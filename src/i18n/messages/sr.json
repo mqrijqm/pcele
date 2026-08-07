@@ -1,0 +1,844 @@
+{
+  "common": {
+    "brandName": "Pčelarstvo Jevtić",
+    "tagline": "Tradicija u svakoj kapi",
+    "learnMore": "Saznaj više",
+    "viewAll": "Pogledaj sve",
+    "addToCart": "Dodaj u korpu",
+    "buyNow": "Kupi odmah",
+    "outOfStock": "Nema na stanju",
+    "inStock": "Na stanju",
+    "loading": "Učitavanje...",
+    "error": "Došlo je do greške",
+    "retry": "Pokušaj ponovo",
+    "close": "Zatvori",
+    "back": "Nazad",
+    "next": "Dalje",
+    "submit": "Pošalji",
+    "save": "Sačuvaj",
+    "cancel": "Otkaži",
+    "search": "Pretraga",
+    "currency": "BAM",
+    "edit": "Uredi",
+    "delete": "Obriši"
+  },
+  "nav": {
+    "home": "Početna",
+    "shop": "Proizvodi",
+    "about": "O nama",
+    "process": "Naš proces",
+    "contact": "Kontakt",
+    "cart": "Korpa",
+    "account": "Moj nalog",
+    "login": "Prijava",
+    "logout": "Odjava",
+    "register": "Registracija",
+    "orders": "Narudžbe"
+  },
+  "home": {
+    "hero": {
+      "title": "Tradicija u svakoj kapi",
+      "subtitle": "Med iz srca bosanskih livada, proizveden s ljubavlju već tri generacije",
+      "cta": "Otkrijte naš med"
+    },
+    "about": {
+      "title": "Naša priča",
+      "description": "Već tri generacije, porodica Jevtić njeguje pčele i proizvodi med po tradicionalnim receptima u netaknutoj prirodi sela Mračaj kod Prnjavora.",
+      "cta": "Saznaj više o nama"
+    },
+    "products": {
+      "title": "Naši proizvodi",
+      "subtitle": "Čist, prirodan med bez dodataka",
+      "cta": "Pogledaj sve proizvode"
+    },
+    "process": {
+      "title": "Od košnice do vašeg stola",
+      "subtitle": "Svaki korak sa pažnjom i ljubavlju",
+      "cta": "Pogledaj cijeli proces"
+    },
+    "heroSection": {
+      "badge": "Porodica Jevtić · pčelari od 1985.",
+      "heading": "Porodični med.<br></br><em>Tradicija od 1985.</em>",
+      "description": "Već četiri decenije porodica Jevtić njeguje pčele u Mrčaju kod Prnjavora. Med vrcamo u malim serijama i punimo bez dodataka — kao što smo oduvijek radili.",
+      "note": "čisto. mirisno. naše.",
+      "ctaProducts": "Pogledaj naše medove",
+      "ctaAbout": "Naša priča",
+      "imageAlt": "Košnice porodičnog pčelinjaka Jevtić u Mrčaju",
+      "jarImageAlt": "Bagremov med Pčelarstvo Jevtić",
+      "proof": {
+        "natural": "100% prirodan med",
+        "location": "Mračaj, Prnjavor",
+        "family": "Porodično od 1985."
+      }
+    },
+    "provenanceSection": {
+      "eyebrow": "Porijeklo i povjerenje",
+      "heading": "Med sa jasnim porijeklom.",
+      "items": [
+        {
+          "label": "Od 1985.",
+          "detail": "Porodično iskustvo"
+        },
+        {
+          "label": "Mračaj",
+          "detail": "Prnjavor, BiH"
+        },
+        {
+          "label": "Bez dodataka",
+          "detail": "Čist med"
+        },
+        {
+          "label": "Mala serija",
+          "detail": "Sezonsko vrcanje"
+        }
+      ],
+      "beehivesAlt": "Košnice u Mračaju",
+      "honeycombAlt": "Saće iz proizvodnje"
+    },
+    "aboutPreview": {
+      "imageAlt": "Ručno otklapanje saća",
+      "eyebrow": "Porodično pčelarstvo od 1985.",
+      "heading": "Četiri decenije, ista pažnja.",
+      "description": "Pčelarstvo Jevtić nije nastalo kao brend, već kao porodični posao. Znanje se prenosi kroz generacije, a ista pažnja prati svaki korak — od rada oko košnica do punjenja posljednje tegle.",
+      "steps": [
+        "Pregled košnica",
+        "Ručno vrcanje",
+        "Mirno cijeđenje",
+        "Punjenje tegli"
+      ],
+      "cta": "Pogledaj proces"
+    },
+    "featuredProducts": {
+      "eyebrow": "Kolekcija",
+      "heading": "Tri karaktera meda, jedna proizvodnja.",
+      "viewAll": "Svi proizvodi"
+    },
+    "testimonialsSection": {
+      "eyebrow": "Riječi kupaca",
+      "heading": "Kvalitet se najlakše prepozna kad se proba.",
+      "subheading": "Lokalne preporuke i stalni kupci",
+      "imageAlt": "Tegla meda u rukama",
+      "quotes": [
+        "Bagremov med je čist, blag i bez onog teškog ukusa koji često osjetim kod industrijskog meda.",
+        "Šumski med ima dubinu i miris kao pravi domaći proizvod. Vidi se da iza njega stoji porodica, ne fabrika.",
+        "Livadski med uzimam za čaj i kolače. Stigne lijepo upakovan i uvijek istog kvaliteta."
+      ]
+    },
+    "instagramGallery": {
+      "eyebrow": "Iz proizvodnje",
+      "heading": "Bez stock fotografija. Ovo je naš rad.",
+      "photoAlts": [
+        "Tegle meda na stolu",
+        "Saće iz proizvodnje",
+        "Otklapanje saća",
+        "Košnice na livadi"
+      ]
+    },
+    "newsletter": {
+      "eyebrow": "Naruči direktno",
+      "heading": "Prva tegla je najbolji način da nas upoznate.",
+      "description": "Pogledajte dostupne vrste meda ili nam pošaljite poruku za količine, poklon pakovanja i sezonske serije.",
+      "ctaProducts": "Pogledaj proizvode",
+      "ctaContact": "Kontakt",
+      "emailPlaceholder": "Email za sezonske novosti",
+      "jarAlt": "Bagremov med",
+      "status": {
+        "sending": "Slanje...",
+        "joined": "Upisano",
+        "alreadyJoined": "Već ste prijavljeni",
+        "join": "Prijavi se"
+      },
+      "successMessage": "Hvala na prijavi! Sezonske novosti stižu na vaš email.",
+      "alreadySubscribedMessage": "Ova email adresa je već prijavljena na listu.",
+      "errors": {
+        "signupFailed": "Prijava nije uspjela. Pokušajte ponovo.",
+        "notConfigured": "Prijava trenutno nije dostupna — pokušajte kasnije.",
+        "networkError": "Greška mreže. Pokušajte ponovo."
+      }
+    },
+    "faq": {
+      "eyebrow": "O medu",
+      "heading": "Mala pitanja prije prve tegle.",
+      "intro": "Kratki odgovori o čuvanju, kristalizaciji i tome šta se nalazi u našim teglama.",
+      "imageAlt": "Tekstura saća",
+      "items": [
+        {
+          "question": "Kako čuvati med?",
+          "answer": "Čuvajte ga na sobnoj temperaturi, zatvorenog i dalje od direktnog sunca. Frižider nije potreban jer hladnoća ubrzava kristalizaciju."
+        },
+        {
+          "question": "Da li prirodan med kristališe?",
+          "answer": "Da. Kristalizacija je prirodan proces i ne znači da je med pokvaren. Teglu možete lagano zagrijati u toploj vodi do 40°C."
+        },
+        {
+          "question": "Da li dodajete šećer ili aditive?",
+          "answer": "Ne. Med punimo bez suvišnih dodataka, mirisa, boja ili konzervansa. Karakter zavisi od paše i sezone."
+        },
+        {
+          "question": "Koji med izabrati za početak?",
+          "answer": "Bagremov je najblaži, livadski je cvjetan i svakodnevan, a šumski je tamniji i intenzivniji."
+        }
+      ]
+    }
+  },
+  "products": {
+    "title": "Naši proizvodi",
+    "subtitle": "Izaberite savršen med za vas",
+    "filter": {
+      "all": "Svi proizvodi",
+      "honey": "Med",
+      "beeProducts": "Pčelinji proizvodi",
+      "other": "Ostalo"
+    },
+    "sort": {
+      "label": "Sortiraj po",
+      "newest": "Najnovije",
+      "priceLow": "Cijena: od najniže",
+      "priceHigh": "Cijena: od najviše"
+    },
+    "noProducts": "Nema proizvoda za prikaz",
+    "size": "Veličina",
+    "quantity": "Količina",
+    "description": "Opis",
+    "details": "Detalji",
+    "story": "Priča o proizvodu",
+    "priceFrom": "od",
+    "priceLabel": "Cijena",
+    "breadcrumb": "Proizvodi",
+    "naturalBadge": "100% Prirodan proizvod",
+    "inclVat": "sa PDV-om",
+    "added": "Dodano!",
+    "freeShippingNote": "Za narudžbe preko 50 KM",
+    "trustBadges": [
+      {
+        "title": "Besplatna dostava",
+        "desc": "Za narudžbe preko 50 KM"
+      },
+      {
+        "title": "Garantovani kvalitet",
+        "desc": "100% prirodan med"
+      },
+      {
+        "title": "Pravo na povrat",
+        "desc": "14 dana za povrat"
+      },
+      {
+        "title": "Porodična tradicija",
+        "desc": "Od 1985. godine"
+      }
+    ],
+    "tabs": {
+      "descriptionTab": "Opis proizvoda",
+      "shippingTab": "Dostava",
+      "reviewsTab": "Recenzije",
+      "reviewsTabWithCount": "Recenzije ({count})",
+      "aboutProduct": "O proizvodu",
+      "qualityNote": "Svaki naš proizvod prolazi strog proces kontrole kvaliteta. Med se vrcа u optimalnom trenutku i pažljivo pakuje u staklene tegle koje čuvaju sve prirodne vrijednosti.",
+      "featuresTitle": "Karakteristike",
+      "features": [
+        "100% prirodan, bez aditiva",
+        "Hladno vrcani med",
+        "Porijeklo: Mračaj, Prnjavor",
+        "Bez konzervansa i GMO",
+        "Ručno pakovan s ljubavlju"
+      ],
+      "shippingInfoTitle": "Informacije o dostavi",
+      "shippingInfoText": "Dostavljamo na teritoriji cijele Bosne i Hercegovine. Narudžbe se obrađuju u roku od 24 sata.",
+      "standardDeliveryLabel": "Standardna dostava:",
+      "standardDeliveryValue": "2-4 radna dana — 5 KM",
+      "expressDeliveryLabel": "Ekspresna dostava:",
+      "expressDeliveryValue": "1-2 radna dana — 10 KM",
+      "freeShippingLabel": "Besplatna dostava:",
+      "returnPolicyTitle": "Politika povrata",
+      "returnPolicyText": "Ukoliko niste zadovoljni proizvodom, imate pravo na povrat u roku od 14 dana od prijema. Proizvod mora biti neotpakovan i u originalnom pakovanju. Kontaktirajte nas na info@pcelarstvo-jevtic.ba za pokretanje procesa povrata."
+    },
+    "grid": {
+      "heroImageAlt": "Saće i med",
+      "eyebrow": "Naša kolekcija",
+      "heading": "Med i pčelinji proizvodi.",
+      "description": "Mala sezonska proizvodnja, jasne vrste meda i proizvodi koje punimo direktno iz našeg pčelinjaka.",
+      "resultCount": "{count} proizvoda",
+      "sort": {
+        "default": "Preporučeno",
+        "priceAsc": "Cijena: niža prvo",
+        "priceDesc": "Cijena: viša prvo"
+      },
+      "noResults": "Nema rezultata",
+      "noResultsMessage": "Nismo pronašli proizvode za \"{query}\". Pokušajte drugi pojam.",
+      "showAll": "Prikaži sve proizvode",
+      "trustFeatures": [
+        {
+          "title": "Dostava",
+          "desc": "Dogovor za lokaciju i količinu"
+        },
+        {
+          "title": "Čist sastav",
+          "desc": "Bez aditiva i boja"
+        },
+        {
+          "title": "Poklon pakovanje",
+          "desc": "Za slavlja i poslovne poklone"
+        },
+        {
+          "title": "Sezonske serije",
+          "desc": "Okus zavisi od paše"
+        }
+      ]
+    },
+    "related": {
+      "eyebrow": "Možda vas zanima",
+      "heading": "Slični proizvodi"
+    }
+  },
+  "cart": {
+    "title": "Vaša korpa",
+    "empty": "Vaša korpa je prazna",
+    "emptyMessage": "Dodajte neke od naših ukusnih proizvoda",
+    "continueShopping": "Nastavi kupovinu",
+    "item": "Artikal",
+    "items": "Artikala",
+    "subtotal": "Međuzbir",
+    "shipping": "Dostava",
+    "total": "Ukupno",
+    "checkout": "Na plaćanje",
+    "remove": "Ukloni",
+    "update": "Ažuriraj",
+    "orderSummary": "Sažetak narudžbe",
+    "shippingCalculated": "Izračunava se"
+  },
+  "checkout": {
+    "title": "Plaćanje",
+    "steps": {
+      "contact": "Kontakt",
+      "shipping": "Dostava",
+      "payment": "Plaćanje",
+      "review": "Pregled"
+    },
+    "contact": {
+      "title": "Kontakt informacije",
+      "email": "Email adresa",
+      "phone": "Broj telefona",
+      "newsletter": "Želim primati novosti o proizvodima i ponudama"
+    },
+    "shipping": {
+      "title": "Adresa za dostavu",
+      "firstName": "Ime",
+      "lastName": "Prezime",
+      "address": "Adresa",
+      "apartment": "Stan, sprat, itd. (opciono)",
+      "city": "Grad",
+      "postalCode": "Poštanski broj",
+      "region": "Regija",
+      "country": "Država",
+      "method": "Način dostave",
+      "methodTitle": "Izaberite način dostave",
+      "standard": "Standardna dostava",
+      "free": "Besplatna dostava",
+      "freeOver": "Besplatna dostava za narudžbe preko {amount}"
+    },
+    "payment": {
+      "title": "Način plaćanja",
+      "card": "Kartica",
+      "cardNumber": "Broj kartice",
+      "expiry": "Datum isteka",
+      "cvc": "CVC",
+      "cod": "Plaćanje pouzećem",
+      "codNote": "Plaćate gotovinom prilikom preuzimanja"
+    },
+    "review": {
+      "title": "Pregled narudžbe",
+      "orderSummary": "Sažetak narudžbe",
+      "shippingAddress": "Adresa za dostavu",
+      "paymentMethod": "Način plaćanja",
+      "placeOrder": "Potvrdite narudžbu"
+    },
+    "confirmation": {
+      "title": "Hvala na narudžbi!",
+      "orderNumber": "Broj narudžbe",
+      "message": "Primili smo vašu narudžbu i uskoro počinjemo s pripremom.",
+      "emailSent": "Potvrda je poslana na {email}",
+      "continueShopping": "Nastavi kupovinu"
+    },
+    "continue": "Nastavi",
+    "cartEmpty": "Korpa je prazna",
+    "selectRegion": "Izaberite regiju",
+    "giftWrapLabel": "Poklon pakiranje (+{amount})",
+    "giftMessagePlaceholder": "Poruka za primaoca (opciono)",
+    "cardDetailsTitle": "Podaci o kartici",
+    "backToPayment": "Nazad na način plaćanja",
+    "promoCodePlaceholder": "Promo kod",
+    "applyPromo": "Primijeni",
+    "removeCode": "Ukloni kod",
+    "discount": "Popust",
+    "freeShort": "Besplatno",
+    "giftWrapRow": "Poklon pakiranje",
+    "giftWrapDisclosure": "Poklon pakiranje ({amount}) — nije uključeno u online naplatu; dogovaramo ga s vama pri potvrdi narudžbe",
+    "freeShippingProgress": "Dodajte još {amount} za besplatnu dostavu",
+    "errors": {
+      "fillAllFields": "Molimo popunite sva polja",
+      "cartError": "Greška sa korpom",
+      "updateContactError": "Greška pri ažuriranju kontakta",
+      "updateAddressError": "Greška pri ažuriranju adrese",
+      "codeAlreadyApplied": "Kod je već primijenjen",
+      "invalidCode": "Nevažeći kod",
+      "removeCodeError": "Greška pri uklanjanju koda",
+      "giftOptionError": "Greška pri čuvanju opcije poklona, pokušajte ponovo",
+      "giftMessageError": "Greška pri čuvanju poruke, pokušajte ponovo",
+      "cardUnavailable": "Kartično plaćanje trenutno nije dostupno. Molimo izaberite plaćanje pouzećem.",
+      "paymentMethodError": "Greška pri odabiru načina plaćanja",
+      "orderCreationError": "Greška pri kreiranju narudžbe",
+      "paymentSucceededOrderError": "Plaćanje uspješno, ali greška pri kreiranju narudžbe"
+    },
+    "stripe": {
+      "paymentError": "Greška pri plaćanju",
+      "unexpectedError": "Došlo je do neočekivane greške",
+      "authRequired": "Potrebna je dodatna autentifikacija",
+      "paymentFailed": "Greška pri plaćanju",
+      "securePayment": "Sigurno plaćanje putem Stripe",
+      "processing": "Obrada...",
+      "payNow": "Plati sada"
+    }
+  },
+  "account": {
+    "title": "Moj nalog",
+    "welcome": "Dobrodošli, {name}",
+    "orders": "Moje narudžbe",
+    "settings": "Postavke",
+    "addresses": "Adrese",
+    "noOrders": "Nemate nijednu narudžbu",
+    "orderHistory": "Istorija narudžbi",
+    "orderDetails": "Detalji narudžbe",
+    "recentOrders": "Nedavne narudžbe",
+    "viewAll": "Pogledaj sve",
+    "startShopping": "Započni kupovinu",
+    "defaultAddress": "Primarna adresa",
+    "yourAddresses": "Vaše adrese",
+    "addAddress": "Dodaj adresu",
+    "addFirstAddress": "Dodaj prvu adresu",
+    "noAddresses": "Nemate sačuvanih adresa.",
+    "editAddress": "Uredi adresu",
+    "newAddress": "Nova adresa",
+    "confirmDeletion": "Potvrdi brisanje",
+    "deleteAddressConfirm": "Da li ste sigurni da želite obrisati ovu adresu?",
+    "profileInfo": "Informacije o profilu",
+    "changePassword": "Promijeni lozinku",
+    "changePasswordAction": "Promijeni lozinku",
+    "profileUpdated": "Profil uspješno ažuriran!",
+    "passwordChanged": "Lozinka uspješno promijenjena!",
+    "status": {
+      "pending": "Na čekanju",
+      "processing": "U obradi",
+      "shipped": "Poslano",
+      "delivered": "Dostavljeno",
+      "cancelled": "Otkazano"
+    },
+    "subtitle": "Upravljajte svojim nalogom i pregledajte narudžbe.",
+    "viewOrderHistory": "Pogledaj istoriju narudžbi",
+    "manageAddresses": "Upravljaj adresama",
+    "orderPrefix": "Narudžba",
+    "qty": "Količina",
+    "tax": "Porez",
+    "backToOrders": "Nazad na narudžbe",
+    "orderItems": "Stavke narudžbe",
+    "noOrdersMessage": "Kada napravite narudžbu, ovdje će se pojaviti.",
+    "viewDetails": "Pogledaj detalje",
+    "companyOptional": "Kompanija (opciono)",
+    "phone": "Telefon",
+    "setAsDefault": "Postavi kao primarnu adresu",
+    "currentPassword": "Trenutna lozinka",
+    "newPassword": "Nova lozinka",
+    "minChars": "Najmanje 8 karaktera",
+    "saveChanges": "Sačuvaj promjene",
+    "emailImmutable": "Email adresa se ne može promijeniti.",
+    "errors": {
+      "fillRequiredFields": "Molimo popunite sva obavezna polja",
+      "saveAddressError": "Greška pri čuvanju adrese",
+      "orderNotFound": "Narudžba nije pronađena",
+      "nameRequired": "Ime i prezime su obavezni",
+      "passwordRequirements": "Nova lozinka ne ispunjava zahtjeve",
+      "passwordMismatch": "Lozinke se ne podudaraju"
+    },
+    "signInPrompt": "Prijavite se da pristupite svom nalogu",
+    "guestCheckoutNote": "Možete naručiti i bez naloga prilikom kupovine.",
+    "ordersPageSubtitle": "Pregledajte istoriju narudžbi",
+    "settingsSubtitle": "Upravljajte postavkama naloga",
+    "tabs": {
+      "profile": "Profil",
+      "security": "Sigurnost"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Prijava",
+      "email": "Email",
+      "password": "Lozinka",
+      "submit": "Prijavi se",
+      "forgotPassword": "Zaboravili ste lozinku?",
+      "noAccount": "Nemate nalog?",
+      "register": "Registrujte se"
+    },
+    "register": {
+      "title": "Kreiranje naloga",
+      "firstName": "Ime",
+      "lastName": "Prezime",
+      "email": "Email",
+      "password": "Lozinka",
+      "confirmPassword": "Potvrdi lozinku",
+      "submit": "Kreiraj nalog",
+      "hasAccount": "Već imate nalog?",
+      "login": "Prijavite se"
+    },
+    "or": "ili",
+    "passwordRequirements": "Lozinka ne ispunjava zahtjeve",
+    "forgotPassword": {
+      "title": "Zaboravljena lozinka",
+      "emailRequired": "Molimo unesite email adresu",
+      "emailSentTitle": "Email poslan!",
+      "emailSentMessage": "Ako postoji nalog sa tom email adresom, poslaćemo link za resetovanje lozinke.",
+      "instructions": "Unesite vašu email adresu i poslaćemo vam link za resetovanje lozinke.",
+      "submit": "Pošalji link"
+    },
+    "resetPassword": {
+      "title": "Resetovanje lozinke",
+      "invalidLink": "Nevažeći link za resetovanje. Molimo zatražite novi.",
+      "successTitle": "Lozinka promijenjena!",
+      "successMessage": "Vaša lozinka je uspješno resetovana. Sada se možete prijaviti.",
+      "instructions": "Unesite novu lozinku.",
+      "submit": "Promijeni lozinku",
+      "requestNewLink": "Zatraži novi link"
+    },
+    "facebookCallback": {
+      "authFailed": "Autentifikacija nije uspjela. Molimo pokušajte ponovo.",
+      "loginError": "Greška pri prijavi. Molimo pokušajte ponovo.",
+      "backToLogin": "Nazad na prijavu",
+      "signingIn": "Prijava u toku..."
+    }
+  },
+  "about": {
+    "title": "O nama",
+    "hero": {
+      "title": "Tri generacije pčelarske tradicije",
+      "subtitle": "Iz srca bosanskih livada do vašeg stola"
+    },
+    "story": {
+      "title": "Naša priča",
+      "content": "Pčelarstvo Jevtić započelo je kao mala porodična djelatnost u mirnom selu Mračaj, u blizini Prnjavora. Kroz tri generacije, prenijeli smo znanje i ljubav prema pčelama, čuvajući tradiciju proizvodnje čistog, prirodnog meda."
+    },
+    "values": {
+      "title": "Naše vrijednosti",
+      "tradition": {
+        "title": "Tradicija",
+        "description": "Tri generacije znanja i iskustva u pčelarstvu"
+      },
+      "quality": {
+        "title": "Kvalitet",
+        "description": "Samo čist, prirodan med bez ikakvih dodataka"
+      },
+      "nature": {
+        "title": "Priroda",
+        "description": "Pčele slobodno pasu po netaknutim livadama i šumama"
+      },
+      "family": {
+        "title": "Porodica",
+        "description": "Svaki proizvod napravljen s ljubavlju i pažnjom"
+      }
+    },
+    "location": {
+      "title": "Gdje se nalazimo",
+      "description": "Selo Mračaj, Prnjavor, Republika Srpska, Bosna i Hercegovina"
+    },
+    "heroSection": {
+      "heading": "Četiri decenije<line2>posvećenosti kvalitetu</line2>",
+      "description": "Od 1985. godine, porodica Jevtić njeguje pčelarsku tradiciju u selu Mračaj kod Prnjavora.",
+      "scrollLabel": "Skroluj"
+    },
+    "features": [
+      {
+        "title": "Netaknuta priroda",
+        "description": "Naše pčele lete nad livadama i šumama oko Mračaja"
+      },
+      {
+        "title": "100% prirodno",
+        "description": "Bez aditiva, konzervansa ili umjetnih sastojaka"
+      },
+      {
+        "title": "Vrhunski kvalitet",
+        "description": "Tradicionalne metode garantuju najbolji ukus"
+      }
+    ],
+    "familyTradition": {
+      "eyebrow": "Porodična tradicija",
+      "heading": "Priča koja traje generacijama",
+      "imageAlt": "Naše košnice na livadi",
+      "paragraph1": "U selu Mračaj kod Prnjavora, okruženi šumama i livadama ovog kraja, naša porodica već četiri decenije njeguje pčelarsku tradiciju.",
+      "paragraph2": "Svaka kap našeg meda nosi priču o posvećenosti, strpljenju i dubokom poštovanju prema prirodi. Naše pčele slobodno lete nad livadama punim divljeg cvijeća, sakupljajući nektar koji se pretvara u najčistiji med.",
+      "statYearsLabel": "Godina iskustva",
+      "statBeehivesLabel": "Košnica",
+      "statNaturalLabel": "Prirodno"
+    },
+    "journey": {
+      "eyebrow": "Naš put",
+      "heading": "Kroz godine",
+      "timeline": [
+        {
+          "year": "1985",
+          "title": "Početak",
+          "description": "Porodica Jevtić započinje pčelarstvo sa prvih 10 košnica."
+        },
+        {
+          "year": "1995",
+          "title": "Širenje",
+          "description": "Proširenje na 50 košnica i prvi prodaja na lokalnom tržištu."
+        },
+        {
+          "year": "2010",
+          "title": "Modernizacija",
+          "description": "Usvajanje modernih tehnika uz očuvanje tradicije."
+        },
+        {
+          "year": "2024",
+          "title": "Danas",
+          "description": "Preko 200 košnica i dostava širom zemlje."
+        }
+      ]
+    },
+    "valuesSection": {
+      "heading": "Ono u šta vjerujemo"
+    },
+    "locationSection": {
+      "eyebrow": "Naša lokacija",
+      "heading": "U Mračaju<honey> kod Prnjavora</honey>",
+      "description": "Naši pčelinjaci nalaze se u selu Mračaj kod Prnjavora, okruženi šumama, livadama i raznovrsnom florom ovog kraja.",
+      "mapAlt": "Mapa regije"
+    }
+  },
+  "process": {
+    "title": "Naš proces",
+    "subtitle": "Od košnice do vaše kutije - svaki korak s pažnjom",
+    "steps": {
+      "preparation": {
+        "title": "Priprema košnica",
+        "description": "Na proljeće pripremamo košnice za novu sezonu, osiguravajući zdravlje pčela i optimalne uslove za proizvodnju meda."
+      },
+      "pollination": {
+        "title": "Oprašivanje i sakupljanje",
+        "description": "Naše pčele slobodno lete po livadama i šumama oko Mračaja, sakupljajući nektar sa bagrema, lipe i raznovrsnog livadskog cvijeća."
+      },
+      "harvest": {
+        "title": "Vrcanje meda",
+        "description": "Pažljivo vrcamo med u pravo vrijeme, kad je saće zatvoreno i med dostigao savršenu zrelost."
+      },
+      "filtering": {
+        "title": "Proceđivanje",
+        "description": "Med se nježno procjeđuje kako bi se uklonile nečistoće, zadržavajući sve prirodne enzime i hranljive tvari."
+      },
+      "bottling": {
+        "title": "Punjenje i pakovanje",
+        "description": "Ručno punimo staklene tegle i pripremamo proizvod za vas - čist, prirodan, onakav kakav treba biti."
+      }
+    }
+  },
+  "contact": {
+    "title": "Kontaktirajte nas",
+    "subtitle": "Rado ćemo odgovoriti na sva vaša pitanja",
+    "sendMessage": "Pošaljite poruku",
+    "gladToHelp": "Rado ćemo vam pomoći",
+    "willReply": "Odgovorićemo vam u najkraćem roku.",
+    "information": "Informacije",
+    "addressLabel": "Adresa",
+    "workingHoursLabel": "Radno vrijeme",
+    "ourLocation": "Naša lokacija",
+    "mapAlt": "Mapa regije Mračaj, Prnjavor",
+    "locationDescription": "Selo Mračaj kod Prnjavora, okruženo šumama i livadama ovog kraja.",
+    "form": {
+      "name": "Vaše ime",
+      "email": "Email adresa",
+      "phone": "Telefon (opciono)",
+      "message": "Vaša poruka",
+      "submit": "Pošaljite poruku",
+      "success": "Hvala! Vaša poruka je poslana.",
+      "error": "Nešto je pošlo po zlu. Pokušajte ponovo."
+    },
+    "info": {
+      "title": "Informacije",
+      "address": "Mračaj, Prnjavor, Republika Srpska",
+      "phone": "+387 65 XXX XXX",
+      "email": "info@pcelarstvo-jevtic.ba",
+      "hours": "Radno vrijeme: Svakim danom, po dogovoru"
+    }
+  },
+  "terms": {
+    "eyebrow": "Pravne informacije",
+    "title": "Uslovi kupovine",
+    "subtitle": "Pravila koja važe za svaku narudžbu u našoj online prodavnici"
+  },
+  "privacy": {
+    "eyebrow": "Pravne informacije",
+    "title": "Politika privatnosti",
+    "subtitle": "Kako prikupljamo, koristimo i štitimo vaše lične podatke"
+  },
+  "legal": {
+    "effectiveDateLabel": "Datum stupanja na snagu",
+    "questionsPrompt": "Imate dodatnih pitanja? Posjetite našu <contact>kontakt stranicu</contact> ili nam pišite na <email>info@pcelarstvo-jevtic.ba</email>."
+  },
+  "footer": {
+    "tagline": "Tradicija u svakoj kapi",
+    "quickLinks": "Brzi linkovi",
+    "contact": "Kontakt",
+    "followUs": "Pratite nas",
+    "copyright": "© {year} Pčelarstvo Jevtić. Sva prava zadržana.",
+    "privacy": "Politika privatnosti",
+    "terms": "Uslovi kupovine",
+    "productLinks": [
+      "Bagremov med",
+      "Livadski med",
+      "Šumski med"
+    ],
+    "hours": "Pon - Sub, 08:00 - 20:00",
+    "emailReplyTime": "Odgovor u roku od 24h"
+  },
+  "trustBanner": {
+    "items": [
+      "Besplatna dostava preko 50 KM",
+      "100% Prirodan med",
+      "Sigurno plaćanje",
+      "14 dana povrat"
+    ]
+  },
+  "ui": {
+    "backToTop": "Nazad na vrh"
+  },
+  "social": {
+    "facebook": {
+      "commentsTitle": "Facebook komentari",
+      "commentsPlaceholder1": "Facebook komentari će biti dostupni uskoro. Podijelite vaše iskustvo sa ovim proizvodom!",
+      "commentsPlaceholder2": "Komentarišite koristeći vaš Facebook nalog",
+      "loginConnecting": "Povezivanje...",
+      "loginContinue": "Nastavi sa Facebook-om",
+      "recommends": "Preporučuje",
+      "facebookRecommendation": "Facebook preporuka",
+      "socialProof": "Društveni dokaz",
+      "recommendationsHeading": "Facebook preporuke",
+      "visitUs": "Posjetite nas na Facebook-u",
+      "placeholderReviews": [
+        {
+          "text": "Već godinama kupujem med od porodice Jevtić. Kvalitet je uvijek besprijekoran, a ukus neponovljiv. Topla preporuka svima!",
+          "timeAgo": "prije 3 dana"
+        },
+        {
+          "text": "Naručila sam poklon paket za Božić i oduševljena sam. Prekrasno pakovanje, a med je fenomenalan. Hvala Jevtićima na brizi o svakom detalju.",
+          "timeAgo": "prije sedmicu dana"
+        },
+        {
+          "text": "Probao sam livadski med i mogu reći da je najkvalitetniji koji sam imao prilike degustirati. Osjeti se da pčele pasu na čistim, netaknutim livadama.",
+          "timeAgo": "prije 2 sedmice"
+        }
+      ]
+    },
+    "google": {
+      "reviewLabel": "Google recenzija",
+      "customerReviews": "Iskustva kupaca",
+      "heading": "Google recenzije",
+      "viewAll": "Pogledajte sve recenzije na Google-u"
+    }
+  },
+  "errors": {
+    "pageNotFound": "Stranica nije pronađena",
+    "pageNotFoundMessage": "Stranica koju tražite ne postoji.",
+    "serverError": "Greška servera",
+    "serverErrorMessage": "Nešto je pošlo po zlu. Molimo pokušajte ponovo.",
+    "networkError": "Greška mreže",
+    "networkErrorMessage": "Provjerite vašu internet konekciju."
+  },
+  "cookieConsent": {
+    "ariaLabel": "Obavještenje o kolačićima",
+    "title": "Koristimo kolačiće",
+    "description": "Neophodni kolačići omogućavaju osnovni rad sajta. Uz vašu saglasnost koristimo i dodatne kolačiće za analitiku posjeta.",
+    "learnMore": "Saznaj više",
+    "essentialOnly": "Samo neophodni",
+    "accept": "Prihvatam"
+  },
+  "contactForm": {
+    "validation": {
+      "nameRequired": "Ime je obavezno.",
+      "emailInvalid": "Unesite ispravnu email adresu.",
+      "messageTooShort": "Poruka mora imati najmanje 10 karaktera.",
+      "messageTooLong": "Poruka je predugačka.",
+      "phoneTooLong": "Broj telefona je predugačak."
+    },
+    "errors": {
+      "rateLimited": "Previše pokušaja. Pokušajte ponovo za nekoliko minuta.",
+      "notConfigured": "Kontakt forma trenutno nije dostupna. Kontaktirajte nas telefonom ili emailom.",
+      "sendFailed": "Slanje poruke nije uspjelo. Pokušajte ponovo.",
+      "generic": "Nešto je pošlo po zlu. Pokušajte ponovo."
+    }
+  },
+  "search": {
+    "placeholder": "Pretražite proizvode...",
+    "ariaLabel": "Pretraga proizvoda",
+    "close": "Zatvori pretragu",
+    "clear": "Obriši pretragu",
+    "noResults": "Nema rezultata za \"{query}\""
+  },
+  "blog": {
+    "navLabel": "Blog",
+    "eyebrow": "Blog",
+    "title": "Iz našeg pčelinjaka",
+    "subtitle": "Priče o medu, pčelama i sezonskom radu na imanju u Mračaju — pisane iz iskustva tri generacije pčelara.",
+    "readMore": "Pročitaj više",
+    "backToBlog": "Nazad na blog",
+    "readingTime": "{minutes} min čitanja",
+    "publishedLabel": "Objavljeno",
+    "relatedTitle": "Pročitajte i ovo",
+    "noPosts": "Trenutno nema objavljenih tekstova.",
+    "postNotFound": "Tekst nije pronađen",
+    "hivesImageAlt": "Košnice u pčelinjaku"
+  },
+  "wishlist": {
+    "title": "Lista želja",
+    "empty": "Vaša lista želja je prazna",
+    "emptyMessage": "Sačuvajte proizvode koji vam se sviđaju i vratite se po njih kasnije.",
+    "continueShopping": "Pregledaj proizvode",
+    "add": "Dodaj u listu želja",
+    "remove": "Ukloni iz liste želja",
+    "added": "Dodano u listu želja",
+    "removeItem": "Ukloni",
+    "viewProduct": "Pogledaj proizvod"
+  },
+  "referral": {
+    "title": "Preporuči prijatelju",
+    "description": "Podijelite svoj lični link s prijateljima. Kada naprave svoju prvu narudžbu, oboje dobijate 10% popusta.",
+    "linkLabel": "Vaš link za preporuku",
+    "copy": "Kopiraj",
+    "copied": "Kopirano!",
+    "loadError": "Trenutno nije moguće učitati vaš link za preporuku.",
+    "copyError": "Kopiranje nije uspjelo. Označite i kopirajte link ručno.",
+    "loading": "Učitavanje vašeg linka..."
+  },
+  "reviews": {
+    "heading": "Recenzije kupaca",
+    "reviewCount": "{count} recenzija",
+    "noReviewsYet": "Još nema recenzija za ovaj proizvod.",
+    "beFirst": "Budite prvi koji će ostaviti recenziju.",
+    "loadError": "Nije moguće učitati recenzije. Pokušajte ponovo.",
+    "writeReview": "Napišite recenziju",
+    "loginPrompt": "Prijavite se da biste ostavili recenziju.",
+    "loginCta": "Prijavite se",
+    "form": {
+      "ratingLabel": "Vaša ocjena",
+      "titleLabel": "Naslov (opciono)",
+      "titlePlaceholder": "Sažmite vaše iskustvo u par riječi",
+      "contentLabel": "Vaša recenzija",
+      "contentPlaceholder": "Recite nam šta mislite o proizvodu...",
+      "submit": "Objavi recenziju",
+      "thanks": "Hvala na recenziji!",
+      "errors": {
+        "ratingRequired": "Odaberite ocjenu od 1 do 5.",
+        "contentTooShort": "Recenzija mora imati najmanje 10 karaktera.",
+        "duplicate": "Već ste ostavili recenziju za ovaj proizvod.",
+        "notPurchased": "Samo kupci koji su kupili ovaj proizvod mogu ostaviti recenziju.",
+        "generic": "Nešto je pošlo po zlu. Pokušajte ponovo."
+      }
+    }
+  }
+}
