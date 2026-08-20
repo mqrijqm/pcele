@@ -50,11 +50,11 @@ export default async function BlogPostPage({
 
   return (
     <div className="pt-24">
-      <section className="relative overflow-hidden border-b border-sand bg-linen py-16 md:py-20">
+      <section className="relative overflow-hidden border-b border-[#8A5A2B]/15 bg-linen py-16 md:py-20">
         <div className="container relative z-10">
           <Link
             href={localeHref(locale, '/blog')}
-            className="reveal inline-flex items-center gap-2 text-sm font-semibold text-walnut transition-colors hover:text-honey"
+            className="reveal inline-flex items-center gap-2 text-sm font-semibold text-[#8A5A2B]/80 transition-colors hover:text-[#8A5A2B]/70"
           >
             <ArrowLeft className="h-4 w-4" />
             {t('blog.backToBlog')}
@@ -62,17 +62,17 @@ export default async function BlogPostPage({
 
           <div className="mt-10 max-w-4xl">
             <span className="reveal stagger-1 eyebrow">{t('blog.eyebrow')}</span>
-            <h1 className="reveal stagger-2 mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.045em] text-espresso md:text-7xl">
+            <h1 className="reveal stagger-2 mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#8A5A2B] md:text-7xl">
               {post.title[locale]}
             </h1>
-            <div className="reveal stagger-3 mt-6 flex flex-wrap items-center gap-4 text-sm text-stone">
+            <div className="reveal stagger-3 mt-6 flex flex-wrap items-center gap-4 text-sm text-[#8A5A2B]/70">
               <span className="inline-flex items-center gap-1.5">
-                <Calendar className="h-4 w-4 text-honey" />
+                <Calendar className="h-4 w-4 text-[#8A5A2B]" />
                 {t('blog.publishedLabel')} {post.date[locale]}
               </span>
-              <span className="h-1 w-1 rounded-full bg-sand" aria-hidden="true" />
+              <span className="h-1 w-1 rounded-full bg-[#F6EEDB]" aria-hidden="true" />
               <span className="inline-flex items-center gap-1.5">
-                <Clock className="h-4 w-4 text-honey" />
+                <Clock className="h-4 w-4 text-[#8A5A2B]" />
                 {post.readingTime[locale]}
               </span>
             </div>
@@ -81,7 +81,7 @@ export default async function BlogPostPage({
       </section>
 
       <div className="container -mt-8 md:-mt-12">
-        <div className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden border border-sand shadow-[0_20px_40px_-15px_rgba(48,43,38,0.18)] md:aspect-[21/9]">
+        <div className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden border border-[#8A5A2B]/15 shadow-[0_20px_40px_-15px_rgba(138,90,43,0.18)] md:aspect-[21/9] rounded-[2rem]">
           <Image
             src={post.image}
             alt={post.title[locale]}
@@ -93,19 +93,19 @@ export default async function BlogPostPage({
         </div>
       </div>
 
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-[#FFF7E6]">
         <div className="container">
           <div className="mx-auto max-w-prose">
             {post.body[locale].map((block, index) =>
               block.t === 'h2' ? (
                 <h2
                   key={index}
-                  className="mb-4 mt-12 font-display text-2xl leading-tight text-espresso first:mt-0"
+                  className="mb-4 mt-12 font-display text-2xl leading-tight text-[#8A5A2B] first:mt-0"
                 >
                   {block.text}
                 </h2>
               ) : (
-                <p key={index} className="mb-5 text-base leading-relaxed text-walnut">
+                <p key={index} className="mb-5 text-base leading-relaxed text-[#8A5A2B]/80">
                   {block.text}
                 </p>
               )
@@ -114,9 +114,9 @@ export default async function BlogPostPage({
         </div>
       </section>
 
-      <section className="border-t border-sand/70 bg-linen py-16 lg:py-20">
+      <section className="border-t border-[#8A5A2B]/15 bg-linen py-16 lg:py-20">
         <div className="container">
-          <h2 className="mb-8 font-display text-2xl text-espresso">{t('blog.relatedTitle')}</h2>
+          <h2 className="mb-8 font-display text-2xl text-[#8A5A2B]">{t('blog.relatedTitle')}</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item, index) => (
               <PostCard

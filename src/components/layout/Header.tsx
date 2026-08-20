@@ -37,7 +37,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#332a24]/14 bg-[#faf4e8] transition-shadow duration-300">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#8A5A2B]/14 bg-[#FFF7E6] transition-shadow duration-300">
         <nav className="mx-auto grid h-24 max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-8 px-5 sm:px-8 lg:px-12">
           <Link
             href={localeHref(locale, '/')}
@@ -58,7 +58,7 @@ export default function Header({ locale }: { locale: Locale }) {
               <Link
                 key={item.href}
                 href={localeHref(locale, item.href)}
-                className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#66594f] transition-colors hover:text-[#332a24]"
+                className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#8A5A2B]/75 transition-colors hover:text-[#8A5A2B]"
               >
                 {t(item.key)}
               </Link>
@@ -74,12 +74,12 @@ export default function Header({ locale }: { locale: Locale }) {
                       href={`/${code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`}
                       aria-label={`Switch to ${code.toUpperCase()}`}
                       className={`text-xs font-medium uppercase tracking-wider transition-colors ${
-                        code === locale ? 'text-honey' : 'text-stone hover:text-espresso'
+                        code === locale ? 'text-[#8A5A2B] font-bold' : 'text-[#8A5A2B]/45 hover:text-[#8A5A2B]'
                       }`}
                     >
                       {code}
                     </Link>
-                    {index === 0 && <span className="mx-1 text-sand">/</span>}
+                    {index === 0 && <span className="mx-1 text-[#8A5A2B]/25">/</span>}
                   </span>
                 ))}
               </div>
@@ -87,7 +87,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
             <Link
               href={localeHref(locale, '/account')}
-              className="hidden text-xs font-semibold text-[#66594f] transition-colors hover:text-[#332a24] xl:block"
+              className="hidden text-xs font-semibold text-[#8A5A2B]/75 transition-colors hover:text-[#8A5A2B] xl:block"
             >
               {t('nav.account')}
             </Link>
@@ -96,16 +96,16 @@ export default function Header({ locale }: { locale: Locale }) {
               type="button"
               onClick={cart.open}
               aria-label={t('nav.cart')}
-              className="hidden items-center gap-2 border-l border-[#332a24]/15 pl-4 text-xs font-semibold text-[#332a24] transition-colors hover:text-[#82601f] sm:flex"
+              className="hidden items-center gap-2 border-l border-[#8A5A2B]/15 pl-4 text-xs font-semibold text-[#8A5A2B] transition-colors hover:text-[#8A5A2B] sm:flex"
             >
               <ShoppingBag className="h-[17px] w-[17px]" strokeWidth={1.7} />
               <span>{t('nav.cart')}</span>
-              <span className="tabular-nums text-[#82601f]">{cart.count}</span>
+              <span className="tabular-nums text-[#8A5A2B]">{cart.count}</span>
             </button>
 
             <Link
               href={localeHref(locale, '/products')}
-              className="hidden min-h-11 items-center bg-[#332a24] px-5 text-sm font-medium text-[#fff8eb] transition-colors hover:bg-[#52604e] md:inline-flex"
+              className="hidden min-h-11 items-center rounded-full bg-[#8A5A2B] px-6 text-sm font-medium text-[#FFF7E6] transition-colors hover:bg-[#C89B3C] hover:text-[#8A5A2B] md:inline-flex"
             >
               {locale === 'sr' ? 'Naruči med' : 'Order honey'}
             </Link>
@@ -115,7 +115,7 @@ export default function Header({ locale }: { locale: Locale }) {
               onClick={() => setMenuOpen((open) => !open)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
-              className="relative z-50 flex h-11 w-11 items-center justify-center bg-[#332a24] text-[#fff8eb] lg:hidden"
+              className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full bg-[#8A5A2B] text-[#FFF7E6] lg:hidden"
             >
               {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -125,12 +125,12 @@ export default function Header({ locale }: { locale: Locale }) {
 
       {/* Full-screen mobile navigation */}
       <div
-        className={`fixed inset-0 z-40 bg-[#f3e8d6] px-6 pt-32 transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-[#F6EEDB] px-6 pt-32 transition-opacity duration-300 lg:hidden ${
           menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
         <div className="mx-auto flex h-full max-w-lg flex-col">
-          <p className="border-b border-[#332a24]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#82601f]">
+          <p className="border-b border-[#8A5A2B]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A5A2B]">
             {locale === 'sr' ? 'Mračaj · Prnjavor · od 1985.' : 'Mračaj · Prnjavor · since 1985'}
           </p>
 
@@ -140,7 +140,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 key={item.href}
                 href={localeHref(locale, item.href)}
                 style={{ transitionDelay: menuOpen ? `${60 + index * 40}ms` : '0ms' }}
-                className={`border-b border-[#332a24]/12 py-4 font-display text-3xl text-[#332a24] transition-all ${
+                className={`border-b border-[#8A5A2B]/12 py-4 font-display text-3xl text-[#8A5A2B] transition-all ${
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
                 }`}
               >
@@ -149,16 +149,16 @@ export default function Header({ locale }: { locale: Locale }) {
             ))}
           </div>
 
-          <div className="mt-auto grid grid-cols-2 gap-px border border-[#332a24]/14 bg-[#332a24]/14">
+          <div className="mt-auto grid grid-cols-2 gap-2">
             <Link
               href={localeHref(locale, '/account')}
-              className="bg-[#faf4e8] px-4 py-4 text-sm font-semibold text-[#332a24]"
+              className="rounded-[1.25rem] bg-[#FFF7E6] px-4 py-4 text-center text-sm font-semibold text-[#8A5A2B]"
             >
               {t('nav.account')}
             </Link>
             <Link
               href={localeHref(locale, '/wishlist')}
-              className="bg-[#faf4e8] px-4 py-4 text-sm font-semibold text-[#332a24]"
+              className="rounded-[1.25rem] bg-[#FFF7E6] px-4 py-4 text-center text-sm font-semibold text-[#8A5A2B]"
             >
               {t('wishlist.title')}
             </Link>
@@ -166,7 +166,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
           <Link
             href={localeHref(locale, '/products')}
-            className="mb-8 mt-4 flex min-h-14 items-center justify-center bg-[#332a24] px-6 text-sm font-semibold text-[#fff8eb]"
+            className="mb-8 mt-4 flex min-h-14 items-center justify-center rounded-full bg-[#8A5A2B] px-6 text-sm font-semibold text-[#FFF7E6]"
           >
             {locale === 'sr' ? 'Pogledaj i naruči med' : 'Browse and order honey'}
           </Link>

@@ -35,13 +35,13 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
       aria-label={t('cookieConsent.ariaLabel')}
       className="fixed bottom-5 left-5 right-5 z-[100] sm:left-6 sm:right-auto sm:max-w-md"
     >
-      <div className="border border-[#332a24]/20 bg-[#332a24] p-6 text-[#fff8eb] shadow-[0_24px_70px_rgba(30,22,16,0.35)]">
-        <h2 className="font-display text-xl text-[#fff8eb]">{t('cookieConsent.title')}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-white/70">
+      <div className="border border-[#8A5A2B]/20 bg-[#8A5A2B] p-6 text-[#FFF7E6] shadow-[0_24px_70px_rgba(138,90,43,0.35)] rounded-[1.5rem]">
+        <h2 className="font-display text-xl text-[#FFF7E6]">{t('cookieConsent.title')}</h2>
+        <p className="mt-3 text-sm leading-relaxed text-[#FFF7E6]/70">
           {t('cookieConsent.description')}{' '}
           <Link
             href={localeHref(locale, '/privacy')}
-            className="border-b border-honey-200/60 text-honey-200 transition-colors hover:text-white"
+            className="border-b border-honey-200/60 text-honey-200 transition-colors hover:text-[#FFF7E6]"
           >
             {t('cookieConsent.learnMore')}
           </Link>
@@ -50,14 +50,14 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={() => decide('essential')}
-            className="min-h-11 border border-white/25 px-5 text-sm font-semibold text-white/80 transition-colors hover:border-white hover:text-white"
+            className="min-h-11 rounded-full border border-[#FFF7E6]/25 px-5 text-sm font-semibold text-[#FFF7E6]/80 transition-colors hover:border-[#FFF7E6] hover:text-[#FFF7E6]"
           >
             {t('cookieConsent.essentialOnly')}
           </button>
           <button
             type="button"
             onClick={() => decide('all')}
-            className="min-h-11 bg-honey px-6 text-sm font-semibold text-white transition-colors hover:bg-honey-600"
+            className="min-h-11 bg-[#8A5A2B] px-6 text-sm font-semibold text-[#FFF7E6] transition-colors hover:bg-[#C89B3C] hover:text-[#8A5A2B]"
           >
             {t('cookieConsent.accept')}
           </button>

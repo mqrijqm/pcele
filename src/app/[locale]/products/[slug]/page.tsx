@@ -70,40 +70,40 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="bg-[#f3e8d6] pt-24">
+    <div className="bg-[#F6EEDB] pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="border-b border-sand/60">
+      <div className="border-b border-[#8A5A2B]/15">
         <div className="container py-4">
-          <nav className="flex items-center gap-2 text-xs text-stone">
-            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-honey">
+          <nav className="flex items-center gap-2 text-xs text-[#8A5A2B]/70">
+            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#8A5A2B]/70">
               {t('nav.home')}
             </Link>
             <ChevronRight className="h-3 w-3" />
             <Link
               href={localeHref(locale, '/products')}
-              className="transition-colors hover:text-honey"
+              className="transition-colors hover:text-[#8A5A2B]/70"
             >
               {t('products.breadcrumb')}
             </Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-walnut">{product.name[locale]}</span>
+            <span className="text-[#8A5A2B]/80">{product.name[locale]}</span>
           </nav>
         </div>
       </div>
 
       <ProductDetail product={product} locale={locale} />
 
-      <div className="border-t border-sand/60 bg-linen">
+      <div className="border-t border-[#8A5A2B]/15 bg-linen">
         <div className="container py-20 lg:py-28">
           <div className="reveal mb-12 text-center">
-            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-honey">
+            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#8A5A2B]">
               {t('products.related.eyebrow')}
             </span>
-            <h2 className="font-display text-display-md text-espresso">
+            <h2 className="font-display text-display-md text-[#8A5A2B]">
               {t('products.related.heading')}
             </h2>
           </div>
@@ -115,8 +115,8 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="overflow-hidden rounded-lg border border-sand/70 bg-white shadow-sm transition-shadow duration-300 group-hover:shadow-md">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-ivory">
+                <div className="overflow-hidden rounded-[1.5rem] border border-[#8A5A2B]/15 bg-[#FFF7E6] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                  <div className="relative aspect-[3/4] overflow-hidden bg-ivory rounded-[2rem]">
                     <Image
                       src={item.image}
                       alt={item.name[locale]}
@@ -127,14 +127,14 @@ export default async function ProductPage({
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="font-display text-xl text-espresso transition-colors duration-300 group-hover:text-honey-600">
+                      <h3 className="font-display text-xl text-[#8A5A2B] transition-colors duration-300 group-hover:text-honey-600">
                         {item.name[locale]}
                       </h3>
-                      <span className="shrink-0 text-base font-semibold text-honey">
+                      <span className="shrink-0 text-base font-semibold text-[#8A5A2B]">
                         {formatPrice(item.variants[0].price)}
                       </span>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-stone">
+                    <p className="mt-2 line-clamp-2 text-sm text-[#8A5A2B]/70">
                       {truncate(item.description[locale])}
                     </p>
                   </div>

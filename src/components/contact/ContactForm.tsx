@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { createTranslator, type Locale } from '@/i18n/config';
 
 const fieldClass =
-  'w-full rounded-lg border border-sand bg-white px-4 py-3 text-base text-espresso transition-colors duration-200 placeholder:text-stone/60 hover:border-stone focus:border-honey focus:outline-none focus:ring-1 focus:ring-honey/20 disabled:cursor-not-allowed disabled:opacity-50';
+  'w-full rounded-[1.1rem] border border-[#8A5A2B]/15 bg-[#FFF7E6] px-4 py-3 text-base text-[#8A5A2B] transition-colors duration-200 placeholder:text-[#8A5A2B]/55 hover:border-[#8A5A2B]/40 focus:border-[#C89B3C] focus:outline-none focus:ring-1 focus:ring-[#C89B3C]/30 disabled:cursor-not-allowed disabled:opacity-50';
 
-const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-stone';
+const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70';
 
 export default function ContactForm({ locale }: { locale: Locale }) {
   const t = createTranslator(locale);
@@ -38,9 +38,9 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
   if (status === 'sent') {
     return (
-      <div className="border border-sand bg-white p-8">
-        <p className="font-display text-2xl text-espresso">{t('contact.form.success')}</p>
-        <p className="mt-3 text-sm text-walnut">{t('contact.willReply')}</p>
+      <div className="border border-[#8A5A2B]/15 bg-[#FFF7E6] p-8 rounded-[1.5rem]">
+        <p className="font-display text-2xl text-[#8A5A2B]">{t('contact.form.success')}</p>
+        <p className="mt-3 text-sm text-[#8A5A2B]/80">{t('contact.willReply')}</p>
       </div>
     );
   }
@@ -98,7 +98,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
           required
           value={form.message}
           onChange={update('message')}
-          className={`${fieldClass} resize-none`}
+          className={`${fieldClass} resize-none rounded-[1.1rem]`}
         />
       </div>
 
@@ -111,7 +111,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="inline-flex h-13 w-full items-center justify-center rounded-full bg-honey px-8 text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:bg-honey-600 hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex h-13 w-full items-center justify-center rounded-full bg-[#8A5A2B] px-8 text-sm font-semibold tracking-wide text-[#FFF7E6] transition-all duration-300 hover:bg-[#C89B3C] hover:text-[#8A5A2B] hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
       >
         <Send className="mr-2 h-4 w-4" />
         {status === 'sending' ? t('common.loading') : t('contact.form.submit')}

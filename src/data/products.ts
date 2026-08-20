@@ -21,7 +21,7 @@ export const products: Product[] = [
     "order": 1,
     "category": "honey",
     "image": "/images/products/bagremov-med-brand-v3.webp",
-    "cardBg": "#f3e8d6",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "bagremov-500",
@@ -60,7 +60,7 @@ export const products: Product[] = [
     "order": 2,
     "category": "honey",
     "image": "/images/products/lipov-med-brand-v3.webp",
-    "cardBg": "#c9dadd",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "lipov-500",
@@ -99,7 +99,7 @@ export const products: Product[] = [
     "order": 3,
     "category": "honey",
     "image": "/images/products/livadski-med-brand-v3.webp",
-    "cardBg": "#d9aa92",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "livadski-500",
@@ -138,7 +138,7 @@ export const products: Product[] = [
     "order": 4,
     "category": "other",
     "image": "/images/products/propolis-brand-v3.webp",
-    "cardBg": "#dfe4d7",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "propolis-30",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     "order": 5,
     "category": "other",
     "image": "/images/products/cvjetni-prah-brand-v3.webp",
-    "cardBg": "#f3e8d6",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "polen-200",
@@ -204,7 +204,7 @@ export const products: Product[] = [
     "order": 6,
     "category": "honey",
     "image": "/images/products/sumski-med-brand-v3.webp",
-    "cardBg": "#c9dadd",
+    "cardBg": "#F6EEDB",
     "variants": [
       {
         "id": "sumski-500",

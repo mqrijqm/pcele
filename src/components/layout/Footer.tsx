@@ -34,9 +34,9 @@ export default function Footer({ locale }: { locale: Locale }) {
       : ['Acacia honey', 'Meadow honey', 'Forest honey'];
 
   return (
-    <footer className="bg-espresso text-white">
+    <footer className="bg-espresso text-[#FFF7E6]">
       <div className="container py-16 lg:py-20">
-        <div className="reveal grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1.1fr_0.7fr_0.7fr_1fr] lg:gap-12">
+        <div className="reveal grid gap-10 border-b border-[#FFF7E6]/10 pb-12 lg:grid-cols-[1.1fr_0.7fr_0.7fr_1fr] lg:gap-12">
           <div>
             <Link
               href={localeHref(locale, '/')}
@@ -47,11 +47,11 @@ export default function Footer({ locale }: { locale: Locale }) {
                 alt="Pčelarstvo Jevtić"
                 width={64}
                 height={64}
-                className="h-12 w-12 rounded-sm bg-ivory p-1.5"
+                className="h-12 w-12 rounded-full bg-[#FFF7E6] p-2"
               />
-              <span className="font-display text-2xl text-white">{t('common.brandName')}</span>
+              <span className="font-display text-2xl text-[#FFF7E6]">{t('common.brandName')}</span>
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-[#FFF7E6]/60">
               {t('footer.tagline')}
             </p>
             <div className="mt-7 flex gap-3">
@@ -63,7 +63,7 @@ export default function Footer({ locale }: { locale: Locale }) {
                   {...(href.startsWith('http')
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/12 text-white/70 transition-colors duration-300 hover:border-honey hover:bg-honey hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FFF7E6]/12 text-[#FFF7E6]/70 transition-colors duration-300 hover:border-[#C89B3C] hover:bg-[#8A5A2B] hover:text-[#FFF7E6]"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -80,7 +80,7 @@ export default function Footer({ locale }: { locale: Locale }) {
                 <li key={link.href}>
                   <Link
                     href={localeHref(locale, link.href)}
-                    className="text-sm text-white/60 transition-colors hover:text-white"
+                    className="text-sm text-[#FFF7E6]/60 transition-colors hover:text-[#FFF7E6]"
                   >
                     {t(link.key)}
                   </Link>
@@ -98,7 +98,7 @@ export default function Footer({ locale }: { locale: Locale }) {
                 <li key={link.href}>
                   <Link
                     href={localeHref(locale, link.href)}
-                    className="text-sm text-white/60 transition-colors hover:text-white"
+                    className="text-sm text-[#FFF7E6]/60 transition-colors hover:text-[#FFF7E6]"
                   >
                     {productNames[link.index]}
                   </Link>
@@ -115,22 +115,22 @@ export default function Footer({ locale }: { locale: Locale }) {
               <li className="flex items-start gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-honey-200" />
                 <div>
-                  <span className="block text-sm text-white/75">{t('contact.info.address')}</span>
-                  <span className="text-xs text-white/35">Republika Srpska, BiH</span>
+                  <span className="block text-sm text-[#FFF7E6]/75">{t('contact.info.address')}</span>
+                  <span className="text-xs text-[#FFF7E6]/35">Republika Srpska, BiH</span>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-honey-200" />
                 <div>
-                  <span className="block text-sm text-white/75">{t('contact.info.phone')}</span>
-                  <span className="text-xs text-white/35">{t('footer.hours')}</span>
+                  <span className="block text-sm text-[#FFF7E6]/75">{t('contact.info.phone')}</span>
+                  <span className="text-xs text-[#FFF7E6]/35">{t('footer.hours')}</span>
                 </div>
               </li>
               <li className="flex items-start gap-3">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-honey-200" />
                 <div>
-                  <span className="block text-sm text-white/75">{t('contact.info.email')}</span>
-                  <span className="text-xs text-white/35">{t('footer.emailReplyTime')}</span>
+                  <span className="block text-sm text-[#FFF7E6]/75">{t('contact.info.email')}</span>
+                  <span className="text-xs text-[#FFF7E6]/35">{t('footer.emailReplyTime')}</span>
                 </div>
               </li>
             </ul>
@@ -138,17 +138,17 @@ export default function Footer({ locale }: { locale: Locale }) {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 pt-6 md:flex-row md:items-center">
-          <p className="text-xs text-white/35">{t('footer.copyright', { year })}</p>
+          <p className="text-xs text-[#FFF7E6]/35">{t('footer.copyright', { year })}</p>
           <div className="flex items-center gap-5">
             <Link
               href={localeHref(locale, '/privacy')}
-              className="text-xs text-white/35 transition-colors hover:text-white/60"
+              className="text-xs text-[#FFF7E6]/35 transition-colors hover:text-[#FFF7E6]/60"
             >
               {t('footer.privacy')}
             </Link>
             <Link
               href={localeHref(locale, '/terms')}
-              className="text-xs text-white/35 transition-colors hover:text-white/60"
+              className="text-xs text-[#FFF7E6]/35 transition-colors hover:text-[#FFF7E6]/60"
             >
               {t('footer.terms')}
             </Link>

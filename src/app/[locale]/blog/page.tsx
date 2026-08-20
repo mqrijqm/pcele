@@ -32,7 +32,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         note={copy.note}
         image="/images/blog/spring-apiary-v1.webp"
         imageAlt={copy.heroAlt}
-        background="#d9aa92"
+        background="#F6EEDB"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"
