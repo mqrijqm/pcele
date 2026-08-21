@@ -104,7 +104,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
               {product.description[locale]}
             </p>
 
-            <div className="my-8 h-px bg-[#F6EEDB]" />
+            <div className="my-8 h-px bg-[#8A5A2B]/[0.06]" />
 
             <div>
               <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#8A5A2B]">
@@ -260,7 +260,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                       const Icon = featureIcons[index];
                       return (
                         <li key={feature} className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F3D46A]/25">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C89B3C]/25">
                             <Icon className="h-4 w-4 text-[#8A5A2B]" />
                           </div>
                           <span className="text-sm text-[#8A5A2B]/80">{feature}</span>

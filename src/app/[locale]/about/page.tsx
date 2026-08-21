@@ -28,9 +28,9 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         heading={copy.heading}
         description={copy.description}
         note={copy.note}
-        image="/images/editorial/family-hive-frame-v1.webp"
+        image="/images/real/ram-2025.webp"
         imageAlt={copy.heroAlt}
-        background="#7A8A6B"
+        background="#8A5A2B"
         cardSide="right"
         imageWidth="lg:w-[76%]"
         cardWidth="lg:w-[43%]"
@@ -75,7 +75,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           <div className="grid grid-cols-12 items-end gap-4">
             <div className="relative col-span-12 aspect-[4/3] overflow-hidden sm:col-span-8 rounded-[2rem]">
               <Image
-                src="/images/blog/spring-apiary-v1.webp"
+                src="/images/real/kosnice-livada.webp"
                 alt={copy.location.mapAlt}
                 fill
                 sizes="(max-width: 640px) 100vw, 40vw"
@@ -84,7 +84,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             </div>
             <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[#FFF7E6] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[2rem]">
               <Image
-                src="/images/hero/uncapping-documentary-v1.webp"
+                src="/images/real/otklapanje-rama.webp"
                 alt={copy.heroAlt}
                 fill
                 sizes="(max-width: 640px) 66vw, 20vw"
@@ -95,7 +95,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-[#F6EEDB] py-24 lg:py-32">
+      <section className="bg-[#8A5A2B]/[0.06] py-24 lg:py-32">
         <div className="container grid gap-12 lg:grid-cols-[0.34fr_0.66fr] lg:gap-20">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A5A2B]">
@@ -151,15 +151,15 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="relative min-h-[42rem] overflow-hidden bg-[#7A8A6B]">
+      <section className="relative min-h-[42rem] overflow-hidden bg-[#8A5A2B]">
         <Image
-          src="/images/blog/spring-apiary-v1.webp"
+          src="/images/real/kosnice-livada.webp"
           alt={copy.location.mapAlt}
           fill
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#7A8A6B]/65 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#8A5A2B]/65 via-transparent to-transparent" />
         <div className="container relative flex min-h-[42rem] items-end py-10 lg:items-center lg:py-20">
           <div className="max-w-xl border border-[#C89B3C]/55 bg-[#FFF7E6]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[1.5rem]">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A5A2B]">

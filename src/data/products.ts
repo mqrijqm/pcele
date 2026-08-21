@@ -20,8 +20,8 @@ export const products: Product[] = [
     "slug": "bagremov-med",
     "order": 1,
     "category": "honey",
-    "image": "/images/products/bagremov-med-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/tegle-red.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "bagremov-500",
@@ -59,8 +59,8 @@ export const products: Product[] = [
     "slug": "lipov-med",
     "order": 2,
     "category": "honey",
-    "image": "/images/products/lipov-med-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/ram-2025.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "lipov-500",
@@ -98,8 +98,8 @@ export const products: Product[] = [
     "slug": "livadski-med",
     "order": 3,
     "category": "honey",
-    "image": "/images/products/livadski-med-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/kante-med.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "livadski-500",
@@ -137,8 +137,8 @@ export const products: Product[] = [
     "slug": "propolis",
     "order": 4,
     "category": "other",
-    "image": "/images/products/propolis-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/kosnice-prikolica.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "propolis-30",
@@ -170,8 +170,8 @@ export const products: Product[] = [
     "slug": "cvjetni-prah",
     "order": 5,
     "category": "other",
-    "image": "/images/products/cvjetni-prah-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/kosnice-livada.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "polen-200",
@@ -203,8 +203,8 @@ export const products: Product[] = [
     "slug": "sumski-med",
     "order": 6,
     "category": "honey",
-    "image": "/images/products/sumski-med-brand-v3.webp",
-    "cardBg": "#F6EEDB",
+    "image": "/images/real/otklapanje-rama.webp",
+    "cardBg": "#FFF7E6",
     "variants": [
       {
         "id": "sumski-500",

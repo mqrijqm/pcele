@@ -70,7 +70,7 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="bg-[#F6EEDB] pt-24">
+    <div className="bg-[#8A5A2B]/[0.06] pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

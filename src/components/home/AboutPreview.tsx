@@ -9,19 +9,19 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
   const copy = home.aboutPreview[locale];
 
   return (
-    <section className="overflow-hidden bg-[#7A8A6B] text-[#8A5A2B]">
+    <section className="overflow-hidden bg-[#8A5A2B] text-[#FFF7E6]">
       <div className="mx-auto grid max-w-[1440px] gap-5 px-5 py-6 sm:px-8 sm:py-8 lg:grid-cols-[0.63fr_0.37fr]">
         <div className="relative min-h-[31rem] overflow-hidden rounded-[2.25rem] lg:min-h-[44rem]">
           <Image
-            src="/images/hero/uncapping-documentary-v1.webp"
+            src="/images/real/otklapanje-rama.webp"
             alt={copy.imageAlt}
             fill
             sizes="(max-width: 1024px) 100vw, 63vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#7A8A6B]/[0.08]" />
+          <div className="absolute inset-0 bg-[#8A5A2B]/[0.08]" />
           <div className="absolute bottom-6 left-6 rounded-full bg-[#8A5A2B]/85 px-6 py-3.5 text-[#FFF7E6] backdrop-blur-sm sm:bottom-8 sm:left-8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#F3D46A]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#C89B3C]">
               {copy.imageCaption}
             </p>
           </div>

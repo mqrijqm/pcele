@@ -18,7 +18,7 @@ export const posts: Post[] = [
   {
     "slug": "proljetno-budjenje-pcelinjaka",
     "order": 1,
-    "image": "/images/blog/spring-apiary-v1.webp",
+    "image": "/images/real/kosnice-livada.webp",
     "title": {
       "sr": "Proljetno buđenje pčelinjaka",
       "en": "The apiary wakes up for spring"
@@ -149,7 +149,7 @@ export const posts: Post[] = [
   {
     "slug": "benefiti-propolisa",
     "order": 2,
-    "image": "/images/blog/propolis-workbench-v1.webp",
+    "image": "/images/real/otklapanje-rama.webp",
     "title": {
       "sr": "Benefiti propolisa",
       "en": "The benefits of propolis"
@@ -280,7 +280,7 @@ export const posts: Post[] = [
   {
     "slug": "kako-prepoznati-pravi-domaci-med",
     "order": 3,
-    "image": "/images/blog/real-raw-honey-v1.webp",
+    "image": "/images/real/kante-med.webp",
     "title": {
       "sr": "Kako prepoznati pravi domaći med",
       "en": "How to recognize real, raw honey"

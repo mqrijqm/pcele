@@ -39,9 +39,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         heading={copy.heading}
         description={copy.description}
         note={copy.note}
-        image="/images/editorial/family-hive-frame-v1.webp"
+        image="/images/real/ram-2025.webp"
         imageAlt={copy.heroAlt}
-        background="#F6EEDB"
+        background="#FFF7E6"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"
@@ -61,7 +61,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <ContactForm locale={locale} />
             </div>
 
-            <div className="reveal-right space-y-6 bg-[#F6EEDB] p-7 sm:p-9 rounded-[1.75rem]">
+            <div className="reveal-right space-y-6 bg-[#8A5A2B]/[0.06] p-7 sm:p-9 rounded-[1.75rem]">
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70">
                   {t('contact.information')}
@@ -90,7 +90,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 </p>
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
                   <Image
-                    src="/images/blog/spring-apiary-v1.webp"
+                    src="/images/real/kosnice-livada.webp"
                     alt={t('contact.mapAlt')}
                     fill
                     sizes="(max-width: 1024px) 100vw, 45vw"

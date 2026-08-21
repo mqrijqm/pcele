@@ -125,7 +125,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
       {/* Full-screen mobile navigation */}
       <div
-        className={`fixed inset-0 z-40 bg-[#F6EEDB] px-6 pt-32 transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-[#8A5A2B]/[0.06] px-6 pt-32 transition-opacity duration-300 lg:hidden ${
           menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >

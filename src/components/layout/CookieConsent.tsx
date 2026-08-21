@@ -41,7 +41,7 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
           {t('cookieConsent.description')}{' '}
           <Link
             href={localeHref(locale, '/privacy')}
-            className="border-b border-honey-200/60 text-honey-200 transition-colors hover:text-[#FFF7E6]"
+            className="border-b border-[#C89B3C] text-[#FFF7E6] transition-colors hover:border-[#FFF7E6]"
           >
             {t('cookieConsent.learnMore')}
           </Link>
@@ -57,7 +57,7 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={() => decide('all')}
-            className="min-h-11 bg-[#8A5A2B] px-6 text-sm font-semibold text-[#FFF7E6] transition-colors hover:bg-[#C89B3C] hover:text-[#8A5A2B]"
+            className="min-h-11 rounded-full bg-[#8A5A2B] px-6 text-sm font-semibold text-[#FFF7E6] transition-colors hover:bg-[#C89B3C] hover:text-[#8A5A2B]"
           >
             {t('cookieConsent.accept')}
           </button>

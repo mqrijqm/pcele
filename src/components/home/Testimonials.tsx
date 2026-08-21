@@ -30,10 +30,10 @@ export default function Testimonials({ locale }: { locale: Locale }) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <figure className="reveal relative overflow-hidden bg-[#7A8A6B] p-7 text-[#FFF7E6] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-10 rounded-[2rem]">
-              <div className="relative min-h-[280px] overflow-hidden bg-[#F6EEDB] lg:min-h-[390px] rounded-[2rem]">
+            <figure className="reveal relative overflow-hidden bg-[#8A5A2B] p-7 text-[#FFF7E6] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-10 rounded-[2rem]">
+              <div className="relative min-h-[280px] overflow-hidden bg-[#8A5A2B]/[0.06] lg:min-h-[390px] rounded-[2rem]">
                 <Image
-                  src="/images/lifestyle/honey-jar-hands-brand-v1.webp"
+                  src="/images/real/kosnice-prikolica.webp"
                   alt={copy.imageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 30vw"
@@ -41,7 +41,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 />
               </div>
               <div className="flex flex-col justify-between pt-8 lg:pt-0">
-                <span className="font-display text-6xl leading-none text-[#F3D46A]">&ldquo;</span>
+                <span className="font-display text-6xl leading-none text-[#C89B3C]">&ldquo;</span>
                 <blockquote className="font-display text-2xl font-medium leading-[1.22] text-[#FFF7E6] sm:text-3xl">
                   {featured.text}
                 </blockquote>

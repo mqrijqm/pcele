@@ -3,26 +3,27 @@
 @tailwind utilities;
 
 :root {
-  /* Paleta — jedini dozvoljeni tonovi na sajtu */
-  --paper: #FFF7E6;   /* najsvetliji krem — osnovna pozadina */
-  --cream: #F6EEDB;   /* krem — sekundarne povrsine */
-  --yellow: #F3D46A;  /* zuta — akcenti, highlight */
-  --gold: #C89B3C;    /* zlatna — linije, ikone, hover */
-  --brown: #8A5A2B;   /* smedja — tekst i tamne sekcije */
-  --sage: #7A8A6B;    /* zelena — sekundarni akcent */
+  /* Paleta 60 / 30 / 10 — tri tona, nista vise */
+  --paper: #FFF7E6;  /* 60% — pozadina svih sekcija */
+  --brown: #8A5A2B;  /* 30% — tekst, tamne sekcije, dugmad */
+  --gold:  #C89B3C;  /* 10% — akcenti: linije, ikone, hover */
+
+  /* Povrsine se izvode iz smedje na niskoj prozirnosti, ne iz nove boje */
+  --surface: rgba(138, 90, 43, 0.06);
+  --hairline: rgba(138, 90, 43, 0.12);
 
   /* Semanticki aliasi (stara imena, da se nista ne polomi) */
   --color-ivory: var(--paper);
-  --color-linen: var(--cream);
-  --color-sand: var(--cream);
+  --color-linen: var(--paper);
+  --color-sand: var(--paper);
   --color-espresso: var(--brown);
   --color-walnut: var(--brown);
   --color-stone: var(--brown);
   --color-honey: var(--gold);
-  --color-honey-light: var(--yellow);
+  --color-honey-light: var(--gold);
   --color-honey-dark: var(--brown);
   --color-bark: var(--brown);
-  --color-sage: var(--sage);
+  --color-sage: var(--brown);
   --color-charcoal: var(--brown);
   --color-gold: var(--gold);
   --color-cream: var(--paper);
@@ -71,8 +72,8 @@ body::before {
 }
 
 ::selection {
-  background-color: var(--yellow);
-  color: var(--brown);
+  background-color: var(--gold);
+  color: var(--paper);
 }
 
 :focus-visible {
@@ -88,7 +89,7 @@ body::before {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--cream);
+  background: var(--surface);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--gold);

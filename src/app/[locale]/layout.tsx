@@ -61,7 +61,7 @@ export async function generateMetadata({
       type: 'website',
       images: [
         {
-          url: '/images/apiary/beehives-hillside.jpg',
+          url: '/images/real/kosnice-livada.webp',
           width: 1200,
           height: 630,
           alt: l === 'sr' ? 'Tradicija u svakoj kapi' : 'Tradition in every drop',

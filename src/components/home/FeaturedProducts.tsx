@@ -10,17 +10,17 @@ import { localeHref, type Locale } from '@/i18n/config';
 const layout = [
   {
     tile: 'lg:col-span-5 lg:row-span-2',
-    bg: 'bg-[#F6EEDB]',
+    bg: 'bg-[#8A5A2B]/[0.06]',
     variant: 'tall' as const,
   },
   {
     tile: 'lg:col-span-7 lg:row-span-1',
-    bg: 'bg-[#F6EEDB]',
+    bg: 'bg-[#8A5A2B]/[0.06]',
     variant: 'wide' as const,
   },
   {
     tile: 'lg:col-span-7 lg:row-span-1',
-    bg: 'bg-[#F6EEDB]',
+    bg: 'bg-[#8A5A2B]/[0.06]',
     variant: 'wide' as const,
   },
 ];

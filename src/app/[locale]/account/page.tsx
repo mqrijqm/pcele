@@ -60,7 +60,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
 
           <div className="mt-10 grid gap-3 sm:grid-cols-3">
             {shortcuts.map(({ Icon, label, note }) => (
-              <div key={label} className="rounded-[1.5rem] bg-[#F6EEDB] p-6">
+              <div key={label} className="rounded-[1.5rem] bg-[#8A5A2B]/[0.06] p-6">
                 <Icon className="h-5 w-5 text-[#8A5A2B]" />
                 <p className="mt-4 font-display text-xl text-[#8A5A2B]">{label}</p>
                 <p className="mt-2 text-xs leading-5 text-[#8A5A2B]/70">{note}</p>

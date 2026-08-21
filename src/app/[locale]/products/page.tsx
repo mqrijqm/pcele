@@ -28,9 +28,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         heading={copy.heading}
         description={copy.description}
         note={copy.note}
-        image="/images/blog/real-raw-honey-v1.webp"
+        image="/images/real/kante-med.webp"
         imageAlt={copy.heroAlt}
-        background="#F6EEDB"
+        background="#FFF7E6"
         cardSide="left"
       />
 
@@ -40,7 +40,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <section className="border-y border-[#8A5A2B]/14 bg-[#7A8A6B] py-12">
+      <section className="border-y border-[#8A5A2B]/14 bg-[#8A5A2B] py-12">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {copy.trustFeatures.map((feature, index) => (

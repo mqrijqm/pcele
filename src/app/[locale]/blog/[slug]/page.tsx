@@ -70,7 +70,7 @@ export default async function BlogPostPage({
                 <Calendar className="h-4 w-4 text-[#8A5A2B]" />
                 {t('blog.publishedLabel')} {post.date[locale]}
               </span>
-              <span className="h-1 w-1 rounded-full bg-[#F6EEDB]" aria-hidden="true" />
+              <span className="h-1 w-1 rounded-full bg-[#8A5A2B]/[0.06]" aria-hidden="true" />
               <span className="inline-flex items-center gap-1.5">
                 <Clock className="h-4 w-4 text-[#8A5A2B]" />
                 {post.readingTime[locale]}

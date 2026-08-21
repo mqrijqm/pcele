@@ -39,7 +39,7 @@ export default function PostCard({
         <div className="border-b border-[#8A5A2B]/15 px-1 py-6">
           <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-[#8A5A2B]/70">
             <span>{post.date[locale]}</span>
-            <span className="h-1 w-1 rounded-full bg-[#F6EEDB]" aria-hidden="true" />
+            <span className="h-1 w-1 rounded-full bg-[#8A5A2B]/[0.06]" aria-hidden="true" />
             <span className="inline-flex items-center gap-1">
               <Clock className="h-3 w-3" />
               {post.readingTime[locale]}

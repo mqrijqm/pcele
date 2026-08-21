@@ -30,9 +30,9 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         heading={copy.heading}
         description={copy.description}
         note={copy.note}
-        image="/images/hero/uncapping-documentary-v1.webp"
+        image="/images/real/otklapanje-rama.webp"
         imageAlt={copy.heroAlt}
-        background="#7A8A6B"
+        background="#8A5A2B"
         cardSide="left"
         imageWidth="lg:w-[82%]"
         cardWidth="lg:w-[40%]"
@@ -90,7 +90,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
-      <section className="bg-[#F6EEDB] py-20 lg:py-24">
+      <section className="bg-[#8A5A2B]/[0.06] py-20 lg:py-24">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A5A2B]">

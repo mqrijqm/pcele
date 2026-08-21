@@ -82,8 +82,8 @@ export const home = {
         'Iz naših košnica u Mračaju kod Prnjavora — med koji već generacijama punimo i šaljemo direktno iz porodice.',
       ctaProducts: 'Pogledaj medove',
       ctaAbout: 'Naša priča',
-      imageAlt: 'Porodični pregled saća u Mračaju',
-      jarAlt: 'Livadski med Pčelarstvo Jevtić',
+      imageAlt: 'Ram sa medom iz sezone 2025, pčelinjak u Mračaju',
+      jarAlt: 'Kante s netom istočenim medom',
       captionTitle: 'Mračaj · Prnjavor',
       captionNote: 'Mala serija · bez dodataka',
     },
@@ -94,8 +94,8 @@ export const home = {
         'From our hives in Mracaj near Prnjavor — honey our family has harvested, jarred and sent for generations.',
       ctaProducts: 'Explore our honey',
       ctaAbout: 'Our story',
-      imageAlt: 'A family hive inspection in Mračaj',
-      jarAlt: 'Meadow honey by Pčelarstvo Jevtić',
+      imageAlt: 'A honey frame from the 2025 season, Mračaj apiary',
+      jarAlt: 'Buckets of freshly extracted honey',
       captionTitle: 'Mracaj · Prnjavor',
       captionNote: 'Small batch · no additives',
     },
@@ -165,7 +165,7 @@ export const home = {
       eyebrow: 'Riječi kupaca',
       heading: 'Kvalitet se najlakše prepozna kad se proba.',
       subheading: 'Lokalne preporuke i stalni kupci',
-      imageAlt: 'Tegla meda u rukama',
+      imageAlt: 'Košnice na prikolici, spremne za seobu',
       quotes: [
         {
           text: 'Livadski med uzimam za čaj i kolače. Stigne lijepo upakovan i uvijek istog kvaliteta.',
@@ -188,7 +188,7 @@ export const home = {
       eyebrow: 'Customer words',
       heading: 'Quality is easiest to recognize when tasted.',
       subheading: 'Local recommendations and returning customers',
-      imageAlt: 'A jar of honey held in two hands',
+      imageAlt: 'Hives loaded on the trailer, ready to move',
       quotes: [
         {
           text: 'I buy meadow honey for tea and cakes. It arrives nicely packed and always with the same quality.',
@@ -290,7 +290,7 @@ export const home = {
       sending: 'Slanje...',
       joined: 'Upisano',
       success: 'Hvala na prijavi! Sezonske novosti stižu na vaš email.',
-      jarAlt: 'Bagremov med',
+      jarAlt: 'Napunjene tegle meda',
     },
     en: {
       eyebrow: 'Order direct',
@@ -304,7 +304,7 @@ export const home = {
       sending: 'Sending...',
       joined: 'Subscribed',
       success: 'Thanks for joining! Seasonal news is on its way to your inbox.',
-      jarAlt: 'Acacia honey',
+      jarAlt: 'Filled jars of honey',
     },
   } satisfies L<Record<string, string>>,
 };
@@ -526,11 +526,11 @@ export const processPage = {
 };
 
 export const processStepImages = [
-  '/images/blog/spring-apiary-v1.webp',
-  '/images/hero/apiary-documentary-v1.webp',
-  '/images/editorial/family-hive-frame-v1.webp',
-  '/images/apiary/honey-buckets-optimized.webp',
-  '/images/products/livadski-med-brand-v3.webp',
+  '/images/real/kosnice-livada.webp',
+  '/images/real/kosnice-prikolica.webp',
+  '/images/real/ram-2025.webp',
+  '/images/real/otklapanje-rama.webp',
+  '/images/real/kante-med.webp',
 ];
 
 // ---------------------------------------------------------------- blog -------

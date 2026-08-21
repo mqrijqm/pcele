@@ -25,7 +25,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
     status === 'sending' ? copy.sending : status === 'done' ? copy.joined : copy.join;
 
   return (
-    <section className="relative overflow-hidden bg-[#F6EEDB] py-20 text-[#8A5A2B] lg:py-28">
+    <section className="relative overflow-hidden bg-[#8A5A2B]/[0.06] py-20 text-[#8A5A2B] lg:py-28">
       <div className="container">
         <div className="grid items-center gap-12 lg:grid-cols-[0.64fr_0.36fr] lg:gap-16">
           <div>
@@ -84,9 +84,9 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             </form>
           </div>
 
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[21rem] overflow-hidden bg-[#F6EEDB] shadow-[0_20px_55px_rgba(138,90,43,0.13)] rounded-[2rem]">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[21rem] overflow-hidden bg-[#8A5A2B]/[0.06] shadow-[0_20px_55px_rgba(138,90,43,0.13)] rounded-[2rem]">
             <Image
-              src="/images/products/bagremov-med-brand-v3.webp"
+              src="/images/real/tegle-red.webp"
               alt={copy.jarAlt}
               fill
               sizes="(max-width: 1024px) 80vw, 21rem"

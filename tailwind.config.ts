@@ -5,31 +5,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta — samo ovih 6 tonova
+        // Paleta 60 / 30 / 10 — samo tri tona
         paper: '#FFF7E6',
-        cream: '#F6EEDB',
-        yellow: '#F3D46A',
-        gold: '#C89B3C',
         brown: '#8A5A2B',
-        sage: '#7A8A6B',
+        gold: '#C89B3C',
 
         // Stara imena mapirana na paletu
         ivory: '#FFF7E6',
-        linen: '#F6EEDB',
-        sand: '#F6EEDB',
+        cream: '#FFF7E6',
+        linen: '#FFF7E6',
+        sand: '#FFF7E6',
         espresso: '#8A5A2B',
         walnut: '#8A5A2B',
         stone: '#8A5A2B',
         bark: '#8A5A2B',
         charcoal: '#8A5A2B',
+        sage: '#8A5A2B',
         honey: {
           DEFAULT: '#C89B3C',
-          light: '#F3D46A',
+          light: '#C89B3C',
           dark: '#8A5A2B',
           50: '#FFF7E6',
-          100: '#F6EEDB',
-          200: '#F3D46A',
-          300: '#F3D46A',
+          100: '#FFF7E6',
+          200: '#C89B3C',
+          300: '#C89B3C',
           400: '#C89B3C',
           500: '#C89B3C',
           600: '#C89B3C',
