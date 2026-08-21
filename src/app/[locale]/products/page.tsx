@@ -30,7 +30,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         note={copy.note}
         image="/images/real/kante-med.webp"
         imageAlt={copy.heroAlt}
-        background="#FFF7E6"
+        background="#FDF9DC"
         cardSide="left"
       />
 
@@ -40,21 +40,21 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
-      <section className="border-y border-[#8A5A2B]/14 bg-[#8A5A2B] py-12">
+      <section className="border-y border-[#73552E]/14 bg-[#73552E] py-12">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {copy.trustFeatures.map((feature, index) => (
               <div
                 key={feature.title}
-                className={`reveal stagger-${index + 1} border-b border-[#8A5A2B]/18 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
+                className={`reveal stagger-${index + 1} border-b border-[#73552E]/18 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
               >
-                <span className="text-[10px] font-bold tracking-[0.18em] text-[#FFF7E6]">
+                <span className="text-[10px] font-bold tracking-[0.18em] text-[#FDF9DC]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-3 font-display text-2xl leading-tight text-[#8A5A2B]">
+                <p className="mt-3 font-display text-2xl leading-tight text-[#73552E]">
                   {feature.title}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#8A5A2B]">{feature.desc}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#73552E]">{feature.desc}</p>
               </div>
             ))}
           </div>

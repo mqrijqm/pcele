@@ -17,21 +17,21 @@ export default function WishlistView({ locale }: { locale: Locale }) {
     <div className="bg-ivory pt-24">
       <section className="section-padding">
         <div className="container">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8A5A2B]">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
             {t('nav.account')}
           </p>
-          <h1 className="mt-5 font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#8A5A2B]">
+          <h1 className="mt-5 font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#73552E]">
             {t('wishlist.title')}
           </h1>
 
           {items.length === 0 ? (
-            <div className="mt-14 flex flex-col items-center border border-[#8A5A2B]/15 bg-[#FFF7E6] px-6 py-20 text-center rounded-[1.5rem]">
-              <Heart className="h-14 w-14 text-[#8A5A2B]/25" />
-              <p className="mt-5 font-display text-2xl text-[#8A5A2B]">{t('wishlist.empty')}</p>
-              <p className="mt-2 max-w-sm text-sm text-[#8A5A2B]">{t('wishlist.emptyMessage')}</p>
+            <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[#FDF9DC] px-6 py-20 text-center rounded-[1.5rem]">
+              <Heart className="h-14 w-14 text-[#73552E]/25" />
+              <p className="mt-5 font-display text-2xl text-[#73552E]">{t('wishlist.empty')}</p>
+              <p className="mt-2 max-w-sm text-sm text-[#73552E]">{t('wishlist.emptyMessage')}</p>
               <Link
                 href={localeHref(locale, '/products')}
-                className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#8A5A2B] px-7 text-sm font-semibold text-[#FFF7E6] transition-colors hover:bg-[#C89B3C] hover:text-[#8A5A2B]"
+                className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#73552E] px-7 text-sm font-semibold text-[#FDF9DC] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
               >
                 {t('wishlist.continueShopping')}
               </Link>
@@ -44,7 +44,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                     type="button"
                     onClick={() => wishlist.remove(product.slug)}
                     aria-label={t('wishlist.removeItem')}
-                    className="absolute right-4 top-4 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#8A5A2B]/15 bg-[#FFF7E6]/85 text-[#8A5A2B] backdrop-blur-sm transition-colors hover:border-[#C89B3C] hover:text-[#8A5A2B]"
+                    className="absolute right-4 top-4 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[#FDF9DC]/85 text-[#73552E] backdrop-blur-sm transition-colors hover:border-[#C79A3B] hover:text-[#73552E]"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -64,16 +64,16 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
                       />
                     </div>
-                    <div className="border-b border-[#8A5A2B]/15 px-1 py-6">
+                    <div className="border-b border-[#73552E]/15 px-1 py-6">
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="font-display text-2xl leading-tight text-[#8A5A2B]">
+                        <h3 className="font-display text-2xl leading-tight text-[#73552E]">
                           {product.name[locale]}
                         </h3>
                         <p className="shrink-0 text-sm font-semibold text-honey-700">
                           {t('products.priceFrom')} {formatPrice(lowestPrice(product))}
                         </p>
                       </div>
-                      <p className="mt-2 text-sm text-[#8A5A2B]">{product.tagline[locale]}</p>
+                      <p className="mt-2 text-sm text-[#73552E]">{product.tagline[locale]}</p>
                     </div>
                   </Link>
                 </div>

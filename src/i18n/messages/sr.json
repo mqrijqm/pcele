@@ -57,8 +57,8 @@
       "cta": "Pogledaj cijeli proces"
     },
     "heroSection": {
-      "badge": "Porodica Jevtić · pčelari od 1985.",
-      "heading": "Porodični med.<br></br><em>Tradicija od 1985.</em>",
+      "badge": "Porodica Jevtić · pčelari od 1980.",
+      "heading": "Porodični med.<br></br><em>Tradicija od 1980.</em>",
       "description": "Već četiri decenije porodica Jevtić njeguje pčele u Mrčaju kod Prnjavora. Med vrcamo u malim serijama i punimo bez dodataka — kao što smo oduvijek radili.",
       "note": "čisto. mirisno. naše.",
       "ctaProducts": "Pogledaj naše medove",
@@ -68,7 +68,7 @@
       "proof": {
         "natural": "100% prirodan med",
         "location": "Mračaj, Prnjavor",
-        "family": "Porodično od 1985."
+        "family": "Porodično od 1980."
       }
     },
     "provenanceSection": {
@@ -76,7 +76,7 @@
       "heading": "Med sa jasnim porijeklom.",
       "items": [
         {
-          "label": "Od 1985.",
+          "label": "Od 1980.",
           "detail": "Porodično iskustvo"
         },
         {
@@ -97,7 +97,7 @@
     },
     "aboutPreview": {
       "imageAlt": "Ručno otklapanje saća",
-      "eyebrow": "Porodično pčelarstvo od 1985.",
+      "eyebrow": "Porodično pčelarstvo od 1980.",
       "heading": "Četiri decenije, ista pažnja.",
       "description": "Pčelarstvo Jevtić nije nastalo kao brend, već kao porodični posao. Znanje se prenosi kroz generacije, a ista pažnja prati svaki korak — od rada oko košnica do punjenja posljednje tegle.",
       "steps": [
@@ -224,7 +224,7 @@
       },
       {
         "title": "Porodična tradicija",
-        "desc": "Od 1985. godine"
+        "desc": "Od 1980. godine"
       }
     ],
     "tabs": {
@@ -549,7 +549,7 @@
     },
     "heroSection": {
       "heading": "Četiri decenije<line2>posvećenosti kvalitetu</line2>",
-      "description": "Od 1985. godine, porodica Jevtić njeguje pčelarsku tradiciju u selu Mračaj kod Prnjavora.",
+      "description": "Od 1980. godine, porodica Jevtić njeguje pčelarsku tradiciju u selu Mračaj kod Prnjavora.",
       "scrollLabel": "Skroluj"
     },
     "features": [
@@ -581,7 +581,7 @@
       "heading": "Kroz godine",
       "timeline": [
         {
-          "year": "1985",
+          "year": "1980",
           "title": "Početak",
           "description": "Porodica Jevtić započinje pčelarstvo sa prvih 10 košnica."
         },
@@ -662,7 +662,7 @@
     "info": {
       "title": "Informacije",
       "address": "Mračaj, Prnjavor, Republika Srpska",
-      "phone": "+387 65 XXX XXX",
+      "phone": "+387 66 030 550",
       "email": "info@pcelarstvo-jevtic.ba",
       "hours": "Radno vrijeme: Svakim danom, po dogovoru"
     }

@@ -41,7 +41,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         note={copy.note}
         image="/images/real/ram-2025.webp"
         imageAlt={copy.heroAlt}
-        background="#FFF7E6"
+        background="#FDF9DC"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"
@@ -52,32 +52,32 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         <div className="container relative z-10">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div className="reveal-left">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                 {t('contact.sendMessage')}
               </p>
-              <h2 className="mb-8 font-display text-display-sm text-[#8A5A2B]">
+              <h2 className="mb-8 font-display text-display-sm text-[#73552E]">
                 {t('contact.gladToHelp')}
               </h2>
               <ContactForm locale={locale} />
             </div>
 
-            <div className="reveal-right space-y-6 bg-[#8A5A2B]/[0.06] p-7 sm:p-9 rounded-[1.75rem]">
+            <div className="reveal-right space-y-6 bg-[#73552E]/[0.06] p-7 sm:p-9 rounded-[1.75rem]">
               <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                   {t('contact.information')}
                 </p>
-                <h2 className="font-display text-2xl text-[#8A5A2B]">{t('contact.info.title')}</h2>
+                <h2 className="font-display text-2xl text-[#73552E]">{t('contact.info.title')}</h2>
 
-                <div className="mt-8 border-t border-[#8A5A2B]/18">
+                <div className="mt-8 border-t border-[#73552E]/18">
                   {details.map(({ Icon, title, value }) => (
                     <div
                       key={title}
-                      className="flex items-start gap-4 border-b border-[#8A5A2B]/18 py-5"
+                      className="flex items-start gap-4 border-b border-[#73552E]/18 py-5"
                     >
-                      <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#8A5A2B]" />
+                      <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#73552E]" />
                       <div>
-                        <h3 className="text-sm font-medium text-[#8A5A2B]">{title}</h3>
-                        <p className="mt-0.5 text-sm text-[#8A5A2B]">{value}</p>
+                        <h3 className="text-sm font-medium text-[#73552E]">{title}</h3>
+                        <p className="mt-0.5 text-sm text-[#73552E]">{value}</p>
                       </div>
                     </div>
                   ))}
@@ -85,7 +85,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               </div>
 
               <div>
-                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                   {t('contact.ourLocation')}
                 </p>
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
@@ -97,10 +97,10 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     className="object-cover saturate-[0.82]"
                   />
                 </div>
-                <p className="mt-4 text-sm text-[#8A5A2B]">{t('contact.locationDescription')}</p>
+                <p className="mt-4 text-sm text-[#73552E]">{t('contact.locationDescription')}</p>
               </div>
 
-              <div className="aspect-video overflow-hidden border border-[#8A5A2B]/15 rounded-[2rem]">
+              <div className="aspect-video overflow-hidden border border-[#73552E]/15 rounded-[2rem]">
                 <iframe
                   title={t('contact.mapAlt')}
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90547.90831565396!2d17.538!3d44.867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e0146f7b9c739%3A0x1a5a5e5cd4c66f6b!2sPrnjavor!5e0!3m2!1sen!2sba!4v1700000000000!5m2!1sen!2sba"

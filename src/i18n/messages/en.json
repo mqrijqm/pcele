@@ -57,8 +57,8 @@
       "cta": "See our full process"
     },
     "heroSection": {
-      "badge": "The Jevtic family · beekeepers since 1985",
-      "heading": "Family-made honey.<br></br><em>A tradition since 1985.</em>",
+      "badge": "The Jevtic family · beekeepers since 1980",
+      "heading": "Family-made honey.<br></br><em>A tradition since 1980.</em>",
       "description": "For four decades, the Jevtic family has kept bees in Mracaj near Prnjavor. We harvest in small batches and jar without additives — just as we always have.",
       "note": "pure. fragrant. ours.",
       "ctaProducts": "Explore our honey",
@@ -68,7 +68,7 @@
       "proof": {
         "natural": "100% natural honey",
         "location": "Mracaj, Prnjavor",
-        "family": "Family-run since 1985"
+        "family": "Family-run since 1980"
       }
     },
     "provenanceSection": {
@@ -76,7 +76,7 @@
       "heading": "Honey with a clear origin.",
       "items": [
         {
-          "label": "Since 1985",
+          "label": "Since 1980",
           "detail": "Family experience"
         },
         {
@@ -97,7 +97,7 @@
     },
     "aboutPreview": {
       "imageAlt": "Hand uncapping honeycomb",
-      "eyebrow": "Family beekeeping since 1985",
+      "eyebrow": "Family beekeeping since 1980",
       "heading": "Four decades, the same care.",
       "description": "Pcelarstvo Jevtic did not begin as a brand, but as a family trade. Knowledge passes from one generation to the next, and the same care follows every step — from tending the hives to filling the last jar.",
       "steps": [
@@ -224,7 +224,7 @@
       },
       {
         "title": "Family tradition",
-        "desc": "Since 1985"
+        "desc": "Since 1980"
       }
     ],
     "tabs": {
@@ -549,7 +549,7 @@
     },
     "heroSection": {
       "heading": "Four decades of<line2>dedication to quality</line2>",
-      "description": "Since 1985, the Jevtić family has continued its beekeeping tradition in the village of Mračaj near Prnjavor.",
+      "description": "Since 1980, the Jevtić family has continued its beekeeping tradition in the village of Mračaj near Prnjavor.",
       "scrollLabel": "Scroll"
     },
     "features": [
@@ -581,7 +581,7 @@
       "heading": "Through the Years",
       "timeline": [
         {
-          "year": "1985",
+          "year": "1980",
           "title": "Beginning",
           "description": "The Jevtić family starts beekeeping with the first 10 beehives."
         },
@@ -662,7 +662,7 @@
     "info": {
       "title": "Information",
       "address": "Mračaj, Prnjavor, Republika Srpska",
-      "phone": "+387 65 XXX XXX",
+      "phone": "+387 66 030 550",
       "email": "info@pcelarstvo-jevtic.ba",
       "hours": "Working hours: Every day, by appointment"
     }

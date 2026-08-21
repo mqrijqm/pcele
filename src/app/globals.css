@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  /* Paleta 60 / 30 / 10 — tri tona, nista vise */
-  --paper: #FFF7E6;  /* 60% — pozadina svih sekcija */
-  --brown: #8A5A2B;  /* 30% — tekst, tamne sekcije, dugmad */
-  --gold:  #C89B3C;  /* 10% — akcenti: linije, ikone, hover */
+  /* Paleta 60 / 30 / 10 — boje ocitane sa deklaracije i logotipa */
+  --paper: #FDF9DC;  /* 60% — krem sa etikete */
+  --brown: #73552E;  /* 30% — mastilo natpisa "livadski MED" */
+  --gold:  #C79A3B;  /* 10% — zlatna sa krila pcele iz logotipa */
 
   /* Povrsine se izvode iz smedje na niskoj prozirnosti, ne iz nove boje */
-  --surface: rgba(138, 90, 43, 0.06);
-  --hairline: rgba(138, 90, 43, 0.12);
+  --surface: rgba(115, 85, 46, 0.05);
+  --hairline: rgba(115, 85, 46, 0.12);
 
   /* Semanticki aliasi (stara imena, da se nista ne polomi) */
   --color-ivory: var(--paper);

@@ -13,7 +13,7 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     home: {
       title: 'Pčelarstvo Jevtić | Tradicija u svakoj kapi',
       description:
-        'Porodični med i pčelinji proizvodi iz Mračaja kod Prnjavora. Pčelarska tradicija od 1985.',
+        'Porodični med i pčelinji proizvodi iz Mračaja kod Prnjavora. Pčelarska tradicija od 1980.',
     },
     products: { title: 'Naši proizvodi', description: 'Izaberite savršen med za vas' },
     about: {
@@ -43,7 +43,7 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     home: {
       title: 'Pčelarstvo Jevtić | Tradition in every drop',
       description:
-        'Family honey and bee products from Mračaj near Prnjavor. A beekeeping tradition since 1985.',
+        'Family honey and bee products from Mračaj near Prnjavor. A beekeeping tradition since 1980.',
     },
     products: { title: 'Our Products', description: 'Choose the perfect honey for you' },
     about: {
@@ -76,8 +76,8 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
 export const home = {
   hero: {
     sr: {
-      badge: 'Porodica Jevtić · pčelari od 1985.',
-      heading: 'Porodični med od 1985.',
+      badge: 'Porodica Jevtić · pčelari od 1980.',
+      heading: 'Porodični med od 1980.',
       description:
         'Iz naših košnica u Mračaju kod Prnjavora — med koji već generacijama punimo i šaljemo direktno iz porodice.',
       ctaProducts: 'Pogledaj medove',
@@ -88,8 +88,8 @@ export const home = {
       captionNote: 'Mala serija · bez dodataka',
     },
     en: {
-      badge: 'The Jevtic family · beekeepers since 1985',
-      heading: 'Family honey since 1985.',
+      badge: 'The Jevtic family · beekeepers since 1980',
+      heading: 'Family honey since 1980.',
       description:
         'From our hives in Mracaj near Prnjavor — honey our family has harvested, jarred and sent for generations.',
       ctaProducts: 'Explore our honey',
@@ -105,7 +105,7 @@ export const home = {
     sr: {
       imageAlt: 'Ručno otklapanje saća',
       imageCaption: 'Ručno · polako · porodično',
-      eyebrow: 'Porodično pčelarstvo od 1985.',
+      eyebrow: 'Porodično pčelarstvo od 1980.',
       heading: 'Znanje koje se prenosi rukama.',
       description:
         'Pčelarstvo Jevtić nije nastalo kao brend, već kao porodični posao. Znanje se prenosi kroz generacije, a ista pažnja prati svaki korak — od rada oko košnica do punjenja posljednje tegle.',
@@ -115,7 +115,7 @@ export const home = {
     en: {
       imageAlt: 'Uncapping the comb by hand',
       imageCaption: 'By hand · slowly · as a family',
-      eyebrow: 'Family beekeeping since 1985',
+      eyebrow: 'Family beekeeping since 1980',
       heading: 'Knowledge passed on by hand.',
       description:
         'Pcelarstvo Jevtic did not begin as a brand, but as a family trade. Knowledge passes from one generation to the next, and the same care follows every step — from tending the hives to filling the last jar.',
@@ -317,7 +317,7 @@ export const productsPage = {
     heading: 'Med i pčelinji proizvodi.',
     description:
       'Mala sezonska proizvodnja, jasne vrste meda i proizvodi koje punimo direktno iz našeg pčelinjaka.',
-    note: 'Mračaj · Prnjavor · od 1985.',
+    note: 'Mračaj · Prnjavor · od 1980.',
     heroAlt: 'Saće i med',
     trustFeatures: [
       { title: 'Dostava', desc: 'Dogovor za lokaciju i količinu' },
@@ -331,7 +331,7 @@ export const productsPage = {
     heading: 'Honey and bee products.',
     description:
       'Small seasonal production, clear honey types, and products packed directly from our apiary.',
-    note: 'Mracaj · Prnjavor · since 1985',
+    note: 'Mracaj · Prnjavor · since 1980',
     heroAlt: 'Honeycomb and honey',
     trustFeatures: [
       { title: 'Delivery', desc: 'Arranged by location and quantity' },
@@ -357,7 +357,7 @@ export const aboutPage = {
     heading: 'Četiri decenije. Isti posao.',
     description:
       'Pčelarstvo Jevtić počelo je kao porodični posao u Mračaju kod Prnjavora. Tako ga vodimo i danas.',
-    note: '1985 — danas',
+    note: '1980 — danas',
     heroAlt: 'Naše košnice na livadi',
     features: [
       { title: 'Netaknuta priroda', desc: 'Naše pčele lete nad livadama i šumama oko Mračaja' },
@@ -376,7 +376,7 @@ export const aboutPage = {
       eyebrow: 'Naš put',
       heading: 'Kroz godine',
       timeline: [
-        { year: '1985', title: 'Početak', desc: 'Porodica Jevtić započinje pčelarstvo sa prvih 10 košnica.' },
+        { year: '1980', title: 'Početak', desc: 'Porodica Jevtić započinje pčelarstvo sa prvih 10 košnica.' },
         { year: '1995', title: 'Širenje', desc: 'Proširenje na 50 košnica i prvi prodaja na lokalnom tržištu.' },
         { year: '2010', title: 'Modernizacija', desc: 'Usvajanje modernih tehnika uz očuvanje tradicije.' },
         { year: '2024', title: 'Danas', desc: 'Preko 200 košnica i dostava širom zemlje.' },
@@ -406,7 +406,7 @@ export const aboutPage = {
     heading: 'Four decades. The same craft.',
     description:
       'Jevtic Beekeeping began as a family trade in Mracaj near Prnjavor. That is how we still run it today.',
-    note: '1985 — today',
+    note: '1980 — today',
     heroAlt: 'Our beehives on the meadow',
     features: [
       { title: 'Pristine Nature', desc: 'Our bees forage across the meadows and forests around Mračaj' },
@@ -425,7 +425,7 @@ export const aboutPage = {
       eyebrow: 'Our Journey',
       heading: 'Through the Years',
       timeline: [
-        { year: '1985', title: 'Beginning', desc: 'The Jevtić family starts beekeeping with the first 10 beehives.' },
+        { year: '1980', title: 'Beginning', desc: 'The Jevtić family starts beekeeping with the first 10 beehives.' },
         { year: '1995', title: 'Expansion', desc: 'Expansion to 50 beehives and first sales at the local market.' },
         { year: '2010', title: 'Modernization', desc: 'Adopting modern techniques while preserving tradition.' },
         { year: '2024', title: 'Today', desc: 'Over 200 beehives and delivery nationwide.' },
@@ -572,3 +572,34 @@ export const contactPage = {
     heroAlt: 'Map of the Mračaj, Prnjavor region',
   },
 };
+
+// ------------------------------------------------------------ deklaracija ----
+// Verbatim from the jar label, so the site and the physical product agree.
+export const declaration = {
+  sr: {
+    eyebrow: 'Sa etikete',
+    heading: 'Deklaracija',
+    apiaryLabel: 'Broj pčelinjaka',
+    apiary: 'RS 0212729',
+    locationsLabel: 'Lokacije',
+    locations: 'Mračaj, Orašje, Otpočivaljka',
+    originLabel: 'Porijeklo',
+    origin: 'Republika Srpska',
+    usageLabel: 'Način upotrebe',
+    usage: 'Kristalizacija je prirodno svojstvo meda. Čuvati na suhom mjestu.',
+    labelAlt: 'Etiketa za livadski med, 1 kg',
+  },
+  en: {
+    eyebrow: 'From the label',
+    heading: 'Declaration',
+    apiaryLabel: 'Apiary number',
+    apiary: 'RS 0212729',
+    locationsLabel: 'Locations',
+    locations: 'Mračaj, Orašje, Otpočivaljka',
+    originLabel: 'Origin',
+    origin: 'Republika Srpska',
+    usageLabel: 'How to use',
+    usage: 'Crystallisation is a natural property of honey. Store in a dry place.',
+    labelAlt: 'Meadow honey label, 1 kg',
+  },
+} as const;

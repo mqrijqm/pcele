@@ -32,7 +32,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         note={copy.note}
         image="/images/real/kosnice-livada.webp"
         imageAlt={copy.heroAlt}
-        background="#FFF7E6"
+        background="#FDF9DC"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"

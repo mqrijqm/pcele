@@ -49,7 +49,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
         <div className="relative max-w-lg">
           <Search
             aria-hidden="true"
-            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8A5A2B]"
+            className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#73552E]"
           />
           <input
             type="search"
@@ -57,14 +57,14 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t('search.placeholder')}
             aria-label={t('search.ariaLabel')}
-            className="min-h-12 w-full border-x-0 border-b border-t-0 border-[#8A5A2B]/20 bg-transparent py-2 pl-11 pr-10 text-sm text-[#8A5A2B] outline-none transition-colors placeholder:text-[#8A5A2B] focus:border-[#C89B3C] rounded-[1.1rem]"
+            className="min-h-12 w-full border-x-0 border-b border-t-0 border-[#73552E]/20 bg-transparent py-2 pl-11 pr-10 text-sm text-[#73552E] outline-none transition-colors placeholder:text-[#73552E] focus:border-[#C79A3B] rounded-[1.1rem]"
           />
         </div>
       </div>
 
-      <div className="reveal mb-12 flex flex-col gap-5 border-b border-[#8A5A2B]/15 pb-7 sm:flex-row sm:items-center sm:justify-between">
+      <div className="reveal mb-12 flex flex-col gap-5 border-b border-[#73552E]/15 pb-7 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="mr-1 flex items-center gap-1.5 text-sm text-[#8A5A2B]">
+          <div className="mr-1 flex items-center gap-1.5 text-sm text-[#73552E]">
             <Filter className="h-4 w-4" />
             <span>{t('products.grid.resultCount', { count: visible.length })}</span>
           </div>
@@ -75,8 +75,8 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
               onClick={() => setCategory(filter.id)}
               className={`min-h-10 px-3 text-sm font-semibold transition-colors duration-300 ${
                 category === filter.id
-                  ? 'border-b border-[#8A5A2B] text-[#8A5A2B]'
-                  : 'border-b border-transparent text-[#8A5A2B] hover:border-[#8A5A2B]/30 hover:text-[#8A5A2B]'
+                  ? 'border-b border-[#73552E] text-[#73552E]'
+                  : 'border-b border-transparent text-[#73552E] hover:border-[#73552E]/30 hover:text-[#73552E]'
               }`}
             >
               {filter.label}
@@ -85,27 +85,27 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <ArrowUpDown className="h-4 w-4 text-[#8A5A2B]" />
+          <ArrowUpDown className="h-4 w-4 text-[#73552E]" />
           <div className="relative">
             <select
               value={sort}
               onChange={(event) => setSort(event.target.value as SortOption)}
               aria-label={t('products.sort.label')}
-              className="min-h-10 appearance-none border border-[#8A5A2B]/20 bg-transparent py-2 pl-4 pr-9 text-sm text-[#8A5A2B] outline-none transition-colors focus:border-[#C89B3C] rounded-[1.1rem]"
+              className="min-h-10 appearance-none border border-[#73552E]/20 bg-transparent py-2 pl-4 pr-9 text-sm text-[#73552E] outline-none transition-colors focus:border-[#C79A3B] rounded-[1.1rem]"
             >
               <option value="default">{t('products.grid.sort.default')}</option>
               <option value="price-asc">{t('products.grid.sort.priceAsc')}</option>
               <option value="price-desc">{t('products.grid.sort.priceDesc')}</option>
             </select>
-            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8A5A2B]" />
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#73552E]" />
           </div>
         </div>
       </div>
 
       {visible.length === 0 ? (
         <div className="py-16 text-center">
-          <p className="font-display text-2xl text-[#8A5A2B]">{t('products.grid.noResults')}</p>
-          <p className="mt-3 text-sm text-[#8A5A2B]">
+          <p className="font-display text-2xl text-[#73552E]">{t('products.grid.noResults')}</p>
+          <p className="mt-3 text-sm text-[#73552E]">
             {t('products.grid.noResultsMessage', { query })}
           </p>
           <button
@@ -114,7 +114,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
               setQuery('');
               setCategory('all');
             }}
-            className="mt-6 border-b border-[#8A5A2B] pb-1 text-sm font-semibold text-[#8A5A2B]"
+            className="mt-6 border-b border-[#73552E] pb-1 text-sm font-semibold text-[#73552E]"
           >
             {t('products.grid.showAll')}
           </button>
@@ -127,7 +127,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
               <div key={product.slug} className={`reveal stagger-${Math.min(index + 1, 6)}`}>
                 <Link href={localeHref(locale, `/products/${product.slug}`)} className="group block">
                   <article className="relative transition-transform duration-300 group-hover:-translate-y-1">
-                    <span className="absolute left-5 top-5 z-10 text-[10px] font-bold tracking-[0.18em] text-[#8A5A2B]">
+                    <span className="absolute left-5 top-5 z-10 text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
                       {String(product.order).padStart(2, '0')}
                     </span>
                     <button
@@ -138,11 +138,11 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                         event.preventDefault();
                         wishlist.toggle(product.slug);
                       }}
-                      className="absolute right-5 top-5 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#8A5A2B]/15 bg-[#FFF7E6]/85 text-[#8A5A2B] backdrop-blur-sm transition-all duration-300 hover:border-[#C89B3C] hover:bg-[#FFF7E6] active:scale-[0.98]"
+                      className="absolute right-5 top-5 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[#FDF9DC]/85 text-[#73552E] backdrop-blur-sm transition-all duration-300 hover:border-[#C79A3B] hover:bg-[#FDF9DC] active:scale-[0.98]"
                     >
                       <Heart
                         className={`h-4 w-4 transition-colors ${
-                          saved ? 'fill-[#C89B3C] text-[#C89B3C]' : 'text-[#8A5A2B]'
+                          saved ? 'fill-[#C79A3B] text-[#C79A3B]' : 'text-[#73552E]'
                         }`}
                       />
                     </button>
@@ -160,14 +160,14 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                       />
                     </div>
 
-                    <div className="border-b border-[#8A5A2B]/15 px-1 py-6">
+                    <div className="border-b border-[#73552E]/15 px-1 py-6">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="flex items-center gap-2 font-display text-2xl leading-tight text-[#8A5A2B]">
+                          <h3 className="flex items-center gap-2 font-display text-2xl leading-tight text-[#73552E]">
                             {product.name[locale]}
-                            <ArrowUpRight className="h-4 w-4 text-[#8A5A2B] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                            <ArrowUpRight className="h-4 w-4 text-[#73552E] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                           </h3>
-                          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#8A5A2B]">
+                          <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-[#73552E]">
                             {product.tagline[locale]}
                           </p>
                         </div>

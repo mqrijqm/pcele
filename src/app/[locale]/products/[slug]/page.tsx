@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
+import Declaration from '@/components/products/Declaration';
 import ProductDetail from '@/components/products/ProductDetail';
 import { formatPrice, getProduct, products } from '@/data/products';
 import { createTranslator, isLocale, locales, localeHref, type Locale } from '@/i18n/config';
@@ -70,40 +71,48 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="bg-[#8A5A2B]/[0.06] pt-24">
+    <div className="bg-[#73552E]/[0.06] pt-24">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="border-b border-[#8A5A2B]/15">
+      <div className="border-b border-[#73552E]/15">
         <div className="container py-4">
-          <nav className="flex items-center gap-2 text-xs text-[#8A5A2B]">
-            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#8A5A2B]">
+          <nav className="flex items-center gap-2 text-xs text-[#73552E]">
+            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#73552E]">
               {t('nav.home')}
             </Link>
             <ChevronRight className="h-3 w-3" />
             <Link
               href={localeHref(locale, '/products')}
-              className="transition-colors hover:text-[#8A5A2B]"
+              className="transition-colors hover:text-[#73552E]"
             >
               {t('products.breadcrumb')}
             </Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-[#8A5A2B]">{product.name[locale]}</span>
+            <span className="text-[#73552E]">{product.name[locale]}</span>
           </nav>
         </div>
       </div>
 
       <ProductDetail product={product} locale={locale} />
 
-      <div className="border-t border-[#8A5A2B]/15 bg-linen">
+      {/* Only livadski med has its label artwork exported so far. */}
+      <Declaration
+        locale={locale}
+        labelImage={
+          product.slug === 'livadski-med' ? '/images/brand/deklaracija-1kg.webp' : undefined
+        }
+      />
+
+      <div className="border-t border-[#73552E]/15 bg-linen">
         <div className="container py-20 lg:py-28">
           <div className="reveal mb-12 text-center">
-            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#8A5A2B]">
+            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#73552E]">
               {t('products.related.eyebrow')}
             </span>
-            <h2 className="font-display text-display-md text-[#8A5A2B]">
+            <h2 className="font-display text-display-md text-[#73552E]">
               {t('products.related.heading')}
             </h2>
           </div>
@@ -115,7 +124,7 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="overflow-hidden rounded-[1.5rem] border border-[#8A5A2B]/15 bg-[#FFF7E6] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                <div className="overflow-hidden rounded-[1.5rem] border border-[#73552E]/15 bg-[#FDF9DC] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
                   <div className="relative aspect-[3/4] overflow-hidden bg-ivory rounded-[2rem]">
                     <Image
                       src={item.image}
@@ -127,14 +136,14 @@ export default async function ProductPage({
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="font-display text-xl text-[#8A5A2B] transition-colors duration-300 group-hover:text-honey-600">
+                      <h3 className="font-display text-xl text-[#73552E] transition-colors duration-300 group-hover:text-honey-600">
                         {item.name[locale]}
                       </h3>
-                      <span className="shrink-0 text-base font-semibold text-[#8A5A2B]">
+                      <span className="shrink-0 text-base font-semibold text-[#73552E]">
                         {formatPrice(item.variants[0].price)}
                       </span>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-[#8A5A2B]">
+                    <p className="mt-2 line-clamp-2 text-sm text-[#73552E]">
                       {truncate(item.description[locale])}
                     </p>
                   </div>

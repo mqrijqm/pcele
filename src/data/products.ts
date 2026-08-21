@@ -21,7 +21,7 @@ export const products: Product[] = [
     "order": 1,
     "category": "honey",
     "image": "/images/real/tegle-red.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "bagremov-500",
@@ -60,7 +60,7 @@ export const products: Product[] = [
     "order": 2,
     "category": "honey",
     "image": "/images/real/ram-2025.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "lipov-500",
@@ -99,7 +99,7 @@ export const products: Product[] = [
     "order": 3,
     "category": "honey",
     "image": "/images/real/kante-med.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "livadski-500",
@@ -138,7 +138,7 @@ export const products: Product[] = [
     "order": 4,
     "category": "other",
     "image": "/images/real/kosnice-prikolica.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "propolis-30",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     "order": 5,
     "category": "other",
     "image": "/images/real/kosnice-livada.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "polen-200",
@@ -204,7 +204,7 @@ export const products: Product[] = [
     "order": 6,
     "category": "honey",
     "image": "/images/real/otklapanje-rama.webp",
-    "cardBg": "#FFF7E6",
+    "cardBg": "#FDF9DC",
     "variants": [
       {
         "id": "sumski-500",
