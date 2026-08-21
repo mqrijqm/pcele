@@ -25,7 +25,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                   <Star key={index} className="h-3.5 w-3.5 fill-[#C89B3C] text-[#C89B3C]" />
                 ))}
               </div>
-              <span className="text-xs text-[#8A5A2B]/70">{copy.subheading}</span>
+              <span className="text-xs text-[#8A5A2B]">{copy.subheading}</span>
             </div>
           </div>
 
@@ -41,13 +41,15 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 />
               </div>
               <div className="flex flex-col justify-between pt-8 lg:pt-0">
-                <span className="font-display text-6xl leading-none text-[#C89B3C]">&ldquo;</span>
+                <span aria-hidden="true" className="font-display text-6xl leading-none text-[#C89B3C]">
+                  &ldquo;
+                </span>
                 <blockquote className="font-display text-2xl font-medium leading-[1.22] text-[#FFF7E6] sm:text-3xl">
                   {featured.text}
                 </blockquote>
                 <figcaption className="mt-8 border-t border-[#FFF7E6]/20 pt-5 text-sm">
                   <span className="font-semibold text-[#FFF7E6]">{featured.author}</span>
-                  <span className="ml-3 text-[#FFF7E6]/45">{featured.city}</span>
+                  <span className="ml-3 text-[#FFF7E6]/90">{featured.city}</span>
                 </figcaption>
               </div>
             </figure>
@@ -62,7 +64,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 </blockquote>
                 <figcaption className="mt-7 text-xs">
                   <span className="font-semibold text-[#8A5A2B]">{quote.author}</span>
-                  <span className="ml-3 text-[#8A5A2B]/70">{quote.city}</span>
+                  <span className="ml-3 text-[#8A5A2B]">{quote.city}</span>
                 </figcaption>
               </figure>
             ))}

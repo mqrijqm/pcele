@@ -37,7 +37,7 @@ export default function PostCard({
         </div>
 
         <div className="border-b border-[#8A5A2B]/15 px-1 py-6">
-          <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-[#8A5A2B]/70">
+          <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-[#8A5A2B]">
             <span>{post.date[locale]}</span>
             <span className="h-1 w-1 rounded-full bg-[#8A5A2B]/[0.06]" aria-hidden="true" />
             <span className="inline-flex items-center gap-1">
@@ -52,10 +52,10 @@ export default function PostCard({
           >
             {post.title[locale]}
           </h3>
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#8A5A2B]/80">
+          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-[#8A5A2B]">
             {post.excerpt[locale]}
           </p>
-          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#8A5A2B] transition-colors group-hover:text-[#8A5A2B]/70">
+          <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#8A5A2B] transition-colors group-hover:text-[#8A5A2B]">
             {t('blog.readMore')}
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </span>

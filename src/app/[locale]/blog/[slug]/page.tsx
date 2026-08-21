@@ -54,7 +54,7 @@ export default async function BlogPostPage({
         <div className="container relative z-10">
           <Link
             href={localeHref(locale, '/blog')}
-            className="reveal inline-flex items-center gap-2 text-sm font-semibold text-[#8A5A2B]/80 transition-colors hover:text-[#8A5A2B]/70"
+            className="reveal inline-flex items-center gap-2 text-sm font-semibold text-[#8A5A2B] transition-colors hover:text-[#8A5A2B]"
           >
             <ArrowLeft className="h-4 w-4" />
             {t('blog.backToBlog')}
@@ -65,7 +65,7 @@ export default async function BlogPostPage({
             <h1 className="reveal stagger-2 mt-5 font-display text-5xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#8A5A2B] md:text-7xl">
               {post.title[locale]}
             </h1>
-            <div className="reveal stagger-3 mt-6 flex flex-wrap items-center gap-4 text-sm text-[#8A5A2B]/70">
+            <div className="reveal stagger-3 mt-6 flex flex-wrap items-center gap-4 text-sm text-[#8A5A2B]">
               <span className="inline-flex items-center gap-1.5">
                 <Calendar className="h-4 w-4 text-[#8A5A2B]" />
                 {t('blog.publishedLabel')} {post.date[locale]}
@@ -105,7 +105,7 @@ export default async function BlogPostPage({
                   {block.text}
                 </h2>
               ) : (
-                <p key={index} className="mb-5 text-base leading-relaxed text-[#8A5A2B]/80">
+                <p key={index} className="mb-5 text-base leading-relaxed text-[#8A5A2B]">
                   {block.text}
                 </p>
               )

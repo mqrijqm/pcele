@@ -25,10 +25,10 @@ export default function LegalPage({
             {eyebrow}
           </span>
           <h1 className="reveal stagger-2 font-display text-display-md text-[#8A5A2B]">{title}</h1>
-          <p className="reveal stagger-3 mx-auto mt-4 max-w-lg text-lg leading-relaxed text-[#8A5A2B]/80">
+          <p className="reveal stagger-3 mx-auto mt-4 max-w-lg text-lg leading-relaxed text-[#8A5A2B]">
             {subtitle}
           </p>
-          <p className="reveal stagger-4 mt-6 text-xs uppercase tracking-wider text-[#8A5A2B]/70">
+          <p className="reveal stagger-4 mt-6 text-xs uppercase tracking-wider text-[#8A5A2B]">
             {doc.effective}
           </p>
         </div>
@@ -44,7 +44,7 @@ export default function LegalPage({
                 className="mb-10 scroll-mt-28 border-b border-[#8A5A2B]/15 pb-10 last:mb-0 last:border-b-0 last:pb-0"
               >
                 <h2 className="font-display text-2xl text-[#8A5A2B]">{section.heading}</h2>
-                <div className="mt-4 space-y-4 text-base leading-relaxed text-[#8A5A2B]/80">
+                <div className="mt-4 space-y-4 text-base leading-relaxed text-[#8A5A2B]">
                   {section.blocks.map((block, index) =>
                     block.t === 'p' ? (
                       <p key={index}>{block.text}</p>
@@ -60,7 +60,7 @@ export default function LegalPage({
               </div>
             ))}
 
-            <p className="mt-12 border-t border-[#8A5A2B]/15 pt-8 text-sm text-[#8A5A2B]/80">
+            <p className="mt-12 border-t border-[#8A5A2B]/15 pt-8 text-sm text-[#8A5A2B]">
               {locale === 'sr' ? 'Imate dodatnih pitanja? Posjetite našu ' : 'Have more questions? Visit our '}
               <Link
                 href={localeHref(locale, '/contact')}

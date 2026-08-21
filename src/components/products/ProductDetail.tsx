@@ -97,10 +97,10 @@ export default function ProductDetail({ product, locale }: { product: Product; l
 
             <div className="mt-6 flex items-baseline gap-3">
               <p className="font-display text-3xl text-[#8A5A2B]">{formatPrice(variant.price)}</p>
-              <span className="text-sm text-[#8A5A2B]/70">{t('products.inclVat')}</span>
+              <span className="text-sm text-[#8A5A2B]">{t('products.inclVat')}</span>
             </div>
 
-            <p className="mt-6 text-base leading-relaxed text-[#8A5A2B]/80">
+            <p className="mt-6 text-base leading-relaxed text-[#8A5A2B]">
               {product.description[locale]}
             </p>
 
@@ -119,7 +119,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                     className={`rounded-full border px-6 py-3 text-sm font-medium transition-all duration-300 ${
                       option.id === variant.id
                         ? 'border-[#C89B3C] bg-[#8A5A2B] text-[#FFF7E6]'
-                        : 'border-[#8A5A2B]/15 text-[#8A5A2B]/80 hover:border-[#C89B3C] hover:text-[#8A5A2B]/70'
+                        : 'border-[#8A5A2B]/15 text-[#8A5A2B] hover:border-[#C89B3C] hover:text-[#8A5A2B]'
                     }`}
                   >
                     {option.title}
@@ -139,7 +139,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                     disabled={quantity <= 1}
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-l-full text-[#8A5A2B]/80 transition-colors hover:bg-linen hover:text-[#8A5A2B] disabled:opacity-50"
+                    className="flex h-10 w-10 items-center justify-center rounded-l-full text-[#8A5A2B] transition-colors hover:bg-linen hover:text-[#8A5A2B] disabled:opacity-50"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
@@ -150,7 +150,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
                     aria-label="Increase quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-r-full text-[#8A5A2B]/80 transition-colors hover:bg-linen hover:text-[#8A5A2B]"
+                    className="flex h-10 w-10 items-center justify-center rounded-r-full text-[#8A5A2B] transition-colors hover:bg-linen hover:text-[#8A5A2B]"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
@@ -173,7 +173,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                 className={`flex h-14 shrink-0 items-center justify-center gap-2 whitespace-nowrap border px-6 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
                   saved
                     ? 'border-[#C89B3C] text-[#8A5A2B]'
-                    : 'border-[#8A5A2B]/15 text-[#8A5A2B]/80 hover:border-[#C89B3C] hover:text-[#8A5A2B]/70'
+                    : 'border-[#8A5A2B]/15 text-[#8A5A2B] hover:border-[#C89B3C] hover:text-[#8A5A2B]'
                 }`}
               >
                 <Heart className={`h-4 w-4 ${saved ? 'fill-[#C89B3C]' : ''}`} />
@@ -182,8 +182,8 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             </div>
 
             <div className="mt-4">
-              <span className="inline-flex items-center gap-2 text-sm text-green-600">
-                <Check className="h-4 w-4" />
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#8A5A2B]">
+                <Check className="h-4 w-4 text-[#C89B3C]" aria-hidden="true" />
                 {t('common.inStock')}
               </span>
             </div>
@@ -203,7 +203,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                       <p className="text-xs font-semibold uppercase tracking-wider text-[#8A5A2B]">
                         {badge.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-[#8A5A2B]/70">{badge.desc}</p>
+                      <p className="mt-0.5 text-xs text-[#8A5A2B]">{badge.desc}</p>
                     </div>
                   </div>
                 );
@@ -228,7 +228,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                 type="button"
                 onClick={() => setTab(id)}
                 className={`relative px-6 py-5 text-sm font-medium uppercase tracking-wider transition-colors ${
-                  tab === id ? 'text-[#8A5A2B]' : 'text-[#8A5A2B]/70 hover:text-[#8A5A2B]'
+                  tab === id ? 'text-[#8A5A2B]' : 'text-[#8A5A2B] hover:text-[#8A5A2B]'
                 }`}
               >
                 {label}
@@ -246,7 +246,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   <h3 className="mb-6 font-display text-2xl text-[#8A5A2B]">
                     {t('products.tabs.aboutProduct')}
                   </h3>
-                  <div className="space-y-4 leading-relaxed text-[#8A5A2B]/80">
+                  <div className="space-y-4 leading-relaxed text-[#8A5A2B]">
                     <p>{product.description[locale]}</p>
                     <p>{t('products.tabs.qualityNote')}</p>
                   </div>
@@ -263,7 +263,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C89B3C]/25">
                             <Icon className="h-4 w-4 text-[#8A5A2B]" />
                           </div>
-                          <span className="text-sm text-[#8A5A2B]/80">{feature}</span>
+                          <span className="text-sm text-[#8A5A2B]">{feature}</span>
                         </li>
                       );
                     })}
@@ -278,10 +278,10 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   <h3 className="mb-6 font-display text-2xl text-[#8A5A2B]">
                     {t('products.tabs.shippingInfoTitle')}
                   </h3>
-                  <p className="leading-relaxed text-[#8A5A2B]/80">
+                  <p className="leading-relaxed text-[#8A5A2B]">
                     {t('products.tabs.shippingInfoText')}
                   </p>
-                  <ul className="mt-6 space-y-3 text-sm text-[#8A5A2B]/80">
+                  <ul className="mt-6 space-y-3 text-sm text-[#8A5A2B]">
                     <li>
                       <span className="font-semibold text-[#8A5A2B]">
                         {t('products.tabs.standardDeliveryLabel')}
@@ -306,7 +306,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   <h3 className="mb-6 font-display text-2xl text-[#8A5A2B]">
                     {t('products.tabs.returnPolicyTitle')}
                   </h3>
-                  <p className="leading-relaxed text-[#8A5A2B]/80">
+                  <p className="leading-relaxed text-[#8A5A2B]">
                     {t('products.tabs.returnPolicyText')}
                   </p>
                 </div>
@@ -316,8 +316,8 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             {tab === 'reviews' && (
               <div className="max-w-2xl">
                 <h3 className="mb-4 font-display text-2xl text-[#8A5A2B]">{t('reviews.heading')}</h3>
-                <p className="text-[#8A5A2B]/80">{t('reviews.noReviewsYet')}</p>
-                <p className="mt-2 text-sm text-[#8A5A2B]/70">{t('reviews.beFirst')}</p>
+                <p className="text-[#8A5A2B]">{t('reviews.noReviewsYet')}</p>
+                <p className="mt-2 text-sm text-[#8A5A2B]">{t('reviews.beFirst')}</p>
               </div>
             )}
           </div>

@@ -50,7 +50,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <h2 className="mt-2 font-display text-2xl font-medium text-[#8A5A2B]">
                 {feature.title}
               </h2>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-[#8A5A2B]/75">{feature.desc}</p>
+              <p className="mt-2 max-w-sm text-sm leading-6 text-[#8A5A2B]">{feature.desc}</p>
             </div>
           ))}
         </div>
@@ -65,7 +65,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[#8A5A2B] sm:text-5xl">
               {copy.tradition.heading}
             </h2>
-            <div className="mt-7 space-y-5 text-base leading-7 text-[#8A5A2B]/75">
+            <div className="mt-7 space-y-5 text-base leading-7 text-[#8A5A2B]">
               {copy.tradition.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -114,7 +114,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               >
                 <p className="font-display text-2xl italic text-[#8A5A2B]">{entry.year}</p>
                 <h3 className="font-display text-2xl font-medium text-[#8A5A2B]">{entry.title}</h3>
-                <p className="text-sm leading-6 text-[#8A5A2B]/75">{entry.desc}</p>
+                <p className="text-sm leading-6 text-[#8A5A2B]">{entry.desc}</p>
               </article>
             ))}
           </div>
@@ -144,7 +144,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 <h3 className="mt-3 font-display text-3xl font-medium text-[#8A5A2B]">
                   {value.title}
                 </h3>
-                <p className="mt-3 max-w-xl text-sm leading-6 text-[#8A5A2B]/75">{value.desc}</p>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-[#8A5A2B]">{value.desc}</p>
               </article>
             ))}
           </div>
@@ -168,8 +168,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] text-[#8A5A2B] sm:text-5xl">
               {copy.location.heading}
             </h2>
-            <p className="mt-6 text-base leading-7 text-[#8A5A2B]/75">{copy.location.description}</p>
-            <p className="mt-7 border-t border-[#8A5A2B]/15 pt-4 text-sm text-[#8A5A2B]/75">
+            <p className="mt-6 text-base leading-7 text-[#8A5A2B]">{copy.location.description}</p>
+            <p className="mt-7 border-t border-[#8A5A2B]/15 pt-4 text-sm text-[#8A5A2B]">
               {copy.location.note}
             </p>
           </div>

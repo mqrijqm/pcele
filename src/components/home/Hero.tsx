@@ -19,7 +19,7 @@ export default function Hero({ locale }: { locale: Locale }) {
           <h1 className="max-w-[12ch] font-display text-[3.35rem] font-medium leading-[1.02] tracking-[-0.045em] text-[#8A5A2B] sm:text-[4.25rem] lg:text-[4.7rem]">
             {copy.heading}
           </h1>
-          <p className="mt-7 max-w-[31rem] text-[1.02rem] leading-7 text-[#8A5A2B]/75 sm:text-lg sm:leading-8">
+          <p className="mt-7 max-w-[31rem] text-[1.02rem] leading-7 text-[#8A5A2B] sm:text-lg sm:leading-8">
             {copy.description}
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-7">
@@ -32,7 +32,7 @@ export default function Hero({ locale }: { locale: Locale }) {
             </Link>
             <Link
               href={localeHref(locale, '/about')}
-              className="border-b border-[#8A5A2B]/35 pb-1 text-sm font-semibold text-[#8A5A2B]/75 transition-colors hover:border-[#C89B3C] hover:text-[#8A5A2B]"
+              className="border-b border-[#8A5A2B]/35 pb-1 text-sm font-semibold text-[#8A5A2B] transition-colors hover:border-[#C89B3C] hover:text-[#8A5A2B]"
             >
               {copy.ctaAbout}
             </Link>
@@ -65,7 +65,7 @@ export default function Hero({ locale }: { locale: Locale }) {
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8A5A2B]">
               {copy.captionTitle}
             </p>
-            <p className="mt-1 text-sm text-[#8A5A2B]/75">{copy.captionNote}</p>
+            <p className="mt-1 text-sm text-[#8A5A2B]">{copy.captionNote}</p>
           </div>
         </div>
 

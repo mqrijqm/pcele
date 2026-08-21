@@ -37,7 +37,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               type="button"
               onClick={cart.close}
               aria-label="Close cart"
-              className="text-[#8A5A2B]/70 transition-colors hover:text-[#8A5A2B]"
+              className="text-[#8A5A2B] transition-colors hover:text-[#8A5A2B]"
             >
               <X className="h-5 w-5" />
             </button>
@@ -48,7 +48,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <ShoppingBag className="h-16 w-16 text-[#8A5A2B]/25" />
                 <p className="mt-4 font-display text-xl text-[#8A5A2B]">{t('cart.empty')}</p>
-                <p className="mt-2 text-sm text-[#8A5A2B]/70">{t('cart.emptyMessage')}</p>
+                <p className="mt-2 text-sm text-[#8A5A2B]">{t('cart.emptyMessage')}</p>
                 <Link
                   href={localeHref(locale, '/products')}
                   onClick={cart.close}
@@ -70,7 +70,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           <p className="font-display text-lg leading-tight text-[#8A5A2B]">
                             {item.name}
                           </p>
-                          <p className="mt-0.5 text-xs tracking-wider text-[#8A5A2B]/70">
+                          <p className="mt-0.5 text-xs tracking-wider text-[#8A5A2B]">
                             {item.variantTitle}
                           </p>
                         </div>
@@ -78,7 +78,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           type="button"
                           onClick={() => cart.remove(item.variantId)}
                           aria-label={t('cart.remove')}
-                          className="text-[#8A5A2B]/70 transition-colors hover:text-[#8A5A2B]/70"
+                          className="text-[#8A5A2B] transition-colors hover:text-[#8A5A2B]"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -89,7 +89,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity - 1)}
                             aria-label="Decrease quantity"
-                            className="flex h-8 w-8 items-center justify-center rounded-l-full text-[#8A5A2B]/80 transition-colors hover:bg-linen hover:text-[#8A5A2B]"
+                            className="flex h-8 w-8 items-center justify-center rounded-l-full text-[#8A5A2B] transition-colors hover:bg-linen hover:text-[#8A5A2B]"
                           >
                             <Minus className="h-3.5 w-3.5" />
                           </button>
@@ -100,7 +100,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity + 1)}
                             aria-label="Increase quantity"
-                            className="flex h-8 w-8 items-center justify-center rounded-r-full text-[#8A5A2B]/80 transition-colors hover:bg-linen hover:text-[#8A5A2B]"
+                            className="flex h-8 w-8 items-center justify-center rounded-r-full text-[#8A5A2B] transition-colors hover:bg-linen hover:text-[#8A5A2B]"
                           >
                             <Plus className="h-3.5 w-3.5" />
                           </button>
@@ -118,13 +118,13 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
 
           {cart.items.length > 0 && (
             <div className="border-t border-[#8A5A2B]/15 px-6 py-5">
-              <div className="flex items-center justify-between text-sm text-[#8A5A2B]/80">
+              <div className="flex items-center justify-between text-sm text-[#8A5A2B]">
                 <span>{t('cart.subtotal')}</span>
                 <span className="font-display text-xl text-[#8A5A2B]">
                   {formatPrice(cart.subtotal)}
                 </span>
               </div>
-              <p className="mt-1 text-xs text-[#8A5A2B]/70">
+              <p className="mt-1 text-xs text-[#8A5A2B]">
                 {t('cart.shipping')}: {t('cart.shippingCalculated')}
               </p>
               <Link
@@ -137,7 +137,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <button
                 type="button"
                 onClick={cart.close}
-                className="mt-3 w-full text-center text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70 transition-colors hover:text-[#8A5A2B]"
+                className="mt-3 w-full text-center text-xs font-semibold uppercase tracking-widest text-[#8A5A2B] transition-colors hover:text-[#8A5A2B]"
               >
                 {t('cart.continueShopping')}
               </button>

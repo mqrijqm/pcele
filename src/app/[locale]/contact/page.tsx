@@ -52,7 +52,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         <div className="container relative z-10">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             <div className="reveal-left">
-              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
                 {t('contact.sendMessage')}
               </p>
               <h2 className="mb-8 font-display text-display-sm text-[#8A5A2B]">
@@ -63,7 +63,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
             <div className="reveal-right space-y-6 bg-[#8A5A2B]/[0.06] p-7 sm:p-9 rounded-[1.75rem]">
               <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70">
+                <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
                   {t('contact.information')}
                 </p>
                 <h2 className="font-display text-2xl text-[#8A5A2B]">{t('contact.info.title')}</h2>
@@ -77,7 +77,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                       <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#8A5A2B]" />
                       <div>
                         <h3 className="text-sm font-medium text-[#8A5A2B]">{title}</h3>
-                        <p className="mt-0.5 text-sm text-[#8A5A2B]/80">{value}</p>
+                        <p className="mt-0.5 text-sm text-[#8A5A2B]">{value}</p>
                       </div>
                     </div>
                   ))}
@@ -85,7 +85,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               </div>
 
               <div>
-                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]">
                   {t('contact.ourLocation')}
                 </p>
                 <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
@@ -97,7 +97,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                     className="object-cover saturate-[0.82]"
                   />
                 </div>
-                <p className="mt-4 text-sm text-[#8A5A2B]/80">{t('contact.locationDescription')}</p>
+                <p className="mt-4 text-sm text-[#8A5A2B]">{t('contact.locationDescription')}</p>
               </div>
 
               <div className="aspect-video overflow-hidden border border-[#8A5A2B]/15 rounded-[2rem]">

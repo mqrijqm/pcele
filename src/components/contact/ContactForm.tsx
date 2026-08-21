@@ -6,9 +6,9 @@ import { useState } from 'react';
 import { createTranslator, type Locale } from '@/i18n/config';
 
 const fieldClass =
-  'w-full rounded-[1.1rem] border border-[#8A5A2B]/15 bg-[#FFF7E6] px-4 py-3 text-base text-[#8A5A2B] transition-colors duration-200 placeholder:text-[#8A5A2B]/55 hover:border-[#8A5A2B]/40 focus:border-[#C89B3C] focus:outline-none focus:ring-1 focus:ring-[#C89B3C]/30 disabled:cursor-not-allowed disabled:opacity-50';
+  'w-full rounded-[1.1rem] border border-[#8A5A2B]/15 bg-[#FFF7E6] px-4 py-3 text-base text-[#8A5A2B] transition-colors duration-200 placeholder:text-[#8A5A2B] hover:border-[#8A5A2B]/40 focus:border-[#C89B3C] focus:outline-none focus:ring-1 focus:ring-[#C89B3C]/30 disabled:cursor-not-allowed disabled:opacity-50';
 
-const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]/70';
+const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-[#8A5A2B]';
 
 export default function ContactForm({ locale }: { locale: Locale }) {
   const t = createTranslator(locale);
@@ -40,7 +40,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
     return (
       <div className="border border-[#8A5A2B]/15 bg-[#FFF7E6] p-8 rounded-[1.5rem]">
         <p className="font-display text-2xl text-[#8A5A2B]">{t('contact.form.success')}</p>
-        <p className="mt-3 text-sm text-[#8A5A2B]/80">{t('contact.willReply')}</p>
+        <p className="mt-3 text-sm text-[#8A5A2B]">{t('contact.willReply')}</p>
       </div>
     );
   }

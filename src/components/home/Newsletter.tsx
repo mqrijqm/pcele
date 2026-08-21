@@ -36,7 +36,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             <h2 className="reveal max-w-[18ch] font-display text-4xl font-medium leading-[1.06] tracking-[-0.045em] text-[#8A5A2B] sm:text-5xl">
               {copy.heading}
             </h2>
-            <p className="reveal stagger-1 mt-6 max-w-xl text-base leading-7 text-[#8A5A2B]/75">
+            <p className="reveal stagger-1 mt-6 max-w-xl text-base leading-7 text-[#8A5A2B]">
               {copy.description}
             </p>
 
@@ -50,7 +50,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
               </Link>
               <Link
                 href={localeHref(locale, '/contact')}
-                className="inline-flex min-h-12 items-center gap-2 border-b border-[#8A5A2B]/25 pb-1 text-sm font-semibold text-[#8A5A2B]/75 transition-colors duration-300 hover:border-[#8A5A2B] hover:text-[#8A5A2B]"
+                className="inline-flex min-h-12 items-center gap-2 border-b border-[#8A5A2B]/25 pb-1 text-sm font-semibold text-[#8A5A2B] transition-colors duration-300 hover:border-[#8A5A2B] hover:text-[#8A5A2B]"
               >
                 {copy.ctaContact}
               </Link>
@@ -66,7 +66,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
                   disabled={status !== 'idle'}
                   placeholder={copy.placeholder}
                   aria-label={copy.placeholder}
-                  className="min-h-12 flex-1 rounded-full border-0 bg-transparent px-5 py-3 text-[#8A5A2B] placeholder:text-[#8A5A2B]/60 focus:outline-none disabled:opacity-60"
+                  className="min-h-12 flex-1 rounded-full border-0 bg-transparent px-5 py-3 text-[#8A5A2B] placeholder:text-[#8A5A2B] focus:outline-none disabled:opacity-60"
                 />
                 <button
                   type="submit"
@@ -77,7 +77,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
                 </button>
               </div>
               {status === 'done' && (
-                <p className="mt-3 text-sm text-[#8A5A2B]/75" role="status">
+                <p className="mt-3 text-sm text-[#8A5A2B]" role="status">
                   {copy.success}
                 </p>
               )}

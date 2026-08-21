@@ -22,7 +22,7 @@ export default function Faq({ locale }: { locale: Locale }) {
             <h2 className="font-display text-4xl font-medium leading-[1.06] tracking-[-0.04em] text-[#8A5A2B] sm:text-5xl">
               {copy.heading}
             </h2>
-            <p className="mt-8 max-w-sm border-t border-[#8A5A2B]/20 pt-6 text-sm leading-7 text-[#8A5A2B]/80">
+            <p className="mt-8 max-w-sm border-t border-[#8A5A2B]/20 pt-6 text-sm leading-7 text-[#8A5A2B]">
               {copy.intro}
             </p>
           </div>
@@ -42,7 +42,7 @@ export default function Faq({ locale }: { locale: Locale }) {
                       <span className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-honey-700">
                         {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-display text-xl font-medium leading-tight text-[#8A5A2B] transition-colors group-hover:text-[#8A5A2B]/70 lg:text-2xl">
+                      <span className="font-display text-xl font-medium leading-tight text-[#8A5A2B] transition-colors group-hover:text-[#8A5A2B] lg:text-2xl">
                         {item.question}
                       </span>
                     </span>
@@ -56,7 +56,7 @@ export default function Faq({ locale }: { locale: Locale }) {
                     className="overflow-hidden transition-all duration-300 ease-out"
                     style={{ maxHeight: isOpen ? 220 : 0, opacity: isOpen ? 1 : 0 }}
                   >
-                    <p className="max-w-2xl pb-8 pl-10 text-base leading-relaxed text-[#8A5A2B]/80 sm:pl-[4.25rem]">
+                    <p className="max-w-2xl pb-8 pl-10 text-base leading-relaxed text-[#8A5A2B] sm:pl-[4.25rem]">
                       {item.answer}
                     </p>
                   </div>

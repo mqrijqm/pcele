@@ -54,7 +54,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
                 <p className="mt-3 font-display text-2xl leading-tight text-[#8A5A2B]">
                   {feature.title}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#8A5A2B]/75">{feature.desc}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#8A5A2B]">{feature.desc}</p>
               </div>
             ))}
           </div>

@@ -21,7 +21,7 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
           />
           <div className="absolute inset-0 bg-[#8A5A2B]/[0.08]" />
           <div className="absolute bottom-6 left-6 rounded-full bg-[#8A5A2B]/85 px-6 py-3.5 text-[#FFF7E6] backdrop-blur-sm sm:bottom-8 sm:left-8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#C89B3C]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#FFF7E6]">
               {copy.imageCaption}
             </p>
           </div>
@@ -34,13 +34,13 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
           <h2 className="mt-5 font-display text-4xl font-medium leading-[1.06] tracking-[-0.04em] sm:text-5xl">
             {copy.heading}
           </h2>
-          <p className="mt-7 text-base leading-7 text-[#8A5A2B]/75">{copy.description}</p>
+          <p className="mt-7 text-base leading-7 text-[#8A5A2B]">{copy.description}</p>
 
           <div className="mt-9 grid grid-cols-2 border-y border-[#8A5A2B]/15">
             {copy.steps.map((step, index) => (
               <div
                 key={step}
-                className="border-b border-r border-[#8A5A2B]/15 px-3 py-4 text-xs leading-5 text-[#8A5A2B]/75 odd:pl-0 even:border-r-0 [&:nth-child(n+3)]:border-b-0"
+                className="border-b border-r border-[#8A5A2B]/15 px-3 py-4 text-xs leading-5 text-[#8A5A2B] odd:pl-0 even:border-r-0 [&:nth-child(n+3)]:border-b-0"
               >
                 <span className="mr-2 text-[9px] font-bold tracking-[0.15em] text-[#8A5A2B]">
                   {String(index + 1).padStart(2, '0')}

@@ -76,7 +76,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
                       <span className="inline-block rounded-full bg-[#FFF7E6]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#8A5A2B]">
                         {item.name}
                       </span>
-                      <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#8A5A2B]/75">
+                      <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#8A5A2B]">
                         {item.note}
                       </p>
                     </div>
@@ -96,7 +96,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
                       <span className="inline-block rounded-full bg-[#FFF7E6]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#8A5A2B]">
                         {item.name}
                       </span>
-                      <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#8A5A2B]/75">
+                      <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#8A5A2B]">
                         {item.note}
                       </p>
                     </div>

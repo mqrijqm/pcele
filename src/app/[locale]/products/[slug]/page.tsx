@@ -78,19 +78,19 @@ export default async function ProductPage({
 
       <div className="border-b border-[#8A5A2B]/15">
         <div className="container py-4">
-          <nav className="flex items-center gap-2 text-xs text-[#8A5A2B]/70">
-            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#8A5A2B]/70">
+          <nav className="flex items-center gap-2 text-xs text-[#8A5A2B]">
+            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#8A5A2B]">
               {t('nav.home')}
             </Link>
             <ChevronRight className="h-3 w-3" />
             <Link
               href={localeHref(locale, '/products')}
-              className="transition-colors hover:text-[#8A5A2B]/70"
+              className="transition-colors hover:text-[#8A5A2B]"
             >
               {t('products.breadcrumb')}
             </Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-[#8A5A2B]/80">{product.name[locale]}</span>
+            <span className="text-[#8A5A2B]">{product.name[locale]}</span>
           </nav>
         </div>
       </div>
@@ -134,7 +134,7 @@ export default async function ProductPage({
                         {formatPrice(item.variants[0].price)}
                       </span>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-[#8A5A2B]/70">
+                    <p className="mt-2 line-clamp-2 text-sm text-[#8A5A2B]">
                       {truncate(item.description[locale])}
                     </p>
                   </div>

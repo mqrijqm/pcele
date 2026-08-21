@@ -91,7 +91,13 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   return (
-    <html lang={locale} className={`${dmSans.variable} ${newsreader.variable}`}>
+    <html
+      lang={locale}
+      className={`${dmSans.variable} ${newsreader.variable}`}
+      // The inline script below adds `js-reveal` before React hydrates, so the
+      // server and client markup differ on this element by design.
+      suppressHydrationWarning
+    >
       <head>
         {/* Enable the scroll-reveal hidden state only when JS can actually reveal it. */}
         <script

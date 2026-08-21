@@ -58,7 +58,7 @@ export default function Header({ locale }: { locale: Locale }) {
               <Link
                 key={item.href}
                 href={localeHref(locale, item.href)}
-                className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#8A5A2B]/75 transition-colors hover:text-[#8A5A2B]"
+                className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#8A5A2B] transition-colors hover:text-[#8A5A2B]"
               >
                 {t(item.key)}
               </Link>
@@ -74,12 +74,18 @@ export default function Header({ locale }: { locale: Locale }) {
                       href={`/${code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`}
                       aria-label={`Switch to ${code.toUpperCase()}`}
                       className={`text-xs font-medium uppercase tracking-wider transition-colors ${
-                        code === locale ? 'text-[#8A5A2B] font-bold' : 'text-[#8A5A2B]/45 hover:text-[#8A5A2B]'
+                        code === locale
+                          ? 'font-bold text-[#8A5A2B] underline decoration-[#C89B3C] decoration-2 underline-offset-4'
+                          : 'text-[#8A5A2B] hover:underline hover:decoration-[#C89B3C] hover:decoration-2 hover:underline-offset-4'
                       }`}
                     >
                       {code}
                     </Link>
-                    {index === 0 && <span className="mx-1 text-[#8A5A2B]/25">/</span>}
+                    {index === 0 && (
+                      <span aria-hidden="true" className="mx-1 text-[#8A5A2B]/40">
+                        /
+                      </span>
+                    )}
                   </span>
                 ))}
               </div>
@@ -87,7 +93,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
             <Link
               href={localeHref(locale, '/account')}
-              className="hidden text-xs font-semibold text-[#8A5A2B]/75 transition-colors hover:text-[#8A5A2B] xl:block"
+              className="hidden text-xs font-semibold text-[#8A5A2B] transition-colors hover:text-[#8A5A2B] xl:block"
             >
               {t('nav.account')}
             </Link>

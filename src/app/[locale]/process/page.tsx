@@ -81,7 +81,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                     <h3 className="mt-4 font-display text-4xl font-medium leading-[1.05] text-[#8A5A2B]">
                       {step.title}
                     </h3>
-                    <p className="mt-5 max-w-lg text-base leading-7 text-[#8A5A2B]/75">{step.desc}</p>
+                    <p className="mt-5 max-w-lg text-base leading-7 text-[#8A5A2B]">{step.desc}</p>
                   </div>
                 </article>
               );

@@ -8,7 +8,7 @@ export default function NotFound() {
         <h1 className="mt-5 font-display text-5xl font-medium text-[#8A5A2B]">
           Stranica nije pronađena
         </h1>
-        <p className="mt-4 text-base text-[#8A5A2B]/80">
+        <p className="mt-4 text-base text-[#8A5A2B]">
           Stranica koju tražite ne postoji. / The page you are looking for does not exist.
         </p>
         <Link
