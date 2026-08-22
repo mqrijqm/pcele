@@ -46,7 +46,7 @@ export default function PostCard({
             </span>
           </div>
           <h3
-            className={`mt-3 font-display text-[#73552E] ${
+            className={`mt-3 text-[#73552E] ${
               featured ? 'text-3xl sm:text-4xl' : 'text-2xl'
             }`}
           >

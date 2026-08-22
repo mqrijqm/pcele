@@ -71,7 +71,7 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="bg-[#73552E]/[0.06] pt-24">
+    <div className="bg-[#73552E]/[0.06] header-offset">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -107,7 +107,7 @@ export default async function ProductPage({
       />
 
       <div className="border-t border-[#73552E]/15 bg-linen">
-        <div className="container py-20 lg:py-28">
+        <div className="container section-padding">
           <div className="reveal mb-12 text-center">
             <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#73552E]">
               {t('products.related.eyebrow')}
@@ -117,7 +117,7 @@ export default async function ProductPage({
             </h2>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item, index) => (
               <Link
                 key={item.slug}
@@ -136,7 +136,7 @@ export default async function ProductPage({
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="font-display text-xl text-[#73552E] transition-colors duration-300 group-hover:text-honey-600">
+                      <h3 className="text-xl text-[#73552E] transition-colors duration-300 group-hover:text-honey-600">
                         {item.name[locale]}
                       </h3>
                       <span className="shrink-0 text-base font-semibold text-[#73552E]">

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
-import { DM_Sans, Newsreader } from 'next/font/google';
+import { Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 import '../globals.css';
 
 import { isLocale, locales, type Locale } from '@/i18n/config';
@@ -13,15 +14,25 @@ import CartDrawer from '@/components/layout/CartDrawer';
 import CookieConsent from '@/components/layout/CookieConsent';
 import RevealObserver from '@/components/ui/RevealObserver';
 
-const dmSans = DM_Sans({
+// Sans nosi sve sitno: navigaciju, tekst, dugmad, cene.
+const inter = Inter({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-dm-sans',
+  variable: '--font-sans',
   display: 'swap',
 });
 
-const newsreader = Newsreader({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-newsreader',
+// Gazpacho je brend serif. Cuva se za krupnu tipografiju — naslove sekcija,
+// wordmark i citate. Browser skida samo one rezove koje stranica stvarno koristi.
+const gazpacho = localFont({
+  src: [
+    { path: '../../fonts/Gazpacho-Light.woff2', weight: '300', style: 'normal' },
+    { path: '../../fonts/Gazpacho-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../fonts/Gazpacho-Italic.woff2', weight: '400', style: 'italic' },
+    { path: '../../fonts/Gazpacho-Medium.woff2', weight: '500', style: 'normal' },
+    { path: '../../fonts/Gazpacho-Bold.woff2', weight: '700', style: 'normal' },
+    { path: '../../fonts/Gazpacho-Black.woff2', weight: '900', style: 'normal' },
+  ],
+  variable: '--font-gazpacho',
   display: 'swap',
 });
 
@@ -70,8 +81,12 @@ export async function generateMetadata({
     },
     twitter: { card: 'summary_large_image' },
     icons: {
-      icon: [{ url: '/images/icons/brand-mark.png', sizes: '32x32', type: 'image/png' }],
-      apple: [{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' }],
+      icon: [
+        { url: '/images/icons/brand-mark-16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/images/icons/brand-mark-32.png', sizes: '32x32', type: 'image/png' },
+        { url: '/images/icons/brand-mark-48.png', sizes: '48x48', type: 'image/png' },
+      ],
+      apple: [{ url: '/images/icons/brand-mark-180.png', sizes: '180x180', type: 'image/png' }],
     },
   };
 }
@@ -93,7 +108,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${dmSans.variable} ${newsreader.variable}`}
+      className={`${inter.variable} ${gazpacho.variable}`}
       // The inline script below adds `js-reveal` before React hydrates, so the
       // server and client markup differ on this element by design.
       suppressHydrationWarning

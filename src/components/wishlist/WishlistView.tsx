@@ -14,7 +14,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
   const items = wishlist.slugs.map(getProduct).filter((p) => p !== undefined);
 
   return (
-    <div className="bg-ivory pt-24">
+    <div className="bg-ivory header-offset">
       <section className="section-padding">
         <div className="container">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
@@ -27,7 +27,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
           {items.length === 0 ? (
             <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[#FDF9DC] px-6 py-20 text-center rounded-[1.5rem]">
               <Heart className="h-14 w-14 text-[#73552E]/25" />
-              <p className="mt-5 font-display text-2xl text-[#73552E]">{t('wishlist.empty')}</p>
+              <p className="mt-5 text-2xl text-[#73552E]">{t('wishlist.empty')}</p>
               <p className="mt-2 max-w-sm text-sm text-[#73552E]">{t('wishlist.emptyMessage')}</p>
               <Link
                 href={localeHref(locale, '/products')}
@@ -37,7 +37,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
               </Link>
             </div>
           ) : (
-            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
+            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
               {items.map((product) => (
                 <div key={product.slug} className="relative">
                   <button
@@ -66,7 +66,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                     </div>
                     <div className="border-b border-[#73552E]/15 px-1 py-6">
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="font-display text-2xl leading-tight text-[#73552E]">
+                        <h3 className="text-2xl leading-tight text-[#73552E]">
                           {product.name[locale]}
                         </h3>
                         <p className="shrink-0 text-sm font-semibold text-honey-700">

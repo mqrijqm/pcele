@@ -35,7 +35,7 @@ export default function PageHero({
 }: Props) {
   return (
     <section
-      className="relative overflow-hidden pb-20 pt-24 lg:pb-28"
+      className="relative overflow-hidden header-offset pb-24 lg:pb-36"
       style={{ backgroundColor: background }}
     >
       <div className="mx-auto max-w-[1440px] px-5 pt-8 sm:px-8 lg:px-12 lg:pt-12">

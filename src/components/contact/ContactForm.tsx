@@ -39,7 +39,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
   if (status === 'sent') {
     return (
       <div className="border border-[#73552E]/15 bg-[#FDF9DC] p-8 rounded-[1.5rem]">
-        <p className="font-display text-2xl text-[#73552E]">{t('contact.form.success')}</p>
+        <p className="text-2xl text-[#73552E]">{t('contact.form.success')}</p>
         <p className="mt-3 text-sm text-[#73552E]">{t('contact.willReply')}</p>
       </div>
     );

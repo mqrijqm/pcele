@@ -36,8 +36,26 @@
   --radius-pill: 999px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --section-padding: clamp(5rem, 10vw, 8rem);
-  --container-padding: clamp(1.25rem, 5vw, 4rem);
+
+  /* Vazduh. Sekcije disu — ovo je glavna poluga za ritam celog sajta. */
+  --section-padding: clamp(7rem, 14vw, 13rem);
+  --section-padding-sm: clamp(4.5rem, 9vw, 8rem);
+  --container-padding: clamp(1.5rem, 6vw, 5rem);
+
+  /* Razmak izmedju naslova i onoga sto ide ispod njega. */
+  --stack-gap: clamp(1.5rem, 3vw, 2.75rem);
+
+  /*
+   * Visina fiksnog headera. Drzi se na jednom mestu jer je stranice koriste
+   * kao gornji razmak — da im sadrzaj ne zavuce ispod menija.
+   */
+  --header-h: 7rem;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 8.5rem;
+  }
 }
 
 * {
@@ -53,8 +71,8 @@ html {
 body {
   background-color: var(--color-ivory);
   color: var(--color-walnut);
-  font-family: var(--font-dm-sans), system-ui, sans-serif;
-  line-height: 1.7;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -99,17 +117,37 @@ body::before {
   background: var(--color-honey);
 }
 
+/*
+ * Naslovi po defaultu idu u sans. Gazpacho se NE dodeljuje automatski —
+ * dodaje se rucno klasom `font-display`, i to samo na krupnu tipografiju.
+ * Tako serif ostaje redak, pa i jak kad se pojavi.
+ */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-newsreader), Georgia, serif;
-  font-weight: 500;
-  line-height: 1.15;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.011em;
   color: var(--color-espresso);
   text-wrap: balance;
+}
+
+/*
+ * Gazpacho ukljucen. Na krupnim velicinama serif trazi tesnji razmak izmedju
+ * redova i slova nego sto bi mu default dao. Stoji u `base` sloju namerno:
+ * ovo su samo polazne vrednosti, svaka Tailwind klasa pored njega ih nadjaca.
+ */
+@layer base {
+  .font-display {
+    font-weight: 400;
+    letter-spacing: -0.028em;
+    line-height: 1.02;
+    text-wrap: balance;
+    font-feature-settings: 'liga' 1, 'kern' 1;
+  }
 }
 
 a {
@@ -141,6 +179,24 @@ p {
 .section-padding {
   padding-top: var(--section-padding);
   padding-bottom: var(--section-padding);
+}
+
+.header-offset {
+  padding-top: var(--header-h);
+}
+
+/* Za sekcije koje se naslanjaju jedna na drugu pa bi pun razmak bio previse. */
+.section-padding-sm {
+  padding-top: var(--section-padding-sm);
+  padding-bottom: var(--section-padding-sm);
+}
+
+/*
+ * Uzi stubac za tekst. Red duzi od ~62 znaka se tesko prati,
+ * a na sirokom ekranu bez ovoga se razvuce preko cele sirine.
+ */
+.measure {
+  max-width: 62ch;
 }
 
 .eyebrow {

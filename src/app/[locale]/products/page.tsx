@@ -34,7 +34,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         cardSide="left"
       />
 
-      <section className="bg-ivory py-16 lg:py-24">
+      <section className="bg-ivory section-padding">
         <div className="container">
           <ProductsGrid locale={locale} />
         </div>
@@ -51,7 +51,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
                 <span className="text-[10px] font-bold tracking-[0.18em] text-[#FDF9DC]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-3 font-display text-2xl leading-tight text-[#73552E]">
+                <p className="mt-3 text-2xl leading-tight text-[#73552E]">
                   {feature.title}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-[#73552E]">{feature.desc}</p>

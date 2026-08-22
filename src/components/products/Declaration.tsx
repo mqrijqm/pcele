@@ -26,14 +26,14 @@ export default function Declaration({
 
   return (
     <section className="border-t border-[#73552E]/15 bg-[#FDF9DC]">
-      <div className="container py-14 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-16">
+      <div className="container section-padding-sm">
+        <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
           <div>
             <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#73552E]">
               <span aria-hidden="true" className="h-px w-8 bg-[#C79A3B]" />
               {copy.eyebrow}
             </p>
-            <h2 className="mt-5 font-display text-3xl font-medium tracking-[-0.03em] text-[#73552E] sm:text-4xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.heading}
             </h2>
 

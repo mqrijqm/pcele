@@ -25,15 +25,15 @@ export default function Newsletter({ locale }: { locale: Locale }) {
     status === 'sending' ? copy.sending : status === 'done' ? copy.joined : copy.join;
 
   return (
-    <section className="relative overflow-hidden bg-[#73552E]/[0.06] py-20 text-[#73552E] lg:py-28">
+    <section className="relative overflow-hidden bg-[#73552E]/[0.06] section-padding text-[#73552E]">
       <div className="container">
-        <div className="grid items-center gap-12 lg:grid-cols-[0.64fr_0.36fr] lg:gap-16">
+        <div className="grid items-center gap-16 lg:grid-cols-[0.64fr_0.36fr] lg:gap-20">
           <div>
             <span className="reveal mb-5 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#73552E]">
               <span className="h-px w-9 bg-[#C79A3B]" aria-hidden="true" />
               {copy.eyebrow}
             </span>
-            <h2 className="reveal max-w-[18ch] font-display text-4xl font-medium leading-[1.06] tracking-[-0.045em] text-[#73552E] sm:text-5xl">
+            <h2 className="reveal max-w-[18ch] font-display text-display-md font-normal text-[#73552E]">
               {copy.heading}
             </h2>
             <p className="reveal stagger-1 mt-6 max-w-xl text-base leading-7 text-[#73552E]">

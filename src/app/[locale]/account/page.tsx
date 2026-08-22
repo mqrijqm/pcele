@@ -28,7 +28,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
   ];
 
   return (
-    <div className="bg-ivory pt-24">
+    <div className="bg-ivory header-offset">
       <section className="section-padding">
         <div className="container max-w-3xl">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
@@ -40,7 +40,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
           <p className="mt-5 text-base leading-7 text-[#73552E]">{t('account.subtitle')}</p>
 
           <div className="mt-10 border border-[#73552E]/15 bg-[#FDF9DC] p-8 rounded-[1.5rem]">
-            <p className="font-display text-2xl text-[#73552E]">{t('account.signInPrompt')}</p>
+            <p className="text-2xl text-[#73552E]">{t('account.signInPrompt')}</p>
             <p className="mt-3 text-sm text-[#73552E]">{t('account.guestCheckoutNote')}</p>
             <div className="mt-7 flex flex-wrap gap-4">
               <Link
@@ -62,7 +62,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
             {shortcuts.map(({ Icon, label, note }) => (
               <div key={label} className="rounded-[1.5rem] bg-[#73552E]/[0.06] p-6">
                 <Icon className="h-5 w-5 text-[#73552E]" />
-                <p className="mt-4 font-display text-xl text-[#73552E]">{label}</p>
+                <p className="mt-4 text-xl text-[#73552E]">{label}</p>
                 <p className="mt-2 text-xs leading-5 text-[#73552E]">{note}</p>
               </div>
             ))}

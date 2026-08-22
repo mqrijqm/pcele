@@ -9,14 +9,14 @@ export default function Testimonials({ locale }: { locale: Locale }) {
   const [featured, ...rest] = copy.quotes;
 
   return (
-    <section className="relative overflow-hidden bg-[#FDF9DC] py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-[#FDF9DC] section-padding">
       <div className="container">
-        <div className="grid gap-12 lg:grid-cols-[0.34fr_0.66fr] lg:gap-16">
+        <div className="grid gap-16 lg:grid-cols-[0.34fr_0.66fr] lg:gap-20">
           <div className="reveal lg:sticky lg:top-28 lg:self-start">
             <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-honey-700">
               {copy.eyebrow}
             </span>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.06] tracking-[-0.04em] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.heading}
             </h2>
             <div className="mt-7 flex items-center gap-3">
@@ -30,7 +30,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <figure className="reveal relative overflow-hidden bg-[#73552E] p-7 text-[#FDF9DC] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-10 rounded-[2rem]">
+            <figure className="reveal relative overflow-hidden bg-[#73552E] p-7 text-[#FDF9DC] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-14 rounded-[2rem]">
               <div className="relative min-h-[280px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[390px] rounded-[2rem]">
                 <Image
                   src="/images/real/kosnice-prikolica.webp"
@@ -59,7 +59,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 key={quote.author}
                 className={`reveal stagger-${index + 1} border-t border-[#73552E]/15 px-1 py-7 sm:p-7`}
               >
-                <blockquote className="font-display text-xl font-medium leading-snug text-[#73552E] lg:text-2xl">
+                <blockquote className="text-xl font-semibold leading-snug text-[#73552E] lg:text-2xl">
                   &ldquo;{quote.text}&rdquo;
                 </blockquote>
                 <figcaption className="mt-7 text-xs">

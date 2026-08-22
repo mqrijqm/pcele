@@ -38,16 +38,27 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['var(--font-newsreader)', 'Georgia', 'serif'],
-        body: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        // Gazpacho — samo krupna tipografija. Vidi pravilo u globals.css.
+        display: ['var(--font-gazpacho)', 'Georgia', 'serif'],
+        body: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        'display-sm': ['1.875rem', { lineHeight: '1.2' }],
-        'display-md': ['2.5rem', { lineHeight: '1.15', letterSpacing: '0' }],
-        'display-lg': ['3.5rem', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        // Display skala je fluidna — raste sa sirinom ekrana, bez skokova.
+        'display-sm': ['clamp(1.75rem, 3vw, 2.25rem)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
+        'display-md': ['clamp(2.25rem, 5vw, 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+        'display-lg': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '0.98', letterSpacing: '-0.035em' }],
+        'display-xl': ['clamp(3.5rem, 12vw, 9.5rem)', { lineHeight: '0.92', letterSpacing: '-0.045em' }],
       },
       spacing: {
         13: '3.25rem',
+        // Vertikalni ritam sekcija — namerno velik.
+        section: 'clamp(7rem, 14vw, 13rem)',
+        'section-sm': 'clamp(4.5rem, 9vw, 8rem)',
+        gutter: 'clamp(1.5rem, 5vw, 5rem)',
+      },
+      maxWidth: {
+        measure: '62ch',
       },
       borderRadius: {
         soft: '1.25rem',

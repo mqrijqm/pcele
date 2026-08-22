@@ -47,7 +47,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
               <span className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <h2 className="mt-2 font-display text-2xl font-medium text-[#73552E]">
+              <h2 className="mt-2 text-2xl font-semibold text-[#73552E]">
                 {feature.title}
               </h2>
               <p className="mt-2 max-w-sm text-sm leading-6 text-[#73552E]">{feature.desc}</p>
@@ -56,13 +56,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="overflow-hidden bg-[#FDF9DC] py-24 lg:py-32">
-        <div className="container grid gap-14 lg:grid-cols-[0.38fr_0.62fr] lg:gap-20">
+      <section className="overflow-hidden bg-[#FDF9DC] section-padding">
+        <div className="container grid gap-20 lg:grid-cols-[0.38fr_0.62fr] lg:gap-24">
           <div className="lg:pt-12">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.tradition.eyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.tradition.heading}
             </h2>
             <div className="mt-7 space-y-5 text-base leading-7 text-[#73552E]">
@@ -95,13 +95,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-[#73552E]/[0.06] py-24 lg:py-32">
-        <div className="container grid gap-12 lg:grid-cols-[0.34fr_0.66fr] lg:gap-20">
+      <section className="bg-[#73552E]/[0.06] section-padding">
+        <div className="container grid gap-16 lg:grid-cols-[0.34fr_0.66fr] lg:gap-24">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.journey.eyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.journey.heading}
             </h2>
           </div>
@@ -113,7 +113,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 className="grid gap-4 border-b border-[#73552E]/20 py-7 sm:grid-cols-[5rem_0.38fr_0.62fr] sm:gap-6"
               >
                 <p className="font-display text-2xl italic text-[#73552E]">{entry.year}</p>
-                <h3 className="font-display text-2xl font-medium text-[#73552E]">{entry.title}</h3>
+                <h3 className="text-2xl font-semibold text-[#73552E]">{entry.title}</h3>
                 <p className="text-sm leading-6 text-[#73552E]">{entry.desc}</p>
               </article>
             ))}
@@ -121,13 +121,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-[#FDF9DC] py-24 lg:py-32">
+      <section className="bg-[#FDF9DC] section-padding">
         <div className="container">
           <div className="max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.values.eyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.values.heading}
             </h2>
           </div>
@@ -141,7 +141,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 <span className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <h3 className="mt-3 font-display text-3xl font-medium text-[#73552E]">
+                <h3 className="mt-3 text-3xl font-semibold text-[#73552E]">
                   {value.title}
                 </h3>
                 <p className="mt-3 max-w-xl text-sm leading-6 text-[#73552E]">{value.desc}</p>
@@ -165,7 +165,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.location.eyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.location.heading}
             </h2>
             <p className="mt-6 text-base leading-7 text-[#73552E]">{copy.location.description}</p>

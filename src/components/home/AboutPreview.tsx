@@ -27,11 +27,11 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center rounded-[2.25rem] bg-[#FDF9DC] px-6 py-16 sm:px-10 lg:px-14 lg:py-20">
+        <div className="flex flex-col justify-center rounded-[2.25rem] bg-[#FDF9DC] px-6 py-20 lg:py-28 sm:px-10 lg:px-14 lg:py-20">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
             {copy.eyebrow}
           </p>
-          <h2 className="mt-5 font-display text-4xl font-medium leading-[1.06] tracking-[-0.04em] sm:text-5xl">
+          <h2 className="mt-8 font-display text-display-md font-normal">
             {copy.heading}
           </h2>
           <p className="mt-7 text-base leading-7 text-[#73552E]">{copy.description}</p>

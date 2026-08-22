@@ -33,7 +33,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   ];
 
   return (
-    <div className="pt-24">
+    <div className="header-offset">
       <PageHero
         eyebrow={copy.eyebrow}
         heading={copy.heading}
@@ -50,7 +50,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
       <section className="section-padding relative overflow-hidden bg-ivory">
         <div className="container relative z-10">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
             <div className="reveal-left">
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                 {t('contact.sendMessage')}
@@ -66,7 +66,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                   {t('contact.information')}
                 </p>
-                <h2 className="font-display text-2xl text-[#73552E]">{t('contact.info.title')}</h2>
+                <h2 className="text-2xl text-[#73552E]">{t('contact.info.title')}</h2>
 
                 <div className="mt-8 border-t border-[#73552E]/18">
                   {details.map(({ Icon, title, value }) => (

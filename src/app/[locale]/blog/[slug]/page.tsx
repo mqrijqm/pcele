@@ -49,8 +49,8 @@ export default async function BlogPostPage({
   const related = posts.filter((p) => p.slug !== post.slug);
 
   return (
-    <div className="pt-24">
-      <section className="relative overflow-hidden border-b border-[#73552E]/15 bg-linen py-16 md:py-20">
+    <div className="header-offset">
+      <section className="relative overflow-hidden border-b border-[#73552E]/15 bg-linen section-padding-sm">
         <div className="container relative z-10">
           <Link
             href={localeHref(locale, '/blog')}
@@ -100,7 +100,7 @@ export default async function BlogPostPage({
               block.t === 'h2' ? (
                 <h2
                   key={index}
-                  className="mb-4 mt-12 font-display text-2xl leading-tight text-[#73552E] first:mt-0"
+                  className="mb-4 mt-12 text-2xl leading-tight text-[#73552E] first:mt-0"
                 >
                   {block.text}
                 </h2>
@@ -114,9 +114,9 @@ export default async function BlogPostPage({
         </div>
       </section>
 
-      <section className="border-t border-[#73552E]/15 bg-linen py-16 lg:py-20">
+      <section className="border-t border-[#73552E]/15 bg-linen section-padding-sm">
         <div className="container">
-          <h2 className="mb-8 font-display text-2xl text-[#73552E]">{t('blog.relatedTitle')}</h2>
+          <h2 className="mb-8 text-2xl text-[#73552E]">{t('blog.relatedTitle')}</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item, index) => (
               <PostCard

@@ -38,13 +38,13 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         cardWidth="lg:w-[40%]"
       />
 
-      <section className="py-24 lg:py-32">
+      <section className="section-padding">
         <div className="container">
           <div className="mb-16 max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.sectionEyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] tracking-[-0.035em] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.sectionHeading}
             </h2>
           </div>
@@ -55,7 +55,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
               return (
                 <article
                   key={step.title}
-                  className="grid items-center gap-8 border-b border-[#73552E]/15 py-10 lg:grid-cols-12 lg:gap-12 lg:py-14"
+                  className="grid items-center gap-10 border-b border-[#73552E]/15 py-14 lg:py-20 lg:grid-cols-12 lg:gap-16 lg:py-14"
                 >
                   <div
                     className={`relative aspect-[4/3] overflow-hidden lg:col-span-6 ${
@@ -78,7 +78,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                     <p className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
                       {String(index + 1).padStart(2, '0')}
                     </p>
-                    <h3 className="mt-4 font-display text-4xl font-medium leading-[1.05] text-[#73552E]">
+                    <h3 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
                       {step.title}
                     </h3>
                     <p className="mt-5 max-w-lg text-base leading-7 text-[#73552E]">{step.desc}</p>
@@ -90,13 +90,13 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
-      <section className="bg-[#73552E]/[0.06] py-20 lg:py-24">
+      <section className="bg-[#73552E]/[0.06] section-padding">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.outroEyebrow}
             </p>
-            <h2 className="mt-5 font-display text-4xl font-medium leading-[1.05] text-[#73552E] sm:text-5xl">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
               {copy.outroHeading}
             </h2>
           </div>

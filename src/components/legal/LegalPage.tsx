@@ -18,7 +18,7 @@ export default function LegalPage({
 }) {
   return (
     <div className="pt-20">
-      <section className="relative overflow-hidden bg-linen py-20 md:py-28">
+      <section className="relative overflow-hidden bg-linen section-padding">
         <div className="container relative z-10 text-center">
           <div className="reveal stagger-1 divider mx-auto mb-6" />
           <span className="reveal stagger-1 mb-4 inline-block text-xs font-medium uppercase tracking-[0.3em] text-[#73552E]">
@@ -43,7 +43,7 @@ export default function LegalPage({
                 id={section.id}
                 className="mb-10 scroll-mt-28 border-b border-[#73552E]/15 pb-10 last:mb-0 last:border-b-0 last:pb-0"
               >
-                <h2 className="font-display text-2xl text-[#73552E]">{section.heading}</h2>
+                <h2 className="text-2xl text-[#73552E]">{section.heading}</h2>
                 <div className="mt-4 space-y-4 text-base leading-relaxed text-[#73552E]">
                   {section.blocks.map((block, index) =>
                     block.t === 'p' ? (

@@ -38,10 +38,36 @@ export default function Header({ locale }: { locale: Locale }) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[#73552E]/14 bg-[#FDF9DC] transition-shadow duration-300">
-        <nav className="mx-auto grid h-24 max-w-[1400px] grid-cols-[auto_1fr_auto] items-center gap-8 px-5 sm:px-8 lg:px-12">
+        <nav className="mx-auto grid h-[var(--header-h)] max-w-[1400px] grid-cols-[1fr_auto_1fr] items-center gap-4 px-5 sm:px-8 lg:gap-10 lg:px-12">
+          {/* Levo: navigacija na desktopu, dugme za meni na telefonu. */}
+          <div className="flex items-center justify-start">
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={menuOpen}
+              className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full bg-[#73552E] text-[#FDF9DC] lg:hidden"
+            >
+              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+
+            <div className="hidden items-center gap-7 lg:flex xl:gap-9">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={localeHref(locale, item.href)}
+                  className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#73552E] transition-colors hover:text-[#C79A3B]"
+                >
+                  {t(item.key)}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Sredina: znak stoji iznad imena, kao pecat na tegli. */}
           <Link
             href={localeHref(locale, '/')}
-            className="relative z-50 inline-flex items-center gap-3 transition-opacity hover:opacity-75"
+            className="relative z-50 flex flex-col items-center leading-none transition-opacity hover:opacity-75"
           >
             <Image
               src="/images/brand/mark.svg"
@@ -50,30 +76,15 @@ export default function Header({ locale }: { locale: Locale }) {
               width={45}
               height={95}
               priority
-              className="h-10 w-auto sm:h-11"
+              className="h-9 w-auto sm:h-11"
             />
-            {/* Wordmark set to match the seal on the jar label. */}
-            <span className="flex flex-col leading-none">
-              <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#73552E]">
-                Pčelarstvo
-              </span>
-              <span className="mt-1 font-display text-xl font-medium tracking-[0.02em] text-[#73552E] sm:text-[1.4rem]">
-                Jevtić
-              </span>
+            <span className="mt-2 text-[8px] font-bold uppercase tracking-[0.26em] text-[#73552E] sm:text-[9px]">
+              Pčelarstvo
+            </span>
+            <span className="mt-1.5 font-display text-[1.35rem] font-medium leading-none tracking-[0.005em] text-[#73552E] sm:text-[1.6rem]">
+              Jevtić
             </span>
           </Link>
-
-          <div className="hidden items-center justify-center gap-7 lg:flex xl:gap-10">
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={localeHref(locale, item.href)}
-                className="relative py-3 text-[13px] font-semibold tracking-[0.01em] text-[#73552E] transition-colors hover:text-[#73552E]"
-              >
-                {t(item.key)}
-              </Link>
-            ))}
-          </div>
 
           <div className="flex items-center justify-end gap-4">
             <div className="hidden sm:block">
@@ -126,15 +137,6 @@ export default function Header({ locale }: { locale: Locale }) {
               {locale === 'sr' ? 'Naruči med' : 'Order honey'}
             </Link>
 
-            <button
-              type="button"
-              onClick={() => setMenuOpen((open) => !open)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
-              className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full bg-[#73552E] text-[#FDF9DC] lg:hidden"
-            >
-              {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
           </div>
         </nav>
       </header>
@@ -156,7 +158,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 key={item.href}
                 href={localeHref(locale, item.href)}
                 style={{ transitionDelay: menuOpen ? `${60 + index * 40}ms` : '0ms' }}
-                className={`border-b border-[#73552E]/12 py-4 font-display text-3xl text-[#73552E] transition-all ${
+                className={`border-b border-[#73552E]/12 py-4 text-3xl text-[#73552E] transition-all ${
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
                 }`}
               >

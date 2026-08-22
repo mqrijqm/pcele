@@ -38,7 +38,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         cardWidth="lg:w-[42%]"
       />
 
-      <section className="bg-ivory py-16 lg:py-24">
+      <section className="bg-ivory section-padding">
         <div className="container">
           <div className="grid gap-x-7 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-9">
             {ordered.map((post, index) => (

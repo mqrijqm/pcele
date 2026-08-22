@@ -11,15 +11,15 @@ export default function Faq({ locale }: { locale: Locale }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="relative overflow-hidden bg-[#73552E]/[0.06] py-24 lg:py-32">
+    <section className="relative overflow-hidden bg-[#73552E]/[0.06] section-padding">
       <div className="container relative z-10">
-        <div className="grid gap-12 lg:grid-cols-[0.36fr_0.64fr] lg:items-start lg:gap-20">
+        <div className="grid gap-16 lg:grid-cols-[0.36fr_0.64fr] lg:items-start lg:gap-24">
           <div className="reveal">
             <span className="mb-5 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-honey-700">
               <span className="h-px w-9 bg-[#C79A3B]" aria-hidden="true" />
               {copy.eyebrow}
             </span>
-            <h2 className="font-display text-4xl font-medium leading-[1.06] tracking-[-0.04em] text-[#73552E] sm:text-5xl">
+            <h2 className="font-display text-display-md font-normal text-[#73552E]">
               {copy.heading}
             </h2>
             <p className="mt-8 max-w-sm border-t border-[#73552E]/20 pt-6 text-sm leading-7 text-[#73552E]">
@@ -42,7 +42,7 @@ export default function Faq({ locale }: { locale: Locale }) {
                       <span className="mt-1 text-[10px] font-semibold tracking-[0.18em] text-honey-700">
                         {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-display text-xl font-medium leading-tight text-[#73552E] transition-colors group-hover:text-[#73552E] lg:text-2xl">
+                      <span className="text-xl font-semibold leading-tight text-[#73552E] transition-colors group-hover:text-[#73552E] lg:text-2xl">
                         {item.question}
                       </span>
                     </span>

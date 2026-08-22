@@ -29,14 +29,14 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
   const copy = home.featured[locale];
 
   return (
-    <section className="bg-[#FDF9DC] py-24 lg:py-32">
+    <section className="bg-[#FDF9DC] section-padding">
       <div className="container">
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.eyebrow}
             </p>
-            <h2 className="mt-4 max-w-[17ch] font-display text-4xl font-medium leading-[1.05] tracking-[-0.04em] text-[#73552E] sm:text-5xl lg:text-[3.6rem]">
+            <h2 className="mt-8 max-w-[17ch] font-display text-display-md font-normal text-[#73552E] lg:text-[3.6rem]">
               {copy.heading}
             </h2>
           </div>

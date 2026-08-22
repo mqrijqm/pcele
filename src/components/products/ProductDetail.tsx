@@ -61,8 +61,8 @@ export default function ProductDetail({ product, locale }: { product: Product; l
 
   return (
     <>
-      <div className="container py-14 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div className="container section-padding-sm">
+        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
             <div className="relative aspect-square overflow-hidden border border-[#73552E]/15 bg-linen rounded-[2rem]">
               <div className="absolute left-4 top-4 z-10">
@@ -96,7 +96,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             </h1>
 
             <div className="mt-6 flex items-baseline gap-3">
-              <p className="font-display text-3xl text-[#73552E]">{formatPrice(variant.price)}</p>
+              <p className="text-3xl text-[#73552E]">{formatPrice(variant.price)}</p>
               <span className="text-sm text-[#73552E]">{t('products.inclVat')}</span>
             </div>
 
@@ -239,11 +239,11 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             ))}
           </div>
 
-          <div className="py-12 lg:py-16">
+          <div className="section-padding-sm">
             {tab === 'description' && (
-              <div className="grid gap-12 lg:grid-cols-2">
+              <div className="grid gap-16 lg:grid-cols-2">
                 <div>
-                  <h3 className="mb-6 font-display text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#73552E]">
                     {t('products.tabs.aboutProduct')}
                   </h3>
                   <div className="space-y-4 leading-relaxed text-[#73552E]">
@@ -252,7 +252,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-6 font-display text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#73552E]">
                     {t('products.tabs.featuresTitle')}
                   </h3>
                   <ul className="space-y-4">
@@ -273,9 +273,9 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             )}
 
             {tab === 'shipping' && (
-              <div className="grid gap-12 lg:grid-cols-2">
+              <div className="grid gap-16 lg:grid-cols-2">
                 <div>
-                  <h3 className="mb-6 font-display text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#73552E]">
                     {t('products.tabs.shippingInfoTitle')}
                   </h3>
                   <p className="leading-relaxed text-[#73552E]">
@@ -303,7 +303,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   </ul>
                 </div>
                 <div>
-                  <h3 className="mb-6 font-display text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#73552E]">
                     {t('products.tabs.returnPolicyTitle')}
                   </h3>
                   <p className="leading-relaxed text-[#73552E]">
@@ -315,7 +315,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
 
             {tab === 'reviews' && (
               <div className="max-w-2xl">
-                <h3 className="mb-4 font-display text-2xl text-[#73552E]">{t('reviews.heading')}</h3>
+                <h3 className="mb-4 text-2xl text-[#73552E]">{t('reviews.heading')}</h3>
                 <p className="text-[#73552E]">{t('reviews.noReviewsYet')}</p>
                 <p className="mt-2 text-sm text-[#73552E]">{t('reviews.beFirst')}</p>
               </div>

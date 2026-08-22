@@ -32,7 +32,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-[#73552E]/15 px-6 py-4">
-            <h2 className="font-display text-xl text-[#73552E]">{t('cart.title')}</h2>
+            <h2 className="text-xl text-[#73552E]">{t('cart.title')}</h2>
             <button
               type="button"
               onClick={cart.close}
@@ -47,7 +47,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
             {cart.items.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
                 <ShoppingBag className="h-16 w-16 text-[#73552E]/25" />
-                <p className="mt-4 font-display text-xl text-[#73552E]">{t('cart.empty')}</p>
+                <p className="mt-4 text-xl text-[#73552E]">{t('cart.empty')}</p>
                 <p className="mt-2 text-sm text-[#73552E]">{t('cart.emptyMessage')}</p>
                 <Link
                   href={localeHref(locale, '/products')}
@@ -67,7 +67,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="font-display text-lg leading-tight text-[#73552E]">
+                          <p className="text-lg leading-tight text-[#73552E]">
                             {item.name}
                           </p>
                           <p className="mt-0.5 text-xs tracking-wider text-[#73552E]">
@@ -120,7 +120,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
             <div className="border-t border-[#73552E]/15 px-6 py-5">
               <div className="flex items-center justify-between text-sm text-[#73552E]">
                 <span>{t('cart.subtotal')}</span>
-                <span className="font-display text-xl text-[#73552E]">
+                <span className="text-xl text-[#73552E]">
                   {formatPrice(cart.subtotal)}
                 </span>
               </div>

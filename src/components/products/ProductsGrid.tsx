@@ -103,8 +103,8 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
       </div>
 
       {visible.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="font-display text-2xl text-[#73552E]">{t('products.grid.noResults')}</p>
+        <div className="py-24 lg:py-32 text-center">
+          <p className="text-2xl text-[#73552E]">{t('products.grid.noResults')}</p>
           <p className="mt-3 text-sm text-[#73552E]">
             {t('products.grid.noResultsMessage', { query })}
           </p>
@@ -120,7 +120,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
           </button>
         </div>
       ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
           {visible.map((product, index) => {
             const saved = wishlist.has(product.slug);
             return (
@@ -163,7 +163,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                     <div className="border-b border-[#73552E]/15 px-1 py-6">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h3 className="flex items-center gap-2 font-display text-2xl leading-tight text-[#73552E]">
+                          <h3 className="flex items-center gap-2 text-2xl leading-tight text-[#73552E]">
                             {product.name[locale]}
                             <ArrowUpRight className="h-4 w-4 text-[#73552E] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                           </h3>
