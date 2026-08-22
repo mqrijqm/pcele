@@ -105,11 +105,8 @@ export default function Header({ locale }: { locale: Locale }) {
             aria-expanded={menuOpen}
             className="flex min-h-11 items-center gap-2 rounded-full px-2 transition-colors hover:text-[#C79A3B] sm:gap-3 sm:px-4"
           >
-            <span
-              aria-hidden="true"
-              className="font-display text-[1.15rem] font-medium leading-none tracking-[0.01em]"
-            >
-              M
+            <span className="font-display text-[1.15rem] font-medium leading-none tracking-[0.01em]">
+              Menu
             </span>
             <span className="menu-glyph" data-open={menuOpen} aria-hidden="true">
               <span />

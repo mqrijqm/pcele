@@ -349,8 +349,14 @@ p {
   left: 100%;
   display: flex;
   align-items: center;
+  /*
+   * Bez ovoga se pilula "stisne": apsolutno pozicioniran element sa left:50%
+   * sme da bude sirok samo do desne ivice, pa bi na telefonu progutao wordmark.
+   */
+  width: max-content;
+  max-width: calc(100vw - 1.5rem);
   border-radius: var(--radius-pill);
-  background: #F1EBD3;
+  background: #FFFFFF;
   transform: translateX(calc(-100% - var(--header-gutter)));
   transition:
     left 0.8s var(--ease-out-expo),
@@ -426,5 +432,27 @@ p {
   .header-pill-logo,
   .menu-glyph span {
     transition-duration: 0.01ms;
+  }
+}
+
+/*
+ * Na telefonu nema mesta za centriran znak i pilulu sa "Menu" u istom redu —
+ * zato tu preskacemo koreografiju: pilula je odmah u sredini, sa znakom u sebi.
+ */
+@media (max-width: 639px) {
+  .header-crest {
+    display: none;
+  }
+
+  .header-pill {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .header-pill-logo {
+    grid-template-columns: 1fr;
+    margin-left: 0.9rem;
+    margin-right: 1.2rem;
+    opacity: 1;
   }
 }
