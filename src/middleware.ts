@@ -16,9 +16,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // `models` mora ovde — inace bi /models/tegla.glb bio preusmeren na
-  // /sr/models/tegla.glb, gde fajla nema, pa 3D scena ostane prazna.
+  // Svaki folder iz `public/` mora ovde — inace bi /hero/jar.png bio
+  // preusmeren na /sr/hero/jar.png, gde fajla nema, pa slika ne bi radila.
   matcher: [
-    '/((?!api|_next|images|icons|models|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next|images|icons|hero|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 };

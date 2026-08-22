@@ -2,8 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { isLocale } from '@/i18n/config';
 import { photoBreaks } from '@/content/pages';
-import JarShowcase from '@/components/home/JarShowcase';
-import Hero from '@/components/home/Hero';
+import HeroJar from '@/components/home/HeroJar';
 import AboutPreview from '@/components/home/AboutPreview';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import Testimonials from '@/components/home/Testimonials';
@@ -19,10 +18,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
-      <Hero locale={locale} />
-      <JarShowcase />
+      <HeroJar locale={locale} />
 
-      {/* Poslije 3D tegle — ista tegla, ali stvarna, u pcelinjaku. */}
+      {/* Poslije heroja — ista tegla, ali stvarna, u pcelinjaku. */}
       <ImageBreak
         images={[{ src: '/images/mockups/jars-row-apiary.webp', alt: shot.homeApiary.alt }]}
         caption={shot.homeApiary.caption}

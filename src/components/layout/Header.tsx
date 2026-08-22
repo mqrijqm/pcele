@@ -43,11 +43,17 @@ export default function Header({ locale }: { locale: Locale }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Dok je meni otvoren pilula ostaje u sredini — logo se tad ne duplira.
-  const docked = scrolled || menuOpen;
-
   // Strip the current locale prefix so the switcher can keep you on the same page.
   const pathWithoutLocale = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '') || '/';
+
+  /*
+   * The home page opens on the jar hero, which puts its own mark on the left
+   * and fills the middle with the headline — there is no room for the standing
+   * crest, and the reference frames show the pill already centred. So home
+   * starts docked; every other page keeps the choreography.
+   */
+  const isHome = pathWithoutLocale === '/';
+  const docked = scrolled || menuOpen || isHome;
 
   return (
     <>

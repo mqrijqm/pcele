@@ -34,3 +34,15 @@ yarn-error.log*
 
 .vercel
 .env*
+
+# Recon capture output — the scripts and findings are tracked, the frames are not.
+recon/profile/
+recon/video/
+recon/load/
+recon/mobile/
+recon/scroll/
+recon/js/
+recon/preloader/
+recon/findings.json
+recon/state-*.png
+recon/cmp-*.png

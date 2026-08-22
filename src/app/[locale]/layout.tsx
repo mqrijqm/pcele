@@ -9,6 +9,8 @@ import { meta } from '@/content/pages';
 import { CartProvider } from '@/lib/cart';
 import { WishlistProvider } from '@/lib/wishlist';
 import Header from '@/components/layout/Header';
+import Preloader from '@/components/layout/Preloader';
+import SmoothScroll from '@/components/layout/SmoothScroll';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
 import CookieConsent from '@/components/layout/CookieConsent';
@@ -33,6 +35,16 @@ const gazpacho = localFont({
     { path: '../../fonts/Gazpacho-Black.woff2', weight: '900', style: 'normal' },
   ],
   variable: '--font-gazpacho',
+  display: 'swap',
+});
+
+// General Sans carries the small caps labels — the brand's grotesque.
+const generalSans = localFont({
+  src: [
+    { path: '../../fonts/GeneralSans-Regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../fonts/GeneralSans-Medium.woff2', weight: '500', style: 'normal' },
+  ],
+  variable: '--font-general',
   display: 'swap',
 });
 
@@ -108,20 +120,29 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${gazpacho.variable}`}
+      className={`${inter.variable} ${gazpacho.variable} ${generalSans.variable}`}
       // The inline script below adds `js-reveal` before React hydrates, so the
       // server and client markup differ on this element by design.
       suppressHydrationWarning
     >
       <head>
-        {/* Enable the scroll-reveal hidden state only when JS can actually reveal it. */}
+        {/*
+          * Both flags are set from script, never from the server markup, so a
+          * page with no JS is never left hidden or unscrollable. The timeout is
+          * a dead-man's switch: if the curtain's own code never runs, scrolling
+          * comes back by itself.
+          */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js-reveal')`,
+            __html:
+              "var d=document.documentElement;d.classList.add('js-reveal','is-preloading');" +
+              "setTimeout(function(){d.classList.remove('is-preloading')},8000);",
           }}
         />
       </head>
       <body>
+        <Preloader />
+        <SmoothScroll />
         <CartProvider>
           <WishlistProvider>
             <RevealObserver />

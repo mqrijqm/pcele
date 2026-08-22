@@ -64,8 +64,15 @@
   margin: 0;
 }
 
+/* Lenis drives the scrolling; native smooth scrolling would fight it. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -453,6 +460,252 @@ p {
     grid-template-columns: 1fr;
     margin-left: 0.9rem;
     margin-right: 1.2rem;
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Hero "Med porodicne tradicije"
+ *
+ * Geometry is measured from reference/ref-3-end.png at 1440x716 and expressed
+ * in vw / % of the stage, so the composition scales as one piece.
+ *
+ * The pin is a sticky stack inside a tall section, not ScrollTrigger's pin --
+ * that is how meracinque.com does it (see recon/findings.md).
+ * ------------------------------------------------------------------------- */
+.hero-jar {
+  --hero-paper: #FCF8DC;
+  --hero-ink: #A96F36;
+  --hero-caps: #5C3814;
+
+  position: relative;
+  width: 100%;
+  height: 300svh;
+  overflow: clip;
+  background-color: var(--hero-paper);
+}
+
+.hero-jar__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* Everything except the jar lives in here, below it in the stacking order. */
+.hero-jar__layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* --- the jar: centred, never moves, always above the type ---------------- */
+.hero-jar__jar {
+  position: absolute;
+  left: 50%;
+  top: 19.02%;
+  height: 68.62%;
+  aspect-ratio: 489 / 771;
+  transform: translateX(-50%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.hero-jar__jar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* --- headline: two halves flung to the edges of a 68vw column ------------ */
+.hero-jar__title {
+  position: absolute;
+  left: 6.74vw;
+  width: 68.06vw;
+  top: 57.82%;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  transform: translateY(-50%);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  /* Sized so "Med porodicne" measures 463px at 1440 wide, as in ref-3. */
+  font-size: 4.155vw;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--hero-ink);
+  white-space: nowrap;
+}
+
+.hero-jar__half {
+  display: block;
+  will-change: transform;
+}
+
+/* --- caps labels: revealed from behind their own edge -------------------- */
+.hero-jar__label {
+  position: absolute;
+  z-index: 2;
+  overflow: hidden;
+  font-family: var(--font-general), var(--font-sans), sans-serif;
+  font-size: 1.366vw;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+  color: var(--hero-caps);
+  white-space: nowrap;
+}
+
+.hero-jar__label > span {
+  display: block;
+  will-change: transform;
+}
+
+.hero-jar__label--top {
+  right: 22.71vw;
+  top: 50.14%;
+  transform: translateY(-50%);
+}
+
+.hero-jar__label--bottom {
+  left: 7.02vw;
+  top: 65.99%;
+  transform: translateY(-50%);
+}
+
+/* --- decorations --------------------------------------------------------- */
+.hero-jar__crest {
+  position: absolute;
+  left: 6.67vw;
+  top: 26.68%;
+  width: 7.99vw;
+  z-index: 2;
+}
+
+.hero-jar__flowers {
+  position: absolute;
+  left: 86.25vw;
+  top: 58.1%;
+  width: 14.17vw;
+  z-index: 2;
+}
+
+.hero-jar__crest img,
+.hero-jar__flowers img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The reference has the daisies mirrored; the flip sits on the image so the
+   wrapper's scale stays free for the reveal. */
+.hero-jar__flowers img {
+  transform: scaleX(-1);
+}
+
+/* --- portrait ------------------------------------------------------------
+ * Following their portrait branch: the halves separate vertically instead of
+ * horizontally, so the headline is never stuck behind the product.
+ * ----------------------------------------------------------------------- */
+@media (orientation: portrait) {
+  .hero-jar {
+    height: 260svh;
+  }
+
+  .hero-jar__jar {
+    top: 26%;
+    height: 47.5%;
+  }
+
+  /*
+   * The same trick as landscape, turned on its side: a tall column with
+   * `space-between`, so one half rests above the jar and the other below it
+   * and neither can end up trapped behind the product.
+   */
+  .hero-jar__title {
+    left: 5vw;
+    width: 90vw;
+    top: 19%;
+    height: 62%;
+    transform: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10vw;
+    text-align: center;
+  }
+
+  .hero-jar__label--top {
+    right: auto;
+    left: 50%;
+    top: 13.5%;
+    transform: translate(-50%, -50%);
+    font-size: 3.4vw;
+  }
+
+  .hero-jar__label--bottom {
+    left: 50%;
+    top: 93%;
+    transform: translate(-50%, -50%);
+    font-size: 3.4vw;
+  }
+
+  .hero-jar__crest {
+    left: 6vw;
+    top: 12%;
+    width: 15vw;
+  }
+
+  .hero-jar__flowers {
+    left: 72vw;
+    top: 76%;
+    width: 32vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-jar {
+    height: 100svh;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Loading curtain. Geometry copied from their #preloader: fixed, full-bleed,
+ * high z-index, the mark centred. It leaves by sliding straight down.
+ * ------------------------------------------------------------------------- */
+#preloader {
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  background-color: #FCF8DC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#preloader .preloader__mark {
+  height: 15vh;
+  width: auto;
+  opacity: 0;
+}
+
+/* Scroll stays put until the curtain is gone. Lenis is stopped too; this
+   covers the case where Lenis never starts (reduced motion, JS still loading). */
+html.is-preloading,
+html.is-preloading body {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #preloader {
+    display: none;
+  }
+
+  #preloader .preloader__mark {
     opacity: 1;
   }
 }
