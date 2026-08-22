@@ -304,3 +304,127 @@ p {
 .arch {
   border-radius: var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
 }
+
+/* ---------------------------------------------------------------------------
+ * Ploveci header: na vrhu stranice logo stoji sam u sredini, a pilula sa
+ * menijem sedi u desnom uglu. Kad se skroluje, pilula klizi u sredinu i logo
+ * uklizi u nju sa leve strane.
+ * ------------------------------------------------------------------------- */
+.site-header {
+  --header-gutter: clamp(1rem, 3vw, 2.5rem);
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: clamp(1rem, 2.2vw, 1.6rem);
+  height: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.site-header > * {
+  pointer-events: auto;
+}
+
+/* Znak koji stoji sam iznad heroja. */
+.header-crest {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition:
+    opacity 0.4s ease,
+    transform 0.7s var(--ease-out-expo);
+}
+
+.site-header[data-docked='true'] .header-crest {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-0.6rem) scale(0.9);
+}
+
+/* Pilula. `left` i `transform` se animiraju zajedno — otud klizanje u sredinu. */
+.header-pill {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-pill);
+  background: #F1EBD3;
+  transform: translateX(calc(-100% - var(--header-gutter)));
+  transition:
+    left 0.8s var(--ease-out-expo),
+    transform 0.8s var(--ease-out-expo),
+    box-shadow 0.5s ease;
+  box-shadow: 0 10px 30px -24px rgba(115, 85, 46, 0.5);
+}
+
+.site-header[data-docked='true'] .header-pill {
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 16px 44px -26px rgba(115, 85, 46, 0.65);
+}
+
+/* Prorez za logo unutar pilule — sirina raste iz nule, pa se pilula sama sirI. */
+.header-pill-logo {
+  display: grid;
+  grid-template-columns: 0fr;
+  margin-left: 0;
+  margin-right: 0;
+  opacity: 0;
+  transition:
+    grid-template-columns 0.8s var(--ease-out-expo),
+    margin 0.8s var(--ease-out-expo),
+    opacity 0.45s ease;
+}
+
+.header-pill-logo > * {
+  overflow: hidden;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.site-header[data-docked='true'] .header-pill-logo {
+  grid-template-columns: 1fr;
+  margin-left: 1.1rem;
+  margin-right: 1.5rem;
+  opacity: 1;
+}
+
+/* Tri prstena umesto klasicnog hamburgera. */
+.menu-glyph {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  width: 1.5rem;
+}
+
+.menu-glyph span {
+  display: block;
+  height: 0.42rem;
+  border: 1.1px solid currentColor;
+  border-radius: 999px;
+  transition: transform 0.4s var(--ease-out-expo), opacity 0.25s ease;
+}
+
+.menu-glyph[data-open='true'] span:nth-child(1) {
+  transform: translateY(0.53rem) rotate(45deg);
+}
+
+.menu-glyph[data-open='true'] span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-glyph[data-open='true'] span:nth-child(3) {
+  transform: translateY(-0.53rem) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-crest,
+  .header-pill,
+  .header-pill-logo,
+  .menu-glyph span {
+    transition-duration: 0.01ms;
+  }
+}
