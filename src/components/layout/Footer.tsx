@@ -107,18 +107,22 @@ export default function Footer({ locale }: { locale: Locale }) {
       </div>
 
       {/*
-       * Potpis na dnu strane, od ivice do ivice. Ranije je ovde stajao tekst
-       * "JEVTIĆ" pa se kosi kraj slova Ć secao o dno stranice; sada je crtez,
-       * pa se skalira ceo, bez odsecanja.
+       * Potpis na dnu strane, preko cele sirine.
+       *
+       * Slozen je iz Gazpacha, a ne iz FOOT.svg: u tom fajlu su donji delovi
+       * slova odsečeni pri izvozu (cetiri putanje se zavrsavaju ravnim rezom
+       * na donjoj ivici), pa se "Jevtić" nikako ne bi video ceo. Font daje
+       * isto pismo, celo slovo i bilo koju velicinu.
+       *
+       * `pb` cuva kvacicu na Ć i rep slova J od donje ivice stranice.
        */}
-      <div className="mt-16 w-full">
-        <img
-          src="/images/brand/foot.svg"
-          alt="Pčelarstvo Jevtić"
-          className="block h-auto w-full select-none"
-          width={382}
-          height={119}
-        />
+      <div className="mt-16 w-full px-4 pb-6 sm:px-6 lg:px-8">
+        <p className="text-center text-[clamp(0.58rem,1.15vw,1rem)] font-semibold uppercase tracking-[0.4em] text-[#FDF9DC]">
+          Pčelarstvo
+        </p>
+        <p className="select-none text-center font-display text-[clamp(4rem,33.5vw,30rem)] font-normal leading-[1.22] tracking-[-0.02em] text-[#FDF9DC]">
+          Jevtić
+        </p>
       </div>
     </footer>
   );
