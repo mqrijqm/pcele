@@ -9,7 +9,7 @@ const page = await browser.newPage({
   viewport: { width: 1440, height: 716 },
   reducedMotion: 'reduce',
 });
-await page.goto('http://localhost:3006/sr', { waitUntil: 'load', timeout: 90000 });
+await page.goto('http://localhost:3007/sr', { waitUntil: 'load', timeout: 90000 });
 await page.waitForTimeout(2500);
 
 const out = await page.evaluate(() => {

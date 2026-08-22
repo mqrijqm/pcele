@@ -38,7 +38,7 @@ await page.addInitScript(() => {
   });
 });
 
-await page.goto('http://localhost:3006/sr', { waitUntil: 'load', timeout: 90000 });
+await page.goto('http://localhost:3007/sr', { waitUntil: 'load', timeout: 90000 });
 
 // Try to scroll while the curtain is up — it must not move.
 await page.waitForTimeout(500);

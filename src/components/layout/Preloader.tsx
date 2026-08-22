@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 /**
@@ -15,7 +15,13 @@ import gsap from 'gsap';
  *     .to(mark,    { opacity: 1, yPercent: 0, duration: 1,   ease: 'power3.out' })
  *     .to(curtain, { yPercent: 100,           duration: 0.9, ease: 'power3.out' }, '+=0.25')
  *
- * Two things are ours rather than theirs:
+ * Their last step is `$('#preloader').remove()`. We cannot copy that: the node
+ * belongs to React, and tearing it out from underneath makes the next render —
+ * the first click on a nav link — throw `insertBefore`/`removeChild` and take
+ * the whole tree down with it. Unmounting through state removes the same node
+ * and leaves React's bookkeeping intact.
+ *
+ * Two more things are ours rather than theirs:
  *   - scroll is locked while it runs (they leave it free)
  *   - it waits on `document.fonts.ready` and on the jar decoding, on top of
  *     `window.load`, so the hero can never be caught half-painted
@@ -23,8 +29,11 @@ import gsap from 'gsap';
  * Like theirs, it runs on every full page load — nothing is stored to skip it.
  */
 export default function Preloader() {
+  const curtainRef = useRef<HTMLDivElement>(null);
+  const [done, setDone] = useState(false);
+
   useEffect(() => {
-    const curtain = document.getElementById('preloader');
+    const curtain = curtainRef.current;
     if (!curtain) return;
 
     const release = () => {
@@ -32,10 +41,9 @@ export default function Preloader() {
       window.dispatchEvent(new Event('preloader:done'));
     };
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) {
-      curtain.remove();
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       release();
+      setDone(true);
       return;
     }
 
@@ -56,8 +64,8 @@ export default function Preloader() {
       tl = gsap
         .timeline({
           onComplete: () => {
-            curtain.remove();
             release();
+            setDone(true);
           },
         })
         .delay(0.2)
@@ -78,8 +86,10 @@ export default function Preloader() {
     };
   }, []);
 
+  if (done) return null;
+
   return (
-    <div id="preloader" aria-hidden="true">
+    <div id="preloader" ref={curtainRef} aria-hidden="true">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="preloader__mark" src="/hero/logo-krug.svg" alt="" width={120} height={120} />
     </div>

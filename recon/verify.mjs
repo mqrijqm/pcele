@@ -24,7 +24,7 @@ const arg = (name, fallback) => {
   return i === -1 ? fallback : process.argv[i + 1];
 };
 
-const PORT = arg('port', '3006');
+const PORT = arg('port', '3007');
 const W = Number(arg('width', 1440));
 const H = Number(arg('height', 716));
 const LOCALE = arg('locale', 'sr');
