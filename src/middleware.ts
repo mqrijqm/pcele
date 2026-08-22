@@ -16,5 +16,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next|images|icons|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)'],
+  // `models` mora ovde — inace bi /models/tegla.glb bio preusmeren na
+  // /sr/models/tegla.glb, gde fajla nema, pa 3D scena ostane prazna.
+  matcher: [
+    '/((?!api|_next|images|icons|models|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)',
+  ],
 };
