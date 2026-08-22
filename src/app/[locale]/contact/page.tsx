@@ -5,7 +5,8 @@ import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 
 import PageHero from '@/components/ui/PageHero';
 import ContactForm from '@/components/contact/ContactForm';
-import { contactPage, meta } from '@/content/pages';
+import ImageBreak from '@/components/ui/ImageBreak';
+import { contactPage, meta, photoBreaks } from '@/content/pages';
 import { createTranslator, isLocale, type Locale } from '@/i18n/config';
 
 export async function generateMetadata({
@@ -23,6 +24,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
   if (!isLocale(locale)) notFound();
 
   const copy = contactPage[locale];
+  const shot = photoBreaks[locale];
   const t = createTranslator(locale);
 
   const details = [
@@ -117,6 +119,16 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           </div>
         </div>
       </section>
+
+      <ImageBreak
+        variant="framed"
+        images={[{ src: '/images/mockups/jars-floating-studio.webp', alt: shot.contactVisit.alt }]}
+        caption={shot.contactVisit.caption}
+        heading={shot.contactVisit.heading}
+        body={shot.contactVisit.body}
+        meta={shot.contactVisit.meta}
+        background="#73552E0F"
+      />
     </div>
   );
 }

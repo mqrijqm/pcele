@@ -603,3 +603,160 @@ export const declaration = {
     labelAlt: 'Meadow honey label, 1 kg',
   },
 } as const;
+
+// ---------------------------------------------------------- foto-pauze ------
+
+/**
+ * Natpisi uz mockup fotografije koje razdvajaju sadrzajne sekcije. Drze se
+ * ovde da bi obe jezicke verzije stajale jedna pored druge.
+ */
+export const photoBreaks = {
+  sr: {
+    homeApiary: {
+      caption: 'Pčelinjak Mračaj · jutarnja tura',
+      meta: 'Sezona 2025.',
+      alt: 'Red tegli livadskog meda ispred košnica',
+    },
+    homeHands: {
+      caption: 'Iste ruke vade ram i lijepe etiketu',
+      meta: 'Teglu po teglu',
+      altFrame: 'Pčelar drži teglu meda i ram sa saćem',
+      altLabel: 'Ručno lijepljenje etikete na teglu',
+    },
+    homeStudio: {
+      caption: 'Jedna paša · jedna serija · jedna etiketa',
+      meta: 'Neto 1 kg',
+      alt: 'Tegle livadskog meda poredane u pravilnom rasteru',
+    },
+    homeTable: {
+      caption: 'Sa livade na sto',
+      heading: 'Ono što otvorite u decembru istočeno je u avgustu.',
+      body:
+        'Ne miješamo serije i ne dokupljujemo med. Svaka tegla nosi pašu jednog dijela ljeta, pa se ukus vidljivo mijenja od proljeća do jeseni — i to je namjerno.',
+      meta: 'Mračaj · Prnjavor',
+      alt: 'Tegle meda na lanenom stolnjaku u livadi pred zalazak sunca',
+    },
+    homeGrass: {
+      caption: 'Paša: maslačak, djetelina, livadsko cvijeće',
+      meta: 'Bez putujućih košnica',
+      alt: 'Tegle meda položene u travu, snimak odozgo',
+    },
+    productsSizes: {
+      caption: 'Ista serija, tri veličine',
+      meta: '0,45 kg · 0,72 kg · 1 kg',
+      alt: 'Tegle meda različitih veličina poredane u nizu',
+    },
+    productsCare: {
+      caption: 'Čuvanje',
+      heading: 'Kristalizacija nije kvar — to je dokaz da med nije zagrijavan.',
+      body:
+        'Prirodan med se prije ili kasnije stisne. Dovoljno je da teglu ostavite u mlakoj vodi do 40 °C i vratiće se u tečno stanje, bez gubitka mirisa. Držite je zatvorenu, na sobnoj temperaturi i dalje od sudopere — med vuče vlagu.',
+      meta: 'Rok trajanja: dvije godine od punjenja',
+      alt: 'Dvije tegle livadskog meda u studijskom svjetlu',
+    },
+    aboutTools: {
+      caption: 'Dimilica, ram, tegla — alat se nije mijenjao',
+      meta: 'Mračaj, 1980 — danas',
+      alt: 'Tegla meda pored otvorene košnice i dimilice',
+    },
+    aboutSeasons: {
+      caption: 'Ista livada, četiri decenije',
+      meta: 'Zora i sumrak nad pčelinjakom',
+      altDawn: 'Dvije tegle meda na ogradi u maglovito jutro',
+      altDusk: 'Tegle meda na panju obraslom mahovinom',
+    },
+    processJar: {
+      caption: 'Poslije vrcanja teglu punimo istog dana',
+      meta: 'Bez pasterizacije, bez filtera pod pritiskom',
+      alt: 'Tegla meda na klupi pored košnica u zoru',
+    },
+    contactVisit: {
+      caption: 'Dođite po med',
+      heading: 'Najbolje se kupuje na licu mjesta — uz kafu i obilazak pčelinjaka.',
+      body:
+        'Javite se dan ranije pa da znamo da vas očekujemo. Pokazaćemo vam košnice, kako se otklapa ram i po čemu se poznaje zrio med. Djeca su dobrodošla, oprema za njih postoji.',
+      meta: 'Mračaj bb, Prnjavor · Republika Srpska',
+      alt: 'Tegle livadskog meda u studijskom postavu',
+    },
+    blogSeasons: {
+      caption: 'Sve počinje na livadi',
+      meta: 'Zapisi iz sezone',
+      altMeadow: 'Tegla meda u livadi punoj maslačka',
+      altSunset: 'Tegle meda pod krošnjom u zalazak sunca',
+    },
+  },
+  en: {
+    homeApiary: {
+      caption: 'Mračaj apiary · morning round',
+      meta: '2025 season',
+      alt: 'A row of meadow honey jars in front of the hives',
+    },
+    homeHands: {
+      caption: 'The same hands lift the frame and apply the label',
+      meta: 'One jar at a time',
+      altFrame: 'A beekeeper holding a jar of honey and a frame of comb',
+      altLabel: 'A label being applied to a jar by hand',
+    },
+    homeStudio: {
+      caption: 'One forage · one batch · one label',
+      meta: 'Net 1 kg',
+      alt: 'Jars of meadow honey arranged in a repeating grid',
+    },
+    homeTable: {
+      caption: 'From the meadow to the table',
+      heading: 'What you open in December was extracted in August.',
+      body:
+        'We never blend batches and we never buy honey in. Every jar carries the forage of one stretch of summer, so the taste shifts visibly from spring to autumn — and that is deliberate.',
+      meta: 'Mračaj · Prnjavor',
+      alt: 'Jars of honey on a linen cloth in a meadow at sunset',
+    },
+    homeGrass: {
+      caption: 'Forage: dandelion, clover, meadow flowers',
+      meta: 'No migratory hives',
+      alt: 'Jars of honey laid in the grass, seen from above',
+    },
+    productsSizes: {
+      caption: 'One batch, three sizes',
+      meta: '0.45 kg · 0.72 kg · 1 kg',
+      alt: 'Jars of honey in several sizes lined up in a row',
+    },
+    productsCare: {
+      caption: 'Keeping it',
+      heading: 'Crystallisation is not a fault — it is proof the honey was never heated.',
+      body:
+        'Raw honey sets sooner or later. Stand the jar in warm water up to 40 °C and it returns to liquid with its aroma intact. Keep it closed, at room temperature and away from the sink — honey draws in moisture.',
+      meta: 'Best within two years of jarring',
+      alt: 'Two jars of meadow honey in studio light',
+    },
+    aboutTools: {
+      caption: 'Smoker, frame, jar — the tools have not changed',
+      meta: 'Mračaj, 1980 — today',
+      alt: 'A jar of honey beside an open hive and a smoker',
+    },
+    aboutSeasons: {
+      caption: 'The same meadow, four decades',
+      meta: 'Dawn and dusk over the apiary',
+      altDawn: 'Two jars of honey on a fence on a misty morning',
+      altDusk: 'Jars of honey on a moss-covered stump',
+    },
+    processJar: {
+      caption: 'Once extracted, the honey is jarred the same day',
+      meta: 'No pasteurising, no pressure filtering',
+      alt: 'A jar of honey on a bench beside the hives at dawn',
+    },
+    contactVisit: {
+      caption: 'Come and collect',
+      heading: 'The best way to buy is in person — over coffee and a walk round the hives.',
+      body:
+        'Let us know a day ahead so we can expect you. We will show you the hives, how a frame is uncapped and how ripe honey is recognised. Children are welcome; we have gear their size.',
+      meta: 'Mračaj bb, Prnjavor · Republika Srpska',
+      alt: 'Jars of meadow honey in a studio arrangement',
+    },
+    blogSeasons: {
+      caption: 'It all starts in the meadow',
+      meta: 'Notes from the season',
+      altMeadow: 'A jar of honey in a meadow full of dandelions',
+      altSunset: 'Jars of honey under a tree at sunset',
+    },
+  },
+};

@@ -5,7 +5,8 @@ import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
 import PageHero from '@/components/ui/PageHero';
-import { meta, processPage, processStepImages } from '@/content/pages';
+import ImageBreak from '@/components/ui/ImageBreak';
+import { meta, photoBreaks, processPage, processStepImages } from '@/content/pages';
 import { isLocale, localeHref, type Locale } from '@/i18n/config';
 
 export async function generateMetadata({
@@ -22,6 +23,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const copy = processPage[locale];
+  const shot = photoBreaks[locale];
 
   return (
     <div className="bg-[#FDF9DC]">
@@ -89,6 +91,14 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
           </div>
         </div>
       </section>
+
+      <ImageBreak
+        images={[{ src: '/images/mockups/jar-hive-bench.webp', alt: shot.processJar.alt }]}
+        aspect="aspect-[3/4] sm:aspect-[16/9]"
+        focus="object-[50%_40%]"
+        caption={shot.processJar.caption}
+        meta={shot.processJar.meta}
+      />
 
       <section className="bg-[#73552E]/[0.06] section-padding">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">

@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import PageHero from '@/components/ui/PageHero';
-import { aboutPage, meta } from '@/content/pages';
+import ImageBreak from '@/components/ui/ImageBreak';
+import { aboutPage, meta, photoBreaks } from '@/content/pages';
 import { isLocale, type Locale } from '@/i18n/config';
 
 export async function generateMetadata({
@@ -20,6 +21,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const copy = aboutPage[locale];
+  const shot = photoBreaks[locale];
 
   return (
     <div className="bg-[#FDF9DC]">
@@ -55,6 +57,14 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           ))}
         </div>
       </section>
+
+      <ImageBreak
+        images={[{ src: '/images/mockups/jar-smoker-frames.webp', alt: shot.aboutTools.alt }]}
+        aspect="aspect-[3/4] sm:aspect-[16/9]"
+        focus="object-[50%_35%]"
+        caption={shot.aboutTools.caption}
+        meta={shot.aboutTools.meta}
+      />
 
       <section className="overflow-hidden bg-[#FDF9DC] section-padding">
         <div className="container grid gap-20 lg:grid-cols-[0.38fr_0.62fr] lg:gap-24">
@@ -120,6 +130,16 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
         </div>
       </section>
+
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/mockups/jars-fence-dawn.webp', alt: shot.aboutSeasons.altDawn },
+          { src: '/images/mockups/jars-two-stump.webp', alt: shot.aboutSeasons.altDusk },
+        ]}
+        caption={shot.aboutSeasons.caption}
+        meta={shot.aboutSeasons.meta}
+      />
 
       <section className="bg-[#FDF9DC] section-padding">
         <div className="container">

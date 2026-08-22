@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 
 import PageHero from '@/components/ui/PageHero';
 import PostCard from '@/components/blog/PostCard';
-import { blogPage, meta } from '@/content/pages';
+import ImageBreak from '@/components/ui/ImageBreak';
+import { blogPage, meta, photoBreaks } from '@/content/pages';
 import { posts } from '@/data/posts';
 import { isLocale, type Locale } from '@/i18n/config';
 
@@ -22,6 +23,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
   if (!isLocale(locale)) notFound();
   const copy = blogPage[locale];
   const ordered = [...posts].sort((a, b) => a.order - b.order);
+  const shot = photoBreaks[locale];
 
   return (
     <div className="bg-ivory">
@@ -54,6 +56,17 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
           </div>
         </div>
       </section>
+
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/mockups/jar-meadow-dandelions.webp', alt: shot.blogSeasons.altMeadow },
+          { src: '/images/mockups/jars-sunset-tree.webp', alt: shot.blogSeasons.altSunset },
+        ]}
+        caption={shot.blogSeasons.caption}
+        meta={shot.blogSeasons.meta}
+        background="#73552E0F"
+      />
     </div>
   );
 }
