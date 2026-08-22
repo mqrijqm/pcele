@@ -21,9 +21,9 @@ export default function Footer({ locale }: { locale: Locale }) {
 
   return (
     <footer className="bg-[#73552E] text-[#FDF9DC]">
-      <div className="container pt-20 lg:pt-28">
+      <div className="container pt-28 lg:pt-40">
         {/* Only what someone actually needs: where we are, how to reach us, where to go next. */}
-        <div className="reveal grid gap-10 sm:grid-cols-2 lg:grid-cols-[1fr_auto]">
+        <div className="reveal grid gap-14 sm:grid-cols-2 lg:grid-cols-[1fr_auto]">
           <div className="max-w-sm">
             {/* The seal off the jar label, on its own cream disc so it reads on the dark ground. */}
             <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[#FDF9DC] p-3">
@@ -106,15 +106,19 @@ export default function Footer({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      {/* The name, full width, sitting on the bottom edge of the page.
-          Leading stays roomy enough for the acute on Ć — clipping it would be a typo. */}
-      <div className="mt-12 overflow-hidden px-5 sm:px-8 lg:px-12">
-        <p
-          aria-hidden="true"
-          className="-mb-[0.16em] select-none pt-[0.16em] text-center font-display font-medium leading-[0.95] tracking-[-0.045em] text-[#FDF9DC] text-[clamp(4rem,23vw,21rem)]"
-        >
-          JEVTIĆ
-        </p>
+      {/*
+       * Potpis na dnu strane, od ivice do ivice. Ranije je ovde stajao tekst
+       * "JEVTIĆ" pa se kosi kraj slova Ć secao o dno stranice; sada je crtez,
+       * pa se skalira ceo, bez odsecanja.
+       */}
+      <div className="mt-16 w-full">
+        <img
+          src="/images/brand/foot.svg"
+          alt="Pčelarstvo Jevtić"
+          className="block h-auto w-full select-none"
+          width={382}
+          height={119}
+        />
       </div>
     </footer>
   );
