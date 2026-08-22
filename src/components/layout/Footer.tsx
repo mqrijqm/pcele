@@ -120,7 +120,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         <p className="text-center text-[clamp(0.58rem,1.15vw,1rem)] font-semibold uppercase tracking-[0.4em] text-[#FDF9DC]">
           Pčelarstvo
         </p>
-        <p className="select-none text-center font-display text-[clamp(4rem,33.5vw,30rem)] font-normal leading-[1.22] tracking-[-0.02em] text-[#FDF9DC]">
+        <p className="-mt-[0.22em] select-none text-center font-display text-[clamp(4rem,33.5vw,30rem)] font-normal leading-[1.22] tracking-[-0.02em] text-[#FDF9DC]">
           Jevtić
         </p>
       </div>
