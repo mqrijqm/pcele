@@ -10,6 +10,7 @@ import Testimonials from '@/components/home/Testimonials';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
 import ImageBreak from '@/components/ui/ImageBreak';
+import BeeFlight from '@/components/bee/BeeFlight';
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -19,6 +20,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      {/* Pcela leti preko cele strane; sloj se portalom kaci na <body>. */}
+      <BeeFlight />
+
       <HeroLand locale={locale} />
       <HeroJar locale={locale} />
 
