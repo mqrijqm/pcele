@@ -90,11 +90,12 @@ export default function ImageBreak({
     return (
       <section className="section-padding-sm" style={{ backgroundColor: background }}>
         {/*
-          * Par ide preko cijele sirine, van mjere teksta: dvije uspravne
-          * fotografije jedna uz drugu trebaju prostor, a uvucene su izgledale
-          * kao dvije slicice.
+          * Par podrazumijevano ide preko cijele sirine, van mjere teksta:
+          * dvije uspravne fotografije jedna uz drugu trebaju prostor. Sa
+          * `frame="narrow"` staje u mjeru teksta, kad snimci ne trpe da budu
+          * ovoliki.
           */}
-        <div className="px-3 sm:px-5">
+        <div className={frame === 'narrow' ? 'container' : 'px-3 sm:px-5'}>
           <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:gap-6">
             <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[0.5rem]">
               <Image
@@ -125,7 +126,9 @@ export default function ImageBreak({
             )}
           </div>
         </div>
-        {footerIn('px-3 sm:px-5 mt-14 sm:mt-[5.5rem] lg:mt-[7.5rem]')}
+        {footerIn(
+          `${frame === 'narrow' ? 'container' : 'px-3 sm:px-5'} mt-14 sm:mt-[5.5rem] lg:mt-[7.5rem]`,
+        )}
       </section>
     );
   }

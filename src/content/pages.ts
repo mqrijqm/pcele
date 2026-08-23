@@ -556,6 +556,35 @@ export const processPage = {
  *   4 procedjivanje     — kante u kojima se med slijeze
  *   5 punjenje          — tegla puni se ispod slavine
  */
+/*
+ * Kratak umetak izmedju pcelinjaka i vrcanja: ramovi se prave u kuci, pa to
+ * stoji kao zaseban potez a ne kao jos jedan korak u nizu.
+ */
+export const processFrames = {
+  sr: {
+    eyebrow: 'Naša ruka',
+    heading: 'Ramove pravimo sami',
+    body:
+      'Sklapamo ih od suve lipovine i jelovine, bez ljepila koje bi mirisalo u košnici. Razmak između satonoša mora biti isti u svakoj košnici — kad ramove praviš sam, ta mjera je tvoja i ne mijenja se od prvog do posljednjeg.',
+    altA: 'Ram sa saćem iz sezone 2025',
+    altB: 'Ručno otklapanje rama',
+  },
+  en: {
+    eyebrow: 'Our own hand',
+    heading: 'We build the frames ourselves',
+    body:
+      'Assembled from seasoned lime and fir, with no glue that would smell inside the hive. The spacing between top bars has to be identical in every hive — make the frames yourself and that measurement is yours, unchanged from the first to the last.',
+    altA: 'A frame of comb from the 2025 season',
+    altB: 'Uncapping a frame by hand',
+  },
+} satisfies L<{
+  eyebrow: string;
+  heading: string;
+  body: string;
+  altA: string;
+  altB: string;
+}>;
+
 export const processStepImages = [
   '/images/real/kosnice-livada.webp',
   '/images/real/pcele-cvijet.webp',
@@ -736,7 +765,7 @@ export const photoBreaks = {
       caption: 'Poslije vrcanja teglu punimo istog dana',
       meta: 'Bez pasterizacije, bez filtera pod pritiskom',
       altTap: 'Med curi iz vrcaljke u kantu',
-      altJars: 'Napunjene tegle složene ispred košnica',
+      altJars: 'Redovi napunjenih tegli na stolu, poslije punjenja',
     },
     contactVisit: {
       caption: 'Dođite po med',
@@ -847,7 +876,7 @@ export const photoBreaks = {
       caption: 'Once extracted, the honey is jarred the same day',
       meta: 'No pasteurising, no pressure filtering',
       altTap: 'Honey running from the extractor into a bucket',
-      altJars: 'Filled jars stacked in front of the hives',
+      altJars: 'Rows of filled jars on the table after bottling',
     },
     contactVisit: {
       caption: 'Come and collect',

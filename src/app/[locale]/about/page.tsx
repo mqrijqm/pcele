@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 
 import PageHero from '@/components/ui/PageHero';
 import ImageBreak from '@/components/ui/ImageBreak';
+import PageOpener from '@/components/ui/PageOpener';
+import BeeFlight from '@/components/bee/BeeFlight';
 import { aboutPage, meta, photoBreaks } from '@/content/pages';
 import { isLocale, type Locale } from '@/i18n/config';
 
@@ -30,6 +32,11 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         * pretrazivace — vizuelno strana pocinje odmah sadrzajem.
         */}
       <h1 className="sr-only">{copy.heading}</h1>
+
+      {/* Pcela leti i ovom stranom. */}
+      <BeeFlight route="about" />
+
+      <PageOpener eyebrow={copy.eyebrow} heading={copy.heading} />
       <section className="border-b border-[#73552E]/12 bg-[var(--paper)]">
         <div className="container grid md:grid-cols-3">
           {copy.features.map((feature, index) => (

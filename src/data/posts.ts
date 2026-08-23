@@ -683,6 +683,65 @@ export const posts: Post[] = [
         }
       ]
     }
+  },
+  {
+    "slug": "ram-koji-smo-sami-napravili",
+    "order": 8,
+    "image": "/images/real/ram-2025.webp",
+    "title": {
+      "sr": "Ram koji smo sami napravili",
+      "en": "The frame we made ourselves"
+    },
+    "excerpt": {
+      "sr": "Ramove sklapamo sami, od lipove i jelove građe. Zašto to radimo kad se mogu kupiti gotovi, i šta se time dobije.",
+      "en": "We build our frames ourselves, from lime and fir. Why bother when you can buy them ready-made, and what it gets you."
+    },
+    "date": {
+      "sr": "21. mart 2026.",
+      "en": "March 21, 2026"
+    },
+    "readingTime": {
+      "sr": "5 min čitanja",
+      "en": "5 min read"
+    },
+    "body": {
+      "sr": [
+        {
+          "t": "h2",
+          "text": "Zašto sami"
+        },
+        {
+          "t": "p",
+          "text": "Gotov ram je jeftin i stigne za dan. Ali građa u njemu zna biti smolava ili presirova, a sastavi popuste poslije druge sezone. Naši se sklapaju od suve lipovine i jelovine, bez ljepila koje bi mirisalo u košnici, i drže po deset godina."
+        },
+        {
+          "t": "h2",
+          "text": "Mjera koja se ne mijenja"
+        },
+        {
+          "t": "p",
+          "text": "Razmak između satonoša mora biti isti u svakoj košnici — inače pčele grade tamo gdje im nije mjesto, a pregled postaje čupanje. Kad ramove praviš sam, ta mjera je tvoja i ista je od prvog do posljednjeg."
+        }
+      ],
+      "en": [
+        {
+          "t": "h2",
+          "text": "Why make them"
+        },
+        {
+          "t": "p",
+          "text": "A ready-made frame is cheap and arrives the next day. But the timber in it can be resinous or too green, and the joints give after a second season. Ours are assembled from seasoned lime and fir, with no glue that would smell inside the hive, and they last a decade."
+        },
+        {
+          "t": "h2",
+          "text": "A measurement that does not drift"
+        },
+        {
+          "t": "p",
+          "text": "The spacing between top bars has to be the same in every hive — otherwise the bees build where they should not, and an inspection turns into tearing things apart. Make the frames yourself and that measurement is yours, identical from the first to the last."
+        }
+      ]
+    }
   }
 ];
 

@@ -139,6 +139,52 @@ export const PROCESS_MOBILE: Leg[] = [
   },
 ];
 
+
+/* ---------------------------------------------------------------- o nama ---
+ * Strana "O nama". Isti smisao kao na procesu: krece uz uvod, pa se spusta
+ * niz stranu izmedju blokova. Mjere se popravljaju posle prvog gledanja.
+ */
+export const ABOUT_REF = { w: 1434, h: 9000 };
+
+export const ABOUT: Leg[] = [
+  {
+    through: [
+      [250, 260],
+      [800, 560],
+      [1180, 1050],
+      [420, 1750],
+      [1150, 2500],
+      [380, 3250],
+      [1150, 4050],
+      [430, 4800],
+      [1150, 5550],
+      [420, 6300],
+      [1080, 7000],
+      [600, 7600],
+    ],
+  },
+];
+
+export const ABOUT_MOBILE_REF = { w: 384, h: 7200 };
+
+export const ABOUT_MOBILE: Leg[] = [
+  {
+    through: [
+      [70, 210],
+      [290, 520],
+      [90, 1150],
+      [290, 1850],
+      [100, 2550],
+      [290, 3250],
+      [100, 3950],
+      [290, 4650],
+      [120, 5350],
+      [270, 6000],
+      [150, 6550],
+    ],
+  },
+];
+
 /*
  * Rute po stranicama. Pcela je ista, mijenja se samo kuda leti.
  */
@@ -150,6 +196,10 @@ export const ROUTES = {
   process: {
     desktop: { legs: PROCESS, ref: PROCESS_REF },
     mobile: { legs: PROCESS_MOBILE, ref: PROCESS_MOBILE_REF },
+  },
+  about: {
+    desktop: { legs: ABOUT, ref: ABOUT_REF },
+    mobile: { legs: ABOUT_MOBILE, ref: ABOUT_MOBILE_REF },
   },
 } as const;
 
