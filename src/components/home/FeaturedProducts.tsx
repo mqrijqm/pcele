@@ -64,16 +64,21 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
                 {style.variant === 'tall' ? (
                   <div className="absolute inset-0">
                     <div className="absolute inset-x-0 bottom-0 top-[25%]">
+                      {/*
+                        * `contain`, ne `cover`: snimci tegli su kvadratni, a
+                        * kutija je siroka — `cover` bi od tegle ostavio samo
+                        * srednju traku.
+                        */}
                       <Image
                         src={product.image}
                         alt={item.name}
                         fill
                         sizes="(max-width: 1024px) 100vw, 42vw"
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.025]"
+                        className="object-contain object-center transition-transform duration-700 group-hover:scale-[1.025]"
                       />
                     </div>
                     <div className="relative z-10 p-7 sm:p-9">
-                      <span className="inline-block rounded-full bg-[var(--paper)]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#73552E]">
+                      <span className="block font-display text-3xl font-normal leading-none tracking-[-0.02em] text-[#73552E] sm:text-4xl">
                         {item.name}
                       </span>
                       <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#73552E]">

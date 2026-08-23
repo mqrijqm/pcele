@@ -28,7 +28,7 @@ const RIGHT_TRAVEL = -122 / 1440;
 const copy = {
   sr: {
     left: 'Med kakav',
-    right: 'treba biti',
+    right: 'treba biti.',
     labelTop: 'VRCANO 2025',
     labelBottom: '100% SIROVO PRIRODAN',
     jarAlt: 'Tegla livadskog meda Pčelarstvo Jevtić, 1 kg',
@@ -36,7 +36,7 @@ const copy = {
   },
   en: {
     left: 'Honey as',
-    right: 'it should be',
+    right: 'it should be.',
     labelTop: 'HARVESTED 2025',
     labelBottom: '100% RAW AND NATURAL',
     jarAlt: 'A 1 kg jar of Pčelarstvo Jevtić meadow honey',
@@ -108,6 +108,13 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           tl.duration(1);
 
           master.add(tl);
+          /*
+           * Bez ovoga se kompozicija sklapa tacno do posljednjeg piksela
+           * sekcije, pa konacni raspored postoji samo u jednom trenutku, na
+           * izlasku. Prazan razmak na kraju znaci da se sve slozi u prvih
+           * ~60% skrola, a ostatak stoji mirno — sto je i smisao pina.
+           */
+          master.to({}, { duration: 0.65 });
           return () => master.scrollTrigger?.kill();
         },
       );

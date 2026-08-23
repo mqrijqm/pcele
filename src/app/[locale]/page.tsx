@@ -54,12 +54,19 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Poslije proizvoda — studijski raster, kao katalog. */}
       <ImageBreak
-        images={[{ src: '/images/mockups/jars-pattern-studio.webp', alt: shot.homeStudio.alt }]}
+        images={[{ src: '/images/real/tegle-raster.webp', alt: shot.homeStudio.alt }]}
         caption={shot.homeStudio.caption}
         meta={shot.homeStudio.meta}
       />
 
       <Testimonials locale={locale} />
+
+      {/* Livada iz koje sve dolazi — uvod u pricu o stolu. */}
+      <ImageBreak
+        images={[{ src: '/images/mockups/jars-grass-flatlay.webp', alt: shot.homeGrass.alt }]}
+        caption={shot.homeGrass.caption}
+        meta={shot.homeGrass.meta}
+      />
 
       {/* Poslije utisaka — jedina pauza koja nosi i tekst. */}
       <ImageBreak
@@ -72,13 +79,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
 
       <Faq locale={locale} />
-
-      {/* Poslije pitanja — livada iz koje sve dolazi. */}
-      <ImageBreak
-        images={[{ src: '/images/mockups/jars-grass-flatlay.webp', alt: shot.homeGrass.alt }]}
-        caption={shot.homeGrass.caption}
-        meta={shot.homeGrass.meta}
-      />
 
       <Newsletter locale={locale} />
     </>

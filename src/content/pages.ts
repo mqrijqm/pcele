@@ -138,8 +138,8 @@ export const home = {
       heading: 'Dva meda. Svaki nosi svoj kraj.',
       viewAll: 'Svi proizvodi',
       items: [
-        { slug: 'livadski-med-1kg', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
-        { slug: 'bagremov-med-1kg', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
+        { slug: 'livadski-med-500g', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
+        { slug: 'bagremov-med-500g', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
       ],
     },
     en: {
@@ -147,8 +147,8 @@ export const home = {
       heading: 'Two honeys. Each carries its landscape.',
       viewAll: 'All products',
       items: [
-        { slug: 'livadski-med-1kg', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
-        { slug: 'bagremov-med-1kg', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
+        { slug: 'livadski-med-500g', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
+        { slug: 'bagremov-med-500g', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
       ],
     },
   } satisfies L<{
@@ -622,9 +622,9 @@ export const photoBreaks = {
       altLabel: 'Ručno lijepljenje etikete na teglu',
     },
     homeStudio: {
-      caption: 'Jedna paša · jedna serija · jedna etiketa',
-      meta: 'Neto 1 kg',
-      alt: 'Tegle livadskog meda poredane u pravilnom rasteru',
+      caption: 'Dvije paše · jedna etiketa',
+      meta: 'Neto 500 g',
+      alt: 'Tegle bagremovog i livadskog meda poredane u pravilnom rasteru',
     },
     homeTable: {
       caption: 'Sa livade na sto',
@@ -696,9 +696,9 @@ export const photoBreaks = {
       altLabel: 'A label being applied to a jar by hand',
     },
     homeStudio: {
-      caption: 'One forage · one batch · one label',
-      meta: 'Net 1 kg',
-      alt: 'Jars of meadow honey arranged in a repeating grid',
+      caption: 'Two forages · one label',
+      meta: 'Net 500 g',
+      alt: 'Jars of acacia and meadow honey arranged in a repeating grid',
     },
     homeTable: {
       caption: 'From the meadow to the table',

@@ -539,13 +539,16 @@ p {
 /* --- headline: two halves flung to the edges of a 68vw column ------------ */
 .hero-jar__title {
   position: absolute;
-  left: 6.74vw;
   /*
-   * Sirina razmice dvije polovine oko tegle. Tegla ide do 913px na 1440, a
-   * desna polovina se sidri o desnu ivicu ovog okvira — pa okvir mora biti
-   * dovoljno sirok da "treba biti" cijelo izadje iza stakla.
+   * Okvir je namjesten tako da obje polovine stoje jednako daleko od tegle.
+   *
+   * Tegla je u sredini (521–913 na 1440). Lijevo od nje ima 521px, desno samo
+   * do cvijeca na 1242 — dakle 329px. Uza strana odredjuje razmak, pa lijeva
+   * polovina krece od 12vw a desna se zavrsava na 85.8vw: obje na po 28px od
+   * stakla.
    */
-  width: 77.5vw;
+  left: 12vw;
+  width: 73.8vw;
   top: 57.82%;
   z-index: 1;
   display: flex;
