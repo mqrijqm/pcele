@@ -1049,7 +1049,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .origin__map {
   margin: clamp(3rem, 7vw, 6rem) auto 0;
-  width: min(46%, 640px);
+  width: min(62%, 840px);
 }
 
 .origin__map img {
@@ -1074,17 +1074,22 @@ html:not(.is-preloading) .hero-land__arrow {
 .origin__badge {
   position: absolute;
   right: clamp(1.5rem, 5vw, 5rem);
-  bottom: clamp(2rem, 5vw, 4.5rem);
+  /*
+   * Uz mapu, a ne u dnu sekcije. Pomjeranje po y stoji na omotacu, a vrtnja na
+   * samoj slici — da jedan transform ne pojede drugi.
+   */
+  top: 52%;
+  transform: translateY(-50%);
   display: block;
   width: clamp(76px, 8vw, 120px);
-  will-change: transform;
-  animation: origin-spin 30s linear infinite;
 }
 
 .origin__badge img {
   display: block;
   width: 100%;
   height: auto;
+  will-change: transform;
+  animation: origin-spin 30s linear infinite;
 }
 
 @keyframes origin-spin {
@@ -1101,12 +1106,13 @@ html:not(.is-preloading) .hero-land__arrow {
   /* Na uskom ekranu znak bi sjeo na tekst, pa ide ispod njega. */
   .origin__badge {
     position: static;
+    transform: none;
     margin: clamp(2.5rem, 8vw, 3.5rem) auto 0;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .origin__badge {
+  .origin__badge img {
     animation: none;
   }
 }

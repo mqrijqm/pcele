@@ -92,6 +92,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
            */
           gsap.set([crest, flowers], { scale: 0 });
           gsap.set(caps, { yPercent: 100 });
+          gsap.set([left, right], { opacity: 0 });
 
           const tl = gsap.timeline({ defaults: { ease: 'linear', duration: 1 } });
 
@@ -100,10 +101,18 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           // travelling, so the decorations lead and the labels close.
           tl.to([crest, flowers], { scale: 1, stagger: 0.5 });
           tl.addLabel('titles');
-          // No opacity on the halves — all three frames paint them at full
-          // strength, the collapsed one included.
           tl.from(left, { x: () => window.innerWidth * LEFT_TRAVEL }, 'titles');
           tl.from(right, { x: () => window.innerWidth * RIGHT_TRAVEL }, 'titles');
+          /*
+           * Tegla stoji iznad naslova, pa ga u sredini ona pokriva — ali dok
+           * su polovine skupljene, krajevi im vire pored stakla. Zato krecu
+           * nevidljive i ispisuju se tek kad se izmaknu: prvo lijeva, pa desna.
+           *
+           * `set` + `to`, ne `from` — isti razlog kao kod krune i natpisa gore:
+           * uz `stagger`, meta ciji red jos nije dosao zadrzava svoju prirodnu
+           * vrijednost, pa bi desna polovina stajala vidljiva iza tegle.
+           */
+          tl.to([left, right], { opacity: 1, duration: 0.55, stagger: 0.15 }, 'titles+=0.35');
           tl.to(caps, { yPercent: 0, stagger: 0.5 });
           tl.duration(1);
 
