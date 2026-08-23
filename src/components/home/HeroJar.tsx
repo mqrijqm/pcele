@@ -205,10 +205,15 @@ export default function HeroJar({ locale }: { locale: Locale }) {
             <span>{t.labelTop}</span>
           </p>
 
-          <h1 className="hero-jar__title">
+          {/*
+            * h2, ne h1: glavni naslov pocetne je wordmark u heroju iznad. Dva
+            * h1 na jednoj strani nisu greska u HTML-u, ali pretrazivacu i
+            * citacu ekrana govore da strana ima dva pocetka.
+            */}
+          <h2 className="hero-jar__title">
             <span className="hero-jar__half hero-jar__half--left">{t.left}</span>
             <span className="hero-jar__half hero-jar__half--right">{t.right}</span>
-          </h1>
+          </h2>
 
           <p className="hero-jar__label hero-jar__label--bottom">
             <span>{t.labelBottom}</span>

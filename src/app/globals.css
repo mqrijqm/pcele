@@ -838,8 +838,12 @@ html:not(.is-preloading) .hero-land__arrow {
 .hero-land__wordmark {
   position: absolute;
   left: 20.66%;
+  /*
+   * `top` je fiksan, pa smanjivanje sirine ne mice gornju ivicu — razmak do
+   * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
+   */
   top: 32.5%;
-  width: 22.5%;
+  width: 19%;
   margin: 0;
   line-height: 0;
 }
