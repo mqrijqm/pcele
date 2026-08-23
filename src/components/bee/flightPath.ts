@@ -29,7 +29,7 @@ export type Leg = { through: Pt[] } | { loop: { c: Pt; r: number; from?: number 
 export const DESKTOP: Leg[] = [
   {
     through: [
-      [350, 243],    // polazak: lijevo od vrha strelice, da se ne dodiruju
+      [350, 196],    // polazak: lijevo od strelice i iznad wordmarka
       [900, 660],
       [1180, 1350],
       [520, 2050],   // tegla
