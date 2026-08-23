@@ -33,32 +33,43 @@ export default function Header({ locale }: { locale: Locale }) {
     };
   }, [menuOpen]);
 
-  // Prag sa histerezom: pilula se ne "trese" kad si tacno na granici.
+  /*
+   * Prag sa histerezom, da se pilula ne "trese" kad si tacno na granici.
+   *
+   * Na pocetnoj je prag visina samog heroja: pilula stoji u cosku dok se crtez
+   * livade ne prolista, pa tek onda klizi u sredinu. Na ostalim stranicama
+   * nema takvog uvoda, pa vazi kratak prag kao i ranije.
+   */
   useEffect(() => {
+    const hero = document.querySelector('.hero-land') as HTMLElement | null;
+    const enter = hero ? hero.offsetHeight * 0.8 : 90;
+    const leave = hero ? hero.offsetHeight * 0.65 : 40;
     const onScroll = () => {
-      setScrolled((was) => (was ? window.scrollY > 40 : window.scrollY > 90));
+      setScrolled((was) => (was ? window.scrollY > leave : window.scrollY > enter));
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [pathname]);
 
   // Strip the current locale prefix so the switcher can keep you on the same page.
   const pathWithoutLocale = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '') || '/';
 
   /*
-   * The home page opens on the jar hero, which puts its own mark on the left
-   * and fills the middle with the headline — there is no room for the standing
-   * crest, and the reference frames show the pill already centred. So home
-   * starts docked; every other page keeps the choreography.
+   * Pocetna sada ima isti uvod kao ostale stranice: pilula pocinje u cosku i
+   * uklizi u sredinu tek kad heroj prodje. Stojeci znak se na pocetnoj ne
+   * prikazuje uopste — sredinu heroja vec drze natpis i wordmark, pa bi se
+   * tukli.
    */
   const isHome = pathWithoutLocale === '/';
-  const docked = scrolled || menuOpen || isHome;
+  const docked = scrolled || menuOpen;
 
   return (
     <>
       <header className="site-header" data-docked={docked}>
-        {/* Znak stoji sam iznad heroja — bez trake, bez linije. */}
+        {/* Znak stoji sam iznad heroja — bez trake, bez linije. Na pocetnoj ga
+            nema: tamo su vec i natpis i wordmark preko crteza. */}
+        {!isHome && (
         <Link
           href={localeHref(locale, '/')}
           aria-label="Pčelarstvo Jevtić"
@@ -80,6 +91,7 @@ export default function Header({ locale }: { locale: Locale }) {
             Jevtić
           </span>
         </Link>
+        )}
 
         {/* Pilula: gore desno na vrhu, u sredini kad se skroluje. */}
         <div className="header-pill p-[0.4rem] text-[#73552E]">
