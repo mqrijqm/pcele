@@ -1197,3 +1197,26 @@ html:not(.is-preloading) .hero-land__arrow {
   width: 100%;
   height: auto;
 }
+
+/*
+ * Natpis preko slike u "O nama". Serif, sitno i bez podebljanja — ranije je
+ * bio verzal u pilulu, sto je vuklo paznju sa same fotografije.
+ */
+.about-preview__quote {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.5;
+  letter-spacing: 0.012em;
+  color: #fdf9dc;
+}
+
+/* Navodnici u zlatnoj, malo krupniji od samog teksta. */
+.about-preview__mark {
+  color: var(--gold);
+  font-size: 1.45em;
+  font-style: normal;
+  line-height: 0;
+  vertical-align: -0.08em;
+}

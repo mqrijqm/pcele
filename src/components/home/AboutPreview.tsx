@@ -10,24 +10,29 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
 
   return (
     <section className="overflow-hidden bg-[#73552E] text-[#FDF9DC]">
-      <div className="mx-auto grid max-w-[1440px] gap-5 px-[var(--container-padding)] py-6 sm:py-8 lg:grid-cols-[0.63fr_0.37fr]">
-        <div className="relative min-h-[31rem] overflow-hidden rounded-[2.25rem] lg:min-h-[44rem]">
+      <div className="mx-auto grid max-w-[1440px] gap-5 px-[var(--container-padding)] py-6 sm:py-8 lg:grid-cols-[0.7fr_0.3fr]">
+        <div className="relative min-h-[31rem] overflow-hidden rounded-[1rem] lg:min-h-[44rem]">
           <Image
-            src="/images/real/tegla-u-ruci.webp"
+            src="/images/real/sace-u-rukama.webp"
             alt={copy.imageAlt}
             fill
-            sizes="(max-width: 1024px) 100vw, 63vw"
+            sizes="(max-width: 1024px) 100vw, 70vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-[#73552E]/[0.08]" />
-          <div className="absolute bottom-6 left-6 rounded-full bg-[#73552E]/85 px-6 py-3.5 text-[#FDF9DC] backdrop-blur-sm sm:bottom-8 sm:left-8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#FDF9DC]">
+          {/*
+            * Natpis stoji direktno na slici, bez pilule. Da bi se citao i kad
+            * ispod njega padne osvijetljeno sace, nosi ga tanka sjenka pri dnu.
+            */}
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#2E2109]/60 via-[#2E2109]/25 to-transparent px-6 pb-6 pt-20 sm:px-9 sm:pb-8">
+            <p className="about-preview__quote">
+              <span className="about-preview__mark">&ldquo;</span>
               {copy.imageCaption}
+              <span className="about-preview__mark">&rdquo;</span>
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col justify-center rounded-[2.25rem] bg-[var(--paper)] px-6 py-20 lg:py-28 sm:px-10 lg:px-14 lg:py-20">
+        <div className="flex flex-col justify-center rounded-[1rem] bg-[var(--paper)] px-6 py-20 lg:py-28 sm:px-10 lg:px-14 lg:py-20">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
             {copy.eyebrow}
           </p>
