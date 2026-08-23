@@ -6,22 +6,22 @@ import { home } from '@/content/pages';
 import { getProduct } from '@/data/products';
 import { localeHref, type Locale } from '@/i18n/config';
 
-// The bento grid: one tall card on the left, two wide cards stacked on the right.
+/*
+ * Dvije vrste meda, dvije jednake kartice u jednom redu.
+ *
+ * Ranije su bile tri — jedna visoka i dvije siroke — ali sa dvije vrste taj
+ * raspored ostavlja rupu u rasteru, pa su sada obje visoke i jednake.
+ */
 const layout = [
   {
-    tile: 'lg:col-span-5 lg:row-span-2',
+    tile: 'lg:col-span-6',
     bg: 'bg-[#73552E]/[0.06]',
     variant: 'tall' as const,
   },
   {
-    tile: 'lg:col-span-7 lg:row-span-1',
+    tile: 'lg:col-span-6',
     bg: 'bg-[#73552E]/[0.06]',
-    variant: 'wide' as const,
-  },
-  {
-    tile: 'lg:col-span-7 lg:row-span-1',
-    bg: 'bg-[#73552E]/[0.06]',
-    variant: 'wide' as const,
+    variant: 'tall' as const,
   },
 ];
 
@@ -49,7 +49,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
           </Link>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[21rem_21rem]">
+        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[32rem]">
           {copy.items.map((item, index) => {
             const product = getProduct(item.slug);
             const style = layout[index];

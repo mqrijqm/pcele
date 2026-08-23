@@ -37,11 +37,15 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
     return sorted;
   }, [query, category, sort, locale]);
 
-  const filters: { id: CategoryFilter; label: string }[] = [
-    { id: 'all', label: t('products.filter.all') },
-    { id: 'honey', label: t('products.filter.honey') },
-    { id: 'other', label: t('products.filter.other') },
-  ];
+  // Kategorija bez ijednog artikla se ne nudi — prazan filter samo vodi u
+  // praznu stranicu.
+  const filters = (
+    [
+      { id: 'all', label: t('products.filter.all') },
+      { id: 'honey', label: t('products.filter.honey') },
+      { id: 'other', label: t('products.filter.other') },
+    ] as { id: CategoryFilter; label: string }[]
+  ).filter((f) => f.id === 'all' || products.some((p) => p.category === f.id));
 
   return (
     <>

@@ -30,7 +30,7 @@ export const legal: Record<Locale, { terms: LegalDoc; privacy: LegalDoc }> = {
           "blocks": [
             {
               "t": "p",
-              "text": "U Prodavnici nudimo prirodne pčelinje proizvode - med (bagremov, livadski, lipov i druge vrste), propolis i polen, proizvedene na našem porodičnom pčelinjaku u okolini Mračaja. Fotografije i opisi proizvoda na sajtu predstavljaju vjeran prikaz proizvoda, ali stvarni izgled (boja, konzistencija) meda može neznatno varirati u zavisnosti od godišnjeg doba i izvora nektara, što je prirodna karakteristika, a ne nedostatak."
+              "text": "U Prodavnici nudimo prirodne pčelinje proizvode - med (bagremov i livadski), proizveden na našem porodičnom pčelinjaku u okolini Mračaja. Fotografije i opisi proizvoda na sajtu predstavljaju vjeran prikaz proizvoda, ali stvarni izgled (boja, konzistencija) meda može neznatno varirati u zavisnosti od godišnjeg doba i izvora nektara, što je prirodna karakteristika, a ne nedostatak."
             },
             {
               "t": "p",
@@ -402,7 +402,7 @@ export const legal: Record<Locale, { terms: LegalDoc; privacy: LegalDoc }> = {
           "blocks": [
             {
               "t": "p",
-              "text": "In the Store we offer natural bee products - honey (acacia, meadow, linden and other varieties), propolis and pollen, produced at our family apiary near Mračaj. Photographs and descriptions on the site are a faithful representation of the products, but the actual appearance (color, texture) of the honey may vary slightly depending on the season and nectar source, which is a natural characteristic and not a defect."
+              "text": "In the Store we offer natural bee products - honey (acacia and meadow), produced at our family apiary near Mračaj. Photographs and descriptions on the site are a faithful representation of the products, but the actual appearance (color, texture) of the honey may vary slightly depending on the season and nectar source, which is a natural characteristic and not a defect."
             },
             {
               "t": "p",

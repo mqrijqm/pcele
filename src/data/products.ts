@@ -1,4 +1,4 @@
-// Generated from the original site's data. Prices are in KM (BAM).
+// Cijene su u KM (BAM).
 import type { Locale } from '@/i18n/config';
 
 export type Variant = { id: string; title: string; price: number; stock: number };
@@ -15,190 +15,98 @@ export type Product = {
   description: Record<Locale, string>;
 };
 
+/*
+ * Ono sto se stvarno prodaje: dvije vrste meda, svaka u dvije tegle.
+ *
+ * Svaka tegla je zaseban artikal, a ne velicina unutar jednog proizvoda, jer
+ * svaka ima svoju fotografiju sa svojom etiketom — na etiketi pise gramaza,
+ * pa jedna slika ne moze pokrivati dvije tegle.
+ *
+ * Cijene i zalihe prenesene su iz ranijeg kataloga.
+ */
 export const products: Product[] = [
   {
-    "slug": "bagremov-med",
-    "order": 1,
-    "category": "honey",
-    "image": "/images/real/tegle-red.webp",
-    "cardBg": "var(--paper)",
-    "variants": [
-      {
-        "id": "bagremov-500",
-        "title": "500g",
-        "price": 22,
-        "stock": 100
-      },
-      {
-        "id": "bagremov-250",
-        "title": "250g",
-        "price": 14,
-        "stock": 100
-      },
-      {
-        "id": "bagremov-1kg",
-        "title": "1kg",
-        "price": 40,
-        "stock": 50
-      }
-    ],
-    "name": {
-      "sr": "Bagremov Med",
-      "en": "Acacia Honey"
+    slug: 'bagremov-med-1kg',
+    order: 1,
+    category: 'honey',
+    image: '/images/proizvodi/bagremov-1kg.webp',
+    cardBg: 'var(--paper)',
+    variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 40, stock: 50 }],
+    name: {
+      sr: 'Bagremov med, 1 kg',
+      en: 'Acacia honey, 1 kg',
     },
-    "tagline": {
-      "sr": "Svijetao, blag i elegantan",
-      "en": "Light, mild, and elegant"
+    tagline: {
+      sr: 'Svijetao, blag i elegantan',
+      en: 'Light, mild, and elegant',
     },
-    "description": {
-      "sr": "Naš bagremov med dolazi iz čistih šuma oko Prnjavora, gdje naše pčele sakupljaju nektar sa stoljetnih stabala bagrema. Poznat po svojoj svijetloj boji i nježnom, blagom ukusu, idealan je za svakodnevnu upotrebu i zaslađivanje napitaka.",
-      "en": "Our acacia honey comes from the pristine forests around Prnjavor, where our bees collect nectar from centuries-old acacia trees. Known for its light color and gentle, mild taste, it is ideal for everyday use and sweetening beverages."
-    }
+    description: {
+      sr: 'Naš bagremov med dolazi iz čistih šuma oko Prnjavora, gdje naše pčele sakupljaju nektar sa stoljetnih stabala bagrema. Poznat po svojoj svijetloj boji i nježnom, blagom ukusu, idealan je za svakodnevnu upotrebu i zaslađivanje napitaka.',
+      en: 'Our acacia honey comes from the pristine forests around Prnjavor, where our bees collect nectar from centuries-old acacia trees. Known for its light color and gentle, mild taste, it is ideal for everyday use and sweetening beverages.',
+    },
   },
   {
-    "slug": "lipov-med",
-    "order": 2,
-    "category": "honey",
-    "image": "/images/real/ram-2025.webp",
-    "cardBg": "var(--paper)",
-    "variants": [
-      {
-        "id": "lipov-500",
-        "title": "500g",
-        "price": 26,
-        "stock": 80
-      },
-      {
-        "id": "lipov-250",
-        "title": "250g",
-        "price": 16,
-        "stock": 100
-      },
-      {
-        "id": "lipov-1kg",
-        "title": "1kg",
-        "price": 48,
-        "stock": 40
-      }
-    ],
-    "name": {
-      "sr": "Lipov Med",
-      "en": "Linden Honey"
+    slug: 'bagremov-med-500g',
+    order: 2,
+    category: 'honey',
+    image: '/images/proizvodi/bagremov-500g.webp',
+    cardBg: 'var(--paper)',
+    variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
+    name: {
+      sr: 'Bagremov med, 500 g',
+      en: 'Acacia honey, 500 g',
     },
-    "tagline": {
-      "sr": "Aromatičan med cvjetnog karaktera",
-      "en": "Aromatic honey with a floral character"
+    tagline: {
+      sr: 'Svijetao, blag i elegantan',
+      en: 'Light, mild, and elegant',
     },
-    "description": {
-      "sr": "Lipov med je poznat po svom prepoznatljivom, intenzivnom mirisu i ljekovitim svojstvima. Sakupljen sa lipovih stabala u okolini Mračaja kod Prnjavora, ovaj med je odličan za ublažavanje prehlade i jačanje imuniteta.",
-      "en": "Linden honey is known for its distinctive, intense aroma and healing properties. Collected from linden trees around Mračaj near Prnjavor, this honey is excellent for relieving colds and strengthening immunity."
-    }
+    description: {
+      sr: 'Naš bagremov med dolazi iz čistih šuma oko Prnjavora, gdje naše pčele sakupljaju nektar sa stoljetnih stabala bagrema. Poznat po svojoj svijetloj boji i nježnom, blagom ukusu, idealan je za svakodnevnu upotrebu i zaslađivanje napitaka.',
+      en: 'Our acacia honey comes from the pristine forests around Prnjavor, where our bees collect nectar from centuries-old acacia trees. Known for its light color and gentle, mild taste, it is ideal for everyday use and sweetening beverages.',
+    },
   },
   {
-    "slug": "livadski-med",
-    "order": 3,
-    "category": "honey",
-    "image": "/images/real/kante-med.webp",
-    "cardBg": "var(--paper)",
-    "variants": [
-      {
-        "id": "livadski-500",
-        "title": "500g",
-        "price": 18,
-        "stock": 120
-      },
-      {
-        "id": "livadski-250",
-        "title": "250g",
-        "price": 11,
-        "stock": 150
-      },
-      {
-        "id": "livadski-1kg",
-        "title": "1kg",
-        "price": 32,
-        "stock": 60
-      }
-    ],
-    "name": {
-      "sr": "Livadski Med",
-      "en": "Meadow Honey"
+    slug: 'livadski-med-1kg',
+    order: 3,
+    category: 'honey',
+    // TODO: privremeno studijski render — fotografija tegle od 1 kg jos nije
+    // snimljena. Ostale tri kartice su prave fotografije.
+    image: '/images/mockups/jar-front-studio.webp',
+    cardBg: 'var(--paper)',
+    variants: [{ id: 'livadski-1kg', title: '1 kg', price: 32, stock: 60 }],
+    name: {
+      sr: 'Livadski med, 1 kg',
+      en: 'Meadow honey, 1 kg',
     },
-    "tagline": {
-      "sr": "Cvjetan, bogat i sezonski",
-      "en": "Floral, rich, and seasonal"
+    tagline: {
+      sr: 'Cvjetan, pun i svakodnevan',
+      en: 'Floral, full and everyday',
     },
-    "description": {
-      "sr": "Livadski med je naš najpopularniji proizvod. Sakupljen sa raznovrsnih livadskih cvjetova oko Mračaja kod Prnjavora, ovaj med ima bogat, složen ukus koji odražava raznolikost biljnog svijeta naših pčelinjaka.",
-      "en": "Meadow honey is our most popular product. Collected from diverse meadow flowers around Mračaj near Prnjavor, this honey has a rich, complex taste that reflects the variety of plant life around our apiaries."
-    }
+    description: {
+      sr: 'Livadski med nastaje iz mnogo različitih cvjetova sa livada oko Mračaja, pa mu se karakter mijenja iz sezone u sezonu. Zaokružen je i cvjetan, dovoljno blag za svaki dan, a dovoljno izražen da se osjeti odakle dolazi.',
+      en: 'Meadow honey comes from many different flowers on the meadows around Mračaj, so its character shifts from one season to the next. It is rounded and floral — mild enough for every day, yet distinct enough to taste where it comes from.',
+    },
   },
   {
-    "slug": "propolis",
-    "order": 4,
-    "category": "other",
-    "image": "/images/real/kosnice-prikolica.webp",
-    "cardBg": "var(--paper)",
-    "variants": [
-      {
-        "id": "propolis-30",
-        "title": "30ml",
-        "price": 15,
-        "stock": 200
-      },
-      {
-        "id": "propolis-50",
-        "title": "50ml",
-        "price": 22,
-        "stock": 150
-      }
-    ],
-    "name": {
-      "sr": "Propolis Kapi",
-      "en": "Propolis Drops"
+    slug: 'livadski-med-500g',
+    order: 4,
+    category: 'honey',
+    image: '/images/proizvodi/livadski-500g.webp',
+    cardBg: 'var(--paper)',
+    variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
+    name: {
+      sr: 'Livadski med, 500 g',
+      en: 'Meadow honey, 500 g',
     },
-    "tagline": {
-      "sr": "Prirodni propolis iz naših košnica",
-      "en": "Natural propolis from our hives"
+    tagline: {
+      sr: 'Cvjetan, pun i svakodnevan',
+      en: 'Floral, full and everyday',
     },
-    "description": {
-      "sr": "Naše propolis kapi su 100% prirodan proizvod, pažljivo pripremljen od propolisa sakupljenog iz naših košnica. Propolis je poznat po svojim antibakterijskim i antivirusnim svojstvima, idealan za jačanje imuniteta.",
-      "en": "Our propolis drops are a 100% natural product, carefully prepared from propolis collected from our beehives. Propolis is known for its antibacterial and antiviral properties, ideal for strengthening immunity."
-    }
+    description: {
+      sr: 'Livadski med nastaje iz mnogo različitih cvjetova sa livada oko Mračaja, pa mu se karakter mijenja iz sezone u sezonu. Zaokružen je i cvjetan, dovoljno blag za svaki dan, a dovoljno izražen da se osjeti odakle dolazi.',
+      en: 'Meadow honey comes from many different flowers on the meadows around Mračaj, so its character shifts from one season to the next. It is rounded and floral — mild enough for every day, yet distinct enough to taste where it comes from.',
+    },
   },
-  {
-    "slug": "cvjetni-prah",
-    "order": 5,
-    "category": "other",
-    "image": "/images/real/kosnice-livada.webp",
-    "cardBg": "var(--paper)",
-    "variants": [
-      {
-        "id": "polen-200",
-        "title": "200g",
-        "price": 12,
-        "stock": 100
-      },
-      {
-        "id": "polen-500",
-        "title": "500g",
-        "price": 25,
-        "stock": 60
-      }
-    ],
-    "name": {
-      "sr": "Cvjetni Prah",
-      "en": "Bee Pollen"
-    },
-    "tagline": {
-      "sr": "Polen pažljivo sušen i pakovan",
-      "en": "Carefully dried and packed pollen"
-    },
-    "description": {
-      "sr": "Cvjetni prah (polen) je supernamirnica bogata proteinima, vitaminima i mineralima. Naše pčele sakupljaju polen sa raznovrsnog cvijeća oko Mračaja kod Prnjavora, a mi ga pažljivo sušimo i pakujemo kako bi zadržao sve hranjive vrijednosti.",
-      "en": "Bee pollen is a superfood rich in proteins, vitamins, and minerals. Our bees collect pollen from diverse flowers around Mračaj near Prnjavor, and we carefully dry and package it to retain its nutritional value."
-    }
-  }
 ];
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);

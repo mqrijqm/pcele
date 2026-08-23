@@ -98,11 +98,11 @@ export default async function ProductPage({
 
       <ProductDetail product={product} locale={locale} />
 
-      {/* Only livadski med has its label artwork exported so far. */}
+      {/* Zasad je izvezena samo etiketa livadskog meda od 1 kg. */}
       <Declaration
         locale={locale}
         labelImage={
-          product.slug === 'livadski-med' ? '/images/brand/deklaracija-1kg.webp' : undefined
+          product.slug === 'livadski-med-1kg' ? '/images/brand/deklaracija-1kg.webp' : undefined
         }
       />
 

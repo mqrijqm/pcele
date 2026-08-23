@@ -11,10 +11,10 @@ const config: Config = {
         gold: '#C79A3B',
 
         // Stara imena mapirana na paletu
-        ivory: '#FDF9DC',
-        cream: '#FDF9DC',
-        linen: '#FDF9DC',
-        sand: '#FDF9DC',
+        ivory: 'var(--paper)',
+        cream: 'var(--paper)',
+        linen: 'var(--paper)',
+        sand: 'var(--paper)',
         espresso: '#73552E',
         walnut: '#73552E',
         stone: '#73552E',

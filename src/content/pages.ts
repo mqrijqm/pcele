@@ -135,22 +135,20 @@ export const home = {
   featured: {
     sr: {
       eyebrow: 'Iz naših košnica',
-      heading: 'Tri meda. Svaki nosi svoj kraj.',
+      heading: 'Dva meda. Svaki nosi svoj kraj.',
       viewAll: 'Svi proizvodi',
       items: [
-        { slug: 'livadski-med', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
-        { slug: 'bagremov-med', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
-        { slug: 'lipov-med', name: 'Lipov Med', note: 'Aromatičan, cvjetnog karaktera.' },
+        { slug: 'livadski-med-1kg', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
+        { slug: 'bagremov-med-1kg', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
       ],
     },
     en: {
       eyebrow: 'From our hives',
-      heading: 'Three honeys. Each carries its landscape.',
+      heading: 'Two honeys. Each carries its landscape.',
       viewAll: 'All products',
       items: [
-        { slug: 'livadski-med', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
-        { slug: 'bagremov-med', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
-        { slug: 'lipov-med', name: 'Linden Honey', note: 'Aromatic, with a floral character.' },
+        { slug: 'livadski-med-1kg', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
+        { slug: 'bagremov-med-1kg', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
       ],
     },
   } satisfies L<{
