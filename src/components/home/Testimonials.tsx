@@ -30,17 +30,17 @@ export default function Testimonials({ locale }: { locale: Locale }) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <figure className="reveal relative overflow-hidden bg-[#73552E] p-7 text-[#FDF9DC] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-14 rounded-[0.6rem]">
-              <div className="relative min-h-[280px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[390px] rounded-[0.6rem]">
+            <figure className="reveal relative overflow-hidden bg-[#73552E] p-4 text-[#FDF9DC] sm:col-span-2 sm:p-5 lg:grid lg:grid-cols-[0.52fr_0.48fr] lg:gap-9 rounded-[0.6rem]">
+              <div className="relative min-h-[320px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[460px] rounded-[0.6rem]">
                 <Image
-                  src="/images/real/kosnice-prikolica.webp"
+                  src="/images/real/sace-kasika.webp"
                   alt={copy.imageAlt}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 30vw"
-                  className="object-cover saturate-[0.88]"
+                  sizes="(max-width: 1024px) 100vw, 38vw"
+                  className="object-cover"
                 />
               </div>
-              <div className="flex flex-col justify-between pt-8 lg:pt-0">
+              <div className="flex flex-col justify-between pt-7 lg:py-4 lg:pr-3">
                 <span aria-hidden="true" className="font-display text-6xl leading-none text-[#C79A3B]">
                   &ldquo;
                 </span>
@@ -59,12 +59,17 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 key={quote.author}
                 className={`reveal stagger-${index + 1} border-t border-[#73552E]/15 px-1 py-7 sm:p-7`}
               >
-                <blockquote className="text-xl font-semibold leading-snug text-[#73552E] lg:text-2xl">
-                  &ldquo;{quote.text}&rdquo;
+                <blockquote className="review">
+                  {/*
+                    * Navodnik je crtez, ne slovo: u zlatnoj i krupniji od
+                    * teksta, pa citat pocinje znakom a ne recenicom.
+                    */}
+                  <span className="review__mark" aria-hidden="true" />
+                  {quote.text}
                 </blockquote>
-                <figcaption className="mt-7 text-xs">
-                  <span className="font-semibold text-[#73552E]">{quote.author}</span>
-                  <span className="ml-3 text-[#73552E]">{quote.city}</span>
+                <figcaption className="review__by">
+                  <span>{quote.author}</span>
+                  <span className="ml-3 opacity-80">{quote.city}</span>
                 </figcaption>
               </figure>
             ))}
