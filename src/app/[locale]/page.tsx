@@ -62,6 +62,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <Testimonials locale={locale} />
 
+      {/* Pravi pcelinjak, prije nego sto krene prica o mjestu. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/pcelinjak-2.webp', alt: shot.homeHives.altA },
+          { src: '/images/real/pcelinjak-3.webp', alt: shot.homeHives.altB },
+        ]}
+        caption={shot.homeHives.caption}
+        meta={shot.homeHives.meta}
+        emblem
+      />
+
       <Origin locale={locale} />
 
       {/* Livada iz koje sve dolazi — uvod u pricu o stolu. */}

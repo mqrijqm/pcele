@@ -1050,6 +1050,8 @@ html:not(.is-preloading) .hero-land__arrow {
 .origin__map {
   margin: clamp(3rem, 7vw, 6rem) auto 0;
   width: min(62%, 840px);
+  /* Karta se pomjera za misem — pomak upisuje JS, ovdje samo najava. */
+  will-change: transform;
 }
 
 .origin__map img {
@@ -1115,4 +1117,83 @@ html:not(.is-preloading) .hero-land__arrow {
   .origin__badge img {
     animation: none;
   }
+}
+
+/* ---------------------------------------------------------------------------
+ * Heroj koji zumira: tri kadra istog snimka, od najsireg do najblizeg.
+ *
+ * Kadrovi se pretapaju i uz to rastu, pa se tri odvojene slike citaju kao
+ * jedno neprekidno primicanje fotografiji. Svaki drzi trecinu ciklusa, a
+ * kasnjenje ih rasporedjuje po njemu.
+ * ------------------------------------------------------------------------- */
+.page-hero__frame {
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: page-hero-zoom 21s cubic-bezier(0.4, 0, 0.5, 1) infinite;
+}
+
+.page-hero__frame:nth-of-type(2) {
+  animation-delay: 7s;
+}
+
+.page-hero__frame:nth-of-type(3) {
+  animation-delay: 14s;
+}
+
+@keyframes page-hero-zoom {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  5% {
+    opacity: 1;
+  }
+  28% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 0;
+    transform: scale(1.14);
+  }
+  /* Vracanje na pocetak dok je kadar nevidljiv, da se skok ne vidi. */
+  34% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+/* Bez pokreta ostaje samo prvi kadar, mirno. */
+@media (prefers-reduced-motion: reduce) {
+  .page-hero__frame {
+    animation: none;
+  }
+
+  .page-hero__frame:first-of-type {
+    opacity: 1;
+  }
+}
+
+/*
+ * Znak u uglu fotografije. Bijel je zbog kontrasta, a tanka sjena ga drzi
+ * citljivim i kad ispod njega padne nebo. Slika ostaje glavna — znak je sitan
+ * i ne hvata mis.
+ */
+.image-break__emblem {
+  position: absolute;
+  right: clamp(0.9rem, 2.2vw, 2rem);
+  bottom: clamp(0.9rem, 2.2vw, 2rem);
+  z-index: 2;
+  display: block;
+  width: clamp(50px, 5.6vw, 84px);
+  pointer-events: none;
+  filter: drop-shadow(0 2px 12px rgba(24, 16, 6, 0.38));
+}
+
+.image-break__emblem img {
+  display: block;
+  width: 100%;
+  height: auto;
 }

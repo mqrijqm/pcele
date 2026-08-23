@@ -6,6 +6,12 @@ type Props = {
   description: string;
   note: string;
   image: string;
+  /**
+   * Vise kadrova istog motiva, od najsireg do najblizeg. Kad ih ima, heroj ih
+   * pretapa u petlji i uz to uvecava — jedan neprekidan zum u fotografiju.
+   * `image` tada sluzi samo kao zamjena bez JS-a i bez animacije.
+   */
+  images?: string[];
   imageAlt: string;
   /** Background band behind the hero. */
   /** Boja iza heroja. Podrazumevano papir — isti kao cela strana. */
@@ -27,6 +33,7 @@ export default function PageHero({
   description,
   note,
   image,
+  images,
   imageAlt,
   background = 'var(--paper)',
   cardSide = 'left',
@@ -46,14 +53,18 @@ export default function PageHero({
               cardSide === 'left' ? 'ml-auto' : ''
             } rounded-[2rem]`}
           >
-            <Image
-              src={image}
-              alt={imageAlt}
-              fill
-              priority
-              sizes="(max-width: 1024px) 100vw, 78vw"
-              className="object-cover"
-            />
+            {(images?.length ? images : [image]).map((src, i) => (
+              <Image
+                key={src}
+                src={src}
+                alt={i === 0 ? imageAlt : ''}
+                aria-hidden={i === 0 ? undefined : true}
+                fill
+                priority={i === 0}
+                sizes="(max-width: 1024px) 100vw, 78vw"
+                className={images?.length ? 'page-hero__frame object-cover' : 'object-cover'}
+              />
+            ))}
           </div>
 
           <div

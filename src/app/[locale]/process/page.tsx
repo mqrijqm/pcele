@@ -92,6 +92,18 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         </div>
       </section>
 
+      {/* Odakle sve krece — pcelinjak na livadi. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/pcelinjak-4.webp', alt: shot.processHives.altA },
+          { src: '/images/real/pcelinjak-5.webp', alt: shot.processHives.altB },
+        ]}
+        caption={shot.processHives.caption}
+        meta={shot.processHives.meta}
+        emblem
+      />
+
       <ImageBreak
         images={[{ src: '/images/mockups/jar-hive-bench.webp', alt: shot.processJar.alt }]}
         aspect="aspect-[3/4] sm:aspect-[16/9]"

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import OriginMap from './OriginMap';
 import { home } from '@/content/pages';
 import type { Locale } from '@/i18n/config';
 
@@ -24,15 +25,7 @@ export default function Origin({ locale }: { locale: Locale }) {
 
         <h2 className="origin__heading reveal stagger-1">{copy.heading}</h2>
 
-        <div className="origin__map reveal stagger-2">
-          <Image
-            src="/images/brand/mapa-prnjavor.webp"
-            alt={copy.mapAlt}
-            width={1058}
-            height={706}
-            sizes="(max-width: 768px) 88vw, 46vw"
-          />
-        </div>
+        <OriginMap alt={copy.mapAlt} />
 
         <p className="origin__note reveal stagger-3">{copy.note}</p>
       </div>

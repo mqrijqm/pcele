@@ -30,7 +30,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         heading={copy.heading}
         description={copy.description}
         note={copy.note}
-        image="/images/real/ram-2025.webp"
+        image="/images/real/arhiva-1.webp"
+        images={[
+          '/images/real/arhiva-1.webp',
+          '/images/real/arhiva-2.webp',
+          '/images/real/arhiva-3.webp',
+        ]}
         imageAlt={copy.heroAlt}
         background="#73552E"
         cardSide="right"
@@ -57,6 +62,18 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           ))}
         </div>
       </section>
+
+      {/* Pcelinjak kakav jeste, dva kadra. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/pcelinjak-1.webp', alt: shot.aboutHives.altA },
+          { src: '/images/real/pcelinjak-6.webp', alt: shot.aboutHives.altB },
+        ]}
+        caption={shot.aboutHives.caption}
+        meta={shot.aboutHives.meta}
+        emblem
+      />
 
       <ImageBreak
         images={[{ src: '/images/mockups/jar-smoker-frames.webp', alt: shot.aboutTools.alt }]}

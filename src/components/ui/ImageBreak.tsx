@@ -26,6 +26,11 @@ type Props = {
   /** Odnos stranica slike — uspravnim snimcima treba drugaciji rez. */
   aspect?: string;
   /**
+   * Bijeli znak u uglu fotografije. Bijel je iskljucivo zbog kontrasta — na
+   * snimcima pcelinjaka nema mirne povrsine na kojoj bi smedji znak citao.
+   */
+  emblem?: boolean;
+  /**
    * `band`: koliko traka sme da bude siroka. `wide` ide skoro preko cele
    * strane, `narrow` je za uspravne snimke — njih siroki rez unakazi.
    */
@@ -54,8 +59,15 @@ export default function ImageBreak({
   aspect,
   focus,
   frame = 'wide',
+  emblem = false,
 }: Props) {
   const hasFooter = Boolean(caption || meta);
+
+  const mark = emblem ? (
+    <span className="image-break__emblem" aria-hidden="true">
+      <Image src="/images/brand/znak-krug-bijeli.svg" alt="" width={120} height={120} />
+    </span>
+  ) : null;
 
   /*
    * Natpis se poravnava sa ivicom slike iznad sebe, a slika i tekst nemaju
@@ -87,6 +99,7 @@ export default function ImageBreak({
                 sizes="(max-width: 640px) 46vw, 44vw"
                 className="object-cover"
               />
+              {mark}
             </div>
             {second && (
               /*
@@ -134,6 +147,7 @@ export default function ImageBreak({
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className={`object-cover ${focus ?? ''}`}
               />
+              {mark}
             </div>
 
             <div className="reveal stagger-2 max-w-[30rem]">
@@ -178,6 +192,7 @@ export default function ImageBreak({
             sizes="(max-width: 1600px) 100vw, 1600px"
             className={`object-cover ${focus ?? ''}`}
           />
+          {mark}
         </div>
       </div>
       {footerIn(frame === 'narrow' ? 'container-narrow mt-6' : 'container-wide mt-6')}

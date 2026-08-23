@@ -634,6 +634,24 @@ export const declaration = {
  */
 export const photoBreaks = {
   sr: {
+    homeHives: {
+      caption: 'Naš pčelinjak · Mračaj',
+      meta: 'Košnice na livadi',
+      altA: 'Red plavih i žutih košnica na livadi ispod brda',
+      altB: 'Košnice u visokoj travi, u hladu voćaka',
+    },
+    aboutHives: {
+      caption: 'Isti red košnica, iz godine u godinu',
+      meta: 'Mračaj · Prnjavor',
+      altA: 'Košnice poredane u hladu drveća na rubu livade',
+      altB: 'Red košnica koji se gubi među stablima',
+    },
+    processHives: {
+      caption: 'Odavde počinje svaka tegla',
+      meta: 'Pčelinjak u julu',
+      altA: 'Košnice na otvorenoj livadi pod vedrim nebom',
+      altB: 'Pogled niz red košnica preko livade',
+    },
     homeApiary: {
       caption: 'Pčelinjak Mračaj · jutarnja tura',
       meta: 'Sezona 2025.',
@@ -714,6 +732,24 @@ export const photoBreaks = {
     },
   },
   en: {
+    homeHives: {
+      caption: 'Our apiary · Mračaj',
+      meta: 'Hives out on the meadow',
+      altA: 'A row of blue and yellow hives on a meadow below the hills',
+      altB: 'Hives standing in tall grass in the shade of fruit trees',
+    },
+    aboutHives: {
+      caption: 'The same row of hives, year after year',
+      meta: 'Mračaj · Prnjavor',
+      altA: 'Hives lined up in the shade of trees at the edge of a meadow',
+      altB: 'A row of hives disappearing among the trees',
+    },
+    processHives: {
+      caption: 'Every jar starts here',
+      meta: 'The apiary in July',
+      altA: 'Hives on an open meadow under a clear sky',
+      altB: 'Looking down the row of hives across the meadow',
+    },
     homeApiary: {
       caption: 'Mračaj apiary · morning round',
       meta: '2025 season',
