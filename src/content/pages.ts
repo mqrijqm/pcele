@@ -213,6 +213,30 @@ export const home = {
     quotes: { text: string; author: string; city: string }[];
   }>,
 
+  origin: {
+    sr: {
+      eyebrow: 'Odakle smo?',
+      heading:
+        'Naši pčelinjaci nalaze se u Mračaju, Orašju i Otpočivaljci, selima nadomak Prnjavora',
+      note:
+        'Čist vazduh i očuvana priroda sela nadomak Prnjavora daju našem medu prepoznatljiv miris, boju i ukus.',
+      mapAlt: 'Karta opštine Prnjavor sa označenim selima Orašje, Mračaj i Otpočivaljka',
+    },
+    en: {
+      eyebrow: 'Where we are from',
+      heading:
+        'Our apiaries stand in Mračaj, Orašje and Otpočivaljka, villages just outside Prnjavor',
+      note:
+        'The clean air and unspoiled nature of the villages around Prnjavor give our honey its distinctive scent, colour and taste.',
+      mapAlt: 'A map of the Prnjavor municipality marking Orašje, Mračaj and Otpočivaljka',
+    },
+  } satisfies L<{
+    eyebrow: string;
+    heading: string;
+    note: string;
+    mapAlt: string;
+  }>,
+
   faq: {
     sr: {
       eyebrow: 'O medu',

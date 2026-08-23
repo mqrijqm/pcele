@@ -1008,3 +1008,105 @@ html:not(.is-preloading) .hero-land__arrow {
     display: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Odakle smo — karta opstine sa tri sela.
+ *
+ * Jedna centrirana kolona na papiru, bez okvira i bez kartice. Ritam sekcije
+ * nosi vazduh, ne ukras, pa su razmaci veci nego drugdje.
+ * ------------------------------------------------------------------------- */
+.origin {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--paper);
+}
+
+/* Nadnaslov: serif, verzal, sitno — ne sans kao drugdje na sajtu. */
+.origin__eyebrow {
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.origin__heading {
+  /* Mjera je odmjerena tako da recenica na sirokom ekranu stane u dva reda. */
+  max-width: 44ch;
+  margin: clamp(2rem, 4vw, 3.25rem) auto 0;
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.35rem, 2.35vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--brown);
+  text-wrap: balance;
+}
+
+.origin__map {
+  margin: clamp(3rem, 7vw, 6rem) auto 0;
+  width: min(46%, 640px);
+}
+
+.origin__map img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.origin__note {
+  max-width: 44ch;
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  text-align: center;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--brown);
+}
+
+/*
+ * Znak u donjem desnom uglu, van mjere teksta. Vrti se polako oko svoje ose —
+ * jedan krug u pola minuta, dovoljno sporo da se primijeti tek ako gledas.
+ */
+.origin__badge {
+  position: absolute;
+  right: clamp(1.5rem, 5vw, 5rem);
+  bottom: clamp(2rem, 5vw, 4.5rem);
+  display: block;
+  width: clamp(76px, 8vw, 120px);
+  will-change: transform;
+  animation: origin-spin 30s linear infinite;
+}
+
+.origin__badge img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes origin-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .origin__map {
+    width: 88%;
+  }
+
+  /* Na uskom ekranu znak bi sjeo na tekst, pa ide ispod njega. */
+  .origin__badge {
+    position: static;
+    margin: clamp(2.5rem, 8vw, 3.5rem) auto 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .origin__badge {
+    animation: none;
+  }
+}

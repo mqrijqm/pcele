@@ -7,6 +7,7 @@ import HeroJar from '@/components/home/HeroJar';
 import AboutPreview from '@/components/home/AboutPreview';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import Testimonials from '@/components/home/Testimonials';
+import Origin from '@/components/home/Origin';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
 import ImageBreak from '@/components/ui/ImageBreak';
@@ -60,6 +61,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       />
 
       <Testimonials locale={locale} />
+
+      <Origin locale={locale} />
 
       {/* Livada iz koje sve dolazi — uvod u pricu o stolu. */}
       <ImageBreak
