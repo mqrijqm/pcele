@@ -34,7 +34,6 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         note={copy.note}
         image="/images/real/kosnice-livada.webp"
         imageAlt={copy.heroAlt}
-        background="#FDF9DC"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"
@@ -65,7 +64,6 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         ]}
         caption={shot.blogSeasons.caption}
         meta={shot.blogSeasons.meta}
-        background="#73552E0F"
       />
     </div>
   );

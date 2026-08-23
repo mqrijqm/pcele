@@ -26,7 +26,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
   const shot = photoBreaks[locale];
 
   return (
-    <div className="bg-[#FDF9DC]">
+    <div className="bg-[var(--paper)]">
       <PageHero
         eyebrow={copy.eyebrow}
         heading={copy.heading}
@@ -100,7 +100,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         meta={shot.processJar.meta}
       />
 
-      <section className="bg-[#73552E]/[0.06] section-padding">
+      <section className="bg-[var(--paper)] section-padding">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">

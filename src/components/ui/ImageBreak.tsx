@@ -17,7 +17,7 @@ type Props = {
   /** Samo za `framed`: recenica koja stoji pored slike. */
   heading?: string;
   body?: string;
-  /** Boja trake iza slike. Podrazumevano papir. */
+  /** Boja trake iza slike. Podrazumevano papir — isti kao cela strana. */
   background?: string;
   /** `framed`: da li slika stoji levo ili desno. */
   side?: 'left' | 'right';
@@ -25,6 +25,11 @@ type Props = {
   priority?: boolean;
   /** Odnos stranica slike — uspravnim snimcima treba drugaciji rez. */
   aspect?: string;
+  /**
+   * `band`: koliko traka sme da bude siroka. `wide` ide skoro preko cele
+   * strane, `narrow` je za uspravne snimke — njih siroki rez unakazi.
+   */
+  frame?: 'wide' | 'narrow';
   /**
    * Tezisna tacka reza (`object-[50%_35%]`). Kad se sirok kadar sece na
    * panoramu, podrazumevani centar zna da odsece poklopac tegle.
@@ -43,24 +48,30 @@ export default function ImageBreak({
   meta,
   heading,
   body,
-  background = '#FDF9DC',
+  background = 'var(--paper)',
   side = 'left',
   priority = false,
   aspect,
   focus,
+  frame = 'wide',
 }: Props) {
   const hasFooter = Boolean(caption || meta);
 
-  const footer = hasFooter ? (
-    <div className="container mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
-      {caption && (
-        <p className="max-w-md text-[11px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
-          {caption}
-        </p>
-      )}
-      {meta && <p className="font-display text-base italic text-[#73552E]/70">{meta}</p>}
-    </div>
-  ) : null;
+  /*
+   * Natpis se poravnava sa ivicom slike iznad sebe, a slika i tekst nemaju
+   * istu meru — zato omotac dolazi spolja.
+   */
+  const footerIn = (wrap: string) =>
+    hasFooter ? (
+      <div className={`${wrap} mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2`}>
+        {caption && (
+          <p className="max-w-md text-[11px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+            {caption}
+          </p>
+        )}
+        {meta && <p className="font-display text-base italic text-[#73552E]/70">{meta}</p>}
+      </div>
+    ) : null;
 
   if (variant === 'pair') {
     const [first, second] = images;
@@ -96,7 +107,7 @@ export default function ImageBreak({
             )}
           </div>
         </div>
-        {footer}
+        {footerIn('container')}
       </section>
     );
   }
@@ -152,21 +163,24 @@ export default function ImageBreak({
   const [wide] = images;
   return (
     <section className="section-padding-sm" style={{ backgroundColor: background }}>
-      <div
-        className={`reveal-scale relative w-full overflow-hidden ${
-          aspect ?? 'aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]'
-        }`}
-      >
-        <Image
-          src={wide.src}
-          alt={wide.alt}
-          fill
-          priority={priority}
-          sizes="100vw"
-          className={`object-cover ${focus ?? ''}`}
-        />
+      {/* Traka vise ne ide od ivice do ivice — uvucena je kao i ostatak sajta. */}
+      <div className={frame === 'narrow' ? 'container-narrow' : 'container-wide'}>
+        <div
+          className={`reveal-scale relative w-full overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] ${
+            aspect ?? 'aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]'
+          }`}
+        >
+          <Image
+            src={wide.src}
+            alt={wide.alt}
+            fill
+            priority={priority}
+            sizes="(max-width: 1600px) 100vw, 1600px"
+            className={`object-cover ${focus ?? ''}`}
+          />
+        </div>
       </div>
-      {footer}
+      {footerIn(frame === 'narrow' ? 'container-narrow' : 'container-wide')}
     </section>
   );
 }

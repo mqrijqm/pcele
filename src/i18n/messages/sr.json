@@ -120,7 +120,7 @@
       "imageAlt": "Tegla meda u rukama",
       "quotes": [
         "Bagremov med je čist, blag i bez onog teškog ukusa koji često osjetim kod industrijskog meda.",
-        "Šumski med ima dubinu i miris kao pravi domaći proizvod. Vidi se da iza njega stoji porodica, ne fabrika.",
+        "Med ima dubinu i miris kao pravi domaći proizvod. Vidi se da iza njega stoji porodica, ne fabrika.",
         "Livadski med uzimam za čaj i kolače. Stigne lijepo upakovan i uvijek istog kvaliteta."
       ]
     },
@@ -176,7 +176,7 @@
         },
         {
           "question": "Koji med izabrati za početak?",
-          "answer": "Bagremov je najblaži, livadski je cvjetan i svakodnevan, a šumski je tamniji i intenzivniji."
+          "answer": "Bagremov je najblaži, livadski je cvjetan i svakodnevan, a lipov je aromatičan i izražen."
         }
       ]
     }
@@ -692,7 +692,7 @@
     "productLinks": [
       "Bagremov med",
       "Livadski med",
-      "Šumski med"
+      "Lipov med"
     ],
     "hours": "Pon - Sub, 08:00 - 20:00",
     "emailReplyTime": "Odgovor u roku od 24h"

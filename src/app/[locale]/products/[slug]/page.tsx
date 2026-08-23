@@ -71,7 +71,7 @@ export default async function ProductPage({
   };
 
   return (
-    <div className="bg-[#73552E]/[0.06] header-offset">
+    <div className="bg-[var(--paper)] header-offset">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -124,7 +124,7 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="overflow-hidden rounded-[1.5rem] border border-[#73552E]/15 bg-[#FDF9DC] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                <div className="overflow-hidden rounded-[1.5rem] border border-[#73552E]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
                   <div className="relative aspect-[3/4] overflow-hidden bg-ivory rounded-[2rem]">
                     <Image
                       src={item.image}

@@ -29,7 +29,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
   const copy = home.featured[locale];
 
   return (
-    <section className="bg-[#FDF9DC] section-padding">
+    <section className="bg-[var(--paper)] section-padding">
       <div className="container">
         <div className="mb-12 flex flex-col gap-6 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
           <div>
@@ -73,7 +73,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
                       />
                     </div>
                     <div className="relative z-10 p-7 sm:p-9">
-                      <span className="inline-block rounded-full bg-[#FDF9DC]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#73552E]">
+                      <span className="inline-block rounded-full bg-[var(--paper)]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#73552E]">
                         {item.name}
                       </span>
                       <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#73552E]">
@@ -93,7 +93,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
                       />
                     </div>
                     <div className="relative z-10 order-1 px-7 py-8 sm:px-10">
-                      <span className="inline-block rounded-full bg-[#FDF9DC]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#73552E]">
+                      <span className="inline-block rounded-full bg-[var(--paper)]/90 px-5 py-2 text-sm font-semibold tracking-[0.06em] text-[#73552E]">
                         {item.name}
                       </span>
                       <p className="mt-4 max-w-[16rem] text-sm leading-6 text-[#73552E]">

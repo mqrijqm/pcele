@@ -26,7 +26,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
         role="dialog"
         aria-modal="true"
         aria-label={t('cart.title')}
-        className={`absolute right-0 top-0 h-full w-full max-w-md bg-[#FDF9DC] shadow-2xl transition-transform duration-500 ease-out-expo ${
+        className={`absolute right-0 top-0 h-full w-full max-w-md bg-[var(--paper)] shadow-2xl transition-transform duration-500 ease-out-expo ${
           cart.isOpen ? 'pointer-events-auto translate-x-0' : 'translate-x-full'
         }`}
       >

@@ -4,7 +4,7 @@
 
 :root {
   /* Paleta 60 / 30 / 10 — boje ocitane sa deklaracije i logotipa */
-  --paper: #F1E6DA;  /* 60% — papir sa crteza livade */
+  --paper: #F5E8D8;  /* 60% — ocitano sa samog crteza livade, da nema sava */
   --brown: #73552E;  /* 30% — mastilo natpisa "livadski MED" */
   --gold:  #C79A3B;  /* 10% — zlatna sa krila pcele iz logotipa */
 
@@ -40,7 +40,7 @@
   /* Vazduh. Sekcije disu — ovo je glavna poluga za ritam celog sajta. */
   --section-padding: clamp(7rem, 14vw, 13rem);
   --section-padding-sm: clamp(4.5rem, 9vw, 8rem);
-  --container-padding: clamp(1.5rem, 6vw, 5rem);
+  --container-padding: clamp(1.75rem, 7vw, 7rem);
 
   /* Razmak izmedju naslova i onoga sto ide ispod njega. */
   --stack-gap: clamp(1.5rem, 3vw, 2.75rem);
@@ -178,7 +178,27 @@ p {
 
 .container {
   width: 100%;
-  max-width: 1280px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/*
+ * Isto uvlacenje kao .container, ali bez uske mere za tekst. Za slike koje
+ * smeju da budu sire od kolone teksta, a vise ne smeju da dodiruju ivicu
+ * ekrana. Jedino heroj ide od ivice do ivice.
+ */
+.container-wide {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* Za uspravne snimke: siroka traka bi im odsekla i glavu i teglu. */
+.container-narrow {
+  width: 100%;
+  max-width: 860px;
   margin: 0 auto;
   padding: 0 var(--container-padding);
 }
@@ -474,7 +494,7 @@ p {
  * that is how meracinque.com does it (see recon/findings.md).
  * ------------------------------------------------------------------------- */
 .hero-jar {
-  --hero-paper: #F1E6DA;
+  --hero-paper: var(--paper);
   --hero-ink: #A96F36;
   --hero-caps: #5C3814;
 
@@ -681,7 +701,7 @@ p {
   width: 100vw;
   height: 100svh;
   overflow: hidden;
-  background-color: #F1E6DA;
+  background-color: var(--paper);
   display: flex;
   align-items: center;
   justify-content: center;

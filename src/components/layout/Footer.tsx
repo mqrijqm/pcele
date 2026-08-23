@@ -26,7 +26,7 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="reveal grid gap-14 sm:grid-cols-2 lg:grid-cols-[1fr_auto]">
           <div className="max-w-sm">
             {/* The seal off the jar label, on its own cream disc so it reads on the dark ground. */}
-            <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[#FDF9DC] p-3">
+            <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[var(--paper)] p-3">
               <Image
                 src="/images/brand/seal.svg"
                 alt="Pčelarstvo Jevtić — tradicija od 1980."

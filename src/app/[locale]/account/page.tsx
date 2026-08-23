@@ -39,7 +39,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
           </h1>
           <p className="mt-5 text-base leading-7 text-[#73552E]">{t('account.subtitle')}</p>
 
-          <div className="mt-10 border border-[#73552E]/15 bg-[#FDF9DC] p-8 rounded-[1.5rem]">
+          <div className="mt-10 border border-[#73552E]/15 bg-[var(--paper)] p-8 rounded-[1.5rem]">
             <p className="text-2xl text-[#73552E]">{t('account.signInPrompt')}</p>
             <p className="mt-3 text-sm text-[#73552E]">{t('account.guestCheckoutNote')}</p>
             <div className="mt-7 flex flex-wrap gap-4">

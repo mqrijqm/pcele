@@ -9,7 +9,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
   const [featured, ...rest] = copy.quotes;
 
   return (
-    <section className="relative overflow-hidden bg-[#FDF9DC] section-padding">
+    <section className="relative overflow-hidden bg-[var(--paper)] section-padding">
       <div className="container">
         <div className="grid gap-16 lg:grid-cols-[0.34fr_0.66fr] lg:gap-20">
           <div className="reveal lg:sticky lg:top-28 lg:self-start">

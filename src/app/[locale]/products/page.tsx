@@ -32,7 +32,6 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         note={copy.note}
         image="/images/real/kante-med.webp"
         imageAlt={copy.heroAlt}
-        background="#FDF9DC"
         cardSide="left"
       />
 

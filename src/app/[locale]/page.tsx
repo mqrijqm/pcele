@@ -28,23 +28,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Poslije heroja — ista tegla, ali stvarna, u pcelinjaku. */}
       <ImageBreak
-        images={[{ src: '/images/mockups/jars-row-apiary.webp', alt: shot.homeApiary.alt }]}
+        images={[{ src: '/images/real/tegla-livada.webp', alt: shot.homeApiary.alt }]}
         caption={shot.homeApiary.caption}
         meta={shot.homeApiary.meta}
+        // Uspravan snimak: siroka traka bi mu odsekla i teglu i lice, pa ide
+        // u uzi okvir i zadrzava svoj prirodni rez.
+        frame="narrow"
+        aspect="aspect-[4/5]"
       />
 
       <AboutPreview locale={locale} />
 
-      {/* Poslije price o porodici — ruke koje taj posao rade. */}
+      {/* Poslije price o porodici — med poslije vrcanja, pa etiketa rukom. */}
       <ImageBreak
         variant="pair"
         images={[
-          { src: '/images/mockups/beekeeper-jar-frame.webp', alt: shot.homeHands.altFrame },
+          { src: '/images/real/kante-med.webp', alt: shot.homeHands.altFrame },
           { src: '/images/mockups/label-in-hands.webp', alt: shot.homeHands.altLabel },
         ]}
         caption={shot.homeHands.caption}
         meta={shot.homeHands.meta}
-        background="#73552E0F"
       />
 
       <FeaturedProducts locale={locale} />
@@ -66,7 +69,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         heading={shot.homeTable.heading}
         body={shot.homeTable.body}
         meta={shot.homeTable.meta}
-        background="#73552E0F"
       />
 
       <Faq locale={locale} />

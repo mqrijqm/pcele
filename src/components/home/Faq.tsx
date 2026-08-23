@@ -11,7 +11,7 @@ export default function Faq({ locale }: { locale: Locale }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="relative overflow-hidden bg-[#73552E]/[0.06] section-padding">
+    <section className="relative overflow-hidden bg-[var(--paper)] section-padding">
       <div className="container relative z-10">
         <div className="grid gap-16 lg:grid-cols-[0.36fr_0.64fr] lg:items-start lg:gap-24">
           <div className="reveal">

@@ -21,7 +21,7 @@ export const products: Product[] = [
     "order": 1,
     "category": "honey",
     "image": "/images/real/tegle-red.webp",
-    "cardBg": "#FDF9DC",
+    "cardBg": "var(--paper)",
     "variants": [
       {
         "id": "bagremov-500",
@@ -60,7 +60,7 @@ export const products: Product[] = [
     "order": 2,
     "category": "honey",
     "image": "/images/real/ram-2025.webp",
-    "cardBg": "#FDF9DC",
+    "cardBg": "var(--paper)",
     "variants": [
       {
         "id": "lipov-500",
@@ -99,7 +99,7 @@ export const products: Product[] = [
     "order": 3,
     "category": "honey",
     "image": "/images/real/kante-med.webp",
-    "cardBg": "#FDF9DC",
+    "cardBg": "var(--paper)",
     "variants": [
       {
         "id": "livadski-500",
@@ -138,7 +138,7 @@ export const products: Product[] = [
     "order": 4,
     "category": "other",
     "image": "/images/real/kosnice-prikolica.webp",
-    "cardBg": "#FDF9DC",
+    "cardBg": "var(--paper)",
     "variants": [
       {
         "id": "propolis-30",
@@ -171,7 +171,7 @@ export const products: Product[] = [
     "order": 5,
     "category": "other",
     "image": "/images/real/kosnice-livada.webp",
-    "cardBg": "#FDF9DC",
+    "cardBg": "var(--paper)",
     "variants": [
       {
         "id": "polen-200",
@@ -197,45 +197,6 @@ export const products: Product[] = [
     "description": {
       "sr": "Cvjetni prah (polen) je supernamirnica bogata proteinima, vitaminima i mineralima. Naše pčele sakupljaju polen sa raznovrsnog cvijeća oko Mračaja kod Prnjavora, a mi ga pažljivo sušimo i pakujemo kako bi zadržao sve hranjive vrijednosti.",
       "en": "Bee pollen is a superfood rich in proteins, vitamins, and minerals. Our bees collect pollen from diverse flowers around Mračaj near Prnjavor, and we carefully dry and package it to retain its nutritional value."
-    }
-  },
-  {
-    "slug": "sumski-med",
-    "order": 6,
-    "category": "honey",
-    "image": "/images/real/otklapanje-rama.webp",
-    "cardBg": "#FDF9DC",
-    "variants": [
-      {
-        "id": "sumski-500",
-        "title": "500g",
-        "price": 24,
-        "stock": 70
-      },
-      {
-        "id": "sumski-250",
-        "title": "250g",
-        "price": 15,
-        "stock": 100
-      },
-      {
-        "id": "sumski-1kg",
-        "title": "1kg",
-        "price": 44,
-        "stock": 30
-      }
-    ],
-    "name": {
-      "sr": "Šumski Med",
-      "en": "Forest Honey"
-    },
-    "tagline": {
-      "sr": "Tamniji, dublji karakter",
-      "en": "Darker, deeper character"
-    },
-    "description": {
-      "sr": "Šumski med je tamniji med sa intenzivnim, punim ukusom i visokim sadržajem minerala. Naše pčele ga sakupljaju iz šuma oko Mračaja kod Prnjavora, od medljike i šumskog cvijeća, dajući mu poseban, nezaboravan karakter.",
-      "en": "Forest honey is a darker honey with an intense, full taste and high mineral content. Our bees collect it from forests around Mračaj near Prnjavor, from honeydew and forest flowers, giving it a distinctive character."
     }
   }
 ];

@@ -25,7 +25,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
           </h1>
 
           {items.length === 0 ? (
-            <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[#FDF9DC] px-6 py-20 text-center rounded-[1.5rem]">
+            <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[var(--paper)] px-6 py-20 text-center rounded-[1.5rem]">
               <Heart className="h-14 w-14 text-[#73552E]/25" />
               <p className="mt-5 text-2xl text-[#73552E]">{t('wishlist.empty')}</p>
               <p className="mt-2 max-w-sm text-sm text-[#73552E]">{t('wishlist.emptyMessage')}</p>
@@ -44,7 +44,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                     type="button"
                     onClick={() => wishlist.remove(product.slug)}
                     aria-label={t('wishlist.removeItem')}
-                    className="absolute right-4 top-4 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[#FDF9DC]/85 text-[#73552E] backdrop-blur-sm transition-colors hover:border-[#C79A3B] hover:text-[#73552E]"
+                    className="absolute right-4 top-4 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[var(--paper)]/85 text-[#73552E] backdrop-blur-sm transition-colors hover:border-[#C79A3B] hover:text-[#73552E]"
                   >
                     <X className="h-4 w-4" />
                   </button>

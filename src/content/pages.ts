@@ -103,7 +103,7 @@ export const home = {
 
   aboutPreview: {
     sr: {
-      imageAlt: 'Ručno otklapanje saća',
+      imageAlt: 'Tegla livadskog meda na dlanu, iznad livade',
       imageCaption: 'Ručno · polako · porodično',
       eyebrow: 'Porodično pčelarstvo od 1980.',
       heading: 'Znanje koje se prenosi rukama.',
@@ -113,7 +113,7 @@ export const home = {
       cta: 'Pogledaj proces',
     },
     en: {
-      imageAlt: 'Uncapping the comb by hand',
+      imageAlt: 'A jar of meadow honey held on an open palm above the meadow',
       imageCaption: 'By hand · slowly · as a family',
       eyebrow: 'Family beekeeping since 1980',
       heading: 'Knowledge passed on by hand.',
@@ -140,7 +140,7 @@ export const home = {
       items: [
         { slug: 'livadski-med', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
         { slug: 'bagremov-med', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
-        { slug: 'sumski-med', name: 'Šumski Med', note: 'Pun, aromatičan i postojan.' },
+        { slug: 'lipov-med', name: 'Lipov Med', note: 'Aromatičan, cvjetnog karaktera.' },
       ],
     },
     en: {
@@ -150,7 +150,7 @@ export const home = {
       items: [
         { slug: 'livadski-med', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
         { slug: 'bagremov-med', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
-        { slug: 'sumski-med', name: 'Forest Honey', note: 'Deep, aromatic and lasting.' },
+        { slug: 'lipov-med', name: 'Linden Honey', note: 'Aromatic, with a floral character.' },
       ],
     },
   } satisfies L<{
@@ -178,7 +178,7 @@ export const home = {
           city: 'Banja Luka',
         },
         {
-          text: 'Šumski med ima dubinu i miris kao pravi domaći proizvod. Vidi se da iza njega stoji porodica, ne fabrika.',
+          text: 'Med ima dubinu i miris kao pravi domaći proizvod. Vidi se da iza njega stoji porodica, ne fabrika.',
           author: 'Nikola Jovanović',
           city: 'Prijedor',
         },
@@ -201,7 +201,7 @@ export const home = {
           city: 'Banja Luka',
         },
         {
-          text: 'The forest honey has depth and aroma like a true homemade product. You can tell there is a family behind it, not a factory.',
+          text: 'The honey has depth and aroma like a true homemade product. You can tell there is a family behind it, not a factory.',
           author: 'Nikola Jovanović',
           city: 'Prijedor',
         },
@@ -239,7 +239,7 @@ export const home = {
         {
           question: 'Koji med izabrati za početak?',
           answer:
-            'Bagremov je najblaži, livadski je cvjetan i svakodnevan, a šumski je tamniji i intenzivniji.',
+            'Bagremov je najblaži, livadski je cvjetan i svakodnevan, a lipov je aromatičan i izražen.',
         },
       ],
     },
@@ -266,7 +266,7 @@ export const home = {
         {
           question: 'Which honey should I try first?',
           answer:
-            'Acacia is the mildest, meadow honey is floral and everyday, while forest honey is darker and more intense.',
+            'Acacia is the mildest, meadow honey is floral and everyday, while linden honey is aromatic and pronounced.',
         },
       ],
     },
@@ -615,12 +615,12 @@ export const photoBreaks = {
     homeApiary: {
       caption: 'Pčelinjak Mračaj · jutarnja tura',
       meta: 'Sezona 2025.',
-      alt: 'Red tegli livadskog meda ispred košnica',
+      alt: 'Djevojka drži teglu livadskog meda u livadi',
     },
     homeHands: {
-      caption: 'Iste ruke vade ram i lijepe etiketu',
+      caption: 'Med poslije vrcanja, pa etiketa rukom',
       meta: 'Teglu po teglu',
-      altFrame: 'Pčelar drži teglu meda i ram sa saćem',
+      altFrame: 'Tri kante svježe istočenog meda',
       altLabel: 'Ručno lijepljenje etikete na teglu',
     },
     homeStudio: {
@@ -689,12 +689,12 @@ export const photoBreaks = {
     homeApiary: {
       caption: 'Mračaj apiary · morning round',
       meta: '2025 season',
-      alt: 'A row of meadow honey jars in front of the hives',
+      alt: 'A woman holding a jar of meadow honey out in the meadow',
     },
     homeHands: {
-      caption: 'The same hands lift the frame and apply the label',
+      caption: 'Honey after extraction, then the label by hand',
       meta: 'One jar at a time',
-      altFrame: 'A beekeeper holding a jar of honey and a frame of comb',
+      altFrame: 'Three buckets of freshly extracted honey',
       altLabel: 'A label being applied to a jar by hand',
     },
     homeStudio: {

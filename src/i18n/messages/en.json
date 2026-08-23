@@ -120,7 +120,7 @@
       "imageAlt": "Honey jar in hands",
       "quotes": [
         "The acacia honey is clean, mild, and without the heavy taste I often notice in industrial honey.",
-        "The forest honey has depth and aroma like a true homemade product. You can tell there is a family behind it, not a factory.",
+        "The honey has depth and aroma like a true homemade product. You can tell there is a family behind it, not a factory.",
         "I buy meadow honey for tea and cakes. It arrives nicely packed and always with the same quality."
       ]
     },
@@ -176,7 +176,7 @@
         },
         {
           "question": "Which honey should I try first?",
-          "answer": "Acacia is the mildest, meadow honey is floral and everyday, while forest honey is darker and more intense."
+          "answer": "Acacia is the mildest, meadow honey is floral and everyday, while linden honey is aromatic and pronounced."
         }
       ]
     }
@@ -692,7 +692,7 @@
     "productLinks": [
       "Acacia honey",
       "Meadow honey",
-      "Forest honey"
+      "Linden honey"
     ],
     "hours": "Mon - Sat, 08:00 - 20:00",
     "emailReplyTime": "Reply within 24h"

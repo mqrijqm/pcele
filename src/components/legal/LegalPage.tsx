@@ -34,7 +34,7 @@ export default function LegalPage({
         </div>
       </section>
 
-      <section className="section-padding bg-[#FDF9DC]">
+      <section className="section-padding bg-[var(--paper)]">
         <div className="container">
           <div className="mx-auto max-w-prose">
             {doc.sections.map((section) => (

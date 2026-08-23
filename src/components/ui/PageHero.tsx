@@ -8,7 +8,8 @@ type Props = {
   image: string;
   imageAlt: string;
   /** Background band behind the hero. */
-  background: string;
+  /** Boja iza heroja. Podrazumevano papir — isti kao cela strana. */
+  background?: string;
   /** Which side the copy card sits on for large screens. */
   cardSide?: 'left' | 'right';
   imageWidth?: string;
@@ -27,7 +28,7 @@ export default function PageHero({
   note,
   image,
   imageAlt,
-  background,
+  background = 'var(--paper)',
   cardSide = 'left',
   imageWidth = 'lg:w-[78%]',
   cardWidth = 'lg:w-[42%]',
@@ -56,7 +57,7 @@ export default function PageHero({
           </div>
 
           <div
-            className={`relative z-10 -mt-10 w-[94%] border border-[#C79A3B]/55 bg-[#FDF9DC] p-7 shadow-[0_24px_70px_rgba(115,85,46,0.12)] sm:w-[76%] sm:p-10 lg:absolute lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:p-14 ${cardWidth} ${
+            className={`relative z-10 -mt-10 w-[94%] border border-[#C79A3B]/55 bg-[var(--paper)] p-7 shadow-[0_24px_70px_rgba(115,85,46,0.12)] sm:w-[76%] sm:p-10 lg:absolute lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:p-14 ${cardWidth} ${
               cardSide === 'left' ? 'lg:left-0' : 'ml-auto lg:right-0'
             } rounded-[1.5rem]`}
           >

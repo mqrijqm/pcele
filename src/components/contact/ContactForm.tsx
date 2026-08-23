@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { createTranslator, type Locale } from '@/i18n/config';
 
 const fieldClass =
-  'w-full rounded-[1.1rem] border border-[#73552E]/15 bg-[#FDF9DC] px-4 py-3 text-base text-[#73552E] transition-colors duration-200 placeholder:text-[#73552E] hover:border-[#73552E]/40 focus:border-[#C79A3B] focus:outline-none focus:ring-1 focus:ring-[#C79A3B]/30 disabled:cursor-not-allowed disabled:opacity-50';
+  'w-full rounded-[1.1rem] border border-[#73552E]/15 bg-[var(--paper)] px-4 py-3 text-base text-[#73552E] transition-colors duration-200 placeholder:text-[#73552E] hover:border-[#73552E]/40 focus:border-[#C79A3B] focus:outline-none focus:ring-1 focus:ring-[#C79A3B]/30 disabled:cursor-not-allowed disabled:opacity-50';
 
 const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-[#73552E]';
 
@@ -38,7 +38,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
 
   if (status === 'sent') {
     return (
-      <div className="border border-[#73552E]/15 bg-[#FDF9DC] p-8 rounded-[1.5rem]">
+      <div className="border border-[#73552E]/15 bg-[var(--paper)] p-8 rounded-[1.5rem]">
         <p className="text-2xl text-[#73552E]">{t('contact.form.success')}</p>
         <p className="mt-3 text-sm text-[#73552E]">{t('contact.willReply')}</p>
       </div>

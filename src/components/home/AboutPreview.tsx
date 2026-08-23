@@ -10,10 +10,10 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
 
   return (
     <section className="overflow-hidden bg-[#73552E] text-[#FDF9DC]">
-      <div className="mx-auto grid max-w-[1440px] gap-5 px-5 py-6 sm:px-8 sm:py-8 lg:grid-cols-[0.63fr_0.37fr]">
+      <div className="mx-auto grid max-w-[1440px] gap-5 px-[var(--container-padding)] py-6 sm:py-8 lg:grid-cols-[0.63fr_0.37fr]">
         <div className="relative min-h-[31rem] overflow-hidden rounded-[2.25rem] lg:min-h-[44rem]">
           <Image
-            src="/images/real/otklapanje-rama.webp"
+            src="/images/real/tegla-u-ruci.webp"
             alt={copy.imageAlt}
             fill
             sizes="(max-width: 1024px) 100vw, 63vw"
@@ -27,7 +27,7 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center rounded-[2.25rem] bg-[#FDF9DC] px-6 py-20 lg:py-28 sm:px-10 lg:px-14 lg:py-20">
+        <div className="flex flex-col justify-center rounded-[2.25rem] bg-[var(--paper)] px-6 py-20 lg:py-28 sm:px-10 lg:px-14 lg:py-20">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
             {copy.eyebrow}
           </p>

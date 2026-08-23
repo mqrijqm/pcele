@@ -24,7 +24,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const shot = photoBreaks[locale];
 
   return (
-    <div className="bg-[#FDF9DC]">
+    <div className="bg-[var(--paper)]">
       <PageHero
         eyebrow={copy.eyebrow}
         heading={copy.heading}
@@ -39,7 +39,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         headingClamp="max-w-[12ch]"
       />
 
-      <section className="border-b border-[#73552E]/12 bg-[#FDF9DC]">
+      <section className="border-b border-[#73552E]/12 bg-[var(--paper)]">
         <div className="container grid md:grid-cols-3">
           {copy.features.map((feature, index) => (
             <div
@@ -66,7 +66,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         meta={shot.aboutTools.meta}
       />
 
-      <section className="overflow-hidden bg-[#FDF9DC] section-padding">
+      <section className="overflow-hidden bg-[var(--paper)] section-padding">
         <div className="container grid gap-20 lg:grid-cols-[0.38fr_0.62fr] lg:gap-24">
           <div className="lg:pt-12">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
@@ -92,7 +92,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 className="object-cover"
               />
             </div>
-            <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[#FDF9DC] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[2rem]">
+            <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[var(--paper)] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[2rem]">
               <Image
                 src="/images/real/otklapanje-rama.webp"
                 alt={copy.heroAlt}
@@ -105,7 +105,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <section className="bg-[#73552E]/[0.06] section-padding">
+      <section className="bg-[var(--paper)] section-padding">
         <div className="container grid gap-16 lg:grid-cols-[0.34fr_0.66fr] lg:gap-24">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
@@ -141,7 +141,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         meta={shot.aboutSeasons.meta}
       />
 
-      <section className="bg-[#FDF9DC] section-padding">
+      <section className="bg-[var(--paper)] section-padding">
         <div className="container">
           <div className="max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
@@ -181,7 +181,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#73552E]/65 via-transparent to-transparent" />
         <div className="container relative flex min-h-[42rem] items-end py-10 lg:items-center lg:py-20">
-          <div className="max-w-xl border border-[#C79A3B]/55 bg-[#FDF9DC]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[1.5rem]">
+          <div className="max-w-xl border border-[#C79A3B]/55 bg-[var(--paper)]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[1.5rem]">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.location.eyebrow}
             </p>

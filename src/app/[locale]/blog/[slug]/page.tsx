@@ -93,7 +93,7 @@ export default async function BlogPostPage({
         </div>
       </div>
 
-      <section className="section-padding bg-[#FDF9DC]">
+      <section className="section-padding bg-[var(--paper)]">
         <div className="container">
           <div className="mx-auto max-w-prose">
             {post.body[locale].map((block, index) =>

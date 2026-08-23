@@ -9,7 +9,7 @@ export default function Hero({ locale }: { locale: Locale }) {
   const copy = home.hero[locale];
 
   return (
-    <section className="relative bg-[#FDF9DC] header-offset text-[#73552E]">
+    <section className="relative bg-[var(--paper)] header-offset text-[#73552E]">
       {/* `header-offset` vec nosi razmak ispod fiksnog menija — zato je pt mali. */}
       <div className="mx-auto grid max-w-[1440px] items-center gap-16 px-5 pb-20 pt-8 sm:px-10 lg:grid-cols-[1fr_0.85fr] lg:gap-20 lg:pb-32 lg:pl-16 lg:pr-0 lg:pt-10 xl:pl-20">
         {/* Tekst nosi hero. Nista ne stoji iza njega ni preko njega. */}

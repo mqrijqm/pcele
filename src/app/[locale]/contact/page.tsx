@@ -43,7 +43,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         note={copy.note}
         image="/images/real/ram-2025.webp"
         imageAlt={copy.heroAlt}
-        background="#FDF9DC"
         cardSide="right"
         imageWidth="lg:w-[78%]"
         cardWidth="lg:w-[42%]"
@@ -127,7 +126,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         heading={shot.contactVisit.heading}
         body={shot.contactVisit.body}
         meta={shot.contactVisit.meta}
-        background="#73552E0F"
       />
     </div>
   );

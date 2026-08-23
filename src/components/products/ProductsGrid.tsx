@@ -138,7 +138,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                         event.preventDefault();
                         wishlist.toggle(product.slug);
                       }}
-                      className="absolute right-5 top-5 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[#FDF9DC]/85 text-[#73552E] backdrop-blur-sm transition-all duration-300 hover:border-[#C79A3B] hover:bg-[#FDF9DC] active:scale-[0.98]"
+                      className="absolute right-5 top-5 z-10 rounded-full flex h-9 w-9 items-center justify-center border border-[#73552E]/15 bg-[var(--paper)]/85 text-[#73552E] backdrop-blur-sm transition-all duration-300 hover:border-[#C79A3B] hover:bg-[var(--paper)] active:scale-[0.98]"
                     >
                       <Heart
                         className={`h-4 w-4 transition-colors ${

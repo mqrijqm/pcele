@@ -25,7 +25,7 @@ export default function Declaration({
   ];
 
   return (
-    <section className="border-t border-[#73552E]/15 bg-[#FDF9DC]">
+    <section className="border-t border-[#73552E]/15 bg-[var(--paper)]">
       <div className="container section-padding-sm">
         <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
           <div>

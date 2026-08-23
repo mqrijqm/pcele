@@ -25,7 +25,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
     status === 'sending' ? copy.sending : status === 'done' ? copy.joined : copy.join;
 
   return (
-    <section className="relative overflow-hidden bg-[#73552E]/[0.06] section-padding text-[#73552E]">
+    <section className="relative overflow-hidden bg-[var(--paper)] section-padding text-[#73552E]">
       <div className="container">
         <div className="grid items-center gap-16 lg:grid-cols-[0.64fr_0.36fr] lg:gap-20">
           <div>
@@ -57,7 +57,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             </div>
 
             <form onSubmit={handleSubmit} noValidate className="reveal stagger-3 mt-12 max-w-2xl">
-              <div className="flex flex-col gap-2 rounded-full border border-[#73552E]/20 bg-[#FDF9DC] p-2 sm:flex-row sm:items-center">
+              <div className="flex flex-col gap-2 rounded-full border border-[#73552E]/20 bg-[var(--paper)] p-2 sm:flex-row sm:items-center">
                 <input
                   type="email"
                   required
