@@ -3,28 +3,28 @@ import Image from 'next/image';
 import type { Locale } from '@/i18n/config';
 
 /**
- * The opening screen: the drawn meadow, with the wordmark and the script line
- * set live on top of it rather than baked into the picture.
+ * Pocetni ekran: crtez livade, sa wordmarkom i pisanim natpisom polozenim
+ * preko njega.
  *
- * The supplied artwork had both burned into the pixels. They were painted out
- * (the drawing behind them was empty, so nothing was lost) and are laid back
- * over the plate as real text and as rati.svg — crisp at any size, selectable,
- * and translatable.
+ * Crtez je cist — na njemu nema ni slova ni pcele, sve sto se vidi preko
+ * njega je zaseban element. Zato se lockup moze pomerati i prevoditi, ostaje
+ * ostar na svakoj velicini, i pcela koja leti kroz stranu je jedina pcela u
+ * heroju.
  *
- * Every overlay position is a percentage of the plate, and the plate is a
- * container, so the whole lockup scales as one piece at any width.
+ * Svaka pozicija je procenat plate, a plata je container, pa se ceo sklop
+ * skalira kao jedan komad na bilo kojoj sirini.
  *
- * Measured off the original composite (1447 × 969):
- *   script      ink x 413–867  y 169–246
- *   PČELARSTVO  ink x 337–549  y 322–348
- *   Jevtić      ink x 299–629  y 361–448
- *   the bee stays part of the plate, at x 325–374  y 282–321
+ * Natpis i strelica su razdvojeni u dva fajla iz istog crteza (rati.svg), sa
+ * istim viewBox-om — zato se preklapaju tacno, a mogu da se ispisuju jedno za
+ * drugim: prvo se napise recenica, pa onda strelica krene ka pceli.
  */
 export default function HeroLand({ locale }: { locale: Locale }) {
   const alt =
     locale === 'sr'
       ? 'Crtež livada i brda oko Mračaja'
       : 'A drawing of the meadows and hills around Mračaj';
+
+  const script = locale === 'sr' ? 'Listaj i prati pčelu' : 'Scroll and follow the bee';
 
   return (
     <section className="hero-land">
@@ -33,18 +33,20 @@ export default function HeroLand({ locale }: { locale: Locale }) {
           className="hero-land__drawing"
           src="/hero/livada.webp"
           alt={alt}
-          width={1447}
-          height={969}
+          width={1537}
+          height={1023}
           priority
           sizes="100vw"
         />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="hero-land__script" src="/hero/rati.svg" alt="Listaj i prati pčelu" />
+        <img className="hero-land__script" src="/hero/rati-script.svg" alt={script} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="hero-land__arrow" src="/hero/rati-arrow.svg" alt="" aria-hidden="true" />
 
         <h1 className="hero-land__wordmark">
-          <span className="hero-land__caps">Pčelarstvo</span>
-          <span className="hero-land__name">Jevtić</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/hero/foot.svg" alt="Pčelarstvo Jevtić" />
         </h1>
       </div>
     </section>

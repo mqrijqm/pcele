@@ -733,40 +733,80 @@ html.is-preloading body {
   height: auto;
 }
 
-.hero-land__script {
+/*
+ * Natpis i strelica dele isti okvir — isti viewBox, ista pozicija — pa se
+ * poklapaju kao da su i dalje jedan fajl.
+ */
+.hero-land__script,
+.hero-land__arrow {
   position: absolute;
-  left: 27.5%;   /* 398 / 1447 — the svg's own ink starts 15px in */
-  top: 4.44%;    /* 43 / 969 — and 126px down */
-  width: 33.1%;  /* 479 / 1447 */
+  left: 27.5%;
+  top: 4.44%;
+  width: 33.1%;
   height: auto;
+}
+
+/*
+ * Ispisivanje. Natpis se ne moze "crtati" pomeranjem dash-offseta jer slova
+ * nisu potezi nego popunjene konture — nema linije po kojoj bi olovka isla.
+ * Zato ih otkriva kosi rez koji putuje slijeva udesno: gornja ivica malo vodi,
+ * u smeru u kojem se rukopis i penje, pa poteza izgleda kao da izlazi ispod
+ * pera a ne ispod lenjira.
+ */
+@keyframes hero-write {
+  from {
+    clip-path: polygon(-20% 0%, -20% 0%, -29% 100%, -29% 100%);
+  }
+  to {
+    clip-path: polygon(-20% 0%, 120% 0%, 111% 100%, -29% 100%);
+  }
+}
+
+/* Strelica se povlaci unazad, od natpisa ka pceli — onako kako se i crta. */
+@keyframes hero-arrow {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 -2%);
+  }
+}
+
+/*
+ * Krecu tek kad zavesa ucitavanja padne: klasa se skida sa <html>, pa
+ * elementi tek tada dobiju animaciju. Bez JS-a klase nikad nema i natpis
+ * stoji ispisan od pocetka.
+ */
+html:not(.is-preloading) .hero-land__script {
+  animation: hero-write 1.8s cubic-bezier(0.62, 0.03, 0.4, 1) 0.25s backwards;
+}
+
+html:not(.is-preloading) .hero-land__arrow {
+  animation: hero-arrow 0.75s cubic-bezier(0.33, 0, 0.15, 1) 1.85s backwards;
+}
+
+/* Smireno stanje: natpis i strelica prosto stoje ispisani. */
+@media (prefers-reduced-motion: reduce) {
+  html:not(.is-preloading) .hero-land__script,
+  html:not(.is-preloading) .hero-land__arrow {
+    animation: none;
+    clip-path: none;
+  }
 }
 
 .hero-land__wordmark {
   position: absolute;
-  left: 20.66%; /* 299 / 1447 — the left edge of "Jevtić" */
-  top: 33.23%;  /* 322 / 969 — the cap line of "PČELARSTVO" */
+  left: 20.66%;
+  top: 31.5%;
+  width: 27.5%;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-  color: #8A5A17;
+  line-height: 0;
 }
 
-.hero-land__caps {
-  margin-left: 2.63cqw; /* 337 - 299 = 38px, the caps sit inset from the name */
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 400;
-  font-size: 2.7cqw;
-  letter-spacing: 0.075em;
-  text-transform: uppercase;
-}
-
-.hero-land__name {
-  margin-top: 0.62cqw;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 500;
-  font-size: 7.3cqw;
-  letter-spacing: -0.005em;
+.hero-land__wordmark img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /*

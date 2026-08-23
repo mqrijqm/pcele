@@ -21,16 +21,15 @@ export const REF = { w: 1434, h: 14090 };
 export type Leg = { through: Pt[] } | { loop: { c: Pt; r: number; from?: number } };
 
 /**
- * Desktop ruta. Krece pored napisa "Listaj i prati pcelu" — tacnije ispod
- * vrha isprekidane strelice, malo desno od pcele koja je vec nacrtana na
- * livadi, da se dve pcele ne preklope. Zatim se spusta kroz teglu, preseca
- * "O nama" dijagonalno, napravi pun krug oko izdvojenih proizvoda i izlazi
- * kod podnozja.
+ * Desktop ruta. Krece tacno pod vrhom isprekidane strelice, tako da strelica
+ * iz napisa "Listaj i prati pcelu" pokazuje bas na nju. Zatim se spusta kroz
+ * teglu, preseca "O nama" dijagonalno, napravi pun krug oko izdvojenih
+ * proizvoda i izlazi kod podnozja.
  */
 export const DESKTOP: Leg[] = [
   {
     through: [
-      [430, 330],    // polazak: uz strelicu u heroju
+      [395, 243],    // polazak: tacno pod vrhom isprekidane strelice
       [900, 660],
       [1180, 1350],
       [520, 2050],   // tegla
@@ -66,27 +65,28 @@ export const DESKTOP: Leg[] = [
 
 /**
  * Telefon: kraca i mirnija ruta. Nema petlje — na 390 px sirine krug bi bio
- * grcevit — nego samo jedna blaga kuka na mestu gde desktop pravi petlju.
+ * grcevit — nego samo mirno njihanje levo-desno niz stranu.
  */
-export const MOBILE_REF = { w: 390, h: 16800 };
+export const MOBILE_REF = { w: 390, h: 13919 };
 
 export const MOBILE: Leg[] = [
   {
     through: [
-      [250, 380],
-      [310, 900],
-      [90, 1900],
-      [300, 3000],
-      [110, 4300],
-      [290, 5600],
-      [100, 7000],
-      [300, 8200],
-      [120, 9600],
-      [290, 11000],
-      [110, 12400],
-      [280, 13700],
-      [150, 15000],
-      [250, 15900],
+      [88, 128], // polazak: pod vrhom strelice, kao i na desktopu
+      [230, 520],
+      [310, 750],
+      [90, 1575],
+      [300, 2485],
+      [110, 3560],
+      [290, 4640],
+      [100, 5800],
+      [300, 6795],
+      [120, 7955],
+      [290, 9115],
+      [110, 10275],
+      [280, 11350],
+      [150, 12430],
+      [250, 13175],
     ],
   },
 ];
