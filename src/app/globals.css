@@ -485,7 +485,7 @@ p {
 }
 
 /* ---------------------------------------------------------------------------
- * Hero "Med porodicne tradicije"
+ * Hero "Med kakav treba biti"
  *
  * Geometry is measured from reference/ref-3-end.png at 1440x716 and expressed
  * in vw / % of the stage, so the composition scales as one piece.
@@ -540,7 +540,12 @@ p {
 .hero-jar__title {
   position: absolute;
   left: 6.74vw;
-  width: 68.06vw;
+  /*
+   * Sirina razmice dvije polovine oko tegle. Tegla ide do 913px na 1440, a
+   * desna polovina se sidri o desnu ivicu ovog okvira — pa okvir mora biti
+   * dovoljno sirok da "treba biti" cijelo izadje iza stakla.
+   */
+  width: 77.5vw;
   top: 57.82%;
   z-index: 1;
   display: flex;
@@ -548,7 +553,7 @@ p {
   margin: 0;
   transform: translateY(-50%);
   font-family: var(--font-gazpacho), Georgia, serif;
-  /* Sized so "Med porodicne" measures 463px at 1440 wide, as in ref-3. */
+  /* Velicina preuzeta iz ref-3: lijeva polovina je tamo mjerila 463px na 1440. */
   font-size: 4.155vw;
   font-weight: 500;
   line-height: 1;

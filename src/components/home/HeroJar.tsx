@@ -17,27 +17,26 @@ gsap.registerPlugin(ScrollTrigger);
  *   right half   right edge 955 → 1077 = 122px → 0.0847 vw
  *
  * Meracinque expresses the same move as `xPercent: ±50` — half of each span's
- * own width. Our two phrases are lopsided ("Med porodične" against
- * "tradicije"), so a single percentage cannot land both halves on the
- * reference. Anchoring to the viewport keeps the mechanic (one linear,
- * scrubbed translate per half) and still scales, because the type is sized in
- * vw as well.
+ * own width. Our two halves are not the same length, so a single percentage
+ * cannot land both on the reference. Anchoring to the viewport keeps the
+ * mechanic (one linear, scrubbed translate per half) and still scales, because
+ * the type is sized in vw as well.
  */
 const LEFT_TRAVEL = 376 / 1440;
 const RIGHT_TRAVEL = -122 / 1440;
 
 const copy = {
   sr: {
-    left: 'Med porodične',
-    right: 'tradicije',
+    left: 'Med kakav',
+    right: 'treba biti',
     labelTop: 'VRCANO 2025',
     labelBottom: '100% SIROVO PRIRODAN',
     jarAlt: 'Tegla livadskog meda Pčelarstvo Jevtić, 1 kg',
     crestAlt: 'Znak Pčelarstva Jevtić',
   },
   en: {
-    left: 'Honey of a',
-    right: 'family line',
+    left: 'Honey as',
+    right: 'it should be',
     labelTop: 'HARVESTED 2025',
     labelBottom: '100% RAW AND NATURAL',
     jarAlt: 'A 1 kg jar of Pčelarstvo Jevtić meadow honey',
