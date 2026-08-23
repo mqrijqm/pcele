@@ -63,7 +63,7 @@ export default function ImageBreak({
    */
   const footerIn = (wrap: string) =>
     hasFooter ? (
-      <div className={`${wrap} mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2`}>
+      <div className={`${wrap} flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2`}>
         {caption && (
           <p className="max-w-md text-[11px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
             {caption}
@@ -107,7 +107,7 @@ export default function ImageBreak({
             )}
           </div>
         </div>
-        {footerIn('container')}
+        {footerIn('container mt-14 sm:mt-[5.5rem] lg:mt-[7.5rem]')}
       </section>
     );
   }
@@ -180,7 +180,7 @@ export default function ImageBreak({
           />
         </div>
       </div>
-      {footerIn(frame === 'narrow' ? 'container-narrow' : 'container-wide')}
+      {footerIn(frame === 'narrow' ? 'container-narrow mt-6' : 'container-wide mt-6')}
     </section>
   );
 }

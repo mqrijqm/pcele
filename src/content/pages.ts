@@ -634,6 +634,12 @@ export const photoBreaks = {
       meta: 'Mračaj · Prnjavor',
       alt: 'Tegle meda na lanenom stolnjaku u livadi pred zalazak sunca',
     },
+    homeAcacia: {
+      caption: 'Bagrem u cvatu · tegla po tegla',
+      meta: 'Bagremov med',
+      altCrate: 'Ruke vade teglu bagremovog meda iz drvenog sanduka',
+      altBloom: 'Tegla bagremovog meda podignuta prema bagremu u cvatu',
+    },
     homeGrass: {
       caption: 'Paša: maslačak, djetelina, livadsko cvijeće',
       meta: 'Bez putujućih košnica',
@@ -707,6 +713,12 @@ export const photoBreaks = {
         'We never blend batches and we never buy honey in. Every jar carries the forage of one stretch of summer, so the taste shifts visibly from spring to autumn — and that is deliberate.',
       meta: 'Mračaj · Prnjavor',
       alt: 'Jars of honey on a linen cloth in a meadow at sunset',
+    },
+    homeAcacia: {
+      caption: 'Acacia in bloom · one jar at a time',
+      meta: 'Acacia honey',
+      altCrate: 'Hands lifting a jar of acacia honey out of a wooden crate',
+      altBloom: 'A jar of acacia honey held up against acacia blossom',
     },
     homeGrass: {
       caption: 'Forage: dandelion, clover, meadow flowers',

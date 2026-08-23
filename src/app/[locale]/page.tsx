@@ -80,6 +80,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <Faq locale={locale} />
 
+      {/* Poslije pitanja — bagrem, dva uspravna kadra jedan uz drugi. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/bagrem-sanduk.webp', alt: shot.homeAcacia.altCrate },
+          { src: '/images/real/bagrem-cvat.webp', alt: shot.homeAcacia.altBloom },
+        ]}
+        caption={shot.homeAcacia.caption}
+        meta={shot.homeAcacia.meta}
+      />
+
       <Newsletter locale={locale} />
     </>
   );
