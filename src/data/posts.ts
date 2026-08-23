@@ -431,6 +431,258 @@ export const posts: Post[] = [
         }
       ]
     }
+  },
+  {
+    "slug": "zasto-se-med-kristalizuje",
+    "order": 4,
+    "image": "/images/real/kante-med.webp",
+    "title": {
+      "sr": "Zašto se med kristalizuje",
+      "en": "Why honey crystallises"
+    },
+    "excerpt": {
+      "sr": "Kristalizacija nije kvar nego dokaz da med nije grijan. Zašto se dešava, kojim vrstama brže, i šta uraditi ako ti smeta.",
+      "en": "Crystallisation is not a fault; it is proof the honey was never heated. Why it happens, which varieties turn faster, and what to do if it bothers you."
+    },
+    "date": {
+      "sr": "18. jul 2026.",
+      "en": "July 18, 2026"
+    },
+    "readingTime": {
+      "sr": "5 min čitanja",
+      "en": "5 min read"
+    },
+    "body": {
+      "sr": [
+        {
+          "t": "h2",
+          "text": "Šta se zapravo dešava"
+        },
+        {
+          "t": "p",
+          "text": "Med je zasićen rastvor šećera — u njemu ima više glukoze i fruktoze nego što voda u njemu može trajno da drži. Vremenom se glukoza izdvaja u sitne kristale i med postaje gust i mutan. To je fizika, a ne kvarenje: sastav je isti kao prvog dana."
+        },
+        {
+          "t": "h2",
+          "text": "Zašto neki med brže"
+        },
+        {
+          "t": "p",
+          "text": "Odnos glukoze i fruktoze razlikuje se od paše do paše. Bagremov med ima više fruktoze i zna ostati tečan i godinu dana. Livadski, koji nosi mnogo različitih cvjetova, obično se stegne za nekoliko mjeseci — i to je uredu."
+        },
+        {
+          "t": "h2",
+          "text": "Ako ti smeta"
+        },
+        {
+          "t": "p",
+          "text": "Teglu stavi u toplu vodu do četrdeset stepeni i sačekaj. Ne u mikrotalasnu i ne na ringlu: iznad te granice gube se enzimi zbog kojih se sirov med i kupuje."
+        }
+      ],
+      "en": [
+        {
+          "t": "h2",
+          "text": "What is actually happening"
+        },
+        {
+          "t": "p",
+          "text": "Honey is a saturated sugar solution — it holds more glucose and fructose than its water can keep dissolved for long. Over time the glucose separates into fine crystals and the honey turns thick and cloudy. That is physics, not spoilage: the composition is exactly what it was on the first day."
+        },
+        {
+          "t": "h2",
+          "text": "Why some honey turns faster"
+        },
+        {
+          "t": "p",
+          "text": "The ratio of glucose to fructose changes with the forage. Acacia honey is higher in fructose and can stay liquid for a year. Meadow honey, carrying many different flowers, usually sets within a few months — and that is fine."
+        },
+        {
+          "t": "h2",
+          "text": "If it bothers you"
+        },
+        {
+          "t": "p",
+          "text": "Stand the jar in warm water up to forty degrees and wait. Not the microwave and not the hob: above that you lose the very enzymes raw honey is bought for."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "bagrem-cvjeta-desetak-dana",
+    "order": 5,
+    "image": "/images/real/bagrem-tegla-stablo.webp",
+    "title": {
+      "sr": "Bagrem cvjeta desetak dana",
+      "en": "Acacia blooms for ten days"
+    },
+    "excerpt": {
+      "sr": "Najkraća paša u godini i najviše nervoze. Kako se čeka bagrem, zašto jedna kiša može odnijeti cijelu sezonu i šta se dobije kad uspije.",
+      "en": "The shortest forage of the year and the most nerves. How you wait for acacia, why a single rain can take the whole season, and what you get when it works."
+    },
+    "date": {
+      "sr": "3. jun 2026.",
+      "en": "June 3, 2026"
+    },
+    "readingTime": {
+      "sr": "4 min čitanja",
+      "en": "4 min read"
+    },
+    "body": {
+      "sr": [
+        {
+          "t": "h2",
+          "text": "Deset dana, ni dan više"
+        },
+        {
+          "t": "p",
+          "text": "Bagrem procvjeta naglo i traje kratko. Ako u tih desetak dana padne jaka kiša ili zahladi, nektara nema — i te godine bagremovog meda jednostavno nema. Zato se košnice dovoze unaprijed i čeka se."
+        },
+        {
+          "t": "h2",
+          "text": "Zašto je svijetao"
+        },
+        {
+          "t": "p",
+          "text": "Nektar bagrema je gotovo bezbojan i vrlo bogat fruktozom. Otud i boja koja jedva da ima ton, i ukus koji ne prekriva ono uz šta se jede. Isti razlog drži ga tečnim mnogo duže od ostalih vrsta."
+        }
+      ],
+      "en": [
+        {
+          "t": "h2",
+          "text": "Ten days, not one more"
+        },
+        {
+          "t": "p",
+          "text": "Acacia comes into flower suddenly and does not last. If heavy rain or a cold snap falls in those ten days there is no nectar — and that year there simply is no acacia honey. So the hives are brought up in advance, and you wait."
+        },
+        {
+          "t": "h2",
+          "text": "Why it is so pale"
+        },
+        {
+          "t": "p",
+          "text": "Acacia nectar is almost colourless and very high in fructose. Hence a colour that barely has a tone, and a taste that does not cover whatever it is eaten with. The same reason keeps it liquid far longer than the other varieties."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "sta-radi-pcelar-zimi",
+    "order": 6,
+    "image": "/images/real/pcelinjak-3.webp",
+    "title": {
+      "sr": "Šta radi pčelar zimi",
+      "en": "What a beekeeper does in winter"
+    },
+    "excerpt": {
+      "sr": "Košnice se ne otvaraju, a posla ima. O vaganju, mišjim pregradama i tome zašto je tišina zimi najbolji znak.",
+      "en": "The hives stay shut and there is still work. On weighing, mouse guards, and why silence in winter is the best sign of all."
+    },
+    "date": {
+      "sr": "12. januar 2026.",
+      "en": "January 12, 2026"
+    },
+    "readingTime": {
+      "sr": "5 min čitanja",
+      "en": "5 min read"
+    },
+    "body": {
+      "sr": [
+        {
+          "t": "h2",
+          "text": "Zimi se ne otvara"
+        },
+        {
+          "t": "p",
+          "text": "Zajednica zimi drži klupko i sama sebi grije sredinu. Svako otvaranje razbija to klupko i košta ih hrane. Zato se stanje ne provjerava pogledom nego rukom: košnica se podigne sa zadnje strane i po težini se zna ima li hrane."
+        },
+        {
+          "t": "h2",
+          "text": "Tišina je dobar znak"
+        },
+        {
+          "t": "p",
+          "text": "Prisloniš uho i kucneš jednom. Kratak šum koji se brzo smiri znači da je sve u redu. Jednolično zujanje koje ne prestaje obično znači da nešto nije — najčešće hrana ili vlaga."
+        }
+      ],
+      "en": [
+        {
+          "t": "h2",
+          "text": "You do not open in winter"
+        },
+        {
+          "t": "p",
+          "text": "In winter the colony holds a cluster and heats its own centre. Every opening breaks that cluster and costs them stores. So you do not check by looking but by hand: lift the hive from the back and its weight tells you whether there is food."
+        },
+        {
+          "t": "h2",
+          "text": "Silence is a good sign"
+        },
+        {
+          "t": "p",
+          "text": "Put your ear against it and knock once. A short rustle that settles quickly means all is well. An even hum that will not stop usually means something is wrong — most often stores or damp."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "kako-citati-etiketu",
+    "order": 7,
+    "image": "/images/real/punjenje-tegle.webp",
+    "title": {
+      "sr": "Kako čitati etiketu na tegli",
+      "en": "How to read the label on a jar"
+    },
+    "excerpt": {
+      "sr": "Šta na etiketi mora pisati, šta smije, i koje su formulacije zapravo prazne. Kratak vodič prije nego što kupiš teglu.",
+      "en": "What a label must say, what it may say, and which phrases are actually empty. A short guide before you buy a jar."
+    },
+    "date": {
+      "sr": "9. avgust 2026.",
+      "en": "August 9, 2026"
+    },
+    "readingTime": {
+      "sr": "6 min čitanja",
+      "en": "6 min read"
+    },
+    "body": {
+      "sr": [
+        {
+          "t": "h2",
+          "text": "Porijeklo prije svega"
+        },
+        {
+          "t": "p",
+          "text": "Na etiketi mora stajati zemlja porijekla. Formulacija „mješavina medova iz EU i van EU“ nije greška u prevodu — znači tačno to, i ne govori ti odakle je med u toj tegli."
+        },
+        {
+          "t": "h2",
+          "text": "Prazne riječi"
+        },
+        {
+          "t": "p",
+          "text": "„Prirodan“ i „domaći“ nisu zaštićeni pojmovi i ne znače ništa mjerljivo. Konkretna paša, konkretno mjesto i godina berbe govore mnogo više od bilo kojeg prideva."
+        }
+      ],
+      "en": [
+        {
+          "t": "h2",
+          "text": "Origin first"
+        },
+        {
+          "t": "p",
+          "text": "The label must state the country of origin. The phrase about a blend of EU and non-EU honeys is not a translation slip — it means exactly that, and it tells you nothing about where the honey in that jar came from."
+        },
+        {
+          "t": "h2",
+          "text": "Empty words"
+        },
+        {
+          "t": "p",
+          "text": "Natural and homemade are not protected terms and mean nothing measurable. A named forage, a named place and a harvest year say far more than any adjective."
+        }
+      ]
+    }
   }
 ];
 

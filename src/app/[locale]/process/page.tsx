@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react';
 
 import PageHero from '@/components/ui/PageHero';
 import ImageBreak from '@/components/ui/ImageBreak';
+import BeeFlight from '@/components/bee/BeeFlight';
 import { meta, photoBreaks, processPage, processStepImages } from '@/content/pages';
 import { isLocale, localeHref, type Locale } from '@/i18n/config';
 
@@ -26,20 +27,12 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
   const shot = photoBreaks[locale];
 
   return (
-    <div className="bg-[var(--paper)]">
-      <PageHero
-        eyebrow={copy.eyebrow}
-        heading={copy.heading}
-        description={copy.description}
-        note={copy.note}
-        image="/images/real/otklapanje-rama.webp"
-        imageAlt={copy.heroAlt}
-        background="#73552E"
-        cardSide="left"
-        imageWidth="lg:w-[82%]"
-        cardWidth="lg:w-[40%]"
-      />
+    <div className="bg-[var(--paper)] header-offset">
+      {/* Heroj je skinut; naslov strane ostaje za citace ekrana. */}
+      <h1 className="sr-only">{copy.heading}</h1>
 
+      {/* Pcela leti i ovom stranom, svojom rutom kroz korake. */}
+      <BeeFlight route="process" />
       <section className="section-padding">
         <div className="container">
           <div className="mb-16 max-w-2xl">
@@ -62,7 +55,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                   <div
                     className={`relative aspect-[4/3] overflow-hidden lg:col-span-6 ${
                       flipped ? 'lg:order-2' : ''
-                    } rounded-[2rem]`}
+                    } rounded-[0.6rem]`}
                   >
                     <Image
                       src={processStepImages[index]}
@@ -105,7 +98,11 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
       />
 
       <ImageBreak
-        images={[{ src: '/images/mockups/jar-hive-bench.webp', alt: shot.processJar.alt }]}
+        variant="pair"
+        images={[
+          { src: '/images/real/vrcaljka-kanta.webp', alt: shot.processJar.altTap },
+          { src: '/images/real/tegle-pcelinjak.webp', alt: shot.processJar.altJars },
+        ]}
         aspect="aspect-[3/4] sm:aspect-[16/9]"
         focus="object-[50%_40%]"
         caption={shot.processJar.caption}

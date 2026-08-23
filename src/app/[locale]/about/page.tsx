@@ -24,26 +24,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
   const shot = photoBreaks[locale];
 
   return (
-    <div className="bg-[var(--paper)]">
-      <PageHero
-        eyebrow={copy.eyebrow}
-        heading={copy.heading}
-        description={copy.description}
-        note={copy.note}
-        image="/images/real/arhiva-1.webp"
-        images={[
-          '/images/real/arhiva-1.webp',
-          '/images/real/arhiva-2.webp',
-          '/images/real/arhiva-3.webp',
-        ]}
-        imageAlt={copy.heroAlt}
-        background="#73552E"
-        cardSide="right"
-        imageWidth="lg:w-[76%]"
-        cardWidth="lg:w-[43%]"
-        headingClamp="max-w-[12ch]"
-      />
-
+    <div className="bg-[var(--paper)] header-offset">
+      {/*
+        * Heroj je skinut, pa naslov strane stoji samo za citace ekrana i
+        * pretrazivace — vizuelno strana pocinje odmah sadrzajem.
+        */}
+      <h1 className="sr-only">{copy.heading}</h1>
       <section className="border-b border-[#73552E]/12 bg-[var(--paper)]">
         <div className="container grid md:grid-cols-3">
           {copy.features.map((feature, index) => (
@@ -100,7 +86,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
 
           <div className="grid grid-cols-12 items-end gap-4">
-            <div className="relative col-span-12 aspect-[4/3] overflow-hidden sm:col-span-8 rounded-[2rem]">
+            <div className="relative col-span-12 aspect-[4/3] overflow-hidden sm:col-span-8 rounded-[0.6rem]">
               <Image
                 src="/images/real/kosnice-livada.webp"
                 alt={copy.location.mapAlt}
@@ -109,7 +95,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 className="object-cover"
               />
             </div>
-            <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[var(--paper)] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[2rem]">
+            <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[var(--paper)] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[0.6rem]">
               <Image
                 src="/images/real/otklapanje-rama.webp"
                 alt={copy.heroAlt}
@@ -198,7 +184,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#73552E]/65 via-transparent to-transparent" />
         <div className="container relative flex min-h-[42rem] items-end py-10 lg:items-center lg:py-20">
-          <div className="max-w-xl border border-[#C79A3B]/55 bg-[var(--paper)]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[1.5rem]">
+          <div className="max-w-xl border border-[#C79A3B]/55 bg-[var(--paper)]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[0.6rem]">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {copy.location.eyebrow}
             </p>

@@ -25,7 +25,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
           </h1>
 
           {items.length === 0 ? (
-            <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[var(--paper)] px-6 py-20 text-center rounded-[1.5rem]">
+            <div className="mt-14 flex flex-col items-center border border-[#73552E]/15 bg-[var(--paper)] px-6 py-20 text-center rounded-[0.6rem]">
               <Heart className="h-14 w-14 text-[#73552E]/25" />
               <p className="mt-5 text-2xl text-[#73552E]">{t('wishlist.empty')}</p>
               <p className="mt-2 max-w-sm text-sm text-[#73552E]">{t('wishlist.emptyMessage')}</p>
@@ -53,7 +53,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                     className="group block"
                   >
                     <div
-                      className="relative flex aspect-[4/4.8] items-center justify-center overflow-hidden p-8 rounded-[2rem]"
+                      className="relative flex aspect-[4/4.8] items-center justify-center overflow-hidden p-8 rounded-[0.6rem]"
                       style={{ backgroundColor: product.cardBg }}
                     >
                       <Image

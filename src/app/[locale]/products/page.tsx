@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import PageHero from '@/components/ui/PageHero';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import ImageBreak from '@/components/ui/ImageBreak';
 import { meta, photoBreaks, productsPage } from '@/content/pages';
@@ -24,25 +23,29 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
   const shot = photoBreaks[locale];
 
   return (
-    <div className="bg-ivory">
-      <PageHero
-        eyebrow={copy.eyebrow}
-        heading={copy.heading}
-        description={copy.description}
-        note={copy.note}
-        image="/images/real/kante-med.webp"
-        imageAlt={copy.heroAlt}
-        cardSide="left"
-      />
-
+    <div className="bg-ivory header-offset">
+      {/* Strana pocinje pretragom; naslov ostaje za citace ekrana. */}
+      <h1 className="sr-only">{copy.heading}</h1>
       <section className="bg-ivory section-padding">
         <div className="container">
           <ProductsGrid locale={locale} />
         </div>
       </section>
 
+      {/* Poslije prodavnice — od sanduka do police. */}
       <ImageBreak
-        images={[{ src: '/images/mockups/jars-lineup-studio.webp', alt: shot.productsSizes.alt }]}
+        variant="pair"
+        images={[
+          { src: '/images/real/bagrem-tegle-panj.webp', alt: shot.productsHarvest.altStump },
+          { src: '/images/real/bagrem-sanduk.webp', alt: shot.productsHarvest.altCrate },
+        ]}
+        caption={shot.productsHarvest.caption}
+        meta={shot.productsHarvest.meta}
+        emblem
+      />
+
+      <ImageBreak
+        images={[{ src: '/images/real/tegle-raster.webp', alt: shot.productsSizes.alt }]}
         caption={shot.productsSizes.caption}
         meta={shot.productsSizes.meta}
       />

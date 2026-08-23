@@ -547,12 +547,21 @@ export const processPage = {
   },
 };
 
+/*
+ * Slika uz svaki korak, redom kojim koraci idu:
+ *
+ *   1 priprema kosnica  — pcelinjak na livadi, prije nego sto sezona krene
+ *   2 oprasivanje       — pcele na cvijetu
+ *   3 vrcanje           — ram pun pcela, izvadjen iz kosnice
+ *   4 procedjivanje     — kante u kojima se med slijeze
+ *   5 punjenje          — tegla puni se ispod slavine
+ */
 export const processStepImages = [
   '/images/real/kosnice-livada.webp',
-  '/images/real/kosnice-prikolica.webp',
-  '/images/real/ram-2025.webp',
-  '/images/real/otklapanje-rama.webp',
+  '/images/real/pcele-cvijet.webp',
+  '/images/real/ram-pcele.webp',
   '/images/real/kante-med.webp',
+  '/images/real/punjenje-tegle.webp',
 ];
 
 // ---------------------------------------------------------------- blog -------
@@ -687,6 +696,18 @@ export const photoBreaks = {
       meta: 'Bez putujućih košnica',
       alt: 'Tegle meda položene u travu, snimak odozgo',
     },
+    productsAcacia: {
+      caption: 'Bagrem cvjeta desetak dana · toliko traje i paša',
+      meta: 'Sezona bagrema',
+      altTree: 'Tegla bagremovog meda pod stablom bagrema u cvatu',
+      altHand: 'Tegla bagremovog meda podignuta prema cvjetnim grozdovima',
+    },
+    productsHarvest: {
+      caption: 'Iz sanduka na policu, bez zaustavljanja',
+      meta: 'Berba 2025.',
+      altStump: 'Tri tegle bagremovog meda na panju, u hladu bagrema',
+      altCrate: 'Ruke vade teglu iz drvenog sanduka punog tegli',
+    },
     productsSizes: {
       caption: 'Ista serija, tri veličine',
       meta: '0,45 kg · 0,72 kg · 1 kg',
@@ -714,7 +735,8 @@ export const photoBreaks = {
     processJar: {
       caption: 'Poslije vrcanja teglu punimo istog dana',
       meta: 'Bez pasterizacije, bez filtera pod pritiskom',
-      alt: 'Tegla meda na klupi pored košnica u zoru',
+      altTap: 'Med curi iz vrcaljke u kantu',
+      altJars: 'Napunjene tegle složene ispred košnica',
     },
     contactVisit: {
       caption: 'Dođite po med',
@@ -785,6 +807,18 @@ export const photoBreaks = {
       meta: 'No migratory hives',
       alt: 'Jars of honey laid in the grass, seen from above',
     },
+    productsAcacia: {
+      caption: 'Acacia flowers for ten days · the forage lasts as long',
+      meta: 'The acacia season',
+      altTree: 'A jar of acacia honey beneath an acacia tree in bloom',
+      altHand: 'A jar of acacia honey held up against the blossom',
+    },
+    productsHarvest: {
+      caption: 'From the crate to the shelf, without a pause',
+      meta: '2025 harvest',
+      altStump: 'Three jars of acacia honey on a stump in the shade of the blossom',
+      altCrate: 'Hands lifting a jar out of a wooden crate full of jars',
+    },
     productsSizes: {
       caption: 'One batch, three sizes',
       meta: '0.45 kg · 0.72 kg · 1 kg',
@@ -812,7 +846,8 @@ export const photoBreaks = {
     processJar: {
       caption: 'Once extracted, the honey is jarred the same day',
       meta: 'No pasteurising, no pressure filtering',
-      alt: 'A jar of honey on a bench beside the hives at dawn',
+      altTap: 'Honey running from the extractor into a bucket',
+      altJars: 'Filled jars stacked in front of the hives',
     },
     contactVisit: {
       caption: 'Come and collect',

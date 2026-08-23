@@ -81,7 +81,7 @@ export default async function BlogPostPage({
       </section>
 
       <div className="container -mt-8 md:-mt-12">
-        <div className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden border border-[#73552E]/15 shadow-[0_20px_40px_-15px_rgba(115,85,46,0.18)] md:aspect-[21/9] rounded-[2rem]">
+        <div className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden border border-[#73552E]/15 shadow-[0_20px_40px_-15px_rgba(115,85,46,0.18)] md:aspect-[21/9] rounded-[0.6rem]">
           <Image
             src={post.image}
             alt={post.title[locale]}

@@ -30,8 +30,8 @@ export default function Testimonials({ locale }: { locale: Locale }) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <figure className="reveal relative overflow-hidden bg-[#73552E] p-7 text-[#FDF9DC] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-14 rounded-[2rem]">
-              <div className="relative min-h-[280px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[390px] rounded-[2rem]">
+            <figure className="reveal relative overflow-hidden bg-[#73552E] p-7 text-[#FDF9DC] sm:col-span-2 sm:p-10 lg:grid lg:grid-cols-[0.42fr_0.58fr] lg:gap-14 rounded-[0.6rem]">
+              <div className="relative min-h-[280px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[390px] rounded-[0.6rem]">
                 <Image
                   src="/images/real/kosnice-prikolica.webp"
                   alt={copy.imageAlt}

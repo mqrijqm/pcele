@@ -35,11 +35,14 @@
   --color-gold: var(--gold);
   --color-cream: var(--paper);
 
-  /* Zaobljenja — sajt vise nije kockast */
-  --radius-sm: 0.75rem;
-  --radius-md: 1.25rem;
-  --radius-lg: 2rem;
-  --radius-xl: 3rem;
+  /*
+   * Zaobljenja. Drzana su namjerno niska: na velikim fotografijama je jak
+   * radijus vukao paznju na okvir umjesto na sadrzaj u njemu.
+   */
+  --radius-sm: 0.3rem;
+  --radius-md: 0.45rem;
+  --radius-lg: 0.6rem;
+  --radius-xl: 0.8rem;
   --radius-pill: 999px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -1219,4 +1222,230 @@ html:not(.is-preloading) .hero-land__arrow {
   font-style: normal;
   line-height: 0;
   vertical-align: -0.08em;
+}
+
+/* ---------------------------------------------------------------------------
+ * Blog: uvod, mozaik, izdvojen zapis.
+ *
+ * Raspored je editorijalni, ne mreza kartica: jedna velika slika uz cetiri
+ * manje, pa jedan zapis razvucen preko dvije kolone sa slikama koje se
+ * preklapaju sa tekstom.
+ * ------------------------------------------------------------------------- */
+.blog-intro__eyebrow {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.blog-intro__heading {
+  max-width: 24ch;
+  margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.7rem, 3.4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--brown);
+  text-wrap: balance;
+}
+
+.blog-intro__lead {
+  max-width: 52ch;
+  margin: clamp(1.25rem, 2.5vw, 2rem) auto 0;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--brown);
+}
+
+/* --- mozaik: velika lijevo, cetiri manje desno ---------------------------- */
+.blog-mosaic {
+  display: grid;
+  gap: clamp(0.5rem, 1vw, 0.9rem);
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 900px) {
+  .blog-mosaic {
+    grid-template-columns: 1.62fr 0.69fr 0.69fr;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Velika drzi obje trake s lijeve strane. */
+  .blog-mosaic__tile:first-child {
+    grid-row: span 2;
+  }
+}
+
+.blog-mosaic__tile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.4rem;
+  background: var(--surface);
+}
+
+@media (min-width: 900px) {
+  .blog-mosaic__tile {
+    aspect-ratio: auto;
+    min-height: 15.5rem;
+  }
+
+  .blog-mosaic__tile:first-child {
+    min-height: 32rem;
+  }
+}
+
+.blog-mosaic__tile img {
+  transition: transform 0.8s var(--ease-out-expo);
+}
+
+.blog-mosaic__tile:hover img {
+  transform: scale(1.03);
+}
+
+/* Naslov na slici — sitno, sa sjenkom pri dnu da se cita. */
+.blog-mosaic__label {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 3.5rem 1rem 0.9rem;
+  background: linear-gradient(to top, rgba(46, 33, 9, 0.62), transparent);
+  color: #fdf9dc;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+/* --- dugmad --------------------------------------------------------------- */
+.blog-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+.blog-cta--solid {
+  background: var(--gold);
+  color: var(--paper);
+}
+
+.blog-cta--solid:hover {
+  background: var(--brown);
+}
+
+.blog-cta--outline {
+  border: 1px solid var(--brown);
+  color: var(--brown);
+}
+
+.blog-cta--outline:hover {
+  background: var(--brown);
+  color: var(--paper);
+}
+
+/* --- izdvojen zapis ------------------------------------------------------- */
+.blog-feature {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.blog-feature__title {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--brown);
+  text-wrap: balance;
+}
+
+.blog-feature__shot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.4rem;
+}
+
+.blog-feature__shot--main {
+  aspect-ratio: 4 / 5;
+}
+
+.blog-feature__shot--inset {
+  aspect-ratio: 1 / 1;
+}
+
+.blog-feature__lede {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1.05rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--brown);
+}
+
+.blog-feature__aside {
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: var(--brown);
+}
+
+/*
+ * Na sirokom ekranu blok se sklapa kao u predlosku: naslov prelazi preko
+ * gornje ivice slike, tekst stoji lijevo od nje, a druga slika upada u donji
+ * lijevi ugao i preklapa se sa prvom.
+ */
+@media (min-width: 1024px) {
+  .blog-feature {
+    grid-template-columns: 0.9fr 1.15fr 0.95fr;
+    grid-template-rows: auto auto auto;
+    column-gap: clamp(2rem, 4vw, 4rem);
+    row-gap: 0;
+    align-items: start;
+  }
+
+  .blog-feature__title {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    z-index: 2;
+    margin-bottom: -2.5rem;
+  }
+
+  .blog-feature__shot--main {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    margin-top: 3.5rem;
+  }
+
+  .blog-feature__lede {
+    grid-column: 1;
+    grid-row: 2;
+    padding-top: 4.5rem;
+  }
+
+  .blog-feature__shot--inset {
+    grid-column: 1;
+    grid-row: 3;
+    z-index: 2;
+    width: 78%;
+    margin-top: 2.5rem;
+    margin-left: auto;
+    margin-right: -3.5rem;
+  }
+
+  .blog-feature__aside {
+    grid-column: 3;
+    grid-row: 2 / 4;
+    padding-top: 9rem;
+  }
 }

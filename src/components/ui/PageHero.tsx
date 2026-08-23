@@ -51,7 +51,7 @@ export default function PageHero({
           <div
             className={`relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/9] ${imageWidth} ${
               cardSide === 'left' ? 'ml-auto' : ''
-            } rounded-[2rem]`}
+            } rounded-[0.6rem]`}
           >
             {(images?.length ? images : [image]).map((src, i) => (
               <Image
@@ -70,7 +70,7 @@ export default function PageHero({
           <div
             className={`relative z-10 -mt-10 w-[94%] border border-[#C79A3B]/55 bg-[var(--paper)] p-7 shadow-[0_24px_70px_rgba(115,85,46,0.12)] sm:w-[76%] sm:p-10 lg:absolute lg:top-1/2 lg:mt-0 lg:-translate-y-1/2 lg:p-14 ${cardWidth} ${
               cardSide === 'left' ? 'lg:left-0' : 'ml-auto lg:right-0'
-            } rounded-[1.5rem]`}
+            } rounded-[0.6rem]`}
           >
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
               {eyebrow}

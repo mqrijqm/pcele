@@ -91,6 +91,76 @@ export const MOBILE: Leg[] = [
   },
 ];
 
+
+/* --------------------------------------------------------------- proces ----
+ * Strana "Nas proces". Ruta krece uz heroj, pa se spusta niz korake — koraci
+ * se smjenjuju lijevo-desno, pa pcela ide izmedju njih.
+ *
+ * Mjereno na 1434 x 8163 (desktop) i 384 x 6440 (telefon).
+ */
+export const PROCESS_REF = { w: 1434, h: 8163 };
+
+export const PROCESS: Leg[] = [
+  {
+    through: [
+      [200, 230], // polazak: uz heroj, iznad kartice
+      [700, 520],
+      [1180, 900],
+      [420, 1500],
+      [1150, 2200],
+      [380, 2950],
+      [1150, 3700],
+      [420, 4450],
+      [1150, 5200],
+      [400, 5950],
+      [1080, 6550],
+      [560, 7050], // zavrsava iznad podnozja
+    ],
+  },
+];
+
+export const PROCESS_MOBILE_REF = { w: 384, h: 6440 };
+
+export const PROCESS_MOBILE: Leg[] = [
+  {
+    through: [
+      [60, 190],
+      [280, 460],
+      [90, 1000],
+      [290, 1600],
+      [100, 2250],
+      [290, 2900],
+      [100, 3550],
+      [290, 4200],
+      [110, 4850],
+      [280, 5400],
+      [150, 5850],
+    ],
+  },
+];
+
+/*
+ * Rute po stranicama. Pcela je ista, mijenja se samo kuda leti.
+ */
+export const ROUTES = {
+  home: {
+    desktop: { legs: DESKTOP, ref: REF },
+    mobile: { legs: MOBILE, ref: MOBILE_REF },
+  },
+  process: {
+    desktop: { legs: PROCESS, ref: PROCESS_REF },
+    mobile: { legs: PROCESS_MOBILE, ref: PROCESS_MOBILE_REF },
+  },
+} as const;
+
+export type RouteName = keyof typeof ROUTES;
+
+/** Prva tacka rute — tu pcela stoji kad je pokret iskljucen. */
+export function startPoint(legs: readonly Leg[]): Pt {
+  const first = legs[0];
+  return 'through' in first ? first.through[0] : [first.loop.c[0], first.loop.c[1] - first.loop.r];
+}
+
 /** Catmull-Rom kroz tacke -> kubicne Bezierove krive. Glatko, bez uglova. */
 function spline(pts: Pt[], tension = 1): string {
   if (pts.length < 2) return '';
@@ -126,7 +196,12 @@ const r = (n: number) => Math.round(n * 10) / 10;
  * Sklapa `d` za dati prozor. `legs` su u referentnim pikselima, `ref` je
  * raspored preko kojeg su crtane, a `w`/`h` su stvarne mere sada.
  */
-export function buildPath(legs: Leg[], ref: { w: number; h: number }, w: number, h: number): string {
+export function buildPath(
+  legs: readonly Leg[],
+  ref: { w: number; h: number },
+  w: number,
+  h: number,
+): string {
   const sx = w / ref.w;
   const sy = h / ref.h;
   const s = (p: Pt): Pt => [p[0] * sx, p[1] * sy];

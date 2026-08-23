@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
 import BeeSvg from './BeeSvg';
-import { buildPath, DESKTOP, MOBILE, MOBILE_REF, REF, type Leg } from './flightPath';
+import { buildPath, ROUTES, startPoint, type Leg, type RouteName } from './flightPath';
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -23,7 +23,8 @@ const MAX_TILT = 20;
  *
  * z-index 40 je izmedju sadrzaja (1-3, i zrno papira na 20) i headera (60).
  */
-export default function BeeFlight() {
+export default function BeeFlight({ route = 'home' }: { route?: RouteName }) {
+  const plan = ROUTES[route];
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
   const flightRef = useRef<SVGPathElement>(null);
@@ -43,7 +44,7 @@ export default function BeeFlight() {
     if (!layer || !flight || !trail || !mask || !bee) return;
 
     /** Prepisuje putanju za trenutne mere strane. Vraca duzinu traga. */
-    const draw = (legs: Leg[], ref: { w: number; h: number }) => {
+    const draw = (legs: readonly Leg[], ref: { w: number; h: number }) => {
       const w = document.documentElement.clientWidth;
       const h = document.documentElement.scrollHeight;
       layer.style.width = `${w}px`;
@@ -65,9 +66,10 @@ export default function BeeFlight() {
         const h = document.documentElement.scrollHeight;
         layer.style.width = `${w}px`;
         layer.style.height = `${h}px`;
+        const [sx, sy] = startPoint(plan.desktop.legs);
         gsap.set(bee, {
-          x: (350 / REF.w) * w,
-          y: (243 / REF.h) * h,
+          x: (sx / plan.desktop.ref.w) * w,
+          y: (sy / plan.desktop.ref.h) * h,
           xPercent: -50,
           yPercent: -50,
         });
@@ -76,7 +78,7 @@ export default function BeeFlight() {
         };
       });
 
-      const fly = (legs: Leg[], ref: { w: number; h: number }) => () => {
+      const fly = (legs: readonly Leg[], ref: { w: number; h: number }) => () => {
         let len = draw(legs, ref);
         let raw = MotionPathPlugin.getRawPath(flight);
         MotionPathPlugin.cacheRawPathMeasurements(raw);
@@ -162,15 +164,18 @@ export default function BeeFlight() {
         };
       };
 
-      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', fly(DESKTOP, REF));
+      mm.add(
+        '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
+        fly(plan.desktop.legs, plan.desktop.ref),
+      );
       mm.add(
         '(max-width: 767px) and (prefers-reduced-motion: no-preference)',
-        fly(MOBILE, MOBILE_REF),
+        fly(plan.mobile.legs, plan.mobile.ref),
       );
     }, layer);
 
     return () => ctx.revert();
-  }, [mounted]);
+  }, [mounted, plan]);
 
   if (!mounted) return null;
 

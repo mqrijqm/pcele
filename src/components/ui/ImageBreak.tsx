@@ -89,14 +89,19 @@ export default function ImageBreak({
     const [first, second] = images;
     return (
       <section className="section-padding-sm" style={{ backgroundColor: background }}>
-        <div className="container">
-          <div className="grid grid-cols-2 gap-4 sm:gap-8 lg:gap-12">
-            <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem]">
+        {/*
+          * Par ide preko cijele sirine, van mjere teksta: dvije uspravne
+          * fotografije jedna uz drugu trebaju prostor, a uvucene su izgledale
+          * kao dvije slicice.
+          */}
+        <div className="px-3 sm:px-5">
+          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:gap-6">
+            <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[0.5rem]">
               <Image
                 src={first.src}
                 alt={first.alt}
                 fill
-                sizes="(max-width: 640px) 46vw, 44vw"
+                sizes="49vw"
                 className="object-cover"
               />
               {mark}
@@ -107,12 +112,12 @@ export default function ImageBreak({
                * `transform: none`, pa bi na istom elementu pojeo translate.
                */
               <div className="translate-y-8 sm:translate-y-16 lg:translate-y-24">
-                <div className="reveal stagger-2 relative aspect-[4/5] overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem]">
+                <div className="reveal stagger-2 relative aspect-[4/5] overflow-hidden rounded-[0.5rem]">
                   <Image
                     src={second.src}
                     alt={second.alt}
                     fill
-                    sizes="(max-width: 640px) 46vw, 44vw"
+                    sizes="49vw"
                     className="object-cover"
                   />
                 </div>
@@ -120,7 +125,7 @@ export default function ImageBreak({
             )}
           </div>
         </div>
-        {footerIn('container mt-14 sm:mt-[5.5rem] lg:mt-[7.5rem]')}
+        {footerIn('px-3 sm:px-5 mt-14 sm:mt-[5.5rem] lg:mt-[7.5rem]')}
       </section>
     );
   }
@@ -136,7 +141,7 @@ export default function ImageBreak({
             }`}
           >
             <div
-              className={`reveal relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] ${
+              className={`reveal relative overflow-hidden rounded-[0.6rem] sm:rounded-[0.6rem] ${
                 aspect ?? 'aspect-[4/3]'
               }`}
             >
@@ -180,7 +185,7 @@ export default function ImageBreak({
       {/* Traka vise ne ide od ivice do ivice — uvucena je kao i ostatak sajta. */}
       <div className={frame === 'narrow' ? 'container-narrow' : 'container-wide'}>
         <div
-          className={`reveal-scale relative w-full overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] ${
+          className={`reveal-scale relative w-full overflow-hidden rounded-[0.6rem] sm:rounded-[0.6rem] ${
             aspect ?? 'aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]'
           }`}
         >

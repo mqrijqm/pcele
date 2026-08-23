@@ -59,7 +59,7 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
               <Link
                 key={item.slug}
                 href={localeHref(locale, `/products/${item.slug}`)}
-                className={`group relative min-h-[28rem] overflow-hidden rounded-[2rem] ${style.bg} lg:min-h-0 ${style.tile}`}
+                className={`group relative min-h-[28rem] overflow-hidden rounded-[0.6rem] ${style.bg} lg:min-h-0 ${style.tile}`}
               >
                 {style.variant === 'tall' ? (
                   <div className="absolute inset-0">

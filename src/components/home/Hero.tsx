@@ -46,7 +46,7 @@ export default function Hero({ locale }: { locale: Locale }) {
          * Jedna slika, izlazi na desnu ivicu ekrana. Bez okvira, bez natpisa
          * preko nje, bez druge slike ispod — hero ima samo dva glasa.
          */}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2.5rem] lg:aspect-[4/5] lg:rounded-l-[3rem] lg:rounded-r-none">
+        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[0.6rem] lg:aspect-[4/5] lg:rounded-l-[3rem] lg:rounded-r-none">
           <Image
             src="/images/real/tegle-red.webp"
             alt={copy.jarAlt}

@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { Clock, Mail, MapPin, Phone } from 'lucide-react';
 
-import PageHero from '@/components/ui/PageHero';
 import ContactForm from '@/components/contact/ContactForm';
 import ImageBreak from '@/components/ui/ImageBreak';
 import { contactPage, meta, photoBreaks } from '@/content/pages';
@@ -36,33 +35,26 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
 
   return (
     <div className="header-offset">
-      <PageHero
-        eyebrow={copy.eyebrow}
-        heading={copy.heading}
-        description={copy.description}
-        note={copy.note}
-        image="/images/real/ram-2025.webp"
-        imageAlt={copy.heroAlt}
-        cardSide="right"
-        imageWidth="lg:w-[78%]"
-        cardWidth="lg:w-[42%]"
-        headingClamp="max-w-[12ch]"
-      />
-
       <section className="section-padding relative overflow-hidden bg-ivory">
         <div className="container relative z-10">
           <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
             <div className="reveal-left">
               <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
-                {t('contact.sendMessage')}
+                {copy.eyebrow}
               </p>
-              <h2 className="mb-8 font-display text-display-sm text-[#73552E]">
-                {t('contact.gladToHelp')}
-              </h2>
+              {/*
+                * Naslov strane. Ranije ga je nosio heroj sa slikom; heroj je
+                * skinut, pa h1 stoji ovdje — bez njega bi strana ostala samo
+                * sa podnaslovima.
+                */}
+              <h1 className="mb-5 font-display text-display-sm text-[#73552E]">{copy.heading}</h1>
+              <p className="mb-8 max-w-md text-base leading-7 text-[#73552E]">
+                {copy.description}
+              </p>
               <ContactForm locale={locale} />
             </div>
 
-            <div className="reveal-right space-y-6 bg-[#73552E]/[0.06] p-7 sm:p-9 rounded-[1.75rem]">
+            <div className="reveal-right space-y-6 bg-[#73552E]/[0.06] p-7 sm:p-9 rounded-[0.6rem]">
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                   {t('contact.information')}
@@ -89,7 +81,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#73552E]">
                   {t('contact.ourLocation')}
                 </p>
-                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[2rem]">
+                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[0.6rem]">
                   <Image
                     src="/images/real/kosnice-livada.webp"
                     alt={t('contact.mapAlt')}
@@ -101,7 +93,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="mt-4 text-sm text-[#73552E]">{t('contact.locationDescription')}</p>
               </div>
 
-              <div className="aspect-video overflow-hidden border border-[#73552E]/15 rounded-[2rem]">
+              <div className="aspect-video overflow-hidden border border-[#73552E]/15 rounded-[0.6rem]">
                 <iframe
                   title={t('contact.mapAlt')}
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90547.90831565396!2d17.538!3d44.867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e0146f7b9c739%3A0x1a5a5e5cd4c66f6b!2sPrnjavor!5e0!3m2!1sen!2sba!4v1700000000000!5m2!1sen!2sba"
