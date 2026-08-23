@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 
 import { isLocale } from '@/i18n/config';
 import { photoBreaks } from '@/content/pages';
+import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import AboutPreview from '@/components/home/AboutPreview';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
@@ -18,6 +19,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      <HeroLand locale={locale} />
       <HeroJar locale={locale} />
 
       {/* Poslije heroja — ista tegla, ali stvarna, u pcelinjaku. */}

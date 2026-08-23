@@ -4,7 +4,7 @@
 
 :root {
   /* Paleta 60 / 30 / 10 — boje ocitane sa deklaracije i logotipa */
-  --paper: #FDF9DC;  /* 60% — krem sa etikete */
+  --paper: #F1E6DA;  /* 60% — papir sa crteza livade */
   --brown: #73552E;  /* 30% — mastilo natpisa "livadski MED" */
   --gold:  #C79A3B;  /* 10% — zlatna sa krila pcele iz logotipa */
 
@@ -474,7 +474,7 @@ p {
  * that is how meracinque.com does it (see recon/findings.md).
  * ------------------------------------------------------------------------- */
 .hero-jar {
-  --hero-paper: #FCF8DC;
+  --hero-paper: #F1E6DA;
   --hero-ink: #A96F36;
   --hero-caps: #5C3814;
 
@@ -681,16 +681,17 @@ p {
   width: 100vw;
   height: 100svh;
   overflow: hidden;
-  background-color: #FCF8DC;
+  background-color: #F1E6DA;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#preloader .preloader__mark {
-  height: 15vh;
-  width: auto;
-  opacity: 0;
+/* The clip is square; keep it comfortably inside the shorter viewport edge. */
+#preloader .preloader__clip {
+  width: min(78vw, 62svh);
+  height: auto;
+  display: block;
 }
 
 /* Scroll stays put until the curtain is gone. Lenis is stopped too; this
@@ -704,8 +705,79 @@ html.is-preloading body {
   #preloader {
     display: none;
   }
+}
 
-  #preloader .preloader__mark {
-    opacity: 1;
+/* ---------------------------------------------------------------------------
+ * Opening screen: the drawn meadow.
+ *
+ * The plate is a container, and every overlay is a percentage of it, so the
+ * wordmark keeps its place against the drawing at any width. Positions come
+ * from the original composite at 1447 x 969 (see HeroLand.tsx).
+ * ------------------------------------------------------------------------- */
+.hero-land {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--paper);
+}
+
+.hero-land__plate {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.hero-land__drawing {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero-land__script {
+  position: absolute;
+  left: 27.5%;   /* 398 / 1447 — the svg's own ink starts 15px in */
+  top: 4.44%;    /* 43 / 969 — and 126px down */
+  width: 33.1%;  /* 479 / 1447 */
+  height: auto;
+}
+
+.hero-land__wordmark {
+  position: absolute;
+  left: 20.66%; /* 299 / 1447 — the left edge of "Jevtić" */
+  top: 33.23%;  /* 322 / 969 — the cap line of "PČELARSTVO" */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  color: #8A5A17;
+}
+
+.hero-land__caps {
+  margin-left: 2.63cqw; /* 337 - 299 = 38px, the caps sit inset from the name */
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: 2.7cqw;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+}
+
+.hero-land__name {
+  margin-top: 0.62cqw;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 500;
+  font-size: 7.3cqw;
+  letter-spacing: -0.005em;
+}
+
+/*
+ * On a phone the drawing at full width would be a 260px-tall strip. Widen the
+ * plate past the viewport and pull it left: the wordmark and the trees stay in
+ * frame, and because the overlays are percentages of the plate they travel with
+ * it. The drawing's own paper is the page colour, so the overflow is invisible.
+ */
+@media (max-width: 767px) {
+  .hero-land__plate {
+    width: 215%;
+    margin-left: -42%;
   }
 }

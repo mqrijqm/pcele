@@ -164,22 +164,7 @@ export default function Header({ locale }: { locale: Locale }) {
           </nav>
 
           <div className="mt-auto pb-10">
-            <div className="grid grid-cols-2 gap-2">
-              <Link
-                href={localeHref(locale, '/account')}
-                className="rounded-[1.25rem] bg-[#73552E]/[0.07] px-4 py-4 text-center text-sm font-semibold text-[#73552E]"
-              >
-                {t('nav.account')}
-              </Link>
-              <Link
-                href={localeHref(locale, '/wishlist')}
-                className="rounded-[1.25rem] bg-[#73552E]/[0.07] px-4 py-4 text-center text-sm font-semibold text-[#73552E]"
-              >
-                {t('wishlist.title')}
-              </Link>
-            </div>
-
-            <div className="mt-6 flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-1">
               {locales.map((code, index) => (
                 <span key={code} className="flex items-center">
                   <Link
