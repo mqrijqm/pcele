@@ -817,8 +817,8 @@ html:not(.is-preloading) .hero-land__arrow {
 .hero-land__wordmark {
   position: absolute;
   left: 20.66%;
-  top: 31.5%;
-  width: 27.5%;
+  top: 32.5%;
+  width: 22.5%;
   margin: 0;
   line-height: 0;
 }
@@ -896,6 +896,16 @@ html:not(.is-preloading) .hero-land__arrow {
   left: 0;
   width: clamp(52px, 4.6vw, 76px);
   will-change: transform;
+}
+
+/*
+ * Na telefonu je izmedju ivice ekrana i vrha strelice svega sedamdesetak
+ * piksela, pa je pcela tu nesto manja — inace bi legla na crtice.
+ */
+@media (max-width: 767px) {
+  .bee {
+    width: 46px;
+  }
 }
 
 /* Srednji omotac: mirno lebdenje, nezavisno od skrola. */

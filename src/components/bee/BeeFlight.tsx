@@ -66,7 +66,7 @@ export default function BeeFlight() {
         layer.style.width = `${w}px`;
         layer.style.height = `${h}px`;
         gsap.set(bee, {
-          x: (395 / REF.w) * w,
+          x: (350 / REF.w) * w,
           y: (243 / REF.h) * h,
           xPercent: -50,
           yPercent: -50,
