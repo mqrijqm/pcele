@@ -171,8 +171,19 @@ export default function HeroJar({ locale }: { locale: Locale }) {
     <section ref={root} className="hero-jar" aria-label={`${t.left} ${t.right}`}>
       <div className="hero-jar__stage">
         <div className="hero-jar__layer">
+          {/*
+            * Znak nije kvadrat: prirodne mere su 27.9 x 29.77, pa je malo visi
+            * nego siri. Mere ispod sluze samo da se unapred rezervise mesto —
+            * sirinu i dalje drzi CSS, a visina ide iz odnosa samog crteza.
+            */}
           <span className="hero-jar__crest">
-            <Image src="/hero/logo-krug.svg" alt={t.crestAlt} width={120} height={120} priority />
+            <Image
+              src="/hero/logo-krug.svg"
+              alt={t.crestAlt}
+              width={279}
+              height={298}
+              priority
+            />
           </span>
 
           <p className="hero-jar__label hero-jar__label--top">
