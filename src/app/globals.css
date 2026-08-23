@@ -8,6 +8,13 @@
   --brown: #73552E;  /* 30% — mastilo natpisa "livadski MED" */
   --gold:  #C79A3B;  /* 10% — zlatna sa krila pcele iz logotipa */
 
+  /*
+   * Podloga iza snimaka proizvoda. Nije papir nego skoro bijelo, ocitano sa
+   * ivica samih fotografija — da se ne vidi gdje slika prestaje a kartica
+   * pocinje.
+   */
+  --shot: #FDFBF9;
+
   /* Povrsine se izvode iz smedje na niskoj prozirnosti, ne iz nove boje */
   --surface: rgba(115, 85, 46, 0.05);
   --hairline: rgba(115, 85, 46, 0.12);

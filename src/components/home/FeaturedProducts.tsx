@@ -15,12 +15,12 @@ import { localeHref, type Locale } from '@/i18n/config';
 const layout = [
   {
     tile: 'lg:col-span-6',
-    bg: 'bg-[#73552E]/[0.06]',
+    bg: 'bg-[var(--shot)]',
     variant: 'tall' as const,
   },
   {
     tile: 'lg:col-span-6',
-    bg: 'bg-[#73552E]/[0.06]',
+    bg: 'bg-[var(--shot)]',
     variant: 'tall' as const,
   },
 ];
