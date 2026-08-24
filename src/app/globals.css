@@ -1884,11 +1884,27 @@ html:not(.is-preloading) .hero-land__arrow {
  * na niskom prozoru prestala da se lista vodoravno.
  */
 .sorte--pinned .sorta {
-  --arch-cap: min(calc(min(38rem, 78vw) * 0.414), 34vh);
+  /*
+   * Uze nego kad sekcija samo stoji: zakovana, dvije kartice treba da stanu
+   * cijele u ekran, a treca da viri toliko da se vidi da ima jos. Na 1430px
+   * to znaci livadski i bagrem cijeli, propolis na ivici.
+   *
+   * Nize od ovoga se ne ide. Sirina kartice je i duzina puta koji traka ima
+   * da predje: na 30rem taj put padne na dvjestotinjak piksela, sekcija se po
+   * pravilu ispod ne zakuje uopste, i ostane da visi izvan ekrana — upravo
+   * ono sto je trebalo popraviti.
+   */
+  --sorta-w: min(34rem, 72vw);
+  --arch-cap: min(calc(var(--sorta-w) * 0.414), 30vh);
 
   border-radius: 50% 50% 0 0 / var(--arch-cap) var(--arch-cap) 0 0;
   display: flex;
   flex-direction: column;
+}
+
+/* Naslov ustupa visinu karticama — zakovanoj sekciji je visina jedini resurs. */
+.sorte--pinned .sorte__heading {
+  font-size: clamp(1.6rem, 3.1vw, 2.35rem);
 }
 
 .sorte--pinned .sorta__art {
@@ -1922,8 +1938,10 @@ html:not(.is-preloading) .hero-land__arrow {
  * odnos kao na maketi. Donji uglovi su ostri jer kartica sjeda na sekciju.
  */
 .sorta {
+  --sorta-w: min(38rem, 78vw);
+
   flex: 0 0 auto;
-  width: min(38rem, 78vw);
+  width: var(--sorta-w);
   scroll-snap-align: start;
   border-radius: 50% 50% 0 0 / 41% 41% 0 0;
   padding: clamp(2.5rem, 4vw, 3.5rem) clamp(2rem, 3.5vw, 3.25rem) 0;
