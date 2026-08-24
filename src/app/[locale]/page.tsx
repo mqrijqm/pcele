@@ -60,6 +60,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             focus: 'object-[74%_50%]',
           },
         ]}
+        frame="narrow"
         caption={shot.homeOther.caption}
         meta={shot.homeOther.meta}
       />

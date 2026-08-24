@@ -89,6 +89,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
             focus: 'object-[74%_50%]',
           },
         ]}
+        frame="narrow"
         caption={shot.productsOther.caption}
         meta={shot.productsOther.meta}
       />
