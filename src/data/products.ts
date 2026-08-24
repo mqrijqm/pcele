@@ -50,7 +50,7 @@ export const products: Product[] = [
     order: 2,
     category: 'honey',
     image: '/images/proizvodi/bagremov-500g.webp',
-    cardBg: 'var(--shot)',
+    cardBg: '#F4EDE1',
     variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
@@ -92,7 +92,7 @@ export const products: Product[] = [
     order: 4,
     category: 'honey',
     image: '/images/proizvodi/livadski-500g.webp',
-    cardBg: 'var(--shot)',
+    cardBg: '#F7E2AC',
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',

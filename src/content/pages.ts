@@ -135,7 +135,7 @@ export const home = {
   featured: {
     sr: {
       eyebrow: 'Iz naših košnica',
-      heading: 'Dva meda, propolis i imuno mix.',
+      heading: 'Ukusi koji se ne zaboravljaju.',
       viewAll: 'Svi proizvodi',
       items: [
         { slug: 'livadski-med-500g', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
@@ -150,7 +150,7 @@ export const home = {
     },
     en: {
       eyebrow: 'From our hives',
-      heading: 'Two honeys, propolis and imuno mix.',
+      heading: 'Flavours you do not forget.',
       viewAll: 'All products',
       items: [
         { slug: 'livadski-med-500g', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
