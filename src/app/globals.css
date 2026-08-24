@@ -722,7 +722,16 @@ p {
   width: 100vw;
   height: 100svh;
   overflow: hidden;
-  background-color: var(--paper);
+  /*
+   * Boja klipa, ne papira. Snimak ima ravnu podlogu preko cijelog kadra; na
+   * papiru se njegov kvadrat vidio kao siva ploca oko tegle. Zavjesa se ionako
+   * vidi sama, pa nema sta da uskladjuje sa stranom ispod sebe.
+   *
+   * Vrijednost je ocitana sa onoga sto preglednik ISCRTA, a ne iz fajla: video
+   * ide kroz YUV, pa se #F0E4D8 iz snimka na ekranu pojavi kao #F2E6D9. Boja
+   * uzeta iz fajla ostavlja tanku, ali vidljivu ivicu.
+   */
+  background-color: #f2e6d9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1754,7 +1763,7 @@ html:not(.is-preloading) .hero-land__arrow {
 .sorte__heading {
   font-family: var(--font-gazpacho), Georgia, serif;
   font-weight: 400;
-  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-size: clamp(1.9rem, 4.1vw, 3rem);
   line-height: 1.04;
   letter-spacing: -0.02em;
   color: #6b4915;
@@ -1805,6 +1814,54 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .sorte__track::-webkit-scrollbar {
   display: none;
+}
+
+/*
+ * Pinovano: traku vozi polozaj strane, pa ona vise ne smije da ima ni svoj
+ * skrol ni snap — dvoje bi se otimalo o isti potez.
+ */
+.sorte--pinned .sorte__track {
+  overflow: hidden;
+  scroll-snap-type: none;
+  will-change: transform;
+}
+
+/*
+ * Dok stoji zakovana, sekcija mora stati u ekran — inace se dno lukova nikad
+ * ne vidi, jer strana ispod nje ne mice. Zato visina ide od ekrana nadolje:
+ * kartica uzima ostatak stupca, a crtez guta razliku, pa naziv i tabela ostaju
+ * citljivi i na niskom prozoru.
+ */
+.sorte--pinned {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(1.75rem, 5vh, 4rem);
+}
+
+.sorte--pinned .sorte__top {
+  margin-bottom: clamp(1.25rem, 3.5vh, 3rem);
+}
+
+.sorte--pinned .sorte__track {
+  flex: 1 1 auto;
+  min-height: 0;
+  align-items: stretch;
+}
+
+.sorte--pinned .sorta {
+  display: flex;
+  flex-direction: column;
+}
+
+.sorte--pinned .sorta__art {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: auto;
+}
+
+.sorte--pinned .sorta__info {
+  padding-bottom: clamp(1.5rem, 4vh, 3.5rem);
 }
 
 /* Fokus se vidi na traci, jer se strelicama upravlja tek kad je fokusirana. */

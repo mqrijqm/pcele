@@ -758,11 +758,6 @@ export const photoBreaks = {
       meta: 'Teglu po teglu',
       alt: 'Ručno lijepljenje etikete na teglu',
     },
-    homeStudio: {
-      caption: 'Dvije paše · jedna etiketa',
-      meta: 'Neto 500 g',
-      alt: 'Tegle bagremovog i livadskog meda poredane u pravilnom rasteru',
-    },
     homeTable: {
       caption: 'Sa livade na sto',
       heading: 'Ono što otvorite u decembru istočeno je u avgustu.',
@@ -879,11 +874,6 @@ export const photoBreaks = {
       caption: 'The label goes on by hand, last',
       meta: 'One jar at a time',
       alt: 'A label being applied to a jar by hand',
-    },
-    homeStudio: {
-      caption: 'Two forages · one label',
-      meta: 'Net 500 g',
-      alt: 'Jars of acacia and meadow honey arranged in a repeating grid',
     },
     homeTable: {
       caption: 'From the meadow to the table',

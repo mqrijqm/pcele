@@ -66,13 +66,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         meta={shot.homeOther.meta}
       />
 
-      {/* Poslije proizvoda — studijski raster, kao katalog. */}
-      <ImageBreak
-        images={[{ src: '/images/real/tegle-raster.webp', alt: shot.homeStudio.alt }]}
-        caption={shot.homeStudio.caption}
-        meta={shot.homeStudio.meta}
-      />
-
       {/*
         * Sorte i ovdje: lukovi imaju ravno dno i sekcija nema donji razmak, pa
         * se boja mijenja tacno na toj liniji — kremasta gore, papir dolje.
