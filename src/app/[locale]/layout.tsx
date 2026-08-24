@@ -6,6 +6,7 @@ import '../globals.css';
 
 import { isLocale, locales, type Locale } from '@/i18n/config';
 import { meta } from '@/content/pages';
+import { SITE_URL } from '@/lib/site-url';
 import { CartProvider } from '@/lib/cart';
 import { WishlistProvider } from '@/lib/wishlist';
 import Header from '@/components/layout/Header';
@@ -62,7 +63,7 @@ export async function generateMetadata({
   const page = meta[l].home;
 
   return {
-    metadataBase: new URL('https://pcelarstvo-jevtic.ba'),
+    metadataBase: new URL(SITE_URL),
     title: { default: page.title, template: '%s | Pčelarstvo Jevtić' },
     description: page.description,
     authors: [{ name: 'Pčelarstvo Jevtić' }],
@@ -77,6 +78,11 @@ export async function generateMetadata({
      * omjer koji Facebook i LinkedIn ocekuju. Ranije je ovdje stajala
      * fotografija 1600x1200 prijavljena kao 1200x630, pa su je mreze sjekle
      * po svom, jer vjeruju prijavljenim mjerama a ne samom fajlu.
+     *
+     * Format je JPG, ne WebP. Facebook danas svari WebP, ali LinkedIn i
+     * WhatsApp znaju da ga preskoce i onda link ode go, bez slike. JPG
+     * razumiju sve mreze, pa se za kartu za dijeljenje ne isplati stedjeti
+     * kilobajte na formatu koji je negdje neizvjestan.
      */
     openGraph: {
       title: l === 'sr' ? 'Pčelarstvo Jevtić — Porodični Med' : 'Pčelarstvo Jevtić — Family Honey',
@@ -84,13 +90,13 @@ export async function generateMetadata({
         l === 'sr'
           ? 'Višegeneracijsko znanje u svakoj tegli. 100% prirodan, bez dodataka i konzervansa.'
           : 'Generations of know-how in every jar. 100% natural, no additives or preservatives.',
-      url: 'https://pcelarstvo-jevtic.ba',
+      url: `${SITE_URL}/${l}`,
       siteName: 'Pčelarstvo Jevtić',
       locale: l === 'sr' ? 'sr_BA' : 'en_US',
       type: 'website',
       images: [
         {
-          url: '/images/og/social-card.webp',
+          url: '/images/og/social-card.jpg',
           width: 1200,
           height: 630,
           alt:
@@ -111,7 +117,7 @@ export async function generateMetadata({
         l === 'sr'
           ? 'Kvaliteta. Tradicija. Sirovo vrcano.'
           : 'Quality. Tradition. Raw-spun.',
-      images: ['/images/og/social-card.webp'],
+      images: ['/images/og/social-card.jpg'],
     },
     icons: {
       icon: [

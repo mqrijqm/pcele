@@ -8,6 +8,7 @@ import Declaration from '@/components/products/Declaration';
 import ProductDetail from '@/components/products/ProductDetail';
 import { formatPrice, getProduct, products } from '@/data/products';
 import { createTranslator, isLocale, locales, localeHref, type Locale } from '@/i18n/config';
+import { SITE_URL } from '@/lib/site-url';
 
 /** Related cards show only the opening of the description, as on the original site. */
 const truncate = (text: string, length = 60) =>
@@ -57,7 +58,7 @@ export default async function ProductPage({
     '@type': 'Product',
     name: product.name[locale],
     description: product.description[locale],
-    image: [`https://pcelarstvo-jevtic.ba${product.image}`],
+    image: [`${SITE_URL}${product.image}`],
     brand: { '@type': 'Brand', name: 'Pčelarstvo Jevtić' },
     offers: product.variants.map((variant) => ({
       '@type': 'Offer',
@@ -66,7 +67,7 @@ export default async function ProductPage({
       price: variant.price.toFixed(2),
       priceCurrency: 'BAM',
       availability: 'https://schema.org/InStock',
-      url: `https://pcelarstvo-jevtic.ba/${locale}/products/${product.slug}`,
+      url: `${SITE_URL}/${locale}/products/${product.slug}`,
     })),
   };
 

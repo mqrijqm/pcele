@@ -4,7 +4,9 @@ import { posts } from '@/data/posts';
 import { products } from '@/data/products';
 import { locales } from '@/i18n/config';
 
-const BASE = 'https://pcelarstvo-jevtic.ba';
+import { SITE_URL } from '@/lib/site-url';
+
+const BASE = SITE_URL;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
