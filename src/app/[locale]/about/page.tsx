@@ -37,12 +37,12 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <BeeFlight route="about" />
 
       <PageOpener eyebrow={copy.eyebrow} heading={copy.heading} />
-      <section className="border-b border-[#73552E]/12 bg-[var(--paper)]">
+      <section className="border-b border-[#73552E]/15 bg-[var(--paper)]">
         <div className="container grid md:grid-cols-3">
           {copy.features.map((feature, index) => (
             <div
               key={feature.title}
-              className="border-b border-[#73552E]/12 py-7 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"
+              className="border-b border-[#73552E]/15 py-7 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"
             >
               <span className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
                 {String(index + 1).padStart(2, '0')}

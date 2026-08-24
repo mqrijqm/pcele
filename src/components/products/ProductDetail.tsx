@@ -83,7 +83,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             </div>
           </div>
 
-          <div className="border border-[#73552E]/12 bg-[var(--paper)] p-7 sm:p-9 lg:p-11 rounded-[0.6rem]">
+          <div className="border border-[#73552E]/15 bg-[var(--paper)] p-7 sm:p-9 lg:p-11 rounded-[0.6rem]">
             <div className="mb-2">
               <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#73552E]">
                 <Leaf className="h-4 w-4" />

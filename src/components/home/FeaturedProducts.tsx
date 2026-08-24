@@ -7,22 +7,21 @@ import { getProduct } from '@/data/products';
 import { localeHref, type Locale } from '@/i18n/config';
 
 /*
- * Dvije vrste meda, dvije jednake kartice u jednom redu.
+ * Cetiri artikla, cetiri jednake visoke plocice — dva reda po dvije.
  *
- * Ranije su bile tri — jedna visoka i dvije siroke — ali sa dvije vrste taj
- * raspored ostavlja rupu u rasteru, pa su sada obje visoke i jednake.
+ * Sa cetiri plocice raster 4+4+4 vise ne staje u dvanaest kolona, a cetiri po
+ * tri kolone bi bile preuske za ovako krupan naslov u plocici. Zato 6+6 kroz
+ * dva reda.
+ *
+ * Broj unosa ovdje mora da prati broj artikala u home.featured.items —
+ * plocica cita layout[index], pa artikal bez svog unosa nema sta da procita.
+ * Zato se ispod i preskace kad unosa nema, umjesto da obori stranu.
  */
 const layout = [
-  {
-    tile: 'lg:col-span-6',
-    bg: 'bg-[var(--shot)]',
-    variant: 'tall' as const,
-  },
-  {
-    tile: 'lg:col-span-6',
-    bg: 'bg-[var(--shot)]',
-    variant: 'tall' as const,
-  },
+  { tile: 'lg:col-span-6', variant: 'tall' as const },
+  { tile: 'lg:col-span-6', variant: 'tall' as const },
+  { tile: 'lg:col-span-6', variant: 'tall' as const },
+  { tile: 'lg:col-span-6', variant: 'tall' as const },
 ];
 
 export default function FeaturedProducts({ locale }: { locale: Locale }) {
@@ -49,17 +48,18 @@ export default function FeaturedProducts({ locale }: { locale: Locale }) {
           </Link>
         </div>
 
-        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[32rem]">
+        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-[repeat(2,30rem)]">
           {copy.items.map((item, index) => {
             const product = getProduct(item.slug);
             const style = layout[index];
-            if (!product) return null;
+            if (!product || !style) return null;
 
             return (
               <Link
                 key={item.slug}
                 href={localeHref(locale, `/products/${item.slug}`)}
-                className={`group relative min-h-[28rem] overflow-hidden rounded-[0.6rem] ${style.bg} lg:min-h-0 ${style.tile}`}
+                style={{ background: product.cardBg }}
+                className={`group relative min-h-[28rem] overflow-hidden rounded-[0.6rem] lg:min-h-0 ${style.tile}`}
               >
                 {style.variant === 'tall' ? (
                   <div className="absolute inset-0">

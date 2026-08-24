@@ -843,7 +843,7 @@ html:not(.is-preloading) .hero-land__arrow {
    * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
    */
   top: 32.5%;
-  width: 19%;
+  width: 15%;
   margin: 0;
   line-height: 0;
 }
@@ -1621,4 +1621,217 @@ html:not(.is-preloading) .hero-land__arrow {
 /* Druga slika je spustena, isto kao u parovima drugdje na sajtu. */
 .frames__shot--low {
   margin-top: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+/* ---------------------------------------------------------------------------
+ * "Vrcamo ukus koji traje" — tri sorte u lukovima, listanje vodoravno.
+ *
+ * Sekcija nema donji razmak i nema donji radijus: ravno dno luka treba da
+ * dodirne smedju traku 01-04 koja pocinje odmah ispod.
+ * ------------------------------------------------------------------------- */
+.sorte {
+  position: relative;
+  background: #fdf6e7;
+  padding-top: clamp(3.5rem, 7vw, 5rem);
+  overflow: hidden;
+}
+
+.sorte__top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding-inline: var(--container-padding);
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.sorte__heading {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #6b4915;
+}
+
+/* Dva reda naslova su dva <span> — prelom je dio sloga, ne slucaj sirine. */
+.sorte__heading span {
+  display: block;
+}
+
+.sorte__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  padding: 0.85rem 1.6rem;
+  border: 1px solid #6b4915;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.95rem;
+  color: #6b4915;
+  transition:
+    background-color 300ms var(--ease-out-expo),
+    color 300ms var(--ease-out-expo);
+}
+
+.sorte__cta:hover {
+  background: #6b4915;
+  color: #fdf6e7;
+}
+
+/*
+ * Traka. `scroll-snap` hvata karticu na sredinu kad potez stane, a inercija
+ * na dodir je nativna — nista od toga ne prolazi kroz JS.
+ */
+.sorte__track {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 3rem);
+  padding-inline: var(--container-padding);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  /* Hvatanje je po lijevoj ivici, pa snap mora da racuna i bocni razmak. */
+  scroll-padding-inline: var(--container-padding);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sorte__track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Fokus se vidi na traci, jer se strelicama upravlja tek kad je fokusirana. */
+.sorte__track:focus-visible {
+  outline: 2px solid #6b4915;
+  outline-offset: -4px;
+}
+
+/*
+ * Luk: gornja dva ugla su polovina sirine po x i oko 40% visine po y — isti
+ * odnos kao na maketi. Donji uglovi su ostri jer kartica sjeda na sekciju.
+ */
+.sorta {
+  flex: 0 0 auto;
+  width: min(38rem, 78vw);
+  scroll-snap-align: start;
+  border-radius: 50% 50% 0 0 / 41% 41% 0 0;
+  padding: clamp(2.5rem, 4vw, 3.5rem) clamp(2rem, 3.5vw, 3.25rem) 0;
+  text-align: center;
+  transition: transform 300ms var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .sorta:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.sorta__art {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: clamp(11rem, 20vw, 16rem);
+}
+
+.sorta__art img {
+  max-height: 100%;
+  width: auto;
+  max-width: 72%;
+  object-fit: contain;
+}
+
+.sorta__naziv {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.sorta__info {
+  /* Uzi od kartice — na maketi info ne dodiruje ivice luka. */
+  width: min(100%, 26rem);
+  margin-inline: auto;
+  margin-top: clamp(1.5rem, 2.5vw, 2.25rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  display: grid;
+  gap: clamp(0.75rem, 1.5vw, 1rem);
+  text-align: left;
+}
+
+/*
+ * Red je grid od tri polja: labela, crta koja pojede visak, vrijednost. Tako
+ * su vrijednosti poravnate desno bez obzira koliko je labela duga.
+ */
+.sorta__red {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.85rem, 1.4vw, 1rem);
+  color: #845c34;
+}
+
+.sorta__red dt,
+.sorta__red dd {
+  margin: 0;
+}
+
+/* Tackasta veza izmedju labele i vrijednosti. */
+.sorta__crta {
+  height: 1px;
+  background-image: linear-gradient(to right, #845c34 0 45%, transparent 45% 100%);
+  background-size: 11px 1px;
+  background-repeat: repeat-x;
+  opacity: 0.65;
+}
+
+.sorte__tacke {
+  display: flex;
+  gap: 0.6rem;
+  padding-bottom: 0.9rem;
+}
+
+.sorte__tacka {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(132, 92, 52, 0.3);
+  transition:
+    background-color 250ms var(--ease-out-expo),
+    transform 250ms var(--ease-out-expo);
+}
+
+.sorte__tacka[data-active='true'] {
+  background: #c9a961;
+  transform: scale(1.35);
+}
+
+/* Na telefonu jedna kartica drzi ekran, pa se listanje osjeti kao stranice. */
+@media (max-width: 767px) {
+  .sorta {
+    width: 86vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sorte__track {
+    scroll-behavior: auto;
+  }
+
+  .sorta,
+  .sorte__tacka {
+    transition: none;
+  }
+
+  .sorta:hover {
+    transform: none;
+  }
 }

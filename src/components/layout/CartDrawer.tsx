@@ -58,7 +58,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 </Link>
               </div>
             ) : (
-              <ul className="divide-y divide-[#73552E]/12">
+              <ul className="divide-y divide-[#73552E]/15">
                 {cart.items.map((item) => (
                   <li key={item.variantId} className="flex gap-4 py-5">
                     <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.4rem] bg-[#73552E]/[0.06]">

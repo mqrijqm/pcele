@@ -166,7 +166,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 key={item.href}
                 href={localeHref(locale, item.href)}
                 style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
-                className={`border-b border-[#73552E]/12 py-4 font-display text-3xl text-[#73552E] transition-all duration-500 hover:text-[#C79A3B] sm:text-4xl ${
+                className={`border-b border-[#73552E]/15 py-4 font-display text-3xl text-[#73552E] transition-all duration-500 hover:text-[#C79A3B] sm:text-4xl ${
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
                 }`}
               >

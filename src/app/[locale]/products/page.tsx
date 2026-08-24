@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import ProductsGrid from '@/components/products/ProductsGrid';
+import SorteMeda from '@/components/products/SorteMeda';
 import ImageBreak from '@/components/ui/ImageBreak';
 import { meta, photoBreaks, productsPage } from '@/content/pages';
 import { isLocale, type Locale } from '@/i18n/config';
@@ -44,13 +45,14 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         emblem
       />
 
-      <ImageBreak
-        images={[{ src: '/images/real/tegle-raster.webp', alt: shot.productsSizes.alt }]}
-        caption={shot.productsSizes.caption}
-        meta={shot.productsSizes.meta}
-      />
+      {/*
+        * Sorte sjede tacno iznad smedje trake 01-04 i dodiruju je: sekcija
+        * nema donji razmak, a lukovi imaju ravno dno. Zato ovdje nema nista
+        * izmedju te dvije sekcije.
+        */}
+      <SorteMeda locale={locale} />
 
-      <section className="border-y border-[#73552E]/14 bg-[#73552E] py-12">
+      <section className="border-b border-[#73552E]/15 bg-[#73552E] py-12">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {copy.trustFeatures.map((feature, index) => (

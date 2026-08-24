@@ -61,11 +61,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 </p>
                 <h2 className="text-2xl text-[#73552E]">{t('contact.info.title')}</h2>
 
-                <div className="mt-8 border-t border-[#73552E]/18">
+                <div className="mt-8 border-t border-[#73552E]/20">
                   {details.map(({ Icon, title, value }) => (
                     <div
                       key={title}
-                      className="flex items-start gap-4 border-b border-[#73552E]/18 py-5"
+                      className="flex items-start gap-4 border-b border-[#73552E]/20 py-5"
                     >
                       <Icon className="mt-0.5 h-5 w-5 shrink-0 text-[#73552E]" />
                       <div>

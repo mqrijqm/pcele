@@ -135,20 +135,32 @@ export const home = {
   featured: {
     sr: {
       eyebrow: 'Iz naših košnica',
-      heading: 'Dva meda. Svaki nosi svoj kraj.',
+      heading: 'Dva meda, propolis i imuno mix.',
       viewAll: 'Svi proizvodi',
       items: [
         { slug: 'livadski-med-500g', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
         { slug: 'bagremov-med-500g', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
+        {
+          slug: 'pcelinji-propolis-20ml',
+          name: 'Pčelinji Propolis',
+          note: 'Smolast, gorak i koncentrisan.',
+        },
+        { slug: 'imuno-mix-450g', name: 'Imuno Mix', note: '70% med, 30% cvjetni polen.' },
       ],
     },
     en: {
       eyebrow: 'From our hives',
-      heading: 'Two honeys. Each carries its landscape.',
+      heading: 'Two honeys, propolis and imuno mix.',
       viewAll: 'All products',
       items: [
         { slug: 'livadski-med-500g', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
         { slug: 'bagremov-med-500g', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
+        {
+          slug: 'pcelinji-propolis-20ml',
+          name: 'Bee Propolis',
+          note: 'Resinous, bitter and concentrated.',
+        },
+        { slug: 'imuno-mix-450g', name: 'Imuno Mix', note: '70% honey, 30% flower pollen.' },
       ],
     },
   } satisfies L<{

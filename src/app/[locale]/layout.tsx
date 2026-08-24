@@ -72,26 +72,47 @@ export async function generateMetadata({
       canonical: `/${l}`,
       languages: { sr: '/sr', en: '/en' },
     },
+    /*
+     * Karta za dijeljenje. Slika je zasebno izrezana na tacno 1200x630 —
+     * omjer koji Facebook i LinkedIn ocekuju. Ranije je ovdje stajala
+     * fotografija 1600x1200 prijavljena kao 1200x630, pa su je mreze sjekle
+     * po svom, jer vjeruju prijavljenim mjerama a ne samom fajlu.
+     */
     openGraph: {
-      title: l === 'sr' ? 'Tradicija u svakoj kapi' : 'Tradition in every drop',
+      title: l === 'sr' ? 'Pčelarstvo Jevtić — Porodični Med' : 'Pčelarstvo Jevtić — Family Honey',
       description:
         l === 'sr'
-          ? 'Med iz srca bosanskih livada, proizveden s ljubavlju već tri generacije'
-          : 'Honey from the heart of Bosnian meadows, made with love for three generations',
+          ? 'Višegeneracijsko znanje u svakoj tegli. 100% prirodan, bez dodataka i konzervansa.'
+          : 'Generations of know-how in every jar. 100% natural, no additives or preservatives.',
       url: 'https://pcelarstvo-jevtic.ba',
       siteName: 'Pčelarstvo Jevtić',
       locale: l === 'sr' ? 'sr_BA' : 'en_US',
       type: 'website',
       images: [
         {
-          url: '/images/real/kosnice-livada.webp',
+          url: '/images/og/social-card.webp',
           width: 1200,
           height: 630,
-          alt: l === 'sr' ? 'Tradicija u svakoj kapi' : 'Tradition in every drop',
+          alt:
+            l === 'sr'
+              ? 'Tegle livadskog meda u travi'
+              : 'Jars of meadow honey lying in grass',
         },
       ],
     },
-    twitter: { card: 'summary_large_image' },
+    /*
+     * Twitter/X nosi svoj, kraci tekst. Bez ovih polja mreza pada nazad na
+     * openGraph — zato su title i description ovdje ispisani, a ne izostavljeni.
+     */
+    twitter: {
+      card: 'summary_large_image',
+      title: l === 'sr' ? 'Med kako treba biti' : 'Honey as it should be',
+      description:
+        l === 'sr'
+          ? 'Kvaliteta. Tradicija. Sirovo vrcano.'
+          : 'Quality. Tradition. Raw-spun.',
+      images: ['/images/og/social-card.webp'],
+    },
     icons: {
       icon: [
         { url: '/images/icons/brand-mark-16.png', sizes: '16x16', type: 'image/png' },
