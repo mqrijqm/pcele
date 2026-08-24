@@ -7,6 +7,7 @@ import HeroJar from '@/components/home/HeroJar';
 import AboutPreview from '@/components/home/AboutPreview';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
 import Legacy from '@/components/home/Legacy';
+import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Faq from '@/components/home/Faq';
@@ -71,6 +72,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         caption={shot.homeStudio.caption}
         meta={shot.homeStudio.meta}
       />
+
+      {/*
+        * Sorte i ovdje: lukovi imaju ravno dno i sekcija nema donji razmak, pa
+        * se boja mijenja tacno na toj liniji — kremasta gore, papir dolje.
+        */}
+      <SorteMeda locale={locale} />
 
       <Testimonials locale={locale} />
 
