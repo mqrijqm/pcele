@@ -6,6 +6,7 @@ import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import AboutPreview from '@/components/home/AboutPreview';
 import FeaturedProducts from '@/components/home/FeaturedProducts';
+import Legacy from '@/components/home/Legacy';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Faq from '@/components/home/Faq';
@@ -41,6 +42,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <AboutPreview locale={locale} />
 
       <FeaturedProducts locale={locale} />
+
+      <Legacy locale={locale} />
 
       {/* Poslije proizvoda — studijski raster, kao katalog. */}
       <ImageBreak

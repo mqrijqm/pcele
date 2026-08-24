@@ -225,6 +225,40 @@ export const home = {
     quotes: { text: string; author: string; city: string }[];
   }>,
 
+  legacy: {
+    sr: {
+      heading: 'Nasljeđe koje traje od 1980.',
+      eyebrow: 'Porodična tradicija',
+      body:
+        'Naša porodična priča počela je 1980. godine, kada je porodica Jevtić, uz ribarstvo, počela njegovati još jednu granu domaćinstva — pčelarstvo. Od prvih košnica do danas, med proizvodimo strpljivo, poštujući prirodu i znanje koje se prenosi generacijama.',
+      chapterEyebrow: '1980 — danas',
+      chapterHeading: 'Med.Porodica.Tradicija',
+      figureAlt: 'Crtež pčelara koji otvara košnicu',
+      archiveAlt: 'Stari snimak reda košnica pod drvećem u pčelinjaku',
+      combAlt: 'Komadi saća puni meda u bijeloj posudi, poslije vađenja',
+    },
+    en: {
+      heading: 'A legacy that has lasted since 1980.',
+      eyebrow: 'Family tradition',
+      body:
+        'Our family story began in 1980, when the Jevtić family, alongside fishing, took up one more branch of the household — beekeeping. From the first hives to this day we make honey patiently, respecting nature and the knowledge passed down through generations.',
+      chapterEyebrow: '1980 — today',
+      chapterHeading: 'Honey.Family.Tradition',
+      figureAlt: 'A drawing of a beekeeper opening a hive',
+      archiveAlt: 'An old photograph of a row of hives under the trees',
+      combAlt: 'Pieces of honeycomb full of honey in a white tray after the harvest',
+    },
+  } satisfies L<{
+    heading: string;
+    eyebrow: string;
+    body: string;
+    chapterEyebrow: string;
+    chapterHeading: string;
+    figureAlt: string;
+    archiveAlt: string;
+    combAlt: string;
+  }>,
+
   origin: {
     sr: {
       eyebrow: 'Odakle smo?',
