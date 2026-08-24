@@ -121,6 +121,17 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
       section.classList.add('sorte--pinned');
       const run = () => track.scrollWidth - track.clientWidth;
 
+      /*
+       * Kad tri kartice ionako skoro stanu u ekran, put je od stotinjak
+       * piksela — a pin koji zaustavi stranu na toliko se ne cita kao namjera
+       * nego kao zastoj. Ispod tog praga sekcija ostaje obicna, sa nativnim
+       * listanjem koje je i inace ima.
+       */
+      if (run() < 240) {
+        section.classList.remove('sorte--pinned');
+        return;
+      }
+
       const tween = gsap.to(track, {
         x: () => -run(),
         ease: 'none',
