@@ -1,6 +1,12 @@
 import Image from 'next/image';
 
-type Shot = { src: string; alt: string };
+/*
+ * `focus` je tezisna tacka reza za tu jednu sliku (`object-[75%_50%]`). Stoji
+ * po snimku, a ne po komponenti, jer u paru dva kadra rijetko imaju motiv na
+ * istom mjestu — panorama sa bocom uz desnu ivicu se u uspravnom rezu gubi
+ * ako se sijece po sredini.
+ */
+type Shot = { src: string; alt: string; focus?: string };
 
 type Props = {
   /**
@@ -103,7 +109,7 @@ export default function ImageBreak({
                 alt={first.alt}
                 fill
                 sizes="49vw"
-                className="object-cover"
+                className={`object-cover ${first.focus ?? ''}`}
               />
               {mark}
             </div>
@@ -119,7 +125,7 @@ export default function ImageBreak({
                     alt={second.alt}
                     fill
                     sizes="49vw"
-                    className="object-cover"
+                    className={`object-cover ${second.focus ?? ''}`}
                   />
                 </div>
               </div>

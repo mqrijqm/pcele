@@ -736,6 +736,18 @@ export const photoBreaks = {
       altA: 'Košnice na otvorenoj livadi pod vedrim nebom',
       altB: 'Pogled niz red košnica preko livade',
     },
+    homeOther: {
+      caption: 'Nije samo med · imuno mix i propolis',
+      meta: 'Livada u junu',
+      altMix: 'Tri tegle imuno mixa u travi punoj bijelih i žutih cvjetova',
+      altPropolis: 'Bočica pčelinjeg propolisa sa kapaljkom, uz grumenje sirove smole',
+    },
+    productsOther: {
+      caption: 'Iz iste košnice, ali ne med',
+      meta: 'Imuno mix · propolis',
+      altMix: 'Tegla imuno mixa na svjetlu, uz drvenu kašiku punu cvjetnog polena',
+      altPropolis: 'Bočica pčelinjeg propolisa sa kapaljkom, uz grumenje sirove smole',
+    },
     homeApiary: {
       caption: 'Pčelinjak Mračaj · jutarnja tura',
       meta: 'Sezona 2025.',
@@ -845,6 +857,18 @@ export const photoBreaks = {
       meta: 'The apiary in July',
       altA: 'Hives on an open meadow under a clear sky',
       altB: 'Looking down the row of hives across the meadow',
+    },
+    homeOther: {
+      caption: 'Not honey alone · imuno mix and propolis',
+      meta: 'A meadow in June',
+      altMix: 'Three jars of imuno mix in grass full of white and yellow flowers',
+      altPropolis: 'A dropper bottle of bee propolis beside lumps of raw resin',
+    },
+    productsOther: {
+      caption: 'From the same hive, but not honey',
+      meta: 'Imuno mix · propolis',
+      altMix: 'A jar of imuno mix in the light, beside a wooden scoop full of flower pollen',
+      altPropolis: 'A dropper bottle of bee propolis beside lumps of raw resin',
     },
     homeApiary: {
       caption: 'Mračaj apiary · morning round',

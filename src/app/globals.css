@@ -2034,10 +2034,14 @@ html:not(.is-preloading) .hero-land__arrow {
   flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  /*
+   * Druga dva reda su namjerno visoka: sace ih presijeca oba, a ono je
+   * uspravan snimak — u niskom rasteru bi ispalo kao traka, ne kao slika.
+   */
   grid-template-rows:
     clamp(19rem, 32vw, 26rem)
-    clamp(5rem, 9vw, 8rem)
-    clamp(8rem, 13vw, 12rem);
+    clamp(9rem, 21vw, 19rem)
+    clamp(10rem, 21vw, 19rem);
   margin-top: clamp(3rem, 6vw, 6rem);
   border-top: 1px solid var(--legacy-line);
 }
@@ -2097,17 +2101,17 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 .legacy__void--b {
-  grid-column: 5 / 11;
+  grid-column: 5 / 10;
   border-right: 1px solid var(--legacy-line);
 }
 
 .legacy__void--c {
-  grid-column: 11 / 13;
+  grid-column: 10 / 13;
 }
 
 .legacy__comb {
   position: relative;
-  grid-column: 7 / 11;
+  grid-column: 7 / 10;
   grid-row: 2 / span 2;
   z-index: 2;
   margin: 0;

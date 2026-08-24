@@ -73,6 +73,26 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
+      {/* Dva artikla koja nisu med, prije zavrsne fotografije. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          {
+            src: '/images/real/imuno-studio.webp',
+            alt: shot.productsOther.altMix,
+            // Tegla stoji lijevo od sredine; centriran rez joj odsijeca ivicu.
+            focus: 'object-[42%_50%]',
+          },
+          {
+            src: '/images/real/propolis-kadar.webp',
+            alt: shot.productsOther.altPropolis,
+            focus: 'object-[74%_50%]',
+          },
+        ]}
+        caption={shot.productsOther.caption}
+        meta={shot.productsOther.meta}
+      />
+
       <ImageBreak
         variant="framed"
         side="right"

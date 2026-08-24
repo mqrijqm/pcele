@@ -45,6 +45,25 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <Legacy locale={locale} />
 
+      {/*
+        * Poslije price o porodici — jedini par na strani koji ne pokazuje med.
+        * Propolis je snimljen kao panorama sa bocom uz desnu ivicu, pa mu rez
+        * ide na 74% umjesto po sredini; centriran bi ostavio prazan zid.
+        */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/imuno-livada.webp', alt: shot.homeOther.altMix },
+          {
+            src: '/images/real/propolis-kadar.webp',
+            alt: shot.homeOther.altPropolis,
+            focus: 'object-[74%_50%]',
+          },
+        ]}
+        caption={shot.homeOther.caption}
+        meta={shot.homeOther.meta}
+      />
+
       {/* Poslije proizvoda — studijski raster, kao katalog. */}
       <ImageBreak
         images={[{ src: '/images/real/tegle-raster.webp', alt: shot.homeStudio.alt }]}
