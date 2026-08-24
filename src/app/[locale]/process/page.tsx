@@ -137,6 +137,14 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         frame="narrow"
       />
 
+      {/* Posljednji korak: kad je tegla puna, etiketa ide rukom. */}
+      <ImageBreak
+        images={[{ src: '/images/mockups/label-in-hands.webp', alt: shot.processLabel.alt }]}
+        caption={shot.processLabel.caption}
+        meta={shot.processLabel.meta}
+        frame="narrow"
+      />
+
       <section className="bg-[var(--paper)] section-padding">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">

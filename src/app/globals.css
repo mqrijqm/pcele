@@ -1212,23 +1212,128 @@ html:not(.is-preloading) .hero-land__arrow {
  * Natpis preko slike u "O nama". Serif, sitno i bez podebljanja — ranije je
  * bio verzal u pilulu, sto je vuklo paznju sa same fotografije.
  */
-.about-preview__quote {
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.84rem;
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.5;
-  letter-spacing: 0.012em;
-  color: #fdf9dc;
+/* ---------------------------------------------------------------------------
+ * "Znanje koje se prenosi rukama" — centrirana kolona na papiru.
+ *
+ * Bez kartice i bez smedje trake. Sirinu drzi mjera citljivosti reda, a ne
+ * container, pa se slog ne rasteze na sirokim ekranima.
+ * ------------------------------------------------------------------------- */
+.about-preview {
+  background: var(--paper);
+  /*
+   * Odozdo manje nego odozgo: sekcija ispod je takodje papir, pa se dva puna
+   * razmaka spoje u prazninu koja izgleda kao greska. Dok je ovo bila smedja
+   * traka granica se vidjela sama, sad je nema.
+   */
+  padding-top: var(--section-padding);
+  padding-bottom: var(--section-padding-sm);
 }
 
-/* Navodnici u zlatnoj, malo krupniji od samog teksta. */
-.about-preview__mark {
+.about-preview__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-inline: var(--container-padding);
+}
+
+.about-preview__eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/* Krug je namjerno malen — najavljuje tekst, ne nosi sekciju. */
+.about-preview__circle {
+  position: relative;
+  width: clamp(11rem, 26vw, 17rem);
+  aspect-ratio: 1;
+  margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.about-preview__caption {
+  margin-top: 1.5rem;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--brown-soft);
+}
+
+.about-preview__heading {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  max-width: 18ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--brown);
+}
+
+.about-preview__lead {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  /* Mjera reda, ne container — zato se slog ne rastegne na sirokom ekranu. */
+  max-width: 58ch;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--brown);
+}
+
+.about-preview__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  width: 100%;
+  max-width: 60rem;
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding: 0;
+  list-style: none;
+}
+
+.about-preview__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* Broj je glavni glas reda: krupan i u istoj serifi kao naslovi. */
+.about-preview__num {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  line-height: 1;
   color: var(--gold);
-  font-size: 1.45em;
-  font-style: normal;
-  line-height: 0;
-  vertical-align: -0.08em;
+}
+
+.about-preview__label {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--brown);
+}
+
+.about-preview__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(3rem, 5vw, 4rem);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--brown);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+/* Na telefonu cetiri kolone bi svaki naziv slomile u tri reda. */
+@media (max-width: 639px) {
+  .about-preview__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.25rem 1.5rem;
+  }
 }
 
 /* ---------------------------------------------------------------------------

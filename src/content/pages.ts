@@ -707,11 +707,10 @@ export const photoBreaks = {
       meta: 'Sezona 2025.',
       alt: 'Djevojka drži teglu livadskog meda u livadi',
     },
-    homeHands: {
-      caption: 'Med poslije vrcanja, pa etiketa rukom',
+    processLabel: {
+      caption: 'Etiketa ide rukom, posljednja',
       meta: 'Teglu po teglu',
-      altFrame: 'Tri kante svježe istočenog meda',
-      altLabel: 'Ručno lijepljenje etikete na teglu',
+      alt: 'Ručno lijepljenje etikete na teglu',
     },
     homeStudio: {
       caption: 'Dvije paše · jedna etiketa',
@@ -818,11 +817,10 @@ export const photoBreaks = {
       meta: '2025 season',
       alt: 'A woman holding a jar of meadow honey out in the meadow',
     },
-    homeHands: {
-      caption: 'Honey after extraction, then the label by hand',
+    processLabel: {
+      caption: 'The label goes on by hand, last',
       meta: 'One jar at a time',
-      altFrame: 'Three buckets of freshly extracted honey',
-      altLabel: 'A label being applied to a jar by hand',
+      alt: 'A label being applied to a jar by hand',
     },
     homeStudio: {
       caption: 'Two forages · one label',

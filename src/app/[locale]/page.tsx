@@ -40,17 +40,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <AboutPreview locale={locale} />
 
-      {/* Poslije price o porodici — med poslije vrcanja, pa etiketa rukom. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/kante-med.webp', alt: shot.homeHands.altFrame },
-          { src: '/images/mockups/label-in-hands.webp', alt: shot.homeHands.altLabel },
-        ]}
-        caption={shot.homeHands.caption}
-        meta={shot.homeHands.meta}
-      />
-
       <FeaturedProducts locale={locale} />
 
       {/* Poslije proizvoda — studijski raster, kao katalog. */}
