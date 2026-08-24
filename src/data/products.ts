@@ -92,7 +92,7 @@ export const products: Product[] = [
     order: 4,
     category: 'honey',
     image: '/images/proizvodi/livadski-500g.webp',
-    cardBg: '#F7E2AC',
+    cardBg: '#F2E5CD',
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
