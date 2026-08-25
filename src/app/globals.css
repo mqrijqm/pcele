@@ -368,6 +368,49 @@ p {
   will-change: auto;
 }
 
+/*
+ * Linija se ne pojavljuje nego se povlaci — slijeva nadesno ako lezi, odozgo
+ * nadolje ako stoji. `pathLength="1"` na samom putu znaci da je puna duzina
+ * uvijek jedinica, pa animacija radi isto i kad se linija razvuce preko cijele
+ * strane i kad je duga svega nekoliko centimetara.
+ *
+ * Ne ide u istu grupu sa ostalim `reveal` klasama: tamo se mijenja
+ * prozirnost i pomak omotaca, a ovdje sam potez.
+ */
+/*
+ * Linija se otkriva rezom koji putuje uz nju — slijeva nadesno ako lezi,
+ * odozgo nadolje ako stoji.
+ *
+ * Ne crtkanjem (`stroke-dasharray`): ove linije se razvlace po sirini
+ * (`preserveAspectRatio="none"`) i nose `non-scaling-stroke`, pa preglednik
+ * duzinu crtice mjeri u razvucenom prostoru a ne u prostoru puta. Rezultat je
+ * bio da se svaka linija povuce tacno do pola i tu stane.
+ *
+ * Kasnjenje ide kroz promjenljivu jer se `transition-delay` ne nasljedjuje, a
+ * prelaz stoji na samom SVG-u unutra.
+ */
+.js-reveal .reveal-draw .ink-rule__h,
+.js-reveal .reveal-draw .ink-rule__v {
+  transition: clip-path 1.4s var(--ease-out-expo) var(--draw-delay, 0s);
+}
+
+.js-reveal .reveal-draw .ink-rule__h {
+  clip-path: inset(0 100% 0 0);
+}
+
+.js-reveal .reveal-draw .ink-rule__v {
+  clip-path: inset(0 0 100% 0);
+}
+
+/* Sitan visak s druge strane da rez ne odsijece obli zavrsetak poteza. */
+.js-reveal .reveal-draw.in-view .ink-rule__h {
+  clip-path: inset(0 -2px 0 0);
+}
+
+.js-reveal .reveal-draw.in-view .ink-rule__v {
+  clip-path: inset(0 0 -2px 0);
+}
+
 .stagger-1 {
   transition-delay: 0.05s;
 }
@@ -402,6 +445,11 @@ p {
   .js-reveal .reveal-scale {
     opacity: 1;
     transform: none;
+  }
+
+  .js-reveal .reveal-draw .ink-rule__h,
+  .js-reveal .reveal-draw .ink-rule__v {
+    clip-path: none;
   }
 }
 
@@ -1859,26 +1907,16 @@ html:not(.is-preloading) .hero-land__arrow {
   padding-inline: var(--container-padding);
 }
 
-.sorte__heading {
-  max-width: 16ch;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  line-height: 1.06;
-  letter-spacing: -0.02em;
-  color: var(--brown);
-}
-
-.sorte__lead {
-  margin-top: 1.25rem;
-  max-width: 46ch;
-  font-size: 1.02rem;
-  line-height: 1.8;
-  color: var(--brown-soft);
-}
-
+/*
+ * Gornja linija je sad prvi element sekcije — razmak iznad nje drzi sama
+ * sekcija, pa bi jos jedan ovdje otvorio rupu.
+ */
 .sorte__inner > .ink-rule {
   margin-block: clamp(2.75rem, 6vw, 4.5rem);
+}
+
+.sorte__inner > .ink-rule:first-child {
+  margin-top: 0;
 }
 
 /* --- tri polja ----------------------------------------------------------- */
@@ -1921,8 +1959,33 @@ html:not(.is-preloading) .hero-land__arrow {
   width: auto;
   height: auto;
   max-height: var(--art-h);
-  transform: scale(var(--art-scale, 1));
   transform-origin: bottom center;
+  /*
+   * Lebdenje. Uvecanje po sorti stoji unutar samog kadra animacije, a ne kao
+   * zaseban `transform` — dva transforma na istom elementu se ne sabiraju,
+   * drugi prosto pojede prvi.
+   *
+   * Trajanja se razlikuju po sorti (`--float-dur`) da tri crteza ne disu u
+   * isti takt, sto bi se odmah procitalo kao mehanika.
+   */
+  animation: sorta-float var(--float-dur, 6s) ease-in-out var(--float-delay, 0s) infinite alternate;
+}
+
+@keyframes sorta-float {
+  from {
+    transform: translateY(-5px) scale(var(--art-scale, 1));
+  }
+  to {
+    transform: translateY(5px) scale(var(--art-scale, 1));
+  }
+}
+
+/* Smireno stanje: crtez prosto stoji, u svojoj mjeri. */
+@media (prefers-reduced-motion: reduce) {
+  .sorta__art img {
+    animation: none;
+    transform: scale(var(--art-scale, 1));
+  }
 }
 
 .sorta__naziv {

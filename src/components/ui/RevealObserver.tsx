@@ -10,7 +10,7 @@ const MAX_STEPS = 5;
 /** Ako zavjesa nikad ne javi da je otisla, gledamo sami. */
 const WATCHDOG_MS = 6000;
 
-const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
+const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-draw';
 
 /**
  * Adds `.in-view` to every `.reveal*` element once it scrolls into view.
@@ -25,7 +25,8 @@ const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale';
  *
  * 2. Susjedi koji udju zajedno ne pale se u isti kadar. Mreza od cetiri
  *    kartice inace skoci kao jedan blok; ovako ide red po red, po polozaju na
- *    strani, a rucno postavljen `stagger-N` uvijek ima prednost.
+ *    strani. Rucno postavljeno kasnjenje — bilo `stagger-N` klasom, bilo kroz
+ *    `style` — uvijek ima prednost nad ovom kaskadom.
  */
 export default function RevealObserver() {
   const pathname = usePathname();
@@ -51,7 +52,7 @@ export default function RevealObserver() {
 
           arrived.forEach((entry, index) => {
             const el = entry.target as HTMLElement;
-            if (index > 0 && !el.className.includes('stagger-')) {
+            if (index > 0 && !el.className.includes('stagger-') && !el.style.transitionDelay) {
               el.style.transitionDelay = `${Math.min(index, MAX_STEPS) * STEP_MS}ms`;
             }
             el.classList.add('in-view');

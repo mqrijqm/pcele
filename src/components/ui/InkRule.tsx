@@ -11,9 +11,15 @@
  * ne bi radila — put ide po X osi, pa bi razvucen u usku i visoku kutiju ostao
  * kratka vodoravna crta.
  */
-export default function InkRule({ className }: { className?: string }) {
+export default function InkRule({
+  className,
+  style,
+}: {
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   return (
-    <span className={`ink-rule ${className ?? ''}`} aria-hidden="true">
+    <span className={`ink-rule ${className ?? ''}`} style={style} aria-hidden="true">
       <svg className="ink-rule__h" viewBox="0 0 600 10" preserveAspectRatio="none" fill="none">
         <path
           d="M1 5.6C60 3.2 120 7.4 180 5.1s120-2.4 180 .8 120 1.8 180-1.4c20-1.1 40-.4 59 .8"

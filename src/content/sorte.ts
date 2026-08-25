@@ -9,6 +9,9 @@ import type { Locale } from '@/i18n/config';
  * u hero smedju (#73552E), a naslovi idu istim serifom kao svaki drugi naslov
  * na strani.
  *
+ * Sekcija nema svoj naslov ni uvod: predstavljaju je crtezi. `srHeading`
+ * postoji samo da citac ekrana zna gdje je usao.
+ *
  * Podaci se ne ponavljaju izmedju sorti. Ranije su livadski i propolis imali
  * isti red ("cvjetan / zlatan / jun–jul"), sto je za propolis bilo i netacno:
  * propolis nije med nego smola, gorka i smolasta, i prodaje se u kapima. Zato
@@ -27,22 +30,23 @@ export type Sorta = {
    * tanka. Mjera izjednacava koliko mastila svaki od njih donese u red.
    */
   scale: number;
+  /** Trajanje jednog udaha u lebdenju, u sekundama. Tri razlicita takta. */
+  float: number;
   redovi: { label: string; value: string }[];
   /** Gdje vodi naziv sorte. */
   slug: string;
 };
 
 type SorteCopy = {
-  heading: string;
-  lead: string;
+  /** Nevidljiv naziv sekcije — sekcija nema naslov koji se vidi. */
+  srHeading: string;
   cta: string;
   sorte: Sorta[];
 };
 
 export const sorte: Record<Locale, SorteCopy> = {
   sr: {
-    heading: 'Vrcamo ukus koji traje.',
-    lead: 'Tri sorte iz istog pčelinjaka — svaka nosi pašu svog dijela ljeta.',
+    srHeading: 'Sorte meda',
     cta: 'Svi proizvodi',
     sorte: [
       {
@@ -51,6 +55,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Crtež livadskog cvijeta',
         nota: 'Sa livada oko Mračaja, iz ljetne paše.',
         scale: 1,
+        float: 6.4,
         slug: 'livadski-med-1kg',
         redovi: [
           { label: 'Ukus', value: 'Cvjetan' },
@@ -64,6 +69,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Crtež bagremove grane u cvatu',
         nota: 'Iz kratkog bagremovog cvata, prve paše u godini.',
         scale: 1.12,
+        float: 7.6,
         slug: 'bagremov-med-1kg',
         redovi: [
           { label: 'Ukus', value: 'Blag' },
@@ -77,6 +83,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Crtež saća s propolisom',
         nota: 'Smola iz košnice, cijeđena u bočicu s kapaljkom.',
         scale: 0.9,
+        float: 5.6,
         slug: 'pcelinji-propolis-20ml',
         redovi: [
           { label: 'Ukus', value: 'Gorak' },
@@ -87,8 +94,7 @@ export const sorte: Record<Locale, SorteCopy> = {
     ],
   },
   en: {
-    heading: 'We spin a taste that lasts.',
-    lead: 'Three varieties from one apiary — each carries the forage of its own stretch of summer.',
+    srHeading: 'Honey varieties',
     cta: 'All products',
     sorte: [
       {
@@ -97,6 +103,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Drawing of a meadow flower',
         nota: 'From the meadows around Mračaj, out of the summer forage.',
         scale: 1,
+        float: 6.4,
         slug: 'livadski-med-1kg',
         redovi: [
           { label: 'Taste', value: 'Floral' },
@@ -110,6 +117,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Drawing of an acacia branch in bloom',
         nota: 'From the short acacia bloom, the first forage of the year.',
         scale: 1.12,
+        float: 7.6,
         slug: 'bagremov-med-1kg',
         redovi: [
           { label: 'Taste', value: 'Mild' },
@@ -123,6 +131,7 @@ export const sorte: Record<Locale, SorteCopy> = {
         alt: 'Drawing of honeycomb with propolis',
         nota: 'Resin from the hive, drawn into a dropper bottle.',
         scale: 0.9,
+        float: 5.6,
         slug: 'pcelinji-propolis-20ml',
         redovi: [
           { label: 'Taste', value: 'Bitter' },
