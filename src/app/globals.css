@@ -737,25 +737,59 @@ p {
   height: 100svh;
   overflow: hidden;
   /*
-   * Boja klipa, ne papira. Snimak ima ravnu podlogu preko cijelog kadra; na
-   * papiru se njegov kvadrat vidio kao siva ploca oko tegle. Zavjesa se ionako
-   * vidi sama, pa nema sta da uskladjuje sa stranom ispod sebe.
+   * Snimak je prebojen u papir sajta, pa zavjesa i strana ispod nje imaju
+   * istu podlogu — nema vise sive ploce oko tegle.
    *
-   * Vrijednost je ocitana sa onoga sto preglednik ISCRTA, a ne iz fajla: video
-   * ide kroz YUV, pa se #F0E4D8 iz snimka na ekranu pojavi kao #F2E6D9. Boja
-   * uzeta iz fajla ostavlja tanku, ali vidljivu ivicu.
+   * Vrijednost je i dalje ocitana sa onoga sto preglednik ISCRTA, a ne iz
+   * fajla: u snimku je --paper (#F5E8D8), ali video ide kroz YUV pa se na
+   * ekranu vrati kao #F7E8D7. Dva nivoa razlike, ali dovoljno da se kvadrat
+   * snimka nazre kao ploca oko tegle.
    */
-  background-color: #f2e6d9;
+  background-color: var(--paper);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 /* The clip is square; keep it comfortably inside the shorter viewport edge. */
-#preloader .preloader__clip {
+.preloader__stage {
+  position: relative;
   width: min(78vw, 62svh);
+}
+
+#preloader .preloader__clip {
+  width: 100%;
   height: auto;
   display: block;
+}
+
+/*
+ * Pcela sjedi tamo gdje je u snimku stajala fotografija koju smo skinuli —
+ * na lijevom rubu oboda. Mjere su iz kadra 720 x 720: srediste (261, 138).
+ */
+.preloader__bee {
+  position: absolute;
+  left: 36.3%;
+  top: 19.2%;
+  width: 11%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+}
+
+/*
+ * Isto lebdenje kao u letu, ali kraceg hoda: ovdje je pcela upola manja nego
+ * na strani, pa bi joj osam piksela bilo pola tijela.
+ */
+.preloader__bee .bee__hover {
+  animation-name: preloader-bee-hover;
+}
+
+@keyframes preloader-bee-hover {
+  from {
+    transform: translateY(-3px);
+  }
+  to {
+    transform: translateY(3px);
+  }
 }
 
 /* Scroll stays put until the curtain is gone. Lenis is stopped too; this

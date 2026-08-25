@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
+import BeeSvg from '@/components/bee/BeeSvg';
+
 /** Belt and braces: if the clip never plays, leave anyway. */
 const FALLBACK_MS = 9000;
 
@@ -13,6 +15,12 @@ const FALLBACK_MS = 9000;
  * (recon/findings.md §2) — a 0.25 s hold on the full jar, then
  * `yPercent: 0 → 100` over 0.9 s on `power3.out`, then gone. What changed is
  * what fills the wait: their monogram rising into place, ours the clip.
+ *
+ * Pcela nije u snimku nego preko njega. U kadru je stajala fotografija tudje
+ * pcele; sada je na obodu ista ona iz heroja, sa istim lepetom. Snimak je zato
+ * iznova iscrtan (recon/recolour-splash.mjs): fotografija je skinuta, a
+ * papir, med i mastilo su prebojeni u boje palete — u izvoru su bili sivkasti,
+ * i tegla je izgledala prazno umesto puna meda.
  *
  * The node unmounts through state rather than `.remove()`. Pulling a
  * React-owned node out of the DOM by hand is what broke navigation before.
@@ -103,17 +111,26 @@ export default function Preloader() {
 
   return (
     <div id="preloader" ref={curtainRef} aria-hidden="true">
-      <video
-        ref={videoRef}
-        className="preloader__clip"
-        muted
-        playsInline
-        preload="auto"
-        poster="/splash/jar-fill-start.webp"
-      >
-        <source src="/splash/jar-fill.webm" type="video/webm" />
-        <source src="/splash/jar-fill.mp4" type="video/mp4" />
-      </video>
+      <div className="preloader__stage">
+        <video
+          ref={videoRef}
+          className="preloader__clip"
+          muted
+          playsInline
+          preload="auto"
+          poster="/splash/jar-fill-start.webp"
+        >
+          <source src="/splash/jar-fill.webm" type="video/webm" />
+          <source src="/splash/jar-fill.mp4" type="video/mp4" />
+        </video>
+
+        {/* isti troslojni omotac kao u letu: mesto -> lebdenje -> crtez */}
+        <div className="preloader__bee">
+          <div className="bee__hover">
+            <BeeSvg className="bee__art" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
