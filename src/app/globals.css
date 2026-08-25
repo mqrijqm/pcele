@@ -2128,9 +2128,11 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 .legacy__cloud {
   position: absolute;
-  top: clamp(1rem, 4vw, 4rem);
-  width: clamp(14rem, 24vw, 24rem);
-  opacity: 0.4;
+  /*
+   * Isti potez kao pcelar, samo razrijedjen — nije nova boja nego ista na
+   * pola snage, pa nebo ostane iza crteza a ne pored njega.
+   */
+  opacity: 0.55;
   pointer-events: none;
 }
 
@@ -2139,14 +2141,35 @@ html:not(.is-preloading) .hero-land__arrow {
   height: auto;
 }
 
-.legacy__cloud--left {
-  left: 0;
+/*
+ * Cetiri mjesta, nijedno na istoj visini ni na istoj mjeri. Sredina je
+ * ostavljena prazna: tu stoji pcelar, i oblak iza njega bi mu ulazio u liniju.
+ */
+.legacy__cloud--1 {
+  left: 2%;
+  top: 8%;
+  width: clamp(11rem, 19vw, 19rem);
 }
 
-/* Isti crtez, izvrnut — da se par ne cita kao ponavljanje. */
-.legacy__cloud--right {
-  right: 0;
+.legacy__cloud--2 {
+  right: 3%;
+  top: 3%;
+  width: clamp(7rem, 12vw, 12rem);
+}
+
+/* Najtanji, i najnize — cita se kao izmaglica pri tlu. */
+.legacy__cloud--3 {
+  left: 17%;
+  top: 29%;
+  width: clamp(8rem, 13vw, 13rem);
   transform: scaleX(-1);
+}
+
+/* Drzi se uz desnu ivicu i nisko: sredinom desne strane prolazi pcela. */
+.legacy__cloud--4 {
+  right: 4%;
+  top: 34%;
+  width: clamp(9rem, 15vw, 15rem);
 }
 
 .legacy__figure {

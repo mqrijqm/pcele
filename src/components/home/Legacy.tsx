@@ -4,6 +4,17 @@ import { home } from '@/content/pages';
 import type { Locale } from '@/i18n/config';
 
 /**
+ * Visine su iz samih fajlova (svi su 400 siroki), da Next rezervise tacan
+ * okvir i nista ne poskoci kad se crtez ucita.
+ */
+const CLOUDS = [
+  { n: 1, h: 140 },
+  { n: 2, h: 337 },
+  { n: 3, h: 151 },
+  { n: 4, h: 202 },
+] as const;
+
+/**
  * Nasljedje — puna strana, crtez gore, pa raster ispod.
  *
  * Sekcija ide od ivice do ivice ekrana, bez `.container`: donji raster zivi od
@@ -21,22 +32,22 @@ export default function Legacy({ locale }: { locale: Locale }) {
     <section className="legacy">
       <div className="legacy__head">
         {/*
-          * Oblaci su isti crtez dva puta, drugi izvrnut — jeftinije od dva
-          * fajla, a oko ionako ne prepoznaje da je isti oblik.
+          * Cetiri razlicita oblaka, sitna i razbacana po nebu iza pcelara.
+          * Svaki je svoj crtez, pa nema para koji se cita kao ponavljanje —
+          * mjere i mjesta su u CSS-u, jer se oba mijenjaju sa sirinom ekrana.
           */}
-        <span className="legacy__cloud legacy__cloud--left" aria-hidden="true">
-          <Image src="/images/brand/oblak.svg" alt="" width={594} height={317} />
-        </span>
-        <span className="legacy__cloud legacy__cloud--right" aria-hidden="true">
-          <Image src="/images/brand/oblak.svg" alt="" width={594} height={317} />
-        </span>
+        {CLOUDS.map((c) => (
+          <span key={c.n} className={`legacy__cloud legacy__cloud--${c.n}`} aria-hidden="true">
+            <Image src={`/images/brand/oblak-${c.n}.svg`} alt="" width={400} height={c.h} />
+          </span>
+        ))}
 
         <Image
           className="legacy__figure reveal"
           src="/images/brand/pcelar.svg"
           alt={copy.figureAlt}
-          width={791}
-          height={787}
+          width={5335}
+          height={6000}
           priority={false}
         />
 
