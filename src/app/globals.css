@@ -258,6 +258,33 @@ p {
   background: currentColor;
 }
 
+/* --- rucna linija --------------------------------------------------------
+ * Dva polozaja u istom omotacu; koji se vidi bira CSS. Vodoravni je
+ * podrazumijevan jer se koristi na tri mjesta, uspravni samo kao razdjelnik
+ * izmedju sorti na sirokom ekranu.
+ * ----------------------------------------------------------------------- */
+.ink-rule {
+  display: block;
+  color: rgba(115, 85, 46, 0.3);
+}
+
+/*
+ * Skrivanje mora biti barem jednako specificno kao `display: block` ispod —
+ * inace uspravna linija ostane u toku i doda svojih 600 jedinica visine svakoj
+ * vodoravnoj crti.
+ */
+.ink-rule .ink-rule__h {
+  display: block;
+  width: 100%;
+  height: 10px;
+}
+
+.ink-rule .ink-rule__v {
+  display: none;
+  width: 10px;
+  height: 100%;
+}
+
 /*
  * Jedan oblik linka kroz cijeli sajt: tekst, tanka linija ispod njega, i
  * strelica. Sekcije su ranije imale svaka svoj — negdje pilula sa okvirom,
@@ -1644,33 +1671,128 @@ html:not(.is-preloading) .hero-land__arrow {
  * Kratki utisci ispod izdvojenog citata. Sitnije i lakse nego ranije — bili
  * su polubold i skoro iste tezine kao naslov sekcije, pa su se tukli s njim.
  */
-.review {
-  position: relative;
-  padding-left: 2.6rem;
-  font-size: 0.95rem;
+/* ---------------------------------------------------------------------------
+ * Utisci — tri citata na papiru.
+ *
+ * Ista mreza i isti razdjelnik kao kod sorti: sve sto na strani stoji u tri
+ * polja stoji na isti nacin.
+ * ------------------------------------------------------------------------- */
+.utisci {
+  background: var(--paper);
+  padding-block: var(--section-padding);
+}
+
+.utisci__inner {
+  max-width: 82rem;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.utisci__eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.utisci__heading {
+  margin-top: 1.75rem;
+  max-width: 20ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
   font-weight: 400;
-  line-height: 1.7;
-  color: var(--brown-soft);
+  font-size: clamp(2rem, 4.2vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--brown);
 }
 
-/* Navodnik: sam crtez, u zlatnoj, krupniji od slova uz koja stoji. */
-.review__mark {
-  position: absolute;
-  left: 0;
-  top: 0.15em;
-  width: 1.9rem;
-  height: 1.38rem;
-  background-color: var(--gold);
-  -webkit-mask: url('/images/brand/navodnik.svg') no-repeat center / contain;
-  mask: url('/images/brand/navodnik.svg') no-repeat center / contain;
+.utisci__inner > .ink-rule {
+  margin-block: clamp(2.75rem, 6vw, 4.5rem);
 }
 
-.review__by {
-  margin-top: 1.5rem;
-  padding-left: 2.6rem;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--brown-soft);
+.utisci__lista {
+  display: grid;
+  gap: 0;
+}
+
+.utisci__polje {
+  position: relative;
+}
+
+/* Potpisi stoje u istoj ravni i kad su citati razlicite duzine. */
+.utisak {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Citat nosi serif, ali umjeren: krupniji od teksta, sitniji od naslova. */
+.utisak__tekst {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+.utisak__potpis {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: baseline;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.utisak__ime {
+  font-weight: 700;
+  color: var(--brown);
+}
+
+.utisak__mjesto {
+  color: rgba(115, 85, 46, 0.55);
+}
+
+.utisci__razdjelnik {
+  margin-block: clamp(2.5rem, 7vw, 3.5rem);
+}
+
+@media (min-width: 860px) {
+  .utisci__lista {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .utisci__polje {
+    padding-inline: clamp(1.5rem, 3.5vw, 3rem);
+  }
+
+  .utisci__polje:first-child {
+    padding-left: 0;
+  }
+
+  .utisci__polje:last-child {
+    padding-right: 0;
+  }
+
+  .utisci__razdjelnik {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    margin: 0;
+    width: 10px;
+  }
+
+  .ink-rule.utisci__razdjelnik .ink-rule__h {
+    display: none;
+  }
+
+  .ink-rule.utisci__razdjelnik .ink-rule__v {
+    display: block;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -1838,33 +1960,6 @@ html:not(.is-preloading) .hero-land__arrow {
   color: var(--brown-soft);
 }
 
-/* --- rucna linija --------------------------------------------------------
- * Dva polozaja u istom omotacu; koji se vidi bira CSS. Vodoravni je
- * podrazumijevan jer se koristi na tri mjesta, uspravni samo kao razdjelnik
- * izmedju sorti na sirokom ekranu.
- * ----------------------------------------------------------------------- */
-.ink-rule {
-  display: block;
-  color: rgba(115, 85, 46, 0.3);
-}
-
-/*
- * Skrivanje mora biti barem jednako specificno kao `display: block` ispod —
- * inace uspravna linija ostane u toku i doda svojih 600 jedinica visine svakoj
- * vodoravnoj crti.
- */
-.ink-rule .ink-rule__h {
-  display: block;
-  width: 100%;
-  height: 10px;
-}
-
-.ink-rule .ink-rule__v {
-  display: none;
-  width: 10px;
-  height: 100%;
-}
-
 .sorte__inner > .ink-rule {
   margin-block: clamp(2.75rem, 6vw, 4.5rem);
 }
@@ -2016,11 +2111,11 @@ html:not(.is-preloading) .hero-land__arrow {
     width: 10px;
   }
 
-  .sorte__razdjelnik .ink-rule__h {
+  .ink-rule.sorte__razdjelnik .ink-rule__h {
     display: none;
   }
 
-  .sorte__razdjelnik .ink-rule__v {
+  .ink-rule.sorte__razdjelnik .ink-rule__v {
     display: block;
   }
 }

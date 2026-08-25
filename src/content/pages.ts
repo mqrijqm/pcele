@@ -104,18 +104,18 @@ export const home = {
   aboutPreview: {
     sr: {
       imageAlt: 'Saće u rukama, iznad košnice',
-      eyebrow: 'Porodično pčelarstvo od 1980.',
+      eyebrow: 'Od košnice do tegle',
       heading: 'Znanje koje se prenosi rukama.',
       description:
-        'Pčelarstvo Jevtić nije nastalo kao brend, već kao porodični posao. Znanje se prenosi kroz generacije, a ista pažnja prati svaki korak — od rada oko košnica do punjenja posljednje tegle.',
+        'Med vadimo, cijedimo i punimo sami, u malim serijama. Ne miješamo serije i ne dokupljujemo med — u teglu ide ono što je te sedmice izašlo iz naših košnica.',
       steps: ['Pregled košnica', 'Ručno vrcanje', 'Mirno cijeđenje', 'Punjenje tegli'],
     },
     en: {
       imageAlt: 'Fresh comb held in two hands above the hive',
-      eyebrow: 'Family beekeeping since 1980',
+      eyebrow: 'From hive to jar',
       heading: 'Knowledge passed on by hand.',
       description:
-        'Pcelarstvo Jevtic did not begin as a brand, but as a family trade. Knowledge passes from one generation to the next, and the same care follows every step — from tending the hives to filling the last jar.',
+        'We extract, filter and fill the honey ourselves, in small batches. We never blend batches and never buy honey in — what goes into the jar came out of our own hives that week.',
       steps: ['Hive care', 'Hand extraction', 'Slow filtering', 'Jar filling'],
     },
   } satisfies L<{
@@ -126,50 +126,11 @@ export const home = {
     steps: string[];
   }>,
 
-  featured: {
-    sr: {
-      eyebrow: 'Iz naših košnica',
-      heading: 'Ukusi koji se ne zaboravljaju.',
-      viewAll: 'Svi proizvodi',
-      items: [
-        { slug: 'livadski-med-500g', name: 'Livadski Med', note: 'Blag, cvjetan i uravnotežen.' },
-        { slug: 'bagremov-med-500g', name: 'Bagremov Med', note: 'Nježan, svijetao i dugo tečan.' },
-        {
-          slug: 'pcelinji-propolis-20ml',
-          name: 'Pčelinji Propolis',
-          note: 'Smolast, gorak i koncentrisan.',
-        },
-        { slug: 'imuno-mix-450g', name: 'Imuno Mix', note: '70% med, 30% cvjetni polen.' },
-      ],
-    },
-    en: {
-      eyebrow: 'From our hives',
-      heading: 'Flavours you do not forget.',
-      viewAll: 'All products',
-      items: [
-        { slug: 'livadski-med-500g', name: 'Meadow Honey', note: 'Mild, floral and balanced.' },
-        { slug: 'bagremov-med-500g', name: 'Acacia Honey', note: 'Delicate, light and slow to crystallize.' },
-        {
-          slug: 'pcelinji-propolis-20ml',
-          name: 'Bee Propolis',
-          note: 'Resinous, bitter and concentrated.',
-        },
-        { slug: 'imuno-mix-450g', name: 'Imuno Mix', note: '70% honey, 30% flower pollen.' },
-      ],
-    },
-  } satisfies L<{
-    eyebrow: string;
-    heading: string;
-    viewAll: string;
-    items: { slug: string; name: string; note: string }[];
-  }>,
-
   testimonials: {
     sr: {
       eyebrow: 'Riječi kupaca',
       heading: 'Kvalitet se najlakše prepozna kad se proba.',
       subheading: 'Lokalne preporuke i stalni kupci',
-      imageAlt: 'Košnice na prikolici, spremne za seobu',
       quotes: [
         {
           text: 'Livadski med uzimam za čaj i kolače. Stigne lijepo upakovan i uvijek istog kvaliteta.',
@@ -192,7 +153,6 @@ export const home = {
       eyebrow: 'Customer words',
       heading: 'Quality is easiest to recognize when tasted.',
       subheading: 'Local recommendations and returning customers',
-      imageAlt: 'Hives loaded on the trailer, ready to move',
       quotes: [
         {
           text: 'I buy meadow honey for tea and cakes. It arrives nicely packed and always with the same quality.',
@@ -215,7 +175,6 @@ export const home = {
     eyebrow: string;
     heading: string;
     subheading: string;
-    imageAlt: string;
     quotes: { text: string; author: string; city: string }[];
   }>,
 
@@ -712,12 +671,6 @@ export const declaration = {
  */
 export const photoBreaks = {
   sr: {
-    homeHives: {
-      caption: 'Naš pčelinjak · Mračaj',
-      meta: 'Košnice na livadi',
-      altA: 'Red plavih i žutih košnica na livadi ispod brda',
-      altB: 'Košnice u visokoj travi, u hladu voćaka',
-    },
     aboutHives: {
       caption: 'Isti red košnica, iz godine u godinu',
       meta: 'Mračaj · Prnjavor',
@@ -730,10 +683,11 @@ export const photoBreaks = {
       altA: 'Košnice na otvorenoj livadi pod vedrim nebom',
       altB: 'Pogled niz red košnica preko livade',
     },
-    homeOther: {
-      caption: 'Nije samo med · imuno mix i propolis',
-      altMix: 'Tri tegle imuno mixa u travi punoj bijelih i žutih cvjetova',
-      altPropolis: 'Bočica pčelinjeg propolisa sa kapaljkom, uz grumenje sirove smole',
+    homeProces: {
+      caption: 'Vrcanje i punjenje · Mračaj',
+      meta: 'Sezona 2025.',
+      altPunjenje: 'Med se toči u teglu, uz red već napunjenih tegli',
+      altRam: 'Ram iz sezone 2025, godina upisana u samo saće',
     },
     productsOther: {
       caption: 'Iz iste košnice, ali ne med',
@@ -745,25 +699,6 @@ export const photoBreaks = {
       caption: 'Etiketa ide rukom, posljednja',
       meta: 'Teglu po teglu',
       alt: 'Ručno lijepljenje etikete na teglu',
-    },
-    homeTable: {
-      caption: 'Sa livade na sto',
-      heading: 'Ono što otvorite u decembru istočeno je u avgustu.',
-      body:
-        'Ne miješamo serije i ne dokupljujemo med. Svaka tegla nosi pašu jednog dijela ljeta, pa se ukus vidljivo mijenja od proljeća do jeseni — i to je namjerno.',
-      meta: 'Mračaj · Prnjavor',
-      alt: 'Tegle meda na lanenom stolnjaku u livadi pred zalazak sunca',
-    },
-    homeAcacia: {
-      caption: 'Bagrem u cvatu · tegla po tegla',
-      meta: 'Bagremov med',
-      altCrate: 'Ruke vade teglu bagremovog meda iz drvenog sanduka',
-      altBloom: 'Tegla bagremovog meda podignuta prema bagremu u cvatu',
-    },
-    homeGrass: {
-      caption: 'Paša: maslačak, djetelina, livadsko cvijeće',
-      meta: 'Bez putujućih košnica',
-      alt: 'Tegle meda položene u travu, snimak odozgo',
     },
     productsAcacia: {
       caption: 'Bagrem cvjeta desetak dana · toliko traje i paša',
@@ -823,12 +758,6 @@ export const photoBreaks = {
     },
   },
   en: {
-    homeHives: {
-      caption: 'Our apiary · Mračaj',
-      meta: 'Hives out on the meadow',
-      altA: 'A row of blue and yellow hives on a meadow below the hills',
-      altB: 'Hives standing in tall grass in the shade of fruit trees',
-    },
     aboutHives: {
       caption: 'The same row of hives, year after year',
       meta: 'Mračaj · Prnjavor',
@@ -841,10 +770,11 @@ export const photoBreaks = {
       altA: 'Hives on an open meadow under a clear sky',
       altB: 'Looking down the row of hives across the meadow',
     },
-    homeOther: {
-      caption: 'Not honey alone · imuno mix and propolis',
-      altMix: 'Three jars of imuno mix in grass full of white and yellow flowers',
-      altPropolis: 'A dropper bottle of bee propolis beside lumps of raw resin',
+    homeProces: {
+      caption: 'Extraction and filling · Mračaj',
+      meta: '2025 season',
+      altPunjenje: 'Honey being poured into a jar beside a row of filled jars',
+      altRam: 'A frame from the 2025 season, the year written into the comb itself',
     },
     productsOther: {
       caption: 'From the same hive, but not honey',
@@ -856,25 +786,6 @@ export const photoBreaks = {
       caption: 'The label goes on by hand, last',
       meta: 'One jar at a time',
       alt: 'A label being applied to a jar by hand',
-    },
-    homeTable: {
-      caption: 'From the meadow to the table',
-      heading: 'What you open in December was extracted in August.',
-      body:
-        'We never blend batches and we never buy honey in. Every jar carries the forage of one stretch of summer, so the taste shifts visibly from spring to autumn — and that is deliberate.',
-      meta: 'Mračaj · Prnjavor',
-      alt: 'Jars of honey on a linen cloth in a meadow at sunset',
-    },
-    homeAcacia: {
-      caption: 'Acacia in bloom · one jar at a time',
-      meta: 'Acacia honey',
-      altCrate: 'Hands lifting a jar of acacia honey out of a wooden crate',
-      altBloom: 'A jar of acacia honey held up against acacia blossom',
-    },
-    homeGrass: {
-      caption: 'Forage: dandelion, clover, meadow flowers',
-      meta: 'No migratory hives',
-      alt: 'Jars of honey laid in the grass, seen from above',
     },
     productsAcacia: {
       caption: 'Acacia flowers for ten days · the forage lasts as long',
