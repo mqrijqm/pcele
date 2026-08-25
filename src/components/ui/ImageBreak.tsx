@@ -25,6 +25,12 @@ type Props = {
   body?: string;
   /** Boja trake iza slike. Podrazumevano papir — isti kao cela strana. */
   background?: string;
+  /**
+   * `dark` okrece traku: smedja podloga, papirni tekst. Sluzi za predah izmedju
+   * dvije svijetle sekcije — na cijeloj strani je papir, pa jedna tamna traka
+   * radi rez koji se osjeti bez ijedne nove boje u paleti.
+   */
+  tone?: 'paper' | 'dark';
   /** `framed`: da li slika stoji levo ili desno. */
   side?: 'left' | 'right';
   /** Prva slika iznad preloma se ucitava ranije. */
@@ -59,7 +65,8 @@ export default function ImageBreak({
   meta,
   heading,
   body,
-  background = 'var(--paper)',
+  background,
+  tone = 'paper',
   side = 'left',
   priority = false,
   aspect,
@@ -68,6 +75,16 @@ export default function ImageBreak({
   emblem = false,
 }: Props) {
   const hasFooter = Boolean(caption || meta);
+
+  /*
+   * Boje su ispisane, a ne sklopljene iz komada: Tailwind cita izvor kao tekst,
+   * pa klasu koju nije vidio doslovno nikad i ne napravi.
+   */
+  const dark = tone === 'dark';
+  const plate = background ?? (dark ? 'var(--brown)' : 'var(--paper)');
+  const ink = dark ? 'text-[#F5E8D8]' : 'text-[#73552E]';
+  const inkSoft = dark ? 'text-[#F5E8D8]/70' : 'text-[#73552E]/70';
+  const rule = dark ? 'border-[#F5E8D8]/20' : 'border-[#73552E]/15';
 
   const mark = emblem ? (
     <span className="image-break__emblem" aria-hidden="true">
@@ -83,18 +100,18 @@ export default function ImageBreak({
     hasFooter ? (
       <div className={`${wrap} flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2`}>
         {caption && (
-          <p className="max-w-md text-[11px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+          <p className={`max-w-md text-[11px] font-bold uppercase tracking-[0.2em] ${ink}`}>
             {caption}
           </p>
         )}
-        {meta && <p className="font-display text-base italic text-[#73552E]/70">{meta}</p>}
+        {meta && <p className={`font-display text-base italic ${inkSoft}`}>{meta}</p>}
       </div>
     ) : null;
 
   if (variant === 'pair') {
     const [first, second] = images;
     return (
-      <section className="section-padding-sm" style={{ backgroundColor: background }}>
+      <section className="section-padding-sm" style={{ backgroundColor: plate }}>
         {/*
           * Par podrazumijevano ide preko cijele sirine, van mjere teksta:
           * dvije uspravne fotografije jedna uz drugu trebaju prostor. Sa
@@ -142,7 +159,7 @@ export default function ImageBreak({
   if (variant === 'framed') {
     const [only] = images;
     return (
-      <section className="section-padding-sm" style={{ backgroundColor: background }}>
+      <section className="section-padding-sm" style={{ backgroundColor: plate }}>
         <div className="container">
           <div
             className={`grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-20 ${
@@ -166,18 +183,18 @@ export default function ImageBreak({
 
             <div className="reveal stagger-2 max-w-[30rem]">
               {caption && (
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+                <p className={`text-[10px] font-bold uppercase tracking-[0.2em] ${ink}`}>
                   {caption}
                 </p>
               )}
               {heading && (
-                <p className="mt-5 font-display text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-[#73552E] sm:text-4xl">
+                <p className={`mt-5 font-display text-3xl font-medium leading-[1.1] tracking-[-0.02em] sm:text-4xl ${ink}`}>
                   {heading}
                 </p>
               )}
-              {body && <p className="mt-6 text-base leading-8 text-[#73552E]">{body}</p>}
+              {body && <p className={`mt-6 text-base leading-8 ${ink}`}>{body}</p>}
               {meta && (
-                <p className="mt-8 border-t border-[#73552E]/15 pt-4 font-display text-lg italic text-[#73552E]/75">
+                <p className={`mt-8 border-t pt-4 font-display text-lg italic ${rule} ${inkSoft}`}>
                   {meta}
                 </p>
               )}
@@ -190,7 +207,7 @@ export default function ImageBreak({
 
   const [wide] = images;
   return (
-    <section className="section-padding-sm" style={{ backgroundColor: background }}>
+    <section className="section-padding-sm" style={{ backgroundColor: plate }}>
       {/* Traka vise ne ide od ivice do ivice — uvucena je kao i ostatak sajta. */}
       <div className={frame === 'narrow' ? 'container-narrow' : 'container-wide'}>
         <div

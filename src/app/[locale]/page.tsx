@@ -50,9 +50,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         * Poslije price o porodici — jedini par na strani koji ne pokazuje med.
         * Propolis je snimljen kao panorama sa bocom uz desnu ivicu, pa mu rez
         * ide na 74% umjesto po sredini; centriran bi ostavio prazan zid.
+        *
+        * Jedina tamna traka na strani. I ono prije nje i ono poslije nje je
+        * papir, pa se ova sekcija — jedina koja ne pokazuje med — odvaja bojom
+        * umjesto razmakom.
         */}
       <ImageBreak
         variant="pair"
+        tone="dark"
         images={[
           { src: '/images/real/imuno-livada.webp', alt: shot.homeOther.altMix },
           {
