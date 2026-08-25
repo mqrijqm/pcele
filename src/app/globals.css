@@ -1932,6 +1932,7 @@ html:not(.is-preloading) .hero-land__arrow {
   border-radius: 50% 50% 0 0 / var(--arch-cap) var(--arch-cap) 0 0;
   display: flex;
   flex-direction: column;
+  padding-top: clamp(1.5rem, min(4vw, 5vh), 3.5rem);
   /*
    * Ulazak se radi skaliranjem, a ne pomjeranjem po y: kartica dnom dodiruje
    * smedju traku ispod sekcije, pa bi je svaki pomak po y odigao sa nje.
@@ -1940,43 +1941,61 @@ html:not(.is-preloading) .hero-land__arrow {
   transform-origin: 50% 100%;
 }
 
-/* Uza kartica trazi i uzu tabelu, inace joj podaci opet dodju do ivice luka. */
-.sorte--pinned .sorta__info {
-  width: min(100%, 19rem);
+/*
+ * Zakovana, kartica je visoka tacno koliko i ekran — pa crtez ne smije da
+ * ucestvuje u racunu njene visine. Sa `flex: 1 1 auto` osnovna mjera okvira
+ * je prirodna visina slike (389px), a na niskom prozoru toliko nema: flexbox
+ * onda oduzima manjak od SVIH stavki, pa se skupe i naziv i tabela i ispadnu
+ * ispod ekrana. Upravo to se i vidjelo — luk bez donjeg dijela.
+ *
+ * `flex: 1 1 0` znaci da okvir u racun ulazi sa nulom i uzme samo ono sto
+ * pretekne, a slika je iz toka izvadjena skroz: apsolutna, centrirana sa
+ * `margin: auto`, i uklopljena u ono mjesta koliko je dobila. Tako naziv i
+ * tabela imaju svoju visinu uvijek, a steze se jedino crtez.
+ */
+.sorte--pinned .sorta__art {
+  flex: 1 1 0;
+  min-height: 0;
+  height: auto;
+  position: relative;
 }
 
 .sorte--pinned .sorta__art img {
-  max-width: 64%;
-}
-
-/* Naslov ustupa visinu karticama — zakovanoj sekciji je visina jedini resurs. */
-.sorte--pinned .sorte__heading {
-  font-size: clamp(1.6rem, 3.1vw, 2.35rem);
-}
-
-.sorte--pinned .sorta__art {
-  flex: 1 1 auto;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: auto;
   height: auto;
-  /*
-   * Crtez stoji po sredini kape, ne na njenom dnu. Kad je kartica uska, luk je
-   * visok — a crtez spusten na dno ostavlja praznu kupolu iznad sebe.
-   */
-  align-items: center;
+  max-width: 64%;
+  max-height: 100%;
 }
 
 /*
- * Na niskom prozoru crtez je jedini element koji se steze — naziv i tabela
- * imaju svoju visinu. Zato im se ovdje skracuju razmaci: sve sto se tu ustedi
- * ide crtezu, koji bi inace spao na marku.
+ * Sve mjere unutar zakovane kartice gledaju i sirinu i visinu prozora, i uzmu
+ * manju od njih. Sirok a nizak prozor je najgori slucaj: po sirini bi slog
+ * ispao krupan, a visine za njega nema — pa `vh` tu preuzima i sve se stegne
+ * umjesto da se prelije preko donje ivice.
  */
 .sorte--pinned .sorta__naziv {
-  margin-top: clamp(1.25rem, 4vh, 2.75rem);
+  margin-top: clamp(1rem, min(3vw, 4vh), 2.75rem);
+  font-size: clamp(1.35rem, min(3.4vw, 5.2vh), 2.6rem);
 }
 
 .sorte--pinned .sorta__info {
-  margin-top: clamp(1.25rem, 3.5vh, 2.5rem);
-  padding-bottom: clamp(1.75rem, 5vh, 4rem);
+  /* Uza kartica trazi i uzu tabelu, inace podaci opet dodju do ivice luka. */
+  width: min(100%, 19rem);
+  margin-top: clamp(1rem, min(2.5vw, 3.5vh), 2.5rem);
+  padding-bottom: clamp(1.5rem, min(4vw, 5vh), 4rem);
+  gap: clamp(0.5rem, min(1.5vw, 2vh), 1rem);
+}
+
+.sorte--pinned .sorta__red {
+  font-size: clamp(0.8rem, min(1.4vw, 2.1vh), 1rem);
+}
+
+/* Naslov sekcije ustupa visinu karticama kad je prozor nizak. */
+.sorte--pinned .sorte__heading {
+  font-size: clamp(1.5rem, min(3.1vw, 4.6vh), 2.35rem);
 }
 
 /* Fokus se vidi na traci, jer se strelicama upravlja tek kad je fokusirana. */
