@@ -1178,17 +1178,54 @@ html:not(.is-preloading) .hero-land__arrow {
   text-wrap: balance;
 }
 
-.origin__map {
+/* --- karta ---------------------------------------------------------------
+ * Crtez, ne slika: obris i kosnice su potezi, pa nose istu boju i istu
+ * debljinu kao sve ostalo na strani i ostaju ostri na svakom ekranu.
+ * ----------------------------------------------------------------------- */
+.mapa {
   margin: clamp(3rem, 7vw, 6rem) auto 0;
-  width: min(62%, 840px);
-  /* Karta se pomjera za misem — pomak upisuje JS, ovdje samo najava. */
-  will-change: transform;
+  width: min(72%, 900px);
 }
 
-.origin__map img {
+.mapa svg {
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
+}
+
+.mapa__obris {
+  fill: rgba(115, 85, 46, 0.05);
+  stroke: var(--brown);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.mapa__kosnica path {
+  fill: none;
+  stroke: var(--brown);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mapa__naziv {
+  fill: var(--brown);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.mapa__potpis {
+  margin-top: clamp(1.5rem, 3vw, 2rem);
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(115, 85, 46, 0.55);
 }
 
 .origin__note {
@@ -1201,7 +1238,7 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Znak u donjem desnom uglu, van mjere teksta. Vrti se polako oko svoje ose —
+ * Znak u donjem desnom uglu, van mjere teksta. Stoji mirno —
  * jedan krug u pola minuta, dovoljno sporo da se primijeti tek ako gledas.
  */
 .origin__badge {
@@ -1221,15 +1258,8 @@ html:not(.is-preloading) .hero-land__arrow {
   display: block;
   width: 100%;
   height: auto;
-  will-change: transform;
-  animation: origin-spin 30s linear infinite;
 }
 
-@keyframes origin-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @media (max-width: 767px) {
   .origin__map {
@@ -1841,8 +1871,6 @@ html:not(.is-preloading) .hero-land__arrow {
   display: block;
   width: 100%;
   height: auto;
-  will-change: transform;
-  animation: origin-spin 30s linear infinite;
 }
 
 /* Na uskom ekranu nema ugla da se poštedi — znak ide ispod naslova. */

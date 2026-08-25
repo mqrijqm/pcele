@@ -11,9 +11,8 @@ import type { Locale } from '@/i18n/config';
  * bez okvira, na istom papiru kao ostatak strane. Nosi je kolicina vazduha oko
  * teksta, pa ide na puni `section-padding`.
  *
- * Karta je rasterska. Isporucena je i kao .svg, ali je to bio isti PNG upakovan
- * u <image> u base64 — 932 kB naspram 37 kB koliko ima ovaj WebP, i ni jedan
- * jedini vektorski oblik.
+ * Karta je crtez, ne slika — obris opstine je ocitan iz stare rasterske karte
+ * i ponovo povucen kao linija, pa je od 37 kB WebP-a ostalo par redova puta.
  */
 export default function Origin({ locale }: { locale: Locale }) {
   const copy = home.origin[locale];
@@ -25,14 +24,14 @@ export default function Origin({ locale }: { locale: Locale }) {
 
         <h2 className="origin__heading reveal stagger-1">{copy.heading}</h2>
 
-        <OriginMap alt={copy.mapAlt} />
+        <OriginMap alt={copy.mapAlt} locale={locale} />
 
         <p className="origin__note reveal stagger-3">{copy.note}</p>
       </div>
 
       {/*
-        * Znak se vrti oko svoje ose. Stoji izvan `.container` jer se drzi
-        * donjeg desnog ugla sekcije, a ne mjere teksta.
+        * Znak stoji izvan `.container` jer se drzi donjeg desnog ugla sekcije,
+        * a ne mjere teksta.
         */}
       <span className="origin__badge" aria-hidden="true">
         <Image src="/images/brand/znak-krug.svg" alt="" width={120} height={120} />
