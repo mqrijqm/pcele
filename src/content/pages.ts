@@ -103,33 +103,27 @@ export const home = {
 
   aboutPreview: {
     sr: {
-      imageAlt: 'Tegla livadskog meda na dlanu, iznad livade',
-      imageCaption: 'Ručno · polako · porodično',
+      imageAlt: 'Saće u rukama, iznad košnice',
       eyebrow: 'Porodično pčelarstvo od 1980.',
       heading: 'Znanje koje se prenosi rukama.',
       description:
         'Pčelarstvo Jevtić nije nastalo kao brend, već kao porodični posao. Znanje se prenosi kroz generacije, a ista pažnja prati svaki korak — od rada oko košnica do punjenja posljednje tegle.',
       steps: ['Pregled košnica', 'Ručno vrcanje', 'Mirno cijeđenje', 'Punjenje tegli'],
-      cta: 'Pogledaj proces',
     },
     en: {
-      imageAlt: 'A jar of meadow honey held on an open palm above the meadow',
-      imageCaption: 'By hand · slowly · as a family',
+      imageAlt: 'Fresh comb held in two hands above the hive',
       eyebrow: 'Family beekeeping since 1980',
       heading: 'Knowledge passed on by hand.',
       description:
         'Pcelarstvo Jevtic did not begin as a brand, but as a family trade. Knowledge passes from one generation to the next, and the same care follows every step — from tending the hives to filling the last jar.',
       steps: ['Hive care', 'Hand extraction', 'Slow filtering', 'Jar filling'],
-      cta: 'See the process',
     },
   } satisfies L<{
     imageAlt: string;
-    imageCaption: string;
     eyebrow: string;
     heading: string;
     description: string;
     steps: string[];
-    cta: string;
   }>,
 
   featured: {
@@ -747,11 +741,6 @@ export const photoBreaks = {
       altMix: 'Tegla imuno mixa na svjetlu, uz drvenu kašiku punu cvjetnog polena',
       altPropolis: 'Bočica pčelinjeg propolisa sa kapaljkom, uz grumenje sirove smole',
     },
-    homeApiary: {
-      caption: 'Pčelinjak Mračaj · jutarnja tura',
-      meta: 'Sezona 2025.',
-      alt: 'Djevojka drži teglu livadskog meda u livadi',
-    },
     processLabel: {
       caption: 'Etiketa ide rukom, posljednja',
       meta: 'Teglu po teglu',
@@ -862,11 +851,6 @@ export const photoBreaks = {
       meta: 'Imuno mix · propolis',
       altMix: 'A jar of imuno mix in the light, beside a wooden scoop full of flower pollen',
       altPropolis: 'A dropper bottle of bee propolis beside lumps of raw resin',
-    },
-    homeApiary: {
-      caption: 'Mračaj apiary · morning round',
-      meta: '2025 season',
-      alt: 'A woman holding a jar of meadow honey out in the meadow',
     },
     processLabel: {
       caption: 'The label goes on by hand, last',

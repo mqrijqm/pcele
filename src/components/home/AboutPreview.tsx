@@ -1,9 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
 
 import { home } from '@/content/pages';
-import { localeHref, type Locale } from '@/i18n/config';
+import type { Locale } from '@/i18n/config';
 
 /**
  * "Znanje koje se prenosi rukama" — jedna centrirana kolona na papiru.
@@ -38,8 +36,6 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
           />
         </div>
 
-        <p className="about-preview__caption">{copy.imageCaption}</p>
-
         <h2 className="about-preview__heading">{copy.heading}</h2>
 
         <p className="about-preview__lead">{copy.description}</p>
@@ -56,11 +52,6 @@ export default function AboutPreview({ locale }: { locale: Locale }) {
             </li>
           ))}
         </ol>
-
-        <Link href={localeHref(locale, '/process')} className="about-preview__cta group">
-          {copy.cta}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
       </div>
     </section>
   );

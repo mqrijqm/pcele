@@ -29,17 +29,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HeroLand locale={locale} />
       <HeroJar locale={locale} />
 
-      {/* Poslije heroja — ista tegla, ali stvarna, u pcelinjaku. */}
-      <ImageBreak
-        images={[{ src: '/images/real/tegla-livada.webp', alt: shot.homeApiary.alt }]}
-        caption={shot.homeApiary.caption}
-        meta={shot.homeApiary.meta}
-        // Uspravan snimak: siroka traka bi mu odsekla i teglu i lice, pa ide
-        // u uzi okvir i zadrzava svoj prirodni rez.
-        frame="narrow"
-        aspect="aspect-[4/5]"
-      />
-
       <AboutPreview locale={locale} />
 
       <FeaturedProducts locale={locale} />

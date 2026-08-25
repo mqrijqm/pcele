@@ -57,7 +57,6 @@ export default function HeroJar({ locale }: { locale: Locale }) {
       const left = q('.hero-jar__half--left')[0];
       const right = q('.hero-jar__half--right')[0];
       const crest = q('.hero-jar__crest')[0];
-      const flowers = q('.hero-jar__flowers')[0];
       const caps = q('.hero-jar__label > span');
 
       const mm = gsap.matchMedia();
@@ -83,23 +82,23 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           });
 
           /*
-           * The staggered pairs start from an explicit `set` rather than a
+           * The staggered labels start from an explicit `set` rather than a
            * `from`. With `stagger`, the target whose slot has not been reached
            * yet keeps its natural value until the playhead arrives — invisible
            * on a mid-page section, but this hero opens at progress 0, where the
-           * second daisy and the second label would flash in already placed.
-           * `set` + `to` is the same shape their portrait branch uses.
+           * second label would flash in already placed. `set` + `to` is the
+           * same shape their portrait branch uses.
            */
-          gsap.set([crest, flowers], { scale: 0 });
+          gsap.set(crest, { scale: 0 });
           gsap.set(caps, { yPercent: 100 });
           gsap.set([left, right], { opacity: 0 });
 
           const tl = gsap.timeline({ defaults: { ease: 'linear', duration: 1 } });
 
           // Order comes from the reference frames, not from theirs: ref-2 shows
-          // the mark and the daisies already in while the headline is still
-          // travelling, so the decorations lead and the labels close.
-          tl.to([crest, flowers], { scale: 1, stagger: 0.5 });
+          // the mark already in while the headline is still travelling, so the
+          // mark leads and the labels close.
+          tl.to(crest, { scale: 1 });
           tl.addLabel('titles');
           tl.from(left, { x: () => window.innerWidth * LEFT_TRAVEL }, 'titles');
           tl.from(right, { x: () => window.innerWidth * RIGHT_TRAVEL }, 'titles');
@@ -146,7 +145,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
             },
           });
 
-          gsap.set([crest, flowers], { scale: 0 });
+          gsap.set(crest, { scale: 0 });
           gsap.set(caps, { yPercent: 100 });
 
           /*
@@ -164,7 +163,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
 
           const tl = gsap.timeline({ defaults: { ease: 'linear', duration: 1 } });
 
-          tl.to([crest, flowers], { scale: 1, stagger: 0.5 });
+          tl.to(crest, { scale: 1 });
           tl.addLabel('titles');
           tl.from(left, { opacity: 0, y: () => toCentre(left as HTMLElement) }, 'titles');
           tl.from(right, { opacity: 0, y: () => toCentre(right as HTMLElement) }, 'titles');
@@ -218,10 +217,6 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           <p className="hero-jar__label hero-jar__label--bottom">
             <span>{t.labelBottom}</span>
           </p>
-
-          <span className="hero-jar__flowers">
-            <Image src="/hero/cvijece.png" alt="" aria-hidden="true" width={1024} height={1536} />
-          </span>
         </div>
 
         <div className="hero-jar__jar">

@@ -18,10 +18,30 @@ gsap.registerPlugin(ScrollTrigger);
  *   gsap.ticker.lagSmoothing(0)
  *
  * It stays stopped while the loading curtain is up.
+ *
+ * Ovdje su i dvije stvari koje se ticu ucitavanja, a ne samog skrola:
+ *
+ * — Strana se otvara na vrhu. Preglednik inace vraca na mjesto gdje si stao
+ *   prije osvjezavanja; sa zavjesom to znaci da zavjesa padne na sredinu
+ *   sekcije koju nisi trazio.
+ *
+ * — `ScrollTrigger.refresh()` poslije zavjese i poslije fontova. Visine
+ *   pinovanih sekcija se mjere dok je zavjesa gore i dok slog jos stoji u
+ *   zamjenskom fontu; kad se pravi font ucita, mjera se pomjeri, a okidaci
+ *   ostanu na starim brojevima.
  */
 export default function SmoothScroll() {
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (document.documentElement.classList.contains('is-preloading')) window.scrollTo(0, 0);
+
+    const refresh = () => ScrollTrigger.refresh();
+    document.fonts?.ready.then(refresh).catch(() => undefined);
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.addEventListener('preloader:done', refresh);
+      return () => window.removeEventListener('preloader:done', refresh);
+    }
 
     const lenis = new Lenis({
       duration: 1.25,
@@ -39,7 +59,10 @@ export default function SmoothScroll() {
 
     const preloading = document.documentElement.classList.contains('is-preloading');
     if (preloading) lenis.stop();
-    const start = () => lenis.start();
+    const start = () => {
+      lenis.start();
+      refresh();
+    };
     window.addEventListener('preloader:done', start);
 
     return () => {

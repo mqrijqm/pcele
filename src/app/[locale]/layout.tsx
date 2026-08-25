@@ -163,7 +163,7 @@ export default async function LocaleLayout({
           dangerouslySetInnerHTML={{
             __html:
               "var d=document.documentElement;d.classList.add('js-reveal','is-preloading');" +
-              "setTimeout(function(){d.classList.remove('is-preloading')},8000);",
+              "setTimeout(function(){d.classList.remove('is-preloading')},7000);",
           }}
         />
       </head>
