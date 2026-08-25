@@ -34,6 +34,48 @@ function padStart(track: HTMLElement) {
   return parseFloat(getComputedStyle(track).paddingLeft) || 0;
 }
 
+/**
+ * Tri scene zakovane sekcije, i gdje na traci pocinje svaka.
+ *
+ * Prva pokazuje livadski sam, po sredini ekrana. Druga ga pomjera ulijevo
+ * taman toliko da uz njega stane bagrem, pa par stoji centriran. Treca pomjeri
+ * traku za jednu karticu, i onda su centrirani bagrem i propolis.
+ *
+ * Sve tri se racunaju iz jedne mjere — sirine kartice plus razmaka — pa se
+ * cijela koreografija sama prilagodi kad se ekran promijeni.
+ */
+function stopX(section: HTMLElement, track: HTMLElement, scene: 0 | 1 | 2) {
+  const first = track.children[0] as HTMLElement | undefined;
+  if (!first) return 0;
+  const cs = getComputedStyle(track);
+  const w = first.offsetWidth;
+  const gap = parseFloat(cs.columnGap) || parseFloat(cs.gap) || 0;
+  const pad = parseFloat(cs.paddingLeft) || 0;
+  const view = section.clientWidth;
+
+  if (scene === 0) return (view - w) / 2 - pad;
+  const pair = (view - 2 * w - gap) / 2 - pad;
+  return scene === 1 ? pair : pair - (w + gap);
+}
+
+/**
+ * Trajanja u jedinicama vremenske ose. Namjerno su srazmjerna predjenom putu:
+ * druga scena pomjeri traku za pola koraka, treca za cijeli — pa trecoj treba
+ * dvostruko vremena da bi obje isle istom brzinom pod prstom.
+ */
+const T = { ulaz: 0.9, mir1: 0.5, hod1: 1.0, mir2: 0.4, hod2: 2.0 };
+const UKUPNO = T.ulaz + T.mir1 + T.hod1 + T.mir2 + T.hod2;
+
+/** Napredak na kojem svaka scena stoji mirno — tu vode tackice. */
+const SCENA_P = [(T.ulaz + T.mir1) / UKUPNO, (T.ulaz + T.mir1 + T.hod1 + T.mir2) / UKUPNO, 1];
+
+/** Koja je scena "na redu" za dati napredak — tackica se pali na pola hoda. */
+function scenaNa(p: number) {
+  if (p < (T.ulaz + T.mir1 + T.hod1 / 2) / UKUPNO) return 0;
+  if (p < (T.ulaz + T.mir1 + T.hod1 + T.mir2 + T.hod2 / 2) / UKUPNO) return 1;
+  return 2;
+}
+
 export default function SorteMeda({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const sectionRef = useRef<HTMLElement>(null);
@@ -100,14 +142,13 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
   }, [syncActive]);
 
   /*
-   * Pin + vodoravni scrub. Traka se pomjera transformom, a ne `scrollLeft`-om:
-   * transform vozi kompozitor, dok bi postavljanje `scrollLeft` svakog kadra
-   * tuklo o `scroll-snap` iste trake.
+   * Pin + koreografija u tri scene. Traka se pomjera transformom, a ne
+   * `scrollLeft`-om: transform vozi kompozitor, dok bi postavljanje
+   * `scrollLeft` svakog kadra tuklo o `scroll-snap` iste trake.
    *
-   * Zato aktivnu karticu ovdje NE mjeri `syncActive`: on poredi rect kartice
-   * sa rect-om trake, a transform pomjera oboje jednako, pa bi razlika ostala
-   * ista do kraja. Umjesto toga se predjeni put racuna iz napretka pina i
-   * poredi sa `offsetLeft`, koji transform ne dira.
+   * Kartice koje jos nisu na redu drze se na `opacity: 0`, a ne `visibility`
+   * ili `display` — tako ostaju u stablu pristupacnosti i citac ekrana ih
+   * procita bez obzira gdje je strana zastala.
    */
   useEffect(() => {
     const section = sectionRef.current;
@@ -119,59 +160,62 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
 
     mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
       section.classList.add('sorte--pinned');
-      const run = () => track.scrollWidth - track.clientWidth;
-
-      /*
-       * Kad tri kartice ionako skoro stanu u ekran, put je od stotinjak
-       * piksela — a pin koji zaustavi stranu na toliko se ne cita kao namjera
-       * nego kao zastoj. Ispod tog praga sekcija ostaje obicna, sa nativnim
-       * listanjem koje je i inace ima.
-       */
-      if (run() < 240) {
+      const cards = Array.from(track.children) as HTMLElement[];
+      const [livada, bagrem, propolis] = cards;
+      if (!livada || !bagrem || !propolis) {
         section.classList.remove('sorte--pinned');
         return;
       }
 
-      const tween = gsap.to(track, {
-        x: () => -run(),
-        ease: 'none',
+      /*
+       * Put strane: koliko traka stvarno predje (jedan i po korak), plus pola
+       * ekrana za ulazak i dva predaha. Bez tog dodatka scene bi se smjenjivale
+       * bez daha izmedju, a ovako svaka ima trenutak u kojem samo stoji.
+       */
+      const travel = () => {
+        const step = stopX(section, track, 1) - stopX(section, track, 2);
+        return Math.round(1.5 * step + section.clientWidth * 0.55);
+      };
+
+      gsap.set(track, { x: () => stopX(section, track, 0) });
+      gsap.set(livada, { opacity: 0, scale: 0.96 });
+      gsap.set([bagrem, propolis], { opacity: 0 });
+
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          // Put strane je tacno sirina koju traka ima da prijedje.
-          end: () => `+=${run()}`,
+          end: () => `+=${travel()}`,
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const last = track.children.length - 1;
-            if (self.progress > 0.995) {
-              setActive(last);
-              return;
-            }
-            const travelled = self.progress * run();
-            const pad = padStart(track);
-            let best = 0;
-            let bestDist = Infinity;
-            Array.from(track.children).forEach((child, i) => {
-              const d = Math.abs((child as HTMLElement).offsetLeft - pad - travelled);
-              if (d < bestDist) {
-                bestDist = d;
-                best = i;
-              }
-            });
-            setActive(best);
-          },
+          onUpdate: (self) => setActive(scenaNa(self.progress)),
         },
       });
 
-      pinRef.current = tween.scrollTrigger ?? null;
+      tl
+        // 1. livadski se pojavi sam, po sredini
+        .to(livada, { opacity: 1, scale: 1, duration: T.ulaz, ease: 'power2.out' })
+        .to({}, { duration: T.mir1 })
+        // 2. odmakne se ulijevo, a bagrem ulazi u prostor koji je oslobodio
+        .to(track, { x: () => stopX(section, track, 1), duration: T.hod1, ease: 'none' })
+        .to(bagrem, { opacity: 1, duration: T.hod1 * 0.75, ease: 'power1.out' }, '<0.15')
+        .to({}, { duration: T.mir2 })
+        // 3. par otklizi za jednu karticu, i na desnoj strani ostaje propolis
+        .to(track, { x: () => stopX(section, track, 2), duration: T.hod2, ease: 'none' })
+        .to(propolis, { opacity: 1, duration: T.hod2 * 0.45, ease: 'power1.out' }, '<0.1')
+        // livadski ode s ekrana, ali ne skroz: bez ovoga mu rub luka ostane da
+        // viri uz lijevu ivicu i scena se ne zatvori na dvije kartice
+        .to(livada, { opacity: 0, duration: T.hod2 * 0.4, ease: 'power1.in' }, '<0.5');
+
+      pinRef.current = tl.scrollTrigger ?? null;
 
       return () => {
         pinRef.current = null;
         section.classList.remove('sorte--pinned');
         gsap.set(track, { clearProps: 'transform' });
+        gsap.set(cards, { clearProps: 'opacity,transform' });
       };
     });
 
@@ -187,15 +231,13 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
 
     /*
      * Pinovano: traka ne moze sama nigdje da ode — nju vozi polozaj strane.
-     * Zato se skace na onu tacku skrola na kojoj scrub dovodi bas ovu karticu
-     * na lijevu ivicu. Skok je trenutan namjerno: Lenis vozi glatko kretanje
-     * strane, pa bi jos jedna animacija preko njega dala dvostruko usporenje.
+     * Zato se skace na onu tacku skrola na kojoj scena i inace stoji mirno.
+     * Skok je trenutan namjerno: Lenis vozi glatko kretanje strane, pa bi jos
+     * jedna animacija preko njega dala dvostruko usporenje.
      */
     const pin = pinRef.current;
     if (pin) {
-      const run = track.scrollWidth - track.clientWidth;
-      const target = Math.max(0, Math.min(el.offsetLeft - padStart(track), run));
-      const p = run > 0 ? target / run : 0;
+      const p = SCENA_P[Math.min(i, SCENA_P.length - 1)];
       window.scrollTo(0, pin.start + p * (pin.end - pin.start));
       return;
     }

@@ -738,7 +738,6 @@ export const photoBreaks = {
     },
     homeOther: {
       caption: 'Nije samo med · imuno mix i propolis',
-      meta: 'Livada u junu',
       altMix: 'Tri tegle imuno mixa u travi punoj bijelih i žutih cvjetova',
       altPropolis: 'Bočica pčelinjeg propolisa sa kapaljkom, uz grumenje sirove smole',
     },
@@ -855,7 +854,6 @@ export const photoBreaks = {
     },
     homeOther: {
       caption: 'Not honey alone · imuno mix and propolis',
-      meta: 'A meadow in June',
       altMix: 'Three jars of imuno mix in grass full of white and yellow flowers',
       altPropolis: 'A dropper bottle of bee propolis beside lumps of raw resin',
     },

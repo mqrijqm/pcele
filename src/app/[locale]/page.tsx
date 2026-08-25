@@ -68,7 +68,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         ]}
         frame="narrow"
         caption={shot.homeOther.caption}
-        meta={shot.homeOther.meta}
       />
 
       {/*
