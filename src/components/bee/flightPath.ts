@@ -15,59 +15,65 @@
 export type Pt = [number, number];
 
 /** Raspored preko kojeg su tacke nacrtane. */
-export const REF = { w: 1434, h: 14090 };
+export const REF = { w: 1434, h: 15636 };
 
 /** Prolazak kroz niz tacaka, ili petlja oko centra. */
 export type Leg = { through: Pt[] } | { loop: { c: Pt; r: number; from?: number } };
 
 /**
  * Desktop ruta. Krece lijevo od vrha isprekidane strelice — dovoljno da je
- * strelica ne dodiruje, a da i dalje pokazuje na nju. Zatim se spusta kroz
- * teglu, preseca "O nama" dijagonalno, napravi pun krug oko izdvojenih
- * proizvoda i izlazi kod podnozja.
+ * strelica ne dodiruje, a da i dalje pokazuje na nju — pa se spusta kroz
+ * heroj oko tegle. Tih prvih sest tacaka je crtano okom, preko heroja, i tu
+ * ostaje.
+ *
+ * Ispod heroja tacke su izmjerene, ne pogodjene: za svakih 380 px visine
+ * potrazen je najsiri pojas u kojem na toj visini nema nijednog naslova, reda
+ * s podacima, citata, linka ni dugmeta (sa 56 px zracnosti oko svakog), pa
+ * ruta ide kroz te pojase. Preko fotografije i preko obicnog pasusa smije —
+ * preko naslova i podataka ne.
+ *
+ * Petlje vise nema: vrtjela se oko mreze izdvojenih proizvoda koje na strani
+ * vise nema, a i sama je bila okret radi okreta.
  */
 export const DESKTOP: Leg[] = [
   {
     through: [
-      [350, 196],    // polazak: lijevo od strelice i iznad wordmarka
+      [350, 196],   // polazak: lijevo od strelice i iznad wordmarka
       [900, 660],
       [1180, 1350],
-      [520, 2050],   // tegla
+      [520, 2050],  // tegla
       [250, 2680],
       [960, 3260],
-      [1160, 3900],
-      [640, 4400],
-      [250, 4820],   // ulazi u "O nama"
-      [720, 5120],
-      [1160, 5400],  // izlazi iz "O nama"
-      [1240, 5960],
-      [820, 6420],
-      [717, 6700],   // dolazi na vrh petlje
-    ],
-  },
-  { loop: { c: [717, 7040], r: 340 } }, // pun krug oko izdvojenih proizvoda
-  {
-    through: [
-      [717, 6700],
-      [1080, 7500],
-      [1180, 8500],
-      [520, 9200],   // utisci
-      [280, 9950],
-      [880, 10600],
-      [1150, 11250], // pitanja
-      [600, 11850],
-      [340, 12400],
-      [820, 12850],
-      [1060, 13150], // zavrsava tik iznad podnozja
+      [1133, 3800], // ispod heroja pocinju izmjerene tacke
+      [1381, 4370], // uz desnu ivicu: sorte drze cijelu mjeru teksta
+      [1330, 5750], // naslov nasljedja ide skoro preko cijele mjere
+      [900, 6600],
+      [1276, 7220],
+      [900, 8200],
+      [560, 9200],
+      [200, 10260],
+      [81, 10900],  // uz lijevu ivicu
+      [400, 11500],
+      [1339, 11900], // desno prije utisaka, da ih ne presijece u dolasku
+      [1250, 12600], // i desno dok utisci ne prodju
+      [120, 13150], // pitanja drze mjeru teksta, ostaje lijeva margina
+      [90, 13400],
+      [1148, 13950],
+      [310, 14440],
+      [388, 14950], // zavrsava iznad podnozja
     ],
   },
 ];
 
 /**
  * Telefon: kraca i mirnija ruta. Nema petlje — na 390 px sirine krug bi bio
- * grcevit — nego samo mirno njihanje levo-desno niz stranu.
+ * grcevit — nego mirno njihanje lijevo-desno niz stranu.
+ *
+ * Ovdje se pojas ne moze mjeriti: na ovoj sirini slog ide preko cijele strane
+ * i slobodnog pojasa gotovo nigdje nema. Zato pcela ostaje u margini uz samu
+ * ivicu, tamo gdje slog ionako ne stize.
  */
-export const MOBILE_REF = { w: 390, h: 13919 };
+export const MOBILE_REF = { w: 384, h: 13478 };
 
 export const MOBILE: Leg[] = [
   {
@@ -75,18 +81,18 @@ export const MOBILE: Leg[] = [
       [40, 128], // polazak: lijevo od vrha strelice, kao i na desktopu
       [230, 520],
       [310, 750],
-      [90, 1575],
-      [300, 2485],
-      [110, 3560],
-      [290, 4640],
-      [100, 5800],
-      [300, 6795],
-      [120, 7955],
-      [290, 9115],
-      [110, 10275],
-      [280, 11350],
-      [150, 12430],
-      [250, 13175],
+      [40, 1700],
+      [344, 2800],
+      [40, 3900],
+      [344, 5000],
+      [40, 6100],
+      [344, 7200],
+      [40, 8300],
+      [344, 9400],
+      [40, 10500],
+      [344, 11600],
+      [40, 12500],
+      [200, 13200],
     ],
   },
 ];

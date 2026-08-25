@@ -50,14 +50,14 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={() => decide('essential')}
-            className="min-h-11 rounded-full border border-[#73552E]/30 px-5 text-sm font-semibold text-[#73552E] transition-colors hover:border-[#73552E] hover:text-[#73552E]"
+            className="btn btn--ghost"
           >
             {t('cookieConsent.essentialOnly')}
           </button>
           <button
             type="button"
             onClick={() => decide('all')}
-            className="min-h-11 rounded-full bg-[#73552E] px-6 text-sm font-semibold text-[#F5E8D8] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
+            className="btn"
           >
             {t('cookieConsent.accept')}
           </button>

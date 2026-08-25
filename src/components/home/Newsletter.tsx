@@ -71,7 +71,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
                 <button
                   type="submit"
                   disabled={status !== 'idle'}
-                  className="min-h-12 rounded-full bg-[#73552E] px-7 py-3 text-sm font-semibold text-[#F5E8D8] transition-colors duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] active:translate-y-px disabled:opacity-70"
+                  className="btn"
                 >
                   {buttonLabel}
                 </button>

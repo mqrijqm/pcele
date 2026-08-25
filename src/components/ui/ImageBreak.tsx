@@ -122,7 +122,7 @@ export default function ImageBreak({
           */}
         <div className={frame === 'narrow' ? 'container' : 'px-3 sm:px-5'}>
           <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:gap-6">
-            <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[0.5rem]">
+            <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[0.6rem]">
               <Image
                 src={first.src}
                 alt={first.alt}
@@ -138,7 +138,7 @@ export default function ImageBreak({
                * `transform: none`, pa bi na istom elementu pojeo translate.
                */
               <div className="translate-y-8 sm:translate-y-16 lg:translate-y-24">
-                <div className="reveal stagger-2 relative aspect-[4/5] overflow-hidden rounded-[0.5rem]">
+                <div className="reveal stagger-2 relative aspect-[4/5] overflow-hidden rounded-[0.6rem]">
                   <Image
                     src={second.src}
                     alt={second.alt}

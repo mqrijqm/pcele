@@ -61,7 +61,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder={t('search.placeholder')}
             aria-label={t('search.ariaLabel')}
-            className="min-h-12 w-full border-x-0 border-b border-t-0 border-[#73552E]/20 bg-transparent py-2 pl-11 pr-10 text-sm text-[#73552E] outline-none transition-colors placeholder:text-[#73552E] focus:border-[#C79A3B] rounded-[0.4rem]"
+            className="min-h-12 w-full border-x-0 border-b border-t-0 border-[#73552E]/20 bg-transparent py-2 pl-11 pr-10 text-sm text-[#73552E] outline-none transition-colors placeholder:text-[#73552E] focus:border-[#C79A3B] rounded-[0.6rem]"
           />
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
               value={sort}
               onChange={(event) => setSort(event.target.value as SortOption)}
               aria-label={t('products.sort.label')}
-              className="min-h-10 appearance-none border border-[#73552E]/20 bg-transparent py-2 pl-4 pr-9 text-sm text-[#73552E] outline-none transition-colors focus:border-[#C79A3B] rounded-[0.4rem]"
+              className="min-h-10 appearance-none border border-[#73552E]/20 bg-transparent py-2 pl-4 pr-9 text-sm text-[#73552E] outline-none transition-colors focus:border-[#C79A3B] rounded-[0.6rem]"
             >
               <option value="default">{t('products.grid.sort.default')}</option>
               <option value="price-asc">{t('products.grid.sort.priceAsc')}</option>

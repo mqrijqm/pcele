@@ -44,10 +44,12 @@
    * Zaobljenja. Drzana su namjerno niska: na velikim fotografijama je jak
    * radijus vukao paznju na okvir umjesto na sadrzaj u njemu.
    */
-  --radius-sm: 0.3rem;
-  --radius-md: 0.45rem;
+  /*
+   * Dva oblika, i nista izmedju: ploca (slika, polje, kartica u prodavnici) i
+   * pilula (dugme, zaglavlje, oznaka). Ranije ih je bilo pet, od 0.3 do 0.8
+   * rem, i nijedan nije imao svoj posao.
+   */
   --radius-lg: 0.6rem;
-  --radius-xl: 0.8rem;
   --radius-pill: 999px;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -408,10 +410,10 @@ p {
   border-radius: var(--radius-lg);
 }
 .soft-sm {
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
 }
 .arch {
-  border-radius: var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
+  border-radius: var(--radius-lg);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1178,54 +1180,17 @@ html:not(.is-preloading) .hero-land__arrow {
   text-wrap: balance;
 }
 
-/* --- karta ---------------------------------------------------------------
- * Crtez, ne slika: obris i kosnice su potezi, pa nose istu boju i istu
- * debljinu kao sve ostalo na strani i ostaju ostri na svakom ekranu.
- * ----------------------------------------------------------------------- */
-.mapa {
+.origin__map {
   margin: clamp(3rem, 7vw, 6rem) auto 0;
-  width: min(72%, 900px);
+  width: min(62%, 840px);
+  /* Karta se pomjera za misem — pomak upisuje JS, ovdje samo najava. */
+  will-change: transform;
 }
 
-.mapa svg {
+.origin__map img {
   display: block;
   width: 100%;
   height: auto;
-  overflow: visible;
-}
-
-.mapa__obris {
-  fill: rgba(115, 85, 46, 0.05);
-  stroke: var(--brown);
-  stroke-width: 2;
-  stroke-linejoin: round;
-}
-
-.mapa__kosnica path {
-  fill: none;
-  stroke: var(--brown);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.mapa__naziv {
-  fill: var(--brown);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 25px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.mapa__potpis {
-  margin-top: clamp(1.5rem, 3vw, 2rem);
-  text-align: center;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(115, 85, 46, 0.55);
 }
 
 .origin__note {
@@ -1314,7 +1279,8 @@ html:not(.is-preloading) .hero-land__arrow {
   }
   33% {
     opacity: 0;
-    transform: scale(1.14);
+    /* 1.14 je bio zumiranje koje se gleda; ovoliko se samo osjeti. */
+    transform: scale(1.04);
   }
   /* Vracanje na pocetak dok je kadar nevidljiv, da se skok ne vidi. */
   34% {
@@ -1528,7 +1494,7 @@ html:not(.is-preloading) .hero-land__arrow {
   display: block;
   overflow: hidden;
   aspect-ratio: 1 / 1;
-  border-radius: 0.4rem;
+  border-radius: var(--radius-lg);
   background: var(--surface);
 }
 
@@ -1564,39 +1530,57 @@ html:not(.is-preloading) .hero-land__arrow {
   line-height: 1.3;
 }
 
-/* --- dugmad --------------------------------------------------------------- */
-.blog-cta {
+/* --- dugmad ---------------------------------------------------------------
+ * Jedno dugme kroz cijeli sajt: pilula, ista visina, ista velicina slova, isti
+ * prelaz na prelasku misem. Razlikuju se samo po tezini — puno i prazno.
+ *
+ * Prije ovoga je svaka sekcija imala svoje: cetiri razlicite visine (h-11,
+ * h-13, min-h-11, min-h-12), negdje sjenka i skok pri kliku, negdje ne, i
+ * zasebno zlatno dugme na blogu sa razmaknutim verzalom.
+ * ------------------------------------------------------------------------- */
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.7rem;
-  padding: 0.85rem 1.6rem;
-  border-radius: 0.3rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  transition:
-    background-color 0.35s ease,
-    color 0.35s ease;
-}
-
-.blog-cta--solid {
-  background: var(--gold);
-  color: var(--paper);
-}
-
-.blog-cta--solid:hover {
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 3rem;
+  padding-inline: 1.75rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
   background: var(--brown);
+  color: var(--paper);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition:
+    background-color 0.35s var(--ease-out-expo),
+    color 0.35s var(--ease-out-expo),
+    border-color 0.35s var(--ease-out-expo);
 }
 
-.blog-cta--outline {
-  border: 1px solid var(--brown);
+.btn:hover {
+  background: var(--gold);
   color: var(--brown);
 }
 
-.blog-cta--outline:hover {
-  background: var(--brown);
-  color: var(--paper);
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Prazno dugme: isti oblik i ista mjera, samo linija umjesto povrsine. */
+.btn--ghost {
+  background: transparent;
+  border-color: rgba(115, 85, 46, 0.3);
+  color: var(--brown);
+}
+
+.btn--ghost:hover {
+  background: transparent;
+  border-color: var(--brown);
+  color: var(--brown);
 }
 
 /* --- izdvojen zapis ------------------------------------------------------- */
@@ -1618,7 +1602,7 @@ html:not(.is-preloading) .hero-land__arrow {
 .blog-feature__shot {
   position: relative;
   overflow: hidden;
-  border-radius: 0.4rem;
+  border-radius: var(--radius-lg);
 }
 
 .blog-feature__shot--main {
@@ -1701,128 +1685,33 @@ html:not(.is-preloading) .hero-land__arrow {
  * Kratki utisci ispod izdvojenog citata. Sitnije i lakse nego ranije — bili
  * su polubold i skoro iste tezine kao naslov sekcije, pa su se tukli s njim.
  */
-/* ---------------------------------------------------------------------------
- * Utisci — tri citata na papiru.
- *
- * Ista mreza i isti razdjelnik kao kod sorti: sve sto na strani stoji u tri
- * polja stoji na isti nacin.
- * ------------------------------------------------------------------------- */
-.utisci {
-  background: var(--paper);
-  padding-block: var(--section-padding);
-}
-
-.utisci__inner {
-  max-width: 82rem;
-  margin-inline: auto;
-  padding-inline: var(--container-padding);
-}
-
-.utisci__eyebrow {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--brown);
-}
-
-.utisci__heading {
-  margin-top: 1.75rem;
-  max-width: 20ch;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 400;
-  font-size: clamp(2rem, 4.2vw, 3rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  color: var(--brown);
-}
-
-.utisci__inner > .ink-rule {
-  margin-block: clamp(2.75rem, 6vw, 4.5rem);
-}
-
-.utisci__lista {
-  display: grid;
-  gap: 0;
-}
-
-.utisci__polje {
+.review {
   position: relative;
+  padding-left: 2.6rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--brown-soft);
 }
 
-/* Potpisi stoje u istoj ravni i kad su citati razlicite duzine. */
-.utisak {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+/* Navodnik: sam crtez, u zlatnoj, krupniji od slova uz koja stoji. */
+.review__mark {
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  width: 1.9rem;
+  height: 1.38rem;
+  background-color: var(--gold);
+  -webkit-mask: url('/images/brand/navodnik.svg') no-repeat center / contain;
+  mask: url('/images/brand/navodnik.svg') no-repeat center / contain;
 }
 
-/* Citat nosi serif, ali umjeren: krupniji od teksta, sitniji od naslova. */
-.utisak__tekst {
-  margin: 0;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-  line-height: 1.6;
-  color: var(--brown);
-}
-
-.utisak__potpis {
-  margin-top: auto;
-  padding-top: 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  align-items: baseline;
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-
-.utisak__ime {
-  font-weight: 700;
-  color: var(--brown);
-}
-
-.utisak__mjesto {
-  color: rgba(115, 85, 46, 0.55);
-}
-
-.utisci__razdjelnik {
-  margin-block: clamp(2.5rem, 7vw, 3.5rem);
-}
-
-@media (min-width: 860px) {
-  .utisci__lista {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .utisci__polje {
-    padding-inline: clamp(1.5rem, 3.5vw, 3rem);
-  }
-
-  .utisci__polje:first-child {
-    padding-left: 0;
-  }
-
-  .utisci__polje:last-child {
-    padding-right: 0;
-  }
-
-  .utisci__razdjelnik {
-    position: absolute;
-    inset-block: 0;
-    left: 0;
-    margin: 0;
-    width: 10px;
-  }
-
-  .ink-rule.utisci__razdjelnik .ink-rule__h {
-    display: none;
-  }
-
-  .ink-rule.utisci__razdjelnik .ink-rule__v {
-    display: block;
-  }
+.review__by {
+  margin-top: 1.5rem;
+  padding-left: 2.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--brown-soft);
 }
 
 /* ---------------------------------------------------------------------------
@@ -1943,7 +1832,7 @@ html:not(.is-preloading) .hero-land__arrow {
   position: relative;
   overflow: hidden;
   aspect-ratio: 4 / 5;
-  border-radius: 0.4rem;
+  border-radius: var(--radius-lg);
 }
 
 /* Druga slika je spustena, isto kao u parovima drugdje na sajtu. */

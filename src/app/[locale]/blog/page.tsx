@@ -73,7 +73,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
           </div>
 
           <div className="mt-6 flex justify-end">
-            <Link href={localeHref(locale, '/blog')} className="blog-cta blog-cta--solid">
+            <Link href={localeHref(locale, '/blog')} className="btn">
               {allLabel}
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -113,7 +113,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
               <p>{feature.body[locale].find((b) => b.t === 'p')?.text}</p>
               <Link
                 href={localeHref(locale, `/blog/${feature.slug}`)}
-                className="blog-cta blog-cta--outline mt-8"
+                className="btn btn--ghost mt-8"
               >
                 {readLabel}
                 <ArrowRight className="h-4 w-4" />

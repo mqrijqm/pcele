@@ -160,7 +160,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
               <button
                 type="button"
                 onClick={handleAdd}
-                className="inline-flex h-14 min-w-[13rem] flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#73552E] px-8 text-base font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] sm:max-w-xs"
+                className="btn flex-1 sm:max-w-xs"
               >
                 <ShoppingBag className="h-5 w-5" />
                 {justAdded ? t('products.added') : t('common.addToCart')}

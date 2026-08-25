@@ -52,7 +52,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 <Link
                   href={localeHref(locale, '/products')}
                   onClick={cart.close}
-                  className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
+                  className="btn mt-6"
                 >
                   {t('cart.continueShopping')}
                 </Link>
@@ -61,7 +61,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <ul className="divide-y divide-[#73552E]/15">
                 {cart.items.map((item) => (
                   <li key={item.variantId} className="flex gap-4 py-5">
-                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.4rem] bg-[#73552E]/[0.06]">
+                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.6rem] bg-[#73552E]/[0.06]">
                       <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="flex flex-1 flex-col">
@@ -130,7 +130,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <Link
                 href={localeHref(locale, '/contact')}
                 onClick={cart.close}
-                className="mt-5 flex min-h-12 w-full items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
+                className="btn mt-5 w-full"
               >
                 {t('cart.checkout')}
               </Link>

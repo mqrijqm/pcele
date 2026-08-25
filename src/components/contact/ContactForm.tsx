@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { createTranslator, type Locale } from '@/i18n/config';
 
 const fieldClass =
-  'w-full rounded-[0.4rem] border border-[#73552E]/15 bg-[var(--paper)] px-4 py-3 text-base text-[#73552E] transition-colors duration-200 placeholder:text-[#73552E] hover:border-[#73552E]/40 focus:border-[#C79A3B] focus:outline-none focus:ring-1 focus:ring-[#C79A3B]/30 disabled:cursor-not-allowed disabled:opacity-50';
+  'w-full rounded-[0.6rem] border border-[#73552E]/15 bg-[var(--paper)] px-4 py-3 text-base text-[#73552E] transition-colors duration-200 placeholder:text-[#73552E] hover:border-[#73552E]/40 focus:border-[#C79A3B] focus:outline-none focus:ring-1 focus:ring-[#C79A3B]/30 disabled:cursor-not-allowed disabled:opacity-50';
 
 const labelClass = 'mb-2 block text-xs font-semibold uppercase tracking-widest text-[#73552E]';
 
@@ -98,7 +98,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
           required
           value={form.message}
           onChange={update('message')}
-          className={`${fieldClass} resize-none rounded-[0.4rem]`}
+          className={`${fieldClass} resize-none rounded-[0.6rem]`}
         />
       </div>
 
@@ -111,7 +111,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="inline-flex h-13 w-full items-center justify-center rounded-full bg-[#73552E] px-8 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+        className="btn w-full"
       >
         <Send className="mr-2 h-4 w-4" />
         {status === 'sending' ? t('common.loading') : t('contact.form.submit')}

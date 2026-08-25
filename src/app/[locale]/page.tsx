@@ -25,10 +25,9 @@ import BeeFlight from '@/components/bee/BeeFlight';
  * sekciju sorti, i pet foto-pauza od kojih su cetiri bile makete tegli u travi
  * i na lanu. Ostalo je ono sto nosi pricu.
  *
- * Od fotografija na pocetnoj ostaje jedna pauza, i to dokumentarna: tocenje
- * meda i ram iz sezone. Makete su otisle jer su izgledale kao reklamna
- * kampanja, a snimci pcelinjaka jer su plave i zute kosnice na njima jace od
- * samog brenda.
+ * Od fotografija su otisle makete tegli u travi i na lanu — izgledale su kao
+ * reklamna kampanja. Ostale su dvije dokumentarne pauze: proces (tocenje meda
+ * i ram iz sezone) i sam pcelinjak prije price o mjestu.
  */
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -62,6 +61,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         ]}
         caption={shot.homeProces.caption}
         meta={shot.homeProces.meta}
+      />
+
+      {/* Pravi pcelinjak, prije nego sto krene prica o mjestu. */}
+      <ImageBreak
+        variant="pair"
+        images={[
+          { src: '/images/real/pcelinjak-2.webp', alt: shot.homeHives.altA },
+          { src: '/images/real/pcelinjak-3.webp', alt: shot.homeHives.altB },
+        ]}
+        caption={shot.homeHives.caption}
+        meta={shot.homeHives.meta}
+        emblem
       />
 
       {/* Mjesto i porijeklo. */}

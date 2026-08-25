@@ -31,7 +31,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
               <p className="mt-2 max-w-sm text-sm text-[#73552E]">{t('wishlist.emptyMessage')}</p>
               <Link
                 href={localeHref(locale, '/products')}
-                className="mt-7 inline-flex min-h-12 items-center rounded-full bg-[#73552E] px-7 text-sm font-semibold text-[#F5E8D8] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
+                className="btn mt-7"
               >
                 {t('wishlist.continueShopping')}
               </Link>

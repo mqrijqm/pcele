@@ -131,6 +131,7 @@ export const home = {
       eyebrow: 'Riječi kupaca',
       heading: 'Kvalitet se najlakše prepozna kad se proba.',
       subheading: 'Lokalne preporuke i stalni kupci',
+      imageAlt: 'Košnice na prikolici, spremne za seobu',
       quotes: [
         {
           text: 'Livadski med uzimam za čaj i kolače. Stigne lijepo upakovan i uvijek istog kvaliteta.',
@@ -153,6 +154,7 @@ export const home = {
       eyebrow: 'Customer words',
       heading: 'Quality is easiest to recognize when tasted.',
       subheading: 'Local recommendations and returning customers',
+      imageAlt: 'Hives loaded on the trailer, ready to move',
       quotes: [
         {
           text: 'I buy meadow honey for tea and cakes. It arrives nicely packed and always with the same quality.',
@@ -175,6 +177,7 @@ export const home = {
     eyebrow: string;
     heading: string;
     subheading: string;
+    imageAlt: string;
     quotes: { text: string; author: string; city: string }[];
   }>,
 
@@ -683,6 +686,12 @@ export const photoBreaks = {
       altA: 'Košnice na otvorenoj livadi pod vedrim nebom',
       altB: 'Pogled niz red košnica preko livade',
     },
+    homeHives: {
+      caption: 'Naš pčelinjak · Mračaj',
+      meta: 'Košnice na livadi',
+      altA: 'Red plavih i žutih košnica na livadi ispod brda',
+      altB: 'Košnice u visokoj travi, u hladu voćaka',
+    },
     homeProces: {
       caption: 'Vrcanje i punjenje · Mračaj',
       meta: 'Sezona 2025.',
@@ -769,6 +778,12 @@ export const photoBreaks = {
       meta: 'The apiary in July',
       altA: 'Hives on an open meadow under a clear sky',
       altB: 'Looking down the row of hives across the meadow',
+    },
+    homeHives: {
+      caption: 'Our apiary · Mračaj',
+      meta: 'Hives out on the meadow',
+      altA: 'A row of blue and yellow hives on a meadow below the hills',
+      altB: 'Hives standing in tall grass in the shade of fruit trees',
     },
     homeProces: {
       caption: 'Extraction and filling · Mračaj',

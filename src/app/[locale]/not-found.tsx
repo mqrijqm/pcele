@@ -13,7 +13,7 @@ export default function NotFound() {
         </p>
         <Link
           href="/sr"
-          className="mt-8 inline-flex min-h-12 items-center rounded-full bg-[#73552E] px-7 text-sm font-semibold text-[#F5E8D8] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
+          className="btn mt-8"
         >
           Početna / Home
         </Link>
