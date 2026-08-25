@@ -52,7 +52,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 <Link
                   href={localeHref(locale, '/products')}
                   onClick={cart.close}
-                  className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#FDF9DC] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
+                  className="mt-6 inline-flex h-11 items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
                 >
                   {t('cart.continueShopping')}
                 </Link>
@@ -130,7 +130,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <Link
                 href={localeHref(locale, '/contact')}
                 onClick={cart.close}
-                className="mt-5 flex min-h-12 w-full items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#FDF9DC] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
+                className="mt-5 flex min-h-12 w-full items-center justify-center rounded-full bg-[#73552E] px-6 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98]"
               >
                 {t('cart.checkout')}
               </Link>

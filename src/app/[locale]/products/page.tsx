@@ -53,15 +53,15 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
             {copy.trustFeatures.map((feature, index) => (
               <div
                 key={feature.title}
-                className={`reveal stagger-${index + 1} border-b border-[#FDF9DC]/20 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
+                className={`reveal stagger-${index + 1} border-b border-[#F5E8D8]/20 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
               >
                 <span className="text-[10px] font-bold tracking-[0.18em] text-[#C79A3B]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-3 font-display text-2xl leading-tight text-[#FDF9DC]">
+                <p className="mt-3 font-display text-2xl leading-tight text-[#F5E8D8]">
                   {feature.title}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#FDF9DC]/75">{feature.desc}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#F5E8D8]/75">{feature.desc}</p>
               </div>
             ))}
           </div>

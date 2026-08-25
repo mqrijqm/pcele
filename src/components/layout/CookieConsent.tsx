@@ -57,7 +57,7 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
           <button
             type="button"
             onClick={() => decide('all')}
-            className="min-h-11 rounded-full bg-[#73552E] px-6 text-sm font-semibold text-[#FDF9DC] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
+            className="min-h-11 rounded-full bg-[#73552E] px-6 text-sm font-semibold text-[#F5E8D8] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
           >
             {t('cookieConsent.accept')}
           </button>

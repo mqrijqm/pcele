@@ -111,7 +111,7 @@ export default function ContactForm({ locale }: { locale: Locale }) {
       <button
         type="submit"
         disabled={status === 'sending'}
-        className="inline-flex h-13 w-full items-center justify-center rounded-full bg-[#73552E] px-8 text-sm font-semibold tracking-wide text-[#FDF9DC] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
+        className="inline-flex h-13 w-full items-center justify-center rounded-full bg-[#73552E] px-8 text-sm font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
       >
         <Send className="mr-2 h-4 w-4" />
         {status === 'sending' ? t('common.loading') : t('contact.form.submit')}

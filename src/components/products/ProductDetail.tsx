@@ -66,7 +66,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
           <div>
             <div className="relative aspect-square overflow-hidden border border-[#73552E]/15 bg-linen rounded-[0.6rem]">
               <div className="absolute left-4 top-4 z-10">
-                <span className="inline-block bg-[#73552E] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FDF9DC]">
+                <span className="inline-block bg-[#73552E] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#F5E8D8]">
                   Premium
                 </span>
               </div>
@@ -118,7 +118,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                     onClick={() => setVariantId(option.id)}
                     className={`rounded-full border px-6 py-3 text-sm font-medium transition-all duration-300 ${
                       option.id === variant.id
-                        ? 'border-[#C79A3B] bg-[#73552E] text-[#FDF9DC]'
+                        ? 'border-[#C79A3B] bg-[#73552E] text-[#F5E8D8]'
                         : 'border-[#73552E]/15 text-[#73552E] hover:border-[#C79A3B] hover:text-[#73552E]'
                     }`}
                   >
@@ -160,7 +160,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
               <button
                 type="button"
                 onClick={handleAdd}
-                className="inline-flex h-14 min-w-[13rem] flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#73552E] px-8 text-base font-semibold tracking-wide text-[#FDF9DC] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] sm:max-w-xs"
+                className="inline-flex h-14 min-w-[13rem] flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-[#73552E] px-8 text-base font-semibold tracking-wide text-[#F5E8D8] transition-all duration-300 hover:bg-[#C79A3B] hover:text-[#73552E] hover:shadow-md active:scale-[0.98] sm:max-w-xs"
               >
                 <ShoppingBag className="h-5 w-5" />
                 {justAdded ? t('products.added') : t('common.addToCart')}

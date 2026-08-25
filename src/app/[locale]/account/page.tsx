@@ -45,7 +45,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
             <div className="mt-7 flex flex-wrap gap-4">
               <Link
                 href={localeHref(locale, '/products')}
-                className="inline-flex min-h-12 items-center rounded-full bg-[#73552E] px-7 text-sm font-semibold text-[#FDF9DC] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
+                className="inline-flex min-h-12 items-center rounded-full bg-[#73552E] px-7 text-sm font-semibold text-[#F5E8D8] transition-colors hover:bg-[#C79A3B] hover:text-[#73552E]"
               >
                 {t('account.startShopping')}
               </Link>

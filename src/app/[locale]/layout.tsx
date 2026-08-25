@@ -17,7 +17,12 @@ import CartDrawer from '@/components/layout/CartDrawer';
 import CookieConsent from '@/components/layout/CookieConsent';
 import RevealObserver from '@/components/ui/RevealObserver';
 
-// Sans nosi sve sitno: navigaciju, tekst, dugmad, cene.
+/*
+ * Dva pisma, i nista vise: Inter nosi sve sitno — navigaciju, tekst, dugmad,
+ * cijene, natpise — a Gazpacho svu krupnu tipografiju. Treci rez (General
+ * Sans) je stajao u ucitavanju zbog dva natpisa u heroju; ti natpisi sada idu
+ * Interom, a strana skida dva fajla manje.
+ */
 const inter = Inter({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-sans',
@@ -36,16 +41,6 @@ const gazpacho = localFont({
     { path: '../../fonts/Gazpacho-Black.woff2', weight: '900', style: 'normal' },
   ],
   variable: '--font-gazpacho',
-  display: 'swap',
-});
-
-// General Sans carries the small caps labels — the brand's grotesque.
-const generalSans = localFont({
-  src: [
-    { path: '../../fonts/GeneralSans-Regular.woff2', weight: '400', style: 'normal' },
-    { path: '../../fonts/GeneralSans-Medium.woff2', weight: '500', style: 'normal' },
-  ],
-  variable: '--font-general',
   display: 'swap',
 });
 
@@ -147,7 +142,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${gazpacho.variable} ${generalSans.variable}`}
+      className={`${inter.variable} ${gazpacho.variable}`}
       // The inline script below adds `js-reveal` before React hydrates, so the
       // server and client markup differ on this element by design.
       suppressHydrationWarning

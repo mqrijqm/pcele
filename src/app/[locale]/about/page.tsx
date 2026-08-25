@@ -132,7 +132,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 key={entry.year}
                 className="grid gap-4 border-b border-[#73552E]/20 py-7 sm:grid-cols-[5rem_0.38fr_0.62fr] sm:gap-6"
               >
-                <p className="font-display text-2xl italic text-[#73552E]">{entry.year}</p>
+                <p className="font-display text-2xl text-[#73552E]">{entry.year}</p>
                 <h3 className="text-2xl font-semibold text-[#73552E]">{entry.title}</h3>
                 <p className="text-sm leading-6 text-[#73552E]">{entry.desc}</p>
               </article>

@@ -141,7 +141,7 @@ export default function Header({ locale }: { locale: Locale }) {
           >
             <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.7} />
             {cart.count > 0 && (
-              <span className="absolute right-1 top-1.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#73552E] px-1 text-[10px] font-bold tabular-nums text-[#FDF9DC]">
+              <span className="absolute right-1 top-1.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#73552E] px-1 text-[10px] font-bold tabular-nums text-[#F5E8D8]">
                 {cart.count}
               </span>
             )}

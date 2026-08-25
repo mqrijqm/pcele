@@ -81,7 +81,7 @@ export default function PageHero({
               {heading}
             </h1>
             <p className="mt-7 max-w-lg text-base leading-7 text-[#73552E]">{description}</p>
-            <p className="mt-8 border-t border-[#73552E]/15 pt-4 font-display text-lg italic text-[#73552E]">
+            <p className="mt-8 border-t border-[#73552E]/15 pt-4 text-[11px] uppercase tracking-[0.2em] text-[#73552E]/70">
               {note}
             </p>
           </div>

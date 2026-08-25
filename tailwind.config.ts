@@ -6,7 +6,7 @@ const config: Config = {
     extend: {
       colors: {
         // Paleta 60 / 30 / 10 — ocitana sa deklaracije
-        paper: '#FDF9DC',
+        paper: '#F5E8D8',
         brown: '#73552E',
         gold: '#C79A3B',
 
@@ -25,8 +25,8 @@ const config: Config = {
           DEFAULT: '#C79A3B',
           light: '#C79A3B',
           dark: '#73552E',
-          50: '#FDF9DC',
-          100: '#FDF9DC',
+          50: '#F5E8D8',
+          100: '#F5E8D8',
           200: '#C79A3B',
           300: '#C79A3B',
           400: '#C79A3B',

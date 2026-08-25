@@ -104,7 +104,9 @@ export default function ImageBreak({
             {caption}
           </p>
         )}
-        {meta && <p className={`font-display text-base italic ${inkSoft}`}>{meta}</p>}
+        {meta && (
+          <p className={`text-[11px] uppercase tracking-[0.2em] ${inkSoft}`}>{meta}</p>
+        )}
       </div>
     ) : null;
 
@@ -194,7 +196,7 @@ export default function ImageBreak({
               )}
               {body && <p className={`mt-6 text-base leading-8 ${ink}`}>{body}</p>}
               {meta && (
-                <p className={`mt-8 border-t pt-4 font-display text-lg italic ${rule} ${inkSoft}`}>
+                <p className={`mt-8 border-t pt-4 text-[11px] uppercase tracking-[0.2em] ${rule} ${inkSoft}`}>
                   {meta}
                 </p>
               )}

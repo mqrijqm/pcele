@@ -30,7 +30,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
           </div>
 
           <div className="grid gap-5 sm:grid-cols-2">
-            <figure className="reveal relative overflow-hidden bg-[#73552E] p-4 text-[#FDF9DC] sm:col-span-2 sm:p-5 lg:grid lg:grid-cols-[0.52fr_0.48fr] lg:gap-9 rounded-[0.6rem]">
+            <figure className="reveal relative overflow-hidden bg-[#73552E] p-4 text-[#F5E8D8] sm:col-span-2 sm:p-5 lg:grid lg:grid-cols-[0.52fr_0.48fr] lg:gap-9 rounded-[0.6rem]">
               <div className="relative min-h-[320px] overflow-hidden bg-[#73552E]/[0.06] lg:min-h-[460px] rounded-[0.6rem]">
                 <Image
                   src="/images/real/sace-kasika.webp"
@@ -44,12 +44,12 @@ export default function Testimonials({ locale }: { locale: Locale }) {
                 <span aria-hidden="true" className="font-display text-6xl leading-none text-[#C79A3B]">
                   &ldquo;
                 </span>
-                <blockquote className="font-display text-2xl font-medium leading-[1.22] text-[#FDF9DC] sm:text-3xl">
+                <blockquote className="font-display text-2xl font-medium leading-[1.22] text-[#F5E8D8] sm:text-3xl">
                   {featured.text}
                 </blockquote>
-                <figcaption className="mt-8 border-t border-[#FDF9DC]/20 pt-5 text-sm">
-                  <span className="font-semibold text-[#FDF9DC]">{featured.author}</span>
-                  <span className="ml-3 text-[#FDF9DC]/90">{featured.city}</span>
+                <figcaption className="mt-8 border-t border-[#F5E8D8]/20 pt-5 text-sm">
+                  <span className="font-semibold text-[#F5E8D8]">{featured.author}</span>
+                  <span className="ml-3 text-[#F5E8D8]/90">{featured.city}</span>
                 </figcaption>
               </div>
             </figure>
