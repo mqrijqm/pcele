@@ -38,7 +38,13 @@ export type Leg = { through: Pt[] } | { loop: { c: Pt; r: number; from?: number 
 export const DESKTOP: Leg[] = [
   {
     through: [
-      [350, 196],   // polazak: lijevo od strelice i iznad wordmarka
+      /*
+       * Polazak lijevo od strelice, i lijevo od wordmarka — ne samo iznad
+       * njega. Visina pcele se racuna od visine cijele strane, a wordmark
+       * sjedi u heroju cija se visina mijenja drugacije; na 768 su se to dvoje
+       * poklopili i pcela je sletjela na samo ime.
+       */
+      [200, 210],
       [900, 660],
       [1180, 1350],
       [520, 2050],  // tegla
