@@ -45,11 +45,6 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         emblem
       />
 
-      {/*
-        * Sorte sjede tacno iznad smedje trake 01-04 i dodiruju je: sekcija
-        * nema donji razmak, a lukovi imaju ravno dno. Zato ovdje nema nista
-        * izmedju te dvije sekcije.
-        */}
       <SorteMeda locale={locale} />
 
       <section className="border-b border-[#73552E]/15 bg-[#73552E] py-12">

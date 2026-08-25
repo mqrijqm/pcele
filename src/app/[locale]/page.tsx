@@ -59,10 +59,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         caption={shot.homeOther.caption}
       />
 
-      {/*
-        * Sorte i ovdje: lukovi imaju ravno dno i sekcija nema donji razmak, pa
-        * se boja mijenja tacno na toj liniji — kremasta gore, papir dolje.
-        */}
       <SorteMeda locale={locale} />
 
       <Testimonials locale={locale} />

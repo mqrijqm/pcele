@@ -4,10 +4,15 @@ import type { Locale } from '@/i18n/config';
  * Sadrzaj sekcije "Vrcamo ukus koji traje" — tri sorte, svaka sa svojim
  * crtezom i tri reda podataka.
  *
- * Boje kartica su ocitane iz referentnih maketa (livadski.png, bagren.png,
- * propa.png): kremaste kartice nose smedji naslov, bijela nosi zlatni. Zlatna
- * na kremastoj daje kontrast 1.99:1, sto je premalo i za ovako krupna slova —
- * zato zlatna ide samo tamo gdje pozadina to podnese.
+ * Nema vise boja po kartici: kartica nema. Sve tri sorte stoje na istom
+ * papiru kao i ostatak strane, pa im je i mastilo isto — crtezi su prebojeni
+ * u hero smedju (#73552E), a naslovi idu istim serifom kao svaki drugi naslov
+ * na strani.
+ *
+ * Podaci se ne ponavljaju izmedju sorti. Ranije su livadski i propolis imali
+ * isti red ("cvjetan / zlatan / jun–jul"), sto je za propolis bilo i netacno:
+ * propolis nije med nego smola, gorka i smolasta, i prodaje se u kapima. Zato
+ * treca sorta ima svoja tri reda, a ne tri ista.
  */
 
 export type Sorta = {
@@ -15,113 +20,114 @@ export type Sorta = {
   key: 'livadski' | 'bagrem' | 'proplis';
   naziv: string;
   alt: string;
-  /** Pozadina kartice. */
-  bg: string;
-  /** Boja naziva — smedja na kremastoj, zlatna na bijeloj. */
-  nazivBoja: string;
+  /** Kratka recenica ispod naziva — jedna, ne opis. */
+  nota: string;
+  /**
+   * Opticka tezina crteza nije ista: sace je gusto siano, bagremova grana je
+   * tanka. Mjera izjednacava koliko mastila svaki od njih donese u red.
+   */
+  scale: number;
   redovi: { label: string; value: string }[];
+  /** Gdje vodi naziv sorte. */
+  slug: string;
 };
 
 type SorteCopy = {
-  heading: string[];
+  heading: string;
+  lead: string;
   cta: string;
-  /** Nevidljiv naslov sekcije za citace ekrana. */
-  srHeading: string;
-  /** Pristupacni opis trake za listanje. */
-  regionLabel: string;
   sorte: Sorta[];
 };
 
-const KREM = '#FCF0D3';
-const BIJELA = '#FFFFFF';
-const SMEDJA = '#845C34';
-const ZLATNA = '#C9A961';
-
 export const sorte: Record<Locale, SorteCopy> = {
   sr: {
-    heading: ['Vrcamo Ukus', 'Koji Traje'],
-    cta: 'Poruči Odmah',
-    srHeading: 'Sorte meda',
-    regionLabel: 'Sorte meda — listaj vodoravno',
+    heading: 'Vrcamo ukus koji traje.',
+    lead: 'Tri sorte iz istog pčelinjaka — svaka nosi pašu svog dijela ljeta.',
+    cta: 'Svi proizvodi',
     sorte: [
       {
         key: 'livadski',
-        naziv: 'livadski MED',
+        naziv: 'Livadski med',
         alt: 'Crtež livadskog cvijeta',
-        bg: KREM,
-        nazivBoja: SMEDJA,
+        nota: 'Sa livada oko Mračaja, iz ljetne paše.',
+        scale: 1,
+        slug: 'livadski-med-1kg',
         redovi: [
-          { label: 'Ukus/Miris', value: 'CVJETAN' },
-          { label: 'Boja', value: 'ZLATAN' },
-          { label: 'Sezona', value: 'JUN–JUL' },
+          { label: 'Ukus', value: 'Cvjetan' },
+          { label: 'Boja', value: 'Zlatna' },
+          { label: 'Paša', value: 'Jun–jul' },
         ],
       },
       {
         key: 'bagrem',
-        naziv: 'bagremov MED',
-        alt: 'Crtež bagremovog cvijeta',
-        bg: BIJELA,
-        nazivBoja: ZLATNA,
+        naziv: 'Bagremov med',
+        alt: 'Crtež bagremove grane u cvatu',
+        nota: 'Iz kratkog bagremovog cvata, prve paše u godini.',
+        scale: 1.12,
+        slug: 'bagremov-med-1kg',
         redovi: [
-          { label: 'Ukus/Miris', value: 'BAGREM' },
-          { label: 'Boja', value: 'ŽUTA' },
-          { label: 'Sezona', value: 'MAJ–JUN' },
+          { label: 'Ukus', value: 'Blag' },
+          { label: 'Boja', value: 'Svijetlozlatna' },
+          { label: 'Paša', value: 'Maj–jun' },
         ],
       },
       {
         key: 'proplis',
-        naziv: 'proplis od MEDA',
+        naziv: 'Pčelinji propolis',
         alt: 'Crtež saća s propolisom',
-        bg: KREM,
-        nazivBoja: SMEDJA,
+        nota: 'Smola iz košnice, cijeđena u bočicu s kapaljkom.',
+        scale: 0.9,
+        slug: 'pcelinji-propolis-20ml',
         redovi: [
-          { label: 'Ukus/Miris', value: 'CVJETAN' },
-          { label: 'Boja', value: 'ZLATAN' },
-          { label: 'Sezona', value: 'JUN–JUL' },
+          { label: 'Ukus', value: 'Gorak' },
+          { label: 'Miris', value: 'Smolast' },
+          { label: 'Oblik', value: 'Kapi' },
         ],
       },
     ],
   },
   en: {
-    heading: ['We Spin a Taste', 'That Lasts'],
-    cta: 'Order Now',
-    srHeading: 'Honey varieties',
-    regionLabel: 'Honey varieties — scroll sideways',
+    heading: 'We spin a taste that lasts.',
+    lead: 'Three varieties from one apiary — each carries the forage of its own stretch of summer.',
+    cta: 'All products',
     sorte: [
       {
         key: 'livadski',
-        naziv: 'meadow HONEY',
+        naziv: 'Meadow honey',
         alt: 'Drawing of a meadow flower',
-        bg: KREM,
-        nazivBoja: SMEDJA,
+        nota: 'From the meadows around Mračaj, out of the summer forage.',
+        scale: 1,
+        slug: 'livadski-med-1kg',
         redovi: [
-          { label: 'Taste/Aroma', value: 'FLORAL' },
-          { label: 'Colour', value: 'GOLDEN' },
-          { label: 'Season', value: 'JUN–JUL' },
+          { label: 'Taste', value: 'Floral' },
+          { label: 'Colour', value: 'Golden' },
+          { label: 'Forage', value: 'Jun–Jul' },
         ],
       },
       {
         key: 'bagrem',
-        naziv: 'acacia HONEY',
-        alt: 'Drawing of an acacia blossom',
-        bg: BIJELA,
-        nazivBoja: ZLATNA,
+        naziv: 'Acacia honey',
+        alt: 'Drawing of an acacia branch in bloom',
+        nota: 'From the short acacia bloom, the first forage of the year.',
+        scale: 1.12,
+        slug: 'bagremov-med-1kg',
         redovi: [
-          { label: 'Taste/Aroma', value: 'ACACIA' },
-          { label: 'Colour', value: 'YELLOW' },
-          { label: 'Season', value: 'MAY–JUN' },
+          { label: 'Taste', value: 'Mild' },
+          { label: 'Colour', value: 'Pale gold' },
+          { label: 'Forage', value: 'May–Jun' },
         ],
       },
       {
         key: 'proplis',
-        naziv: 'propolis in HONEY',
+        naziv: 'Bee propolis',
         alt: 'Drawing of honeycomb with propolis',
-        bg: KREM,
-        nazivBoja: SMEDJA,
+        nota: 'Resin from the hive, drawn into a dropper bottle.',
+        scale: 0.9,
+        slug: 'pcelinji-propolis-20ml',
         redovi: [
-          { label: 'Taste/Aroma', value: 'FLORAL' },
-          { label: 'Colour', value: 'GOLDEN' },
-          { label: 'Season', value: 'JUN–JUL' },
+          { label: 'Taste', value: 'Bitter' },
+          { label: 'Aroma', value: 'Resinous' },
+          { label: 'Form', value: 'Drops' },
         ],
       },
     ],
