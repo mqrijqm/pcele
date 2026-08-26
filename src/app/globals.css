@@ -2379,3 +2379,34 @@ html:not(.is-preloading) .hero-land__arrow {
     border-top: 1px solid var(--legacy-line);
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Prelaz s papira na smedju.
+ *
+ * Med se prelije preko ruba strane: iznad je papir, ispod smedja, a granicu
+ * crta sam potez a ne prava linija. Sekcija ispod je zasad prazna.
+ * ------------------------------------------------------------------------- */
+.drip {
+  background: var(--paper);
+  /*
+   * Papir iznad ruba. Dovoljno da se tegla iz heroja i prva kap ne dodiruju,
+   * premalo da se izmedju njih otvori prazna strana.
+   */
+  padding-top: clamp(3rem, 7vw, 6.5rem);
+}
+
+.drip__edge {
+  display: block;
+  width: 100%;
+  height: auto;
+  /*
+   * Dno crteza i tijelo sekcije su ista boja. Jedan piksel preklopa gasi
+   * svijetlu nit koja se na frakcionom zumu zna pojaviti izmedju njih.
+   */
+  margin-bottom: -1px;
+}
+
+.drip__body {
+  min-height: 40svh;
+  background: var(--brown);
+}

@@ -4,6 +4,7 @@ import { isLocale } from '@/i18n/config';
 import { photoBreaks } from '@/content/pages';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
+import Drip from '@/components/home/Drip';
 import AboutPreview from '@/components/home/AboutPreview';
 import Legacy from '@/components/home/Legacy';
 import SorteMeda from '@/components/products/SorteMeda';
@@ -17,8 +18,12 @@ import BeeFlight from '@/components/bee/BeeFlight';
 /**
  * Pocetna, jedan tok bez ponavljanja:
  *
- *   hero i identitet -> glavni proizvodi -> porodicna tradicija -> proces ->
- *   mjesto -> utisci -> pitanja -> jedan poziv na kraju
+ *   hero i identitet -> prelaz na smedju -> porodicna tradicija -> proces ->
+ *   mjesto -> utisci -> pitanja -> sorte -> jedan poziv na kraju
+ *
+ * Sorte su sisle s vrha. Odmah iza heroja su tri sorte trazile odluku od
+ * citaoca koji jos nije cuo ciji je to med; sada stoje pri dnu, kad je prica
+ * ispricana, i vode pravo u poziv na kraju.
  *
  * Strana je ranije bila za trecinu duza i istu poruku je govorila po tri puta:
  * dva odvojena bloka o tradiciji od 1980, mreza webshop kartica odmah uz
@@ -43,8 +48,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HeroLand locale={locale} />
       <HeroJar locale={locale} />
 
-      {/* Glavni proizvodi — tri sorte na papiru. */}
-      <SorteMeda locale={locale} />
+      {/*
+        Med se prelije preko ruba i strana prelazi na smedju. Sekcija ispod
+        je zasad prazna — vazan je prelaz.
+      */}
+      <Drip />
 
       {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
       <Legacy locale={locale} />
@@ -81,6 +89,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Testimonials locale={locale} />
 
       <Faq locale={locale} />
+
+      {/* Tri sorte na papiru, tik pred poziv na kraju. */}
+      <SorteMeda locale={locale} />
 
       {/* Jedan poziv na kraju, ne tri. */}
       <Newsletter locale={locale} />
