@@ -152,7 +152,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                     </button>
 
                     <div
-                      className="relative flex aspect-[4/4.8] items-center justify-center overflow-hidden p-8 rounded-[0.6rem]"
+                      className="relative flex aspect-[4/4.8] items-center justify-center plate overflow-hidden p-8"
                       style={{ backgroundColor: product.cardBg }}
                     >
                       <Image

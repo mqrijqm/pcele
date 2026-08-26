@@ -50,7 +50,7 @@ export default function Declaration({
           </div>
 
           {labelImage ? (
-            <div className="overflow-hidden rounded-[0.6rem] border border-[#885B27]/15">
+            <div className="plate overflow-hidden border border-[#885B27]/15">
               <Image
                 src={labelImage}
                 alt={copy.labelAlt}

@@ -22,7 +22,7 @@ export default function PostCard({
     <Link href={localeHref(locale, `/blog/${post.slug}`)} className="group block">
       <article className="transition-transform duration-300 group-hover:-translate-y-1">
         <div
-          className={`relative overflow-hidden bg-linen ${featured ? 'aspect-[16/8]' : 'aspect-[16/10]'} rounded-[0.6rem]`}
+          className={`relative plate overflow-hidden bg-linen ${featured ? 'aspect-[16/8]' : 'aspect-[16/10]'}`}
         >
           <Image
             src={post.image}

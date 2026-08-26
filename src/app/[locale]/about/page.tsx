@@ -93,7 +93,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           </div>
 
           <div className="grid grid-cols-12 items-end gap-4">
-            <div className="relative col-span-12 aspect-[4/3] overflow-hidden sm:col-span-8 rounded-[0.6rem]">
+            <div className="relative col-span-12 aspect-[4/3] plate overflow-hidden sm:col-span-8">
               <Image
                 src="/images/real/kosnice-livada.webp"
                 alt={copy.location.mapAlt}
@@ -102,7 +102,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
                 className="object-cover"
               />
             </div>
-            <div className="relative col-span-8 -mt-20 aspect-[4/5] overflow-hidden border-[10px] border-[var(--paper)] sm:col-span-4 sm:-ml-14 sm:mt-0 rounded-[0.6rem]">
+            <div className="relative col-span-8 -mt-20 aspect-[4/5] plate overflow-hidden border-[10px] border-[var(--paper)] sm:col-span-4 sm:-ml-14 sm:mt-0">
               <Image
                 src="/images/real/otklapanje-rama.webp"
                 alt={copy.heroAlt}

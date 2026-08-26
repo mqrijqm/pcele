@@ -64,7 +64,7 @@ export default function ProductDetail({ product, locale }: { product: Product; l
       <div className="container section-padding-sm">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
-            <div className="relative aspect-square overflow-hidden border border-[#885B27]/15 bg-linen rounded-[0.6rem]">
+            <div className="relative aspect-square plate overflow-hidden border border-[#885B27]/15 bg-linen">
               <div className="absolute left-4 top-4 z-10">
                 <span className="inline-block bg-[#885B27] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FCF0DC]">
                   Premium

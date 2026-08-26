@@ -45,7 +45,7 @@ export default function Legacy({ locale }: { locale: Locale }) {
         />
 
         <div className="legacy__plates reveal stagger-2">
-          <figure className="legacy__archive">
+          <figure className="legacy__archive plate">
             <Image
               className="legacy__img"
               src="/images/real/pcelinjak-arhiva.webp"
@@ -56,7 +56,7 @@ export default function Legacy({ locale }: { locale: Locale }) {
           </figure>
 
           {/* Jedino preklapanje u sekciji: sace lezi preko arhivskog snimka. */}
-          <figure className="legacy__comb">
+          <figure className="legacy__comb plate">
             <Image
               className="legacy__img"
               src="/images/real/sace-posuda.webp"

@@ -31,7 +31,7 @@ export default function Testimonials({ locale }: { locale: Locale }) {
 
           <div className="grid gap-5 sm:grid-cols-2">
             <figure className="reveal relative overflow-hidden bg-[#885B27] p-4 text-[#FCF0DC] sm:col-span-2 sm:p-5 lg:grid lg:grid-cols-[0.52fr_0.48fr] lg:gap-9 rounded-[0.6rem]">
-              <div className="relative min-h-[320px] overflow-hidden bg-[#885B27]/[0.06] lg:min-h-[460px] rounded-[0.6rem]">
+              <div className="relative min-h-[320px] plate overflow-hidden bg-[#885B27]/[0.06] lg:min-h-[460px]">
                 <Image
                   src="/images/real/sace-kasika.webp"
                   alt={copy.imageAlt}

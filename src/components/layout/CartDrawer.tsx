@@ -61,7 +61,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <ul className="divide-y divide-[#885B27]/15">
                 {cart.items.map((item) => (
                   <li key={item.variantId} className="flex gap-4 py-5">
-                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.6rem] bg-[#885B27]/[0.06]">
+                    <div className="relative h-24 w-20 shrink-0 plate overflow-hidden bg-[#885B27]/[0.06]">
                       <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="flex flex-1 flex-col">

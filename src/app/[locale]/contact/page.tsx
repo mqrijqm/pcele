@@ -81,7 +81,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#885B27]">
                   {t('contact.ourLocation')}
                 </p>
-                <div className="relative aspect-[16/10] w-full overflow-hidden rounded-[0.6rem]">
+                <div className="relative aspect-[16/10] w-full plate overflow-hidden">
                   <Image
                     src="/images/real/kosnice-livada.webp"
                     alt={t('contact.mapAlt')}
@@ -93,7 +93,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
                 <p className="mt-4 text-sm text-[#885B27]">{t('contact.locationDescription')}</p>
               </div>
 
-              <div className="aspect-video overflow-hidden border border-[#885B27]/15 rounded-[0.6rem]">
+              <div className="aspect-video plate overflow-hidden border border-[#885B27]/15">
                 <iframe
                   title={t('contact.mapAlt')}
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d90547.90831565396!2d17.538!3d44.867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475e0146f7b9c739%3A0x1a5a5e5cd4c66f6b!2sPrnjavor!5e0!3m2!1sen!2sba!4v1700000000000!5m2!1sen!2sba"

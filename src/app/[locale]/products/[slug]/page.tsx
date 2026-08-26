@@ -125,8 +125,8 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="overflow-hidden rounded-[0.6rem] border border-[#885B27]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
-                  <div className="relative aspect-[3/4] overflow-hidden bg-ivory rounded-[0.6rem]">
+                <div className="plate overflow-hidden border border-[#885B27]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                  <div className="relative aspect-[3/4] plate overflow-hidden bg-ivory">
                     <Image
                       src={item.image}
                       alt={item.name[locale]}

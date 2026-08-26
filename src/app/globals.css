@@ -53,6 +53,15 @@
   --radius-lg: 0.6rem;
   --radius-pill: 999px;
 
+  /*
+   * Jedan ugao svake slike otvoren je mnogo vise od ostala tri. Mjera je u
+   * postotku a ne u pikselima: zamah je onda isti odnos na sicusnoj plocici u
+   * korpi i na slici preko pola strane. Prva vrijednost je udio sirine, druga
+   * udio visine — ugao je elipsa, ne cetvrtina kruga, pa se ne stisne na
+   * niskim i sirokim slikama.
+   */
+  --radius-sweep: 32% 26%;
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Vazduh. Sekcije disu — ovo je glavna poluga za ritam celog sajta. */
@@ -452,6 +461,15 @@ p {
   .js-reveal .reveal-draw .ink-rule__v {
     clip-path: none;
   }
+}
+
+/*
+ * Ploca: svaka slika na sajtu. Tri ugla su jedva zaobljena, cetvrti se otvara
+ * — uvijek isti, donji lijevi, da se cita kao potpis a ne kao slucaj.
+ */
+.plate {
+  border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sweep);
 }
 
 /* Meke forme — nista na sajtu nema ostar ugao. */
@@ -1554,6 +1572,7 @@ html:not(.is-preloading) .hero-land__arrow {
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-lg);
   background: var(--surface);
+  border-bottom-left-radius: var(--radius-sweep);
 }
 
 @media (min-width: 900px) {
@@ -1661,6 +1680,7 @@ html:not(.is-preloading) .hero-land__arrow {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sweep);
 }
 
 .blog-feature__shot--main {
@@ -1891,6 +1911,7 @@ html:not(.is-preloading) .hero-land__arrow {
   overflow: hidden;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sweep);
 }
 
 /* Druga slika je spustena, isto kao u parovima drugdje na sajtu. */

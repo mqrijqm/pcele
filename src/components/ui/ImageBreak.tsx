@@ -122,7 +122,7 @@ export default function ImageBreak({
           */}
         <div className={frame === 'narrow' ? 'container' : 'px-3 sm:px-5'}>
           <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:gap-6">
-            <div className="reveal relative aspect-[4/5] overflow-hidden rounded-[0.6rem]">
+            <div className="reveal relative aspect-[4/5] plate overflow-hidden">
               <Image
                 src={first.src}
                 alt={first.alt}
@@ -138,7 +138,7 @@ export default function ImageBreak({
                * `transform: none`, pa bi na istom elementu pojeo translate.
                */
               <div className="translate-y-8 sm:translate-y-16 lg:translate-y-24">
-                <div className="reveal stagger-2 relative aspect-[4/5] overflow-hidden rounded-[0.6rem]">
+                <div className="reveal stagger-2 relative aspect-[4/5] plate overflow-hidden">
                   <Image
                     src={second.src}
                     alt={second.alt}
@@ -169,7 +169,7 @@ export default function ImageBreak({
             }`}
           >
             <div
-              className={`reveal relative overflow-hidden rounded-[0.6rem] sm:rounded-[0.6rem] ${
+              className={`reveal relative plate overflow-hidden ${
                 aspect ?? 'aspect-[4/3]'
               }`}
             >
@@ -213,7 +213,7 @@ export default function ImageBreak({
       {/* Traka vise ne ide od ivice do ivice — uvucena je kao i ostatak sajta. */}
       <div className={frame === 'narrow' ? 'container-narrow' : 'container-wide'}>
         <div
-          className={`reveal-scale relative w-full overflow-hidden rounded-[0.6rem] sm:rounded-[0.6rem] ${
+          className={`reveal-scale relative w-full plate overflow-hidden ${
             aspect ?? 'aspect-[3/4] sm:aspect-[16/9] lg:aspect-[21/9]'
           }`}
         >

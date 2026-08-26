@@ -84,7 +84,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             </form>
           </div>
 
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[21rem] overflow-hidden bg-[#885B27]/[0.06] shadow-[0_20px_55px_rgba(136,91,39,0.13)] rounded-[0.6rem]">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-[21rem] plate overflow-hidden bg-[#885B27]/[0.06] shadow-[0_20px_55px_rgba(136,91,39,0.13)]">
             <Image
               src="/images/real/tegle-red.webp"
               alt={copy.jarAlt}
