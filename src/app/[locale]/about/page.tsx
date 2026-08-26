@@ -37,20 +37,20 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <BeeFlight route="about" />
 
       <PageOpener eyebrow={copy.eyebrow} heading={copy.heading} />
-      <section className="border-b border-[#73552E]/15 bg-[var(--paper)]">
+      <section className="border-b border-[#885B27]/15 bg-[var(--paper)]">
         <div className="container grid md:grid-cols-3">
           {copy.features.map((feature, index) => (
             <div
               key={feature.title}
-              className="border-b border-[#73552E]/15 py-7 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"
+              className="border-b border-[#885B27]/15 py-7 md:border-b-0 md:border-r md:px-8 md:first:pl-0 md:last:border-r-0"
             >
-              <span className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
+              <span className="text-[10px] font-bold tracking-[0.18em] text-[#885B27]">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <h2 className="mt-2 text-2xl font-semibold text-[#73552E]">
+              <h2 className="mt-2 text-2xl font-semibold text-[#885B27]">
                 {feature.title}
               </h2>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-[#73552E]">{feature.desc}</p>
+              <p className="mt-2 max-w-sm text-sm leading-6 text-[#885B27]">{feature.desc}</p>
             </div>
           ))}
         </div>
@@ -79,13 +79,13 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <section className="overflow-hidden bg-[var(--paper)] section-padding">
         <div className="container grid gap-20 lg:grid-cols-[0.38fr_0.62fr] lg:gap-24">
           <div className="lg:pt-12">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
               {copy.tradition.eyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.tradition.heading}
             </h2>
-            <div className="mt-7 space-y-5 text-base leading-7 text-[#73552E]">
+            <div className="mt-7 space-y-5 text-base leading-7 text-[#885B27]">
               {copy.tradition.paragraphs.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>
               ))}
@@ -118,23 +118,23 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <section className="bg-[var(--paper)] section-padding">
         <div className="container grid gap-16 lg:grid-cols-[0.34fr_0.66fr] lg:gap-24">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
               {copy.journey.eyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.journey.heading}
             </h2>
           </div>
 
-          <div className="border-t border-[#73552E]/20">
+          <div className="border-t border-[#885B27]/20">
             {copy.journey.timeline.map((entry) => (
               <article
                 key={entry.year}
-                className="grid gap-4 border-b border-[#73552E]/20 py-7 sm:grid-cols-[5rem_0.38fr_0.62fr] sm:gap-6"
+                className="grid gap-4 border-b border-[#885B27]/20 py-7 sm:grid-cols-[5rem_0.38fr_0.62fr] sm:gap-6"
               >
-                <p className="font-display text-2xl text-[#73552E]">{entry.year}</p>
-                <h3 className="text-2xl font-semibold text-[#73552E]">{entry.title}</h3>
-                <p className="text-sm leading-6 text-[#73552E]">{entry.desc}</p>
+                <p className="font-display text-2xl text-[#885B27]">{entry.year}</p>
+                <h3 className="text-2xl font-semibold text-[#885B27]">{entry.title}</h3>
+                <p className="text-sm leading-6 text-[#885B27]">{entry.desc}</p>
               </article>
             ))}
           </div>
@@ -154,34 +154,34 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <section className="bg-[var(--paper)] section-padding">
         <div className="container">
           <div className="max-w-2xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
               {copy.values.eyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.values.heading}
             </h2>
           </div>
 
-          <div className="mt-14 grid border-t border-[#73552E]/15 sm:grid-cols-2">
+          <div className="mt-14 grid border-t border-[#885B27]/15 sm:grid-cols-2">
             {copy.values.items.map((value, index) => (
               <article
                 key={value.title}
-                className="border-b border-[#73552E]/15 py-8 sm:px-8 sm:odd:border-r sm:odd:pl-0"
+                className="border-b border-[#885B27]/15 py-8 sm:px-8 sm:odd:border-r sm:odd:pl-0"
               >
-                <span className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
+                <span className="text-[10px] font-bold tracking-[0.18em] text-[#885B27]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <h3 className="mt-3 text-3xl font-semibold text-[#73552E]">
+                <h3 className="mt-3 text-3xl font-semibold text-[#885B27]">
                   {value.title}
                 </h3>
-                <p className="mt-3 max-w-xl text-sm leading-6 text-[#73552E]">{value.desc}</p>
+                <p className="mt-3 max-w-xl text-sm leading-6 text-[#885B27]">{value.desc}</p>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative min-h-[42rem] overflow-hidden bg-[#73552E]">
+      <section className="relative min-h-[42rem] overflow-hidden bg-[#885B27]">
         <Image
           src="/images/real/kosnice-livada.webp"
           alt={copy.location.mapAlt}
@@ -189,17 +189,17 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#73552E]/65 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#885B27]/65 via-transparent to-transparent" />
         <div className="container relative flex min-h-[42rem] items-end py-10 lg:items-center lg:py-20">
-          <div className="max-w-xl border border-[#C79A3B]/55 bg-[var(--paper)]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[0.6rem]">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+          <div className="max-w-xl border border-[#EEC660]/55 bg-[var(--paper)]/95 p-8 backdrop-blur-sm sm:p-12 rounded-[0.6rem]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
               {copy.location.eyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.location.heading}
             </h2>
-            <p className="mt-6 text-base leading-7 text-[#73552E]">{copy.location.description}</p>
-            <p className="mt-7 border-t border-[#73552E]/15 pt-4 text-sm text-[#73552E]">
+            <p className="mt-6 text-base leading-7 text-[#885B27]">{copy.location.description}</p>
+            <p className="mt-7 border-t border-[#885B27]/15 pt-4 text-sm text-[#885B27]">
               {copy.location.note}
             </p>
           </div>

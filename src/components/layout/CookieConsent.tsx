@@ -35,13 +35,13 @@ export default function CookieConsent({ locale }: { locale: Locale }) {
       aria-label={t('cookieConsent.ariaLabel')}
       className="fixed bottom-5 left-5 right-5 z-[100] sm:left-6 sm:right-auto sm:max-w-md"
     >
-      <div className="rounded-[0.6rem] border border-[#73552E]/15 bg-[var(--paper)] p-6 text-[#73552E] shadow-[0_24px_70px_rgba(115,85,46,0.35)]">
-        <h2 className="text-xl text-[#73552E]">{t('cookieConsent.title')}</h2>
-        <p className="mt-3 text-sm leading-relaxed text-[#73552E]">
+      <div className="rounded-[0.6rem] border border-[#885B27]/15 bg-[var(--paper)] p-6 text-[#885B27] shadow-[0_24px_70px_rgba(136,91,39,0.35)]">
+        <h2 className="text-xl text-[#885B27]">{t('cookieConsent.title')}</h2>
+        <p className="mt-3 text-sm leading-relaxed text-[#885B27]">
           {t('cookieConsent.description')}{' '}
           <Link
             href={localeHref(locale, '/privacy')}
-            className="border-b border-[#C79A3B] text-[#73552E] transition-colors hover:border-[#73552E]"
+            className="border-b border-[#EEC660] text-[#885B27] transition-colors hover:border-[#885B27]"
           >
             {t('cookieConsent.learnMore')}
           </Link>

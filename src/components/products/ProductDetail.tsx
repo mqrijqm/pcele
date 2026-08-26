@@ -64,9 +64,9 @@ export default function ProductDetail({ product, locale }: { product: Product; l
       <div className="container section-padding-sm">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
-            <div className="relative aspect-square overflow-hidden border border-[#73552E]/15 bg-linen rounded-[0.6rem]">
+            <div className="relative aspect-square overflow-hidden border border-[#885B27]/15 bg-linen rounded-[0.6rem]">
               <div className="absolute left-4 top-4 z-10">
-                <span className="inline-block bg-[#73552E] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#F5E8D8]">
+                <span className="inline-block bg-[#885B27] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FCF0DC]">
                   Premium
                 </span>
               </div>
@@ -83,31 +83,31 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             </div>
           </div>
 
-          <div className="border border-[#73552E]/15 bg-[var(--paper)] p-7 sm:p-9 lg:p-11 rounded-[0.6rem]">
+          <div className="border border-[#885B27]/15 bg-[var(--paper)] p-7 sm:p-9 lg:p-11 rounded-[0.6rem]">
             <div className="mb-2">
-              <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#73552E]">
+              <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#885B27]">
                 <Leaf className="h-4 w-4" />
                 {t('products.naturalBadge')}
               </span>
             </div>
 
-            <h1 className="font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#73552E] lg:text-6xl">
+            <h1 className="font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#885B27] lg:text-6xl">
               {product.name[locale]}
             </h1>
 
             <div className="mt-6 flex items-baseline gap-3">
-              <p className="text-3xl text-[#73552E]">{formatPrice(variant.price)}</p>
-              <span className="text-sm text-[#73552E]">{t('products.inclVat')}</span>
+              <p className="text-3xl text-[#885B27]">{formatPrice(variant.price)}</p>
+              <span className="text-sm text-[#885B27]">{t('products.inclVat')}</span>
             </div>
 
-            <p className="mt-6 text-base leading-relaxed text-[#73552E]">
+            <p className="mt-6 text-base leading-relaxed text-[#885B27]">
               {product.description[locale]}
             </p>
 
-            <div className="my-8 h-px bg-[#73552E]/[0.06]" />
+            <div className="my-8 h-px bg-[#885B27]/[0.06]" />
 
             <div>
-              <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#73552E]">
+              <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#885B27]">
                 {t('products.size')}
               </span>
               <div className="flex flex-wrap gap-3">
@@ -118,8 +118,8 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                     onClick={() => setVariantId(option.id)}
                     className={`rounded-full border px-6 py-3 text-sm font-medium transition-all duration-300 ${
                       option.id === variant.id
-                        ? 'border-[#C79A3B] bg-[#73552E] text-[#F5E8D8]'
-                        : 'border-[#73552E]/15 text-[#73552E] hover:border-[#C79A3B] hover:text-[#73552E]'
+                        ? 'border-[#EEC660] bg-[#885B27] text-[#FCF0DC]'
+                        : 'border-[#885B27]/15 text-[#885B27] hover:border-[#EEC660] hover:text-[#885B27]'
                     }`}
                   >
                     {option.title}
@@ -130,27 +130,27 @@ export default function ProductDetail({ product, locale }: { product: Product; l
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end">
               <div>
-                <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#73552E]">
+                <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#885B27]">
                   {t('products.quantity')}
                 </span>
-                <div className="inline-flex items-center rounded-full border border-[#73552E]/15">
+                <div className="inline-flex items-center rounded-full border border-[#885B27]/15">
                   <button
                     type="button"
                     disabled={quantity <= 1}
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     aria-label="Decrease quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-l-full text-[#73552E] transition-colors hover:bg-linen hover:text-[#73552E] disabled:opacity-50"
+                    className="flex h-10 w-10 items-center justify-center rounded-l-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27] disabled:opacity-50"
                   >
                     <Minus className="h-4 w-4" />
                   </button>
-                  <span className="flex h-10 w-12 items-center justify-center font-medium text-[#73552E]">
+                  <span className="flex h-10 w-12 items-center justify-center font-medium text-[#885B27]">
                     {quantity}
                   </span>
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => q + 1)}
                     aria-label="Increase quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-r-full text-[#73552E] transition-colors hover:bg-linen hover:text-[#73552E]"
+                    className="flex h-10 w-10 items-center justify-center rounded-r-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
                   >
                     <Plus className="h-4 w-4" />
                   </button>
@@ -172,38 +172,38 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                 onClick={() => wishlist.toggle(product.slug)}
                 className={`flex h-14 shrink-0 items-center justify-center gap-2 whitespace-nowrap border px-6 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
                   saved
-                    ? 'border-[#C79A3B] text-[#73552E]'
-                    : 'border-[#73552E]/15 text-[#73552E] hover:border-[#C79A3B] hover:text-[#73552E]'
+                    ? 'border-[#EEC660] text-[#885B27]'
+                    : 'border-[#885B27]/15 text-[#885B27] hover:border-[#EEC660] hover:text-[#885B27]'
                 }`}
               >
-                <Heart className={`h-4 w-4 ${saved ? 'fill-[#C79A3B]' : ''}`} />
+                <Heart className={`h-4 w-4 ${saved ? 'fill-[#EEC660]' : ''}`} />
                 {saved ? t('wishlist.remove') : t('wishlist.add')}
               </button>
             </div>
 
             <div className="mt-4">
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#73552E]">
-                <Check className="h-4 w-4 text-[#C79A3B]" aria-hidden="true" />
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#885B27]">
+                <Check className="h-4 w-4 text-[#EEC660]" aria-hidden="true" />
                 {t('common.inStock')}
               </span>
             </div>
 
-            <div className="mt-10 grid grid-cols-2 border-t border-[#73552E]/15">
+            <div className="mt-10 grid grid-cols-2 border-t border-[#885B27]/15">
               {badges.map((badge, index) => {
                 const Icon = trustIcons[index];
                 return (
                   <div
                     key={badge.title}
-                    className="flex items-start gap-3 border-b border-[#73552E]/15 py-4 odd:pr-4 even:border-l even:pl-4"
+                    className="flex items-start gap-3 border-b border-[#885B27]/15 py-4 odd:pr-4 even:border-l even:pl-4"
                   >
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center text-[#73552E]">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center text-[#885B27]">
                       <Icon className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#73552E]">
+                      <p className="text-xs font-semibold uppercase tracking-wider text-[#885B27]">
                         {badge.title}
                       </p>
-                      <p className="mt-0.5 text-xs text-[#73552E]">{badge.desc}</p>
+                      <p className="mt-0.5 text-xs text-[#885B27]">{badge.desc}</p>
                     </div>
                   </div>
                 );
@@ -213,9 +213,9 @@ export default function ProductDetail({ product, locale }: { product: Product; l
         </div>
       </div>
 
-      <div className="border-t border-[#73552E]/15">
+      <div className="border-t border-[#885B27]/15">
         <div className="container">
-          <div className="flex border-b border-[#73552E]/15">
+          <div className="flex border-b border-[#885B27]/15">
             {(
               [
                 ['description', t('products.tabs.descriptionTab')],
@@ -228,12 +228,12 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                 type="button"
                 onClick={() => setTab(id)}
                 className={`relative px-6 py-5 text-sm font-medium uppercase tracking-wider transition-colors ${
-                  tab === id ? 'text-[#73552E]' : 'text-[#73552E] hover:text-[#73552E]'
+                  tab === id ? 'text-[#885B27]' : 'text-[#885B27] hover:text-[#885B27]'
                 }`}
               >
                 {label}
                 {tab === id && (
-                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#73552E]" />
+                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#885B27]" />
                 )}
               </button>
             ))}
@@ -243,16 +243,16 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             {tab === 'description' && (
               <div className="grid gap-16 lg:grid-cols-2">
                 <div>
-                  <h3 className="mb-6 text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#885B27]">
                     {t('products.tabs.aboutProduct')}
                   </h3>
-                  <div className="space-y-4 leading-relaxed text-[#73552E]">
+                  <div className="space-y-4 leading-relaxed text-[#885B27]">
                     <p>{product.description[locale]}</p>
                     <p>{t('products.tabs.qualityNote')}</p>
                   </div>
                 </div>
                 <div>
-                  <h3 className="mb-6 text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#885B27]">
                     {t('products.tabs.featuresTitle')}
                   </h3>
                   <ul className="space-y-4">
@@ -260,10 +260,10 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                       const Icon = featureIcons[index];
                       return (
                         <li key={feature} className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#C79A3B]/25">
-                            <Icon className="h-4 w-4 text-[#73552E]" />
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEC660]/25">
+                            <Icon className="h-4 w-4 text-[#885B27]" />
                           </div>
-                          <span className="text-sm text-[#73552E]">{feature}</span>
+                          <span className="text-sm text-[#885B27]">{feature}</span>
                         </li>
                       );
                     })}
@@ -275,27 +275,27 @@ export default function ProductDetail({ product, locale }: { product: Product; l
             {tab === 'shipping' && (
               <div className="grid gap-16 lg:grid-cols-2">
                 <div>
-                  <h3 className="mb-6 text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#885B27]">
                     {t('products.tabs.shippingInfoTitle')}
                   </h3>
-                  <p className="leading-relaxed text-[#73552E]">
+                  <p className="leading-relaxed text-[#885B27]">
                     {t('products.tabs.shippingInfoText')}
                   </p>
-                  <ul className="mt-6 space-y-3 text-sm text-[#73552E]">
+                  <ul className="mt-6 space-y-3 text-sm text-[#885B27]">
                     <li>
-                      <span className="font-semibold text-[#73552E]">
+                      <span className="font-semibold text-[#885B27]">
                         {t('products.tabs.standardDeliveryLabel')}
                       </span>{' '}
                       {t('products.tabs.standardDeliveryValue')}
                     </li>
                     <li>
-                      <span className="font-semibold text-[#73552E]">
+                      <span className="font-semibold text-[#885B27]">
                         {t('products.tabs.expressDeliveryLabel')}
                       </span>{' '}
                       {t('products.tabs.expressDeliveryValue')}
                     </li>
                     <li>
-                      <span className="font-semibold text-[#73552E]">
+                      <span className="font-semibold text-[#885B27]">
                         {t('products.tabs.freeShippingLabel')}
                       </span>{' '}
                       {t('products.freeShippingNote')}
@@ -303,10 +303,10 @@ export default function ProductDetail({ product, locale }: { product: Product; l
                   </ul>
                 </div>
                 <div>
-                  <h3 className="mb-6 text-2xl text-[#73552E]">
+                  <h3 className="mb-6 text-2xl text-[#885B27]">
                     {t('products.tabs.returnPolicyTitle')}
                   </h3>
-                  <p className="leading-relaxed text-[#73552E]">
+                  <p className="leading-relaxed text-[#885B27]">
                     {t('products.tabs.returnPolicyText')}
                   </p>
                 </div>
@@ -315,9 +315,9 @@ export default function ProductDetail({ product, locale }: { product: Product; l
 
             {tab === 'reviews' && (
               <div className="max-w-2xl">
-                <h3 className="mb-4 text-2xl text-[#73552E]">{t('reviews.heading')}</h3>
-                <p className="text-[#73552E]">{t('reviews.noReviewsYet')}</p>
-                <p className="mt-2 text-sm text-[#73552E]">{t('reviews.beFirst')}</p>
+                <h3 className="mb-4 text-2xl text-[#885B27]">{t('reviews.heading')}</h3>
+                <p className="text-[#885B27]">{t('reviews.noReviewsYet')}</p>
+                <p className="mt-2 text-sm text-[#885B27]">{t('reviews.beFirst')}</p>
               </div>
             )}
           </div>

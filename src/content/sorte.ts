@@ -6,7 +6,7 @@ import type { Locale } from '@/i18n/config';
  *
  * Nema vise boja po kartici: kartica nema. Sve tri sorte stoje na istom
  * papiru kao i ostatak strane, pa im je i mastilo isto — crtezi su prebojeni
- * u hero smedju (#73552E), a naslovi idu istim serifom kao svaki drugi naslov
+ * u hero smedju (#885B27), a naslovi idu istim serifom kao svaki drugi naslov
  * na strani.
  *
  * Sekcija nema svoj naslov ni uvod: predstavljaju je crtezi. `srHeading`

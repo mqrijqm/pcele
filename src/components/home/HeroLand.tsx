@@ -1,15 +1,13 @@
-import Image from 'next/image';
-
 import type { Locale } from '@/i18n/config';
 
 /**
  * Pocetni ekran: crtez livade, sa wordmarkom i pisanim natpisom polozenim
  * preko njega.
  *
- * Crtez je cist — na njemu nema ni slova ni pcele, sve sto se vidi preko
- * njega je zaseban element. Zato se lockup moze pomerati i prevoditi, ostaje
- * ostar na svakoj velicini, i pcela koja leti kroz stranu je jedina pcela u
- * heroju.
+ * Crtez je vektor (livada.svg), u smedjoj — ne slika. Na njemu nema ni slova
+ * ni pcele, sve sto se vidi preko njega je zaseban element. Zato se lockup
+ * moze pomerati i prevoditi, ostaje ostar na svakoj velicini, i pcela koja
+ * leti kroz stranu je jedina pcela u heroju.
  *
  * Svaka pozicija je procenat plate, a plata je container, pa se ceo sklop
  * skalira kao jedan komad na bilo kojoj sirini.
@@ -29,15 +27,8 @@ export default function HeroLand({ locale }: { locale: Locale }) {
   return (
     <section className="hero-land">
       <div className="hero-land__plate">
-        <Image
-          className="hero-land__drawing"
-          src="/hero/livada.webp"
-          alt={alt}
-          width={1537}
-          height={1023}
-          priority
-          sizes="100vw"
-        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="hero-land__drawing" src="/hero/livada.svg" alt={alt} />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="hero-land__script" src="/hero/rati-script.svg" alt={script} />

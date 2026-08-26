@@ -50,7 +50,7 @@ export const products: Product[] = [
     order: 2,
     category: 'honey',
     image: '/images/proizvodi/bagremov-500g.webp',
-    cardBg: '#F4EDE1',
+    cardBg: '#FCF0DC',
     variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
@@ -92,7 +92,7 @@ export const products: Product[] = [
     order: 4,
     category: 'honey',
     image: '/images/proizvodi/livadski-500g.webp',
-    cardBg: '#F2E5CD',
+    cardBg: '#FCF0DC',
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
@@ -117,7 +117,7 @@ export const products: Product[] = [
     image: '/images/proizvodi/propolis-20ml.webp',
     // Snimak nosi svoju ravnu podlogu, pa je i kartica te boje — inace bi se
     // vidio pravougaonik fotografije unutar kartice.
-    cardBg: '#ECDED1',
+    cardBg: '#FCF0DC',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'propolis-20ml', title: '20 ml', price: 12, stock: 40 }],
     name: {
@@ -139,7 +139,7 @@ export const products: Product[] = [
     category: 'other',
     image: '/images/proizvodi/imuno-mix-450g.webp',
     // Kao i kod propolisa: podloga kartice prati podlogu snimka.
-    cardBg: '#ECD5BD',
+    cardBg: '#FCF0DC',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'imuno-mix-450', title: '450 g', price: 20, stock: 60 }],
     name: {

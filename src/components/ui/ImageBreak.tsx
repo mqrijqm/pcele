@@ -82,9 +82,9 @@ export default function ImageBreak({
    */
   const dark = tone === 'dark';
   const plate = background ?? (dark ? 'var(--brown)' : 'var(--paper)');
-  const ink = dark ? 'text-[#F5E8D8]' : 'text-[#73552E]';
-  const inkSoft = dark ? 'text-[#F5E8D8]/70' : 'text-[#73552E]/70';
-  const rule = dark ? 'border-[#F5E8D8]/20' : 'border-[#73552E]/15';
+  const ink = dark ? 'text-[#FCF0DC]' : 'text-[#885B27]';
+  const inkSoft = dark ? 'text-[#FCF0DC]/70' : 'text-[#885B27]/70';
+  const rule = dark ? 'border-[#FCF0DC]/20' : 'border-[#885B27]/15';
 
   const mark = emblem ? (
     <span className="image-break__emblem" aria-hidden="true">

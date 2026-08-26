@@ -47,21 +47,21 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
 
       <SorteMeda locale={locale} />
 
-      <section className="border-b border-[#73552E]/15 bg-[#73552E] py-12">
+      <section className="border-b border-[#885B27]/15 bg-[#885B27] py-12">
         <div className="container">
           <div className="grid md:grid-cols-2 lg:grid-cols-4">
             {copy.trustFeatures.map((feature, index) => (
               <div
                 key={feature.title}
-                className={`reveal stagger-${index + 1} border-b border-[#F5E8D8]/20 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
+                className={`reveal stagger-${index + 1} border-b border-[#FCF0DC]/20 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
               >
-                <span className="text-[10px] font-bold tracking-[0.18em] text-[#C79A3B]">
+                <span className="text-[10px] font-bold tracking-[0.18em] text-[#EEC660]">
                   {String(index + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-3 font-display text-2xl leading-tight text-[#F5E8D8]">
+                <p className="mt-3 font-display text-2xl leading-tight text-[#FCF0DC]">
                   {feature.title}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#F5E8D8]/75">{feature.desc}</p>
+                <p className="mt-2 text-sm leading-relaxed text-[#FCF0DC]/75">{feature.desc}</p>
               </div>
             ))}
           </div>

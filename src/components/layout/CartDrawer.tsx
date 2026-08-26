@@ -18,7 +18,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
       <div
         onClick={cart.close}
         aria-hidden="true"
-        className={`absolute inset-0 bg-[#73552E]/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-[#885B27]/60 backdrop-blur-sm transition-opacity duration-300 ${
           cart.isOpen ? 'pointer-events-auto opacity-100' : 'opacity-0'
         }`}
       />
@@ -31,13 +31,13 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
         }`}
       >
         <div className="flex h-full flex-col">
-          <div className="flex items-center justify-between border-b border-[#73552E]/15 px-6 py-4">
-            <h2 className="text-xl text-[#73552E]">{t('cart.title')}</h2>
+          <div className="flex items-center justify-between border-b border-[#885B27]/15 px-6 py-4">
+            <h2 className="text-xl text-[#885B27]">{t('cart.title')}</h2>
             <button
               type="button"
               onClick={cart.close}
               aria-label="Close cart"
-              className="text-[#73552E] transition-colors hover:text-[#73552E]"
+              className="text-[#885B27] transition-colors hover:text-[#885B27]"
             >
               <X className="h-5 w-5" />
             </button>
@@ -46,9 +46,9 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
           <div className="flex-1 overflow-y-auto px-6 py-4">
             {cart.items.length === 0 ? (
               <div className="flex h-full flex-col items-center justify-center text-center">
-                <ShoppingBag className="h-16 w-16 text-[#73552E]/25" />
-                <p className="mt-4 text-xl text-[#73552E]">{t('cart.empty')}</p>
-                <p className="mt-2 text-sm text-[#73552E]">{t('cart.emptyMessage')}</p>
+                <ShoppingBag className="h-16 w-16 text-[#885B27]/25" />
+                <p className="mt-4 text-xl text-[#885B27]">{t('cart.empty')}</p>
+                <p className="mt-2 text-sm text-[#885B27]">{t('cart.emptyMessage')}</p>
                 <Link
                   href={localeHref(locale, '/products')}
                   onClick={cart.close}
@@ -58,19 +58,19 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 </Link>
               </div>
             ) : (
-              <ul className="divide-y divide-[#73552E]/15">
+              <ul className="divide-y divide-[#885B27]/15">
                 {cart.items.map((item) => (
                   <li key={item.variantId} className="flex gap-4 py-5">
-                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.6rem] bg-[#73552E]/[0.06]">
+                    <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-[0.6rem] bg-[#885B27]/[0.06]">
                       <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-lg leading-tight text-[#73552E]">
+                          <p className="text-lg leading-tight text-[#885B27]">
                             {item.name}
                           </p>
-                          <p className="mt-0.5 text-xs tracking-wider text-[#73552E]">
+                          <p className="mt-0.5 text-xs tracking-wider text-[#885B27]">
                             {item.variantTitle}
                           </p>
                         </div>
@@ -78,29 +78,29 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           type="button"
                           onClick={() => cart.remove(item.variantId)}
                           aria-label={t('cart.remove')}
-                          className="text-[#73552E] transition-colors hover:text-[#73552E]"
+                          className="text-[#885B27] transition-colors hover:text-[#885B27]"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
                       </div>
                       <div className="mt-auto flex items-center justify-between pt-3">
-                        <div className="inline-flex items-center rounded-full border border-[#73552E]/15">
+                        <div className="inline-flex items-center rounded-full border border-[#885B27]/15">
                           <button
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity - 1)}
                             aria-label="Decrease quantity"
-                            className="flex h-8 w-8 items-center justify-center rounded-l-full text-[#73552E] transition-colors hover:bg-linen hover:text-[#73552E]"
+                            className="flex h-8 w-8 items-center justify-center rounded-l-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
                           >
                             <Minus className="h-3.5 w-3.5" />
                           </button>
-                          <span className="flex h-8 w-9 items-center justify-center text-sm font-medium text-[#73552E]">
+                          <span className="flex h-8 w-9 items-center justify-center text-sm font-medium text-[#885B27]">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity + 1)}
                             aria-label="Increase quantity"
-                            className="flex h-8 w-8 items-center justify-center rounded-r-full text-[#73552E] transition-colors hover:bg-linen hover:text-[#73552E]"
+                            className="flex h-8 w-8 items-center justify-center rounded-r-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
                           >
                             <Plus className="h-3.5 w-3.5" />
                           </button>
@@ -117,14 +117,14 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
           </div>
 
           {cart.items.length > 0 && (
-            <div className="border-t border-[#73552E]/15 px-6 py-5">
-              <div className="flex items-center justify-between text-sm text-[#73552E]">
+            <div className="border-t border-[#885B27]/15 px-6 py-5">
+              <div className="flex items-center justify-between text-sm text-[#885B27]">
                 <span>{t('cart.subtotal')}</span>
-                <span className="text-xl text-[#73552E]">
+                <span className="text-xl text-[#885B27]">
                   {formatPrice(cart.subtotal)}
                 </span>
               </div>
-              <p className="mt-1 text-xs text-[#73552E]">
+              <p className="mt-1 text-xs text-[#885B27]">
                 {t('cart.shipping')}: {t('cart.shippingCalculated')}
               </p>
               <Link
@@ -137,7 +137,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <button
                 type="button"
                 onClick={cart.close}
-                className="mt-3 w-full text-center text-xs font-semibold uppercase tracking-widest text-[#73552E] transition-colors hover:text-[#73552E]"
+                className="mt-3 w-full text-center text-xs font-semibold uppercase tracking-widest text-[#885B27] transition-colors hover:text-[#885B27]"
               >
                 {t('cart.continueShopping')}
               </button>

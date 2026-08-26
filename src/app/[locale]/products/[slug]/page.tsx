@@ -78,21 +78,21 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="border-b border-[#73552E]/15">
+      <div className="border-b border-[#885B27]/15">
         <div className="container py-4">
-          <nav className="flex items-center gap-2 text-xs text-[#73552E]">
-            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#73552E]">
+          <nav className="flex items-center gap-2 text-xs text-[#885B27]">
+            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#885B27]">
               {t('nav.home')}
             </Link>
             <ChevronRight className="h-3 w-3" />
             <Link
               href={localeHref(locale, '/products')}
-              className="transition-colors hover:text-[#73552E]"
+              className="transition-colors hover:text-[#885B27]"
             >
               {t('products.breadcrumb')}
             </Link>
             <ChevronRight className="h-3 w-3" />
-            <span className="text-[#73552E]">{product.name[locale]}</span>
+            <span className="text-[#885B27]">{product.name[locale]}</span>
           </nav>
         </div>
       </div>
@@ -107,13 +107,13 @@ export default async function ProductPage({
         }
       />
 
-      <div className="border-t border-[#73552E]/15 bg-linen">
+      <div className="border-t border-[#885B27]/15 bg-linen">
         <div className="container section-padding">
           <div className="reveal mb-12 text-center">
-            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#73552E]">
+            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#885B27]">
               {t('products.related.eyebrow')}
             </span>
-            <h2 className="font-display text-display-md text-[#73552E]">
+            <h2 className="font-display text-display-md text-[#885B27]">
               {t('products.related.heading')}
             </h2>
           </div>
@@ -125,7 +125,7 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="overflow-hidden rounded-[0.6rem] border border-[#73552E]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
+                <div className="overflow-hidden rounded-[0.6rem] border border-[#885B27]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
                   <div className="relative aspect-[3/4] overflow-hidden bg-ivory rounded-[0.6rem]">
                     <Image
                       src={item.image}
@@ -137,14 +137,14 @@ export default async function ProductPage({
                   </div>
                   <div className="p-6">
                     <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-xl text-[#73552E] transition-colors duration-300 group-hover:text-honey-600">
+                      <h3 className="text-xl text-[#885B27] transition-colors duration-300 group-hover:text-honey-600">
                         {item.name[locale]}
                       </h3>
-                      <span className="shrink-0 text-base font-semibold text-[#73552E]">
+                      <span className="shrink-0 text-base font-semibold text-[#885B27]">
                         {formatPrice(item.variants[0].price)}
                       </span>
                     </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-[#73552E]">
+                    <p className="mt-2 line-clamp-2 text-sm text-[#885B27]">
                       {truncate(item.description[locale])}
                     </p>
                   </div>

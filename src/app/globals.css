@@ -3,26 +3,27 @@
 @tailwind utilities;
 
 :root {
-  /* Paleta 60 / 30 / 10 — boje ocitane sa deklaracije i logotipa */
-  --paper: #F5E8D8;  /* 60% — ocitano sa samog crteza livade, da nema sava */
-  --brown: #73552E;  /* 30% — mastilo natpisa "livadski MED" */
-  --gold:  #C79A3B;  /* 10% — zlatna sa krila pcele iz logotipa */
+  /*
+   * Paleta je tri boje i nista vise. Svaki ton koji je ranije bio "skoro
+   * papir" ili "blaza smedja" sada se izvodi iz ove tri, prozirnoscu — nova
+   * boja se ne uvodi.
+   */
+  --paper: #FCF0DC;  /* 60% — papir; jedina svijetla boja na sajtu */
+  --brown: #885B27;  /* 30% — mastilo, tekst i crtez livade u heroju */
+  --gold:  #EEC660;  /* 10% — zlatna, akcenat */
 
-  /* Blaza smedja, za sitan tekst koji ne treba da nosi tezinu naslova. */
-  --brown-soft: #8C6E48;
+  /* Sitan tekst: ista smedja, samo tise. Nije cetvrta boja. */
+  --brown-soft: rgba(136, 91, 39, 0.75);
 
   /*
-   * Podloga iza snimaka proizvoda. Nije papir nego skoro bijelo, ocitano sa
-   * ivica samih fotografija — da se ne vidi gdje slika prestaje a kartica
-   * pocinje.
+   * Podloga iza snimaka proizvoda. Nekad je bila za nijansu svjetlija od
+   * papira; sada je isti papir — bijelog na sajtu nema uopste.
    */
-  /* Topli off-white: pilula u zaglavlju i plocice iza snimaka. Jedini ton
-     svjetliji od papira; ciste bijele na sajtu nema. */
-  --shot: #FBF3E8;
+  --shot: var(--paper);
 
   /* Povrsine se izvode iz smedje na niskoj prozirnosti, ne iz nove boje */
-  --surface: rgba(115, 85, 46, 0.05);
-  --hairline: rgba(115, 85, 46, 0.12);
+  --surface: rgba(136, 91, 39, 0.05);
+  --hairline: rgba(136, 91, 39, 0.12);
 
   /* Semanticki aliasi (stara imena, da se nista ne polomi) */
   --color-ivory: var(--paper);
@@ -267,7 +268,7 @@ p {
  * ----------------------------------------------------------------------- */
 .ink-rule {
   display: block;
-  color: rgba(115, 85, 46, 0.3);
+  color: rgba(136, 91, 39, 0.3);
 }
 
 /*
@@ -297,7 +298,7 @@ p {
   align-items: center;
   gap: 0.6rem;
   padding-bottom: 0.4rem;
-  border-bottom: 1px solid rgba(115, 85, 46, 0.35);
+  border-bottom: 1px solid rgba(136, 91, 39, 0.35);
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -522,19 +523,19 @@ p {
    * koji lezi na strani a ne kao element sucelja.
    */
   background: var(--shot);
-  border: 1px solid rgba(115, 85, 46, 0.14);
+  border: 1px solid rgba(136, 91, 39, 0.14);
   transform: translateX(calc(-100% - var(--header-gutter)));
   transition:
     left 0.8s var(--ease-out-expo),
     transform 0.8s var(--ease-out-expo),
     box-shadow 0.5s ease;
-  box-shadow: 0 6px 22px -20px rgba(115, 85, 46, 0.45);
+  box-shadow: 0 6px 22px -20px rgba(136, 91, 39, 0.45);
 }
 
 .site-header[data-docked='true'] .header-pill {
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 16px 44px -26px rgba(115, 85, 46, 0.65);
+  box-shadow: 0 16px 44px -26px rgba(136, 91, 39, 0.65);
 }
 
 /* Prorez za logo unutar pilule — sirina raste iz nule, pa se pilula sama sirI. */
@@ -634,8 +635,8 @@ p {
  * ------------------------------------------------------------------------- */
 .hero-jar {
   --hero-paper: var(--paper);
-  --hero-ink: #A96F36;
-  --hero-caps: #5C3814;
+  --hero-ink: #885B27;
+  --hero-caps: #885B27;
 
   position: relative;
   width: 100%;
@@ -846,8 +847,8 @@ p {
    * istu podlogu — nema vise sive ploce oko tegle.
    *
    * Vrijednost je i dalje ocitana sa onoga sto preglednik ISCRTA, a ne iz
-   * fajla: u snimku je --paper (#F5E8D8), ali video ide kroz YUV pa se na
-   * ekranu vrati kao #F7E8D7. Dva nivoa razlike, ali dovoljno da se kvadrat
+   * fajla: u snimku je --paper (#FCF0DC), ali video ide kroz YUV pa se na
+   * ekranu vrati kao #FCF0DC. Dva nivoa razlike, ali dovoljno da se kvadrat
    * snimka nazre kao ploca oko tegle.
    */
   background-color: var(--paper);
@@ -936,10 +937,19 @@ html.is-preloading body {
 .hero-land__plate {
   position: relative;
   width: 100%;
+  /*
+   * Plata drzi omjer starog crteza (1537 x 1023) jer su sve nadgradnje —
+   * wordmark, natpis i strelica — postotak plate. Vektorski crtez je nizi
+   * (3870 x 1670), pa sjedi na dnu plate, tamo gdje je horizont i bio.
+   */
+  aspect-ratio: 1537 / 1023;
   container-type: inline-size;
 }
 
 .hero-land__drawing {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   display: block;
   width: 100%;
   height: auto;
@@ -1077,7 +1087,7 @@ html:not(.is-preloading) .hero-land__arrow {
 /* Trag: isti potez kao isprekidana strelica u heroju (rati.svg). */
 .bee-layer__trail {
   fill: none;
-  stroke: #a77342;
+  stroke: #885B27;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-miterlimit: 16;
@@ -1572,7 +1582,7 @@ html:not(.is-preloading) .hero-land__arrow {
   bottom: 0;
   padding: 3.5rem 1rem 0.9rem;
   background: linear-gradient(to top, rgba(46, 33, 9, 0.62), transparent);
-  color: #F5E8D8;
+  color: #FCF0DC;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: 0.92rem;
   line-height: 1.3;
@@ -1621,7 +1631,7 @@ html:not(.is-preloading) .hero-land__arrow {
 /* Prazno dugme: isti oblik i ista mjera, samo linija umjesto povrsine. */
 .btn--ghost {
   background: transparent;
-  border-color: rgba(115, 85, 46, 0.3);
+  border-color: rgba(136, 91, 39, 0.3);
   color: var(--brown);
 }
 
@@ -2046,7 +2056,7 @@ html:not(.is-preloading) .hero-land__arrow {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(115, 85, 46, 0.55);
+  color: rgba(136, 91, 39, 0.55);
 }
 
 .sorta__red dd {
@@ -2107,7 +2117,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .legacy {
   /* Raster ima puno praznog prostora; na 0.12 se linije gube. */
-  --legacy-line: rgba(115, 85, 46, 0.2);
+  --legacy-line: rgba(136, 91, 39, 0.2);
 
   position: relative;
   min-height: 100svh;

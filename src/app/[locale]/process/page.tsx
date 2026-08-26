@@ -39,13 +39,13 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
 
       <section className="pb-[var(--section-padding)]">
         <div className="container">
-          <div className="border-t border-[#73552E]/15">
+          <div className="border-t border-[#885B27]/15">
             {copy.steps.map((step, index) => {
               const flipped = index % 2 === 1;
               return (
                 <article
                   key={step.title}
-                  className="grid items-center gap-10 border-b border-[#73552E]/15 py-14 lg:py-20 lg:grid-cols-12 lg:gap-16 lg:py-14"
+                  className="grid items-center gap-10 border-b border-[#885B27]/15 py-14 lg:py-20 lg:grid-cols-12 lg:gap-16 lg:py-14"
                 >
                   <div
                     className={`relative aspect-[4/3] overflow-hidden lg:col-span-6 ${
@@ -65,13 +65,13 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
                       flipped ? 'lg:col-span-5 lg:col-start-1 lg:row-start-1' : 'lg:col-span-5 lg:col-start-8'
                     }
                   >
-                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#73552E]">
+                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#885B27]">
                       {String(index + 1).padStart(2, '0')}
                     </p>
-                    <h3 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+                    <h3 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
                       {step.title}
                     </h3>
-                    <p className="mt-5 max-w-lg text-base leading-7 text-[#73552E]">{step.desc}</p>
+                    <p className="mt-5 max-w-lg text-base leading-7 text-[#885B27]">{step.desc}</p>
                   </div>
                 </article>
               );
@@ -148,16 +148,16 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
       <section className="bg-[var(--paper)] section-padding">
         <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#73552E]">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
               {copy.outroEyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.outroHeading}
             </h2>
           </div>
           <Link
             href={localeHref(locale, '/products')}
-            className="group inline-flex w-fit items-center gap-3 border-b border-[#73552E]/35 pb-2 text-sm font-semibold text-[#73552E]"
+            className="group inline-flex w-fit items-center gap-3 border-b border-[#885B27]/35 pb-2 text-sm font-semibold text-[#885B27]"
           >
             {copy.outroCta}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

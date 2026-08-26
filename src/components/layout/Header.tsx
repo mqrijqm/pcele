@@ -84,17 +84,17 @@ export default function Header({ locale }: { locale: Locale }) {
             priority
             className="h-11 w-auto sm:h-14"
           />
-          <span className="mt-2.5 text-[8px] font-bold uppercase tracking-[0.28em] text-[#73552E] sm:text-[9px]">
+          <span className="mt-2.5 text-[8px] font-bold uppercase tracking-[0.28em] text-[#885B27] sm:text-[9px]">
             Pčelarstvo
           </span>
-          <span className="mt-1.5 font-display text-[1.4rem] font-medium leading-none tracking-[0.005em] text-[#73552E] sm:text-[1.7rem]">
+          <span className="mt-1.5 font-display text-[1.4rem] font-medium leading-none tracking-[0.005em] text-[#885B27] sm:text-[1.7rem]">
             Jevtić
           </span>
         </Link>
         )}
 
         {/* Pilula: gore desno na vrhu, u sredini kad se skroluje. */}
-        <div className="header-pill p-[0.4rem] text-[#73552E]">
+        <div className="header-pill p-[0.4rem] text-[#885B27]">
           <Link
             href={localeHref(locale, '/')}
             aria-label="Pčelarstvo Jevtić"
@@ -121,7 +121,7 @@ export default function Header({ locale }: { locale: Locale }) {
             onClick={() => setMenuOpen((open) => !open)}
             aria-label={menuOpen ? (locale === 'sr' ? 'Zatvori meni' : 'Close menu') : 'Menu'}
             aria-expanded={menuOpen}
-            className="flex min-h-11 items-center gap-2 rounded-full px-2 transition-colors hover:text-[#C79A3B] sm:gap-3 sm:px-4"
+            className="flex min-h-11 items-center gap-2 rounded-full px-2 transition-colors hover:text-[#EEC660] sm:gap-3 sm:px-4"
           >
             <span className="font-display text-[1.15rem] font-medium leading-none tracking-[0.01em]">
               Menu
@@ -137,11 +137,11 @@ export default function Header({ locale }: { locale: Locale }) {
             type="button"
             onClick={cart.open}
             aria-label={t('nav.cart')}
-            className="relative mr-1 flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:text-[#C79A3B]"
+            className="relative mr-1 flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:text-[#EEC660]"
           >
             <ShoppingBag className="h-[18px] w-[18px]" strokeWidth={1.7} />
             {cart.count > 0 && (
-              <span className="absolute right-1 top-1.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#73552E] px-1 text-[10px] font-bold tabular-nums text-[#F5E8D8]">
+              <span className="absolute right-1 top-1.5 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#885B27] px-1 text-[10px] font-bold tabular-nums text-[#FCF0DC]">
                 {cart.count}
               </span>
             )}
@@ -156,7 +156,7 @@ export default function Header({ locale }: { locale: Locale }) {
         }`}
       >
         <div className="mx-auto flex h-full max-w-3xl flex-col">
-          <p className="border-b border-[#73552E]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#73552E]">
+          <p className="border-b border-[#885B27]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
             {locale === 'sr' ? 'Mračaj · Prnjavor · od 1980.' : 'Mračaj · Prnjavor · since 1980'}
           </p>
 
@@ -166,7 +166,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 key={item.href}
                 href={localeHref(locale, item.href)}
                 style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
-                className={`border-b border-[#73552E]/15 py-4 font-display text-3xl text-[#73552E] transition-all duration-500 hover:text-[#C79A3B] sm:text-4xl ${
+                className={`border-b border-[#885B27]/15 py-4 font-display text-3xl text-[#885B27] transition-all duration-500 hover:text-[#EEC660] sm:text-4xl ${
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
                 }`}
               >
@@ -184,14 +184,14 @@ export default function Header({ locale }: { locale: Locale }) {
                     aria-label={`Switch to ${code.toUpperCase()}`}
                     className={`text-xs font-medium uppercase tracking-wider transition-colors ${
                       code === locale
-                        ? 'font-bold text-[#73552E] underline decoration-[#C79A3B] decoration-2 underline-offset-4'
-                        : 'text-[#73552E]/70 hover:text-[#73552E]'
+                        ? 'font-bold text-[#885B27] underline decoration-[#EEC660] decoration-2 underline-offset-4'
+                        : 'text-[#885B27]/70 hover:text-[#885B27]'
                     }`}
                   >
                     {code}
                   </Link>
                   {index === 0 && (
-                    <span aria-hidden="true" className="mx-1.5 text-[#73552E]/40">
+                    <span aria-hidden="true" className="mx-1.5 text-[#885B27]/40">
                       /
                     </span>
                   )}

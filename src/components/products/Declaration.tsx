@@ -25,32 +25,32 @@ export default function Declaration({
   ];
 
   return (
-    <section className="border-t border-[#73552E]/15 bg-[var(--paper)]">
+    <section className="border-t border-[#885B27]/15 bg-[var(--paper)]">
       <div className="container section-padding-sm">
         <div className="grid gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
           <div>
-            <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#73552E]">
-              <span aria-hidden="true" className="h-px w-8 bg-[#C79A3B]" />
+            <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#885B27]">
+              <span aria-hidden="true" className="h-px w-8 bg-[#EEC660]" />
               {copy.eyebrow}
             </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#73552E]">
+            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
               {copy.heading}
             </h2>
 
             <dl className="mt-8 space-y-5">
               {facts.map((fact) => (
-                <div key={fact.label} className="border-t border-[#73552E]/15 pt-4">
-                  <dt className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#73552E]">
+                <div key={fact.label} className="border-t border-[#885B27]/15 pt-4">
+                  <dt className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
                     {fact.label}
                   </dt>
-                  <dd className="mt-1.5 text-base leading-7 text-[#73552E]">{fact.value}</dd>
+                  <dd className="mt-1.5 text-base leading-7 text-[#885B27]">{fact.value}</dd>
                 </div>
               ))}
             </dl>
           </div>
 
           {labelImage ? (
-            <div className="overflow-hidden rounded-[0.6rem] border border-[#73552E]/15">
+            <div className="overflow-hidden rounded-[0.6rem] border border-[#885B27]/15">
               <Image
                 src={labelImage}
                 alt={copy.labelAlt}
