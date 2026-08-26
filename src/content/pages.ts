@@ -692,12 +692,6 @@ export const photoBreaks = {
       altA: 'Red plavih i žutih košnica na livadi ispod brda',
       altB: 'Košnice u visokoj travi, u hladu voćaka',
     },
-    homeProces: {
-      caption: 'Vrcanje i punjenje · Mračaj',
-      meta: 'Sezona 2025.',
-      altPunjenje: 'Med se toči u teglu, uz red već napunjenih tegli',
-      altRam: 'Ram iz sezone 2025, godina upisana u samo saće',
-    },
     productsOther: {
       caption: 'Iz iste košnice, ali ne med',
       meta: 'Imuno mix · propolis',
@@ -784,12 +778,6 @@ export const photoBreaks = {
       meta: 'Hives out on the meadow',
       altA: 'A row of blue and yellow hives on a meadow below the hills',
       altB: 'Hives standing in tall grass in the shade of fruit trees',
-    },
-    homeProces: {
-      caption: 'Extraction and filling · Mračaj',
-      meta: '2025 season',
-      altPunjenje: 'Honey being poured into a jar beside a row of filled jars',
-      altRam: 'A frame from the 2025 season, the year written into the comb itself',
     },
     productsOther: {
       caption: 'From the same hive, but not honey',

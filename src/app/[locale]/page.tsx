@@ -31,8 +31,10 @@ import BeeFlight from '@/components/bee/BeeFlight';
  * i na lanu. Ostalo je ono sto nosi pricu.
  *
  * Od fotografija su otisle makete tegli u travi i na lanu — izgledale su kao
- * reklamna kampanja. Ostale su dvije dokumentarne pauze: proces (tocenje meda
- * i ram iz sezone) i sam pcelinjak prije price o mjestu.
+ * reklamna kampanja. Za njima je otisla i pauza sa vrcanjem i ramom: oba
+ * snimka vec stoje tamo gdje im je mjesto, na strani o procesu i u blogu, pa
+ * su ovdje samo usporavala tok. Ostala je jedna pauza, sam pcelinjak, prije
+ * price o mjestu.
  */
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -60,18 +62,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Proces — cetiri koraka od kosnice do tegle. */}
       <AboutPreview locale={locale} />
 
-      {/* Jedina foto-pauza na strani, i jedina koja nosi novu informaciju. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/punjenje-tegle.webp', alt: shot.homeProces.altPunjenje },
-          { src: '/images/real/ram-2025.webp', alt: shot.homeProces.altRam },
-        ]}
-        caption={shot.homeProces.caption}
-        meta={shot.homeProces.meta}
-      />
-
-      {/* Pravi pcelinjak, prije nego sto krene prica o mjestu. */}
+      {/* Jedina foto-pauza na strani: pcelinjak, prije nego sto krene prica o mjestu. */}
       <ImageBreak
         variant="pair"
         images={[
