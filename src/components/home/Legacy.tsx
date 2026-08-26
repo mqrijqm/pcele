@@ -4,94 +4,74 @@ import { home } from '@/content/pages';
 import type { Locale } from '@/i18n/config';
 
 /**
- * Visine su iz samih fajlova (svi su 400 siroki), da Next rezervise tacan
- * okvir i nista ne poskoci kad se crtez ucita.
- */
-const CLOUDS = [
-  { n: 1, h: 140 },
-  { n: 2, h: 337 },
-  { n: 3, h: 151 },
-  { n: 4, h: 202 },
-] as const;
-
-/**
- * Nasljedje — puna strana, crtez gore, pa raster ispod.
+ * Nasljedje — dvije kolone, sire lijevo.
  *
- * Sekcija ide od ivice do ivice ekrana, bez `.container`: donji raster zivi od
- * toga da arhivski snimak dodiruje lijevu ivicu, a linije koje dijele celije
- * idu do kraja. Zato se uvlacenje radi po celiji, a ne po sekciji.
+ * Gornji red nosi naslov lijevo i crtez pcelara desno; donji dva snimka
+ * lijevo i tekst desno. Sve cetiri celije dijele isti raster, pa se lijeva
+ * ivica naslova i lijeva ivica arhivskog snimka poklapaju, a desna kolona
+ * stoji u istoj liniji cijelom visinom.
  *
- * Linije nisu ukras nego jedini okvir koji raster ima — nema kartica, nema
- * sjenki. Crtaju se kao `border` na samim celijama, ukljucujuci i dvije prazne,
- * jer prazan prostor ovdje nosi isto koliko i sadrzaj.
+ * Snimci se preklapaju umjesto da stoje jedan uz drugi: sace izlazi iz
+ * arhivskog snimka desno i sjeda na istu donju liniju, sa rubom u boji papira
+ * — kao odstampana fotografija polozena preko starije. To je jedino mjesto u
+ * sekciji gdje se nesto preklapa, pa pogled prvo ide tamo.
+ *
+ * Tekst desno je poravnat po dnu, ne po vrhu: zadnji red ("Med.Porodica.
+ * Tradicija") zavrsava tacno tamo gdje i snimci, pa red ispod sekcije ide
+ * cist.
+ *
+ * Raster sa linijama i cetiri oblaka iznad crteza su otisli — linije su
+ * dijelile prazne celije koje nisu imale sta da nose, a oblaci su bili jedini
+ * crtez na strani koji ne prikazuje nista.
  */
 export default function Legacy({ locale }: { locale: Locale }) {
   const copy = home.legacy[locale];
 
   return (
     <section className="legacy">
-      <div className="legacy__head">
-        {/*
-          * Cetiri razlicita oblaka, sitna i razbacana po nebu iza pcelara.
-          * Svaki je svoj crtez, pa nema para koji se cita kao ponavljanje —
-          * mjere i mjesta su u CSS-u, jer se oba mijenjaju sa sirinom ekrana.
-          */}
-        {CLOUDS.map((c) => (
-          <span key={c.n} className={`legacy__cloud legacy__cloud--${c.n}`} aria-hidden="true">
-            <Image src={`/images/brand/oblak-${c.n}.svg`} alt="" width={400} height={c.h} />
-          </span>
-        ))}
+      <div className="legacy__inner">
+        <header className="legacy__intro reveal">
+          <p className="legacy__eyebrow">{copy.eyebrow}</p>
+          <span className="legacy__rule" aria-hidden="true" />
+          <h2 className="legacy__heading">{copy.heading}</h2>
+        </header>
 
         <Image
-          className="legacy__figure reveal"
+          className="legacy__figure reveal stagger-1"
           src="/images/brand/pcelar.svg"
           alt={copy.figureAlt}
           width={5335}
           height={6000}
-          priority={false}
         />
 
-        <h2 className="legacy__heading reveal stagger-1">{copy.heading}</h2>
-      </div>
+        <div className="legacy__plates reveal stagger-2">
+          <figure className="legacy__archive">
+            <Image
+              className="legacy__img"
+              src="/images/real/pcelinjak-arhiva.webp"
+              alt={copy.archiveAlt}
+              fill
+              sizes="(max-width: 900px) 100vw, 52vw"
+            />
+          </figure>
 
-      <div className="legacy__grid">
-        <figure className="legacy__archive">
-          <Image
-            src="/images/real/pcelinjak-arhiva.webp"
-            alt={copy.archiveAlt}
-            fill
-            sizes="(max-width: 900px) 100vw, 58vw"
-            className="legacy__img"
-          />
-        </figure>
-
-        <div className="legacy__copy">
-          <p className="legacy__eyebrow">{copy.eyebrow}</p>
-          <p className="legacy__body">{copy.body}</p>
+          {/* Jedino preklapanje u sekciji: sace lezi preko arhivskog snimka. */}
+          <figure className="legacy__comb">
+            <Image
+              className="legacy__img"
+              src="/images/real/sace-posuda.webp"
+              alt={copy.combAlt}
+              fill
+              sizes="(max-width: 900px) 45vw, 17vw"
+            />
+          </figure>
         </div>
 
-        {/* Prazne celije — nose linije rastera, nista drugo. */}
-        <div className="legacy__void legacy__void--a" aria-hidden="true" />
-        <div className="legacy__void legacy__void--b" aria-hidden="true" />
-        <div className="legacy__void legacy__void--c" aria-hidden="true" />
-
-        {/*
-          * Sace presijeca liniju izmedju dva reda umjesto da stane u jedan —
-          * jedini element koji izlazi iz rastera, pa mu i pogled prvo ide.
-          */}
-        <figure className="legacy__comb">
-          <Image
-            src="/images/real/sace-posuda.webp"
-            alt={copy.combAlt}
-            fill
-            sizes="(max-width: 900px) 100vw, 34vw"
-            className="legacy__img"
-          />
-        </figure>
-
-        <div className="legacy__chapter">
+        <div className="legacy__copy reveal stagger-3">
+          <p className="legacy__body">{copy.body}</p>
+          <span className="legacy__rule" aria-hidden="true" />
           <p className="legacy__eyebrow">{copy.chapterEyebrow}</p>
-          <p className="legacy__chapter-heading">{copy.chapterHeading}</p>
+          <p className="legacy__chapter">{copy.chapterHeading}</p>
         </div>
       </div>
     </section>

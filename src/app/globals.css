@@ -2112,271 +2112,170 @@ html:not(.is-preloading) .hero-land__arrow {
 
 
 /* ==========================================================================
-   Nasljedje — puna strana: crtez pcelara gore, raster sa linijama ispod.
+   Nasljedje — dvije kolone: naslov i snimci lijevo, crtez i tekst desno.
    ========================================================================== */
 
 .legacy {
-  /* Raster ima puno praznog prostora; na 0.12 se linije gube. */
-  --legacy-line: rgba(136, 91, 39, 0.2);
-
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
   background: var(--paper);
-  overflow: hidden;
+  padding-block: var(--section-padding);
 }
 
-/* --- gornji dio: oblaci, crtez, naslov --- */
-
-.legacy__head {
-  position: relative;
-  flex: 0 0 auto;
-  padding: clamp(4rem, 9vw, 8rem) 0 0;
-  text-align: center;
-}
-
-/*
- * Oblaci stoje iza crteza i nisu obavezni za razumijevanje sekcije, pa se na
- * uskom ekranu jednostavno gase — tamo bi ionako zavrsili ispod crteza.
- */
-.legacy__cloud {
-  position: absolute;
-  /*
-   * Isti potez kao pcelar, samo razrijedjen — nije nova boja nego ista na
-   * pola snage, pa nebo ostane iza crteza a ne pored njega.
-   */
-  opacity: 0.55;
-  pointer-events: none;
-}
-
-.legacy__cloud img {
-  width: 100%;
-  height: auto;
-}
-
-/*
- * Cetiri mjesta, nijedno na istoj visini ni na istoj mjeri. Sredina je
- * ostavljena prazna: tu stoji pcelar, i oblak iza njega bi mu ulazio u liniju.
- */
-.legacy__cloud--1 {
-  left: 2%;
-  top: 8%;
-  width: clamp(11rem, 19vw, 19rem);
-}
-
-.legacy__cloud--2 {
-  right: 3%;
-  top: 3%;
-  width: clamp(7rem, 12vw, 12rem);
-}
-
-/* Najtanji, i najnize — cita se kao izmaglica pri tlu. */
-.legacy__cloud--3 {
-  left: 17%;
-  top: 29%;
-  width: clamp(8rem, 13vw, 13rem);
-  transform: scaleX(-1);
-}
-
-/* Drzi se uz desnu ivicu i nisko: sredinom desne strane prolazi pcela. */
-.legacy__cloud--4 {
-  right: 4%;
-  top: 34%;
-  width: clamp(9rem, 15vw, 15rem);
-}
-
-.legacy__figure {
-  position: relative;
-  width: auto;
-  height: clamp(14rem, 28vw, 26rem);
-  margin: 0 auto;
-}
-
-/*
- * Naslov stane u jedan red na desktopu, i to je cijela poenta — zato ima
- * uze uvlacenje od ostatka sekcije i mjeru vezanu za sirinu ekrana, a ne za
- * kolonu teksta. 5.4vw je najveca vrijednost pri kojoj se ovaj niz znakova u
- * Gazpachu jos uvijek ne lomi. Ako font ne stigne, Georgia je sira i red se
- * prelomi na dva — ruzno, ali citljivo, pa nema `nowrap`.
- */
-.legacy__heading {
-  margin: clamp(1.5rem, 3vw, 3rem) auto 0;
-  padding: 0 var(--container-padding);
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.01em;
-  line-height: 0.95;
-  color: var(--brown);
-  font-size: clamp(2rem, 8.5vw, 3.4rem);
-  text-wrap: balance;
-}
-
-@media (min-width: 901px) {
-  .legacy__heading {
-    padding: 0 clamp(1rem, 2vw, 2rem);
-    font-size: 5.4vw;
-    text-wrap: nowrap;
-  }
-}
-
-/* --- donji dio: raster --- */
-
-.legacy__grid {
-  flex: 1 1 auto;
+.legacy__inner {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
   /*
-   * Druga dva reda su namjerno visoka: sace ih presijeca oba, a ono je
-   * uspravan snimak — u niskom rasteru bi ispalo kao traka, ne kao slika.
+   * Lijeva kolona nosi naslov i oba snimka, desna crtez i tekst. Odnos je
+   * blizu 2:1 — dovoljno da naslov stane u dva reda, a da desna kolona i
+   * dalje drzi punu mjeru teksta.
    */
-  grid-template-rows:
-    clamp(19rem, 32vw, 26rem)
-    clamp(9rem, 21vw, 19rem)
-    clamp(10rem, 21vw, 19rem);
-  margin-top: clamp(3rem, 6vw, 6rem);
-  border-top: 1px solid var(--legacy-line);
+  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+  column-gap: clamp(2rem, 4vw, 4.5rem);
+  row-gap: clamp(2.5rem, 5vw, 6rem);
+  align-items: start;
+  /*
+   * Sira mjera od ostatka strane. Ovo je jedini raspored na sajtu koji nosi
+   * cetiri celije odjednom — na 82rem bi se naslov prelomio na tri reda, a
+   * tekst desno na devet.
+   */
+  max-width: 104rem;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
 }
 
-.legacy__archive {
-  position: relative;
-  grid-column: 1 / 8;
-  grid-row: 1;
-  margin: 0;
-  overflow: hidden;
-}
-
-.legacy__img {
-  object-fit: cover;
-  object-position: center;
-}
-
-.legacy__copy {
-  grid-column: 8 / 13;
-  grid-row: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(1.25rem, 2.5vw, 2.25rem);
-  padding: clamp(2rem, 4vw, 4rem) clamp(1.75rem, 4vw, 4rem);
-  background: var(--shot);
-}
+/* --- gornji red: naslov lijevo, pcelar desno ----------------------------- */
 
 .legacy__eyebrow {
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
+  /*
+   * Zlatna na papiru daje kontrast 1.45:1 — na sedam desetina rema se ne
+   * cita. Ovdje stoji mastilo, samo tise; boja je i dalje iz palete.
+   */
+  color: var(--brown-soft);
+}
+
+/* Kratka crta: ispod natpisa gore, i iznad zadnjeg reda desno. */
+.legacy__rule {
+  display: block;
+  width: clamp(3rem, 5vw, 4.75rem);
+  height: 1px;
+  background: rgba(136, 91, 39, 0.4);
+}
+
+.legacy__intro > .legacy__rule {
+  margin-top: clamp(1rem, 1.6vw, 1.5rem);
+}
+
+.legacy__heading {
+  margin-top: clamp(1.5rem, 3vw, 2.75rem);
+  /*
+   * Mjera lomi naslov tamo gdje treba: "Nasljedje koje / traje od 1980."
+   * Bez nje bi na sirokom ekranu stao u jedan predugacak red.
+   */
+  max-width: 15ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 6.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--brown);
+}
+
+.legacy__figure {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  /* Desna ivica crteza stoji u istoj liniji sa desnom ivicom teksta ispod. */
+  margin-inline: auto 0;
+}
+
+/* --- donji red: dva snimka lijevo --------------------------------------- */
+
+.legacy__plates {
+  position: relative;
+  /*
+   * Arhivski snimak drzi visinu reda; desni pojas je prazan da sace ima
+   * kuda da izadje iz njega.
+   */
+  padding-right: 14%;
+}
+
+.legacy__archive {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  margin: 0;
+}
+
+.legacy__comb {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 27%;
+  aspect-ratio: 5 / 9;
+  margin: 0;
+  /*
+   * Rub u boji papira i tanka sjenka: sace treba da izgleda kao snimak
+   * polozen preko starijeg, a ne kao druga polovina jedne slike.
+   */
+  border: clamp(5px, 0.55vw, 9px) solid var(--paper);
+  box-shadow: 0 10px 30px rgba(136, 91, 39, 0.18);
+}
+
+.legacy__img {
+  object-fit: cover;
+}
+
+/* --- donji red: tekst desno --------------------------------------------- */
+
+.legacy__copy {
+  /*
+   * Poravnato po dnu, da zadnji red teksta zavrsi u istoj liniji sa donjom
+   * ivicom snimaka.
+   */
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.25rem, 2vw, 1.75rem);
 }
 
 .legacy__body {
-  max-width: 30ch;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
   line-height: 1.75;
   color: var(--brown);
 }
 
-/*
- * Tri prazne celije drugog reda. Linije se crtaju samo desno i dolje, pa se
- * susjedne ivice ne udvajaju u deblju crtu.
- */
-.legacy__void {
-  grid-row: 2;
-  border-bottom: 1px solid var(--legacy-line);
-}
-
-.legacy__void--a {
-  grid-column: 1 / 5;
-  border-right: 1px solid var(--legacy-line);
-}
-
-.legacy__void--b {
-  grid-column: 5 / 10;
-  border-right: 1px solid var(--legacy-line);
-}
-
-.legacy__void--c {
-  grid-column: 10 / 13;
-}
-
-.legacy__comb {
-  position: relative;
-  grid-column: 7 / 10;
-  grid-row: 2 / span 2;
-  z-index: 2;
-  margin: 0;
-  overflow: hidden;
-}
-
 .legacy__chapter {
-  grid-column: 1 / 5;
-  grid-row: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.9rem;
-  padding: clamp(1.5rem, 3vw, 2.75rem) var(--container-padding);
-  border-right: 1px solid var(--legacy-line);
-}
-
-.legacy__chapter-heading {
+  margin-top: -0.5rem;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.1rem, 1.9vw, 1.6rem);
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
   line-height: 1.2;
   color: var(--brown);
 }
 
 /*
- * Na uskom ekranu raster se raspada u jedan stubac. Cetiri kolone od po 25%
- * ekrana ne bi drzale ni rec teksta, a sace bi ostalo sirine prsta.
+ * Na uskom ekranu dvije kolone se raspadaju u jedan stubac. Crtez pcelara ide
+ * uz naslov jer je s njim i u paru, pa tek onda snimci i tekst.
  */
 @media (max-width: 900px) {
-  .legacy {
-    min-height: 0;
+  .legacy__inner {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(2rem, 7vw, 3rem);
   }
 
-  .legacy__cloud {
-    display: none;
+  .legacy__figure {
+    max-width: 14rem;
+    margin-inline: 0;
   }
 
-  .legacy__grid {
-    display: block;
-  }
-
-  .legacy__archive,
-  .legacy__comb {
-    position: relative;
-    display: block;
-    width: 100%;
-  }
-
-  .legacy__archive {
-    aspect-ratio: 16 / 10;
+  .legacy__plates {
+    padding-right: 18%;
   }
 
   .legacy__comb {
-    aspect-ratio: 4 / 5;
-  }
-
-  .legacy__copy {
-    padding: clamp(2.5rem, 8vw, 4rem) var(--container-padding);
-  }
-
-  .legacy__body {
-    max-width: 40ch;
-  }
-
-  .legacy__void {
-    display: none;
-  }
-
-  .legacy__chapter {
-    padding: clamp(2.5rem, 8vw, 4rem) var(--container-padding);
-    border-right: 0;
-    border-top: 1px solid var(--legacy-line);
+    width: 34%;
   }
 }
 
