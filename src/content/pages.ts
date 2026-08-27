@@ -215,6 +215,38 @@ export const home = {
     combAlt: string;
   }>,
 
+  rail: {
+    sr: {
+      label: 'Snimci s pčelinjaka',
+      eyebrow: 'Iz našeg albuma',
+      heading: 'Ljeto na pčelinjaku, red po red.',
+      sealHives: 'Pogledaj naše pčelinjake',
+      sealProcess: 'Pogledaj proces vrcanja',
+      alt: {
+        hives: 'Red košnica pod drvetom, iza njih pokošena livada',
+        frame: 'Pčelar u bijelom odijelu vadi ram pun pčela iz žute košnice',
+      },
+    },
+    en: {
+      label: 'Photographs from the apiary',
+      eyebrow: 'From our album',
+      heading: 'Summer at the apiary, row by row.',
+      sealHives: 'See our apiaries',
+      sealProcess: 'See the extraction process',
+      alt: {
+        hives: 'A row of hives under a tree, a mown meadow behind them',
+        frame: 'A beekeeper in white lifting a frame full of bees out of a yellow hive',
+      },
+    },
+  } satisfies L<{
+    label: string;
+    eyebrow: string;
+    heading: string;
+    sealHives: string;
+    sealProcess: string;
+    alt: Record<'hives' | 'frame', string>;
+  }>,
+
   origin: {
     sr: {
       eyebrow: 'Odakle smo?',

@@ -5,6 +5,7 @@ import { photoBreaks } from '@/content/pages';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import Drip from '@/components/home/Drip';
+import PhotoRail from '@/components/home/PhotoRail';
 import AboutPreview from '@/components/home/AboutPreview';
 import Legacy from '@/components/home/Legacy';
 import SorteMeda from '@/components/products/SorteMeda';
@@ -51,10 +52,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HeroJar locale={locale} />
 
       {/*
-        Med se prelije preko ruba i strana prelazi na smedju. Sekcija ispod
-        je zasad prazna — vazan je prelaz.
+        Med se prelije preko ruba i strana prelazi na smedju. U tijelu prelaza
+        stoji traka: snimci s pcelinjaka se prelistavaju sami, u krug.
       */}
-      <Drip />
+      <Drip>
+        <PhotoRail locale={locale} />
+      </Drip>
 
       {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
       <Legacy locale={locale} />

@@ -11,6 +11,7 @@
   --paper: #FCF0DC;  /* 60% — papir; jedina svijetla boja na sajtu */
   --brown: #885B27;  /* 30% — mastilo, tekst i crtez livade u heroju */
   --gold:  #EEC660;  /* 10% — zlatna, akcenat */
+  --sage:  #818765;  /* zelena s pecata; jedina boja izvan tri, i samo na njima */
 
   /* Sitan tekst: ista smedja, samo tise. Nije cetvrta boja. */
   --brown-soft: rgba(136, 91, 39, 0.75);
@@ -956,21 +957,29 @@ html.is-preloading body {
   position: relative;
   width: 100%;
   /*
-   * Plata drzi omjer starog crteza (1537 x 1023) jer su sve nadgradnje —
-   * wordmark, natpis i strelica — postotak plate. Vektorski crtez je nizi
-   * (3870 x 1670), pa sjedi na dnu plate, tamo gdje je horizont i bio.
+   * Plata drzi omjer snimka. Sve nadgradnje — wordmark, natpis i strelica —
+   * su postotak plate, a omjer je gotovo isti kao kod crteza koji je tu bio
+   * (1.556 prema 1.503), pa nijedna nije morala da se pomjeri.
    */
-  aspect-ratio: 1537 / 1023;
+  aspect-ratio: 1600 / 1028;
   container-type: inline-size;
 }
 
-.hero-land__drawing {
+/*
+ * Snimak popunjava platu i uzima isti otvoreni ugao kao svaka slika na sajtu.
+ * `object-fit: cover` je tu zbog uskih ekrana, gdje plata dobije svoj omjer
+ * od medija upita a ne od snimka.
+ */
+.hero-land__film {
   position: absolute;
-  left: 0;
-  bottom: 0;
+  inset: 0;
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-sweep);
+  background: var(--paper);
 }
 
 /*
@@ -2329,4 +2338,211 @@ html:not(.is-preloading) .hero-land__arrow {
 .drip__body {
   min-height: 40svh;
   background: var(--brown);
+}
+
+/* ---------------------------------------------------------------------------
+ * Album — snimci koji se listaju skrolom.
+ *
+ * Sekcija je visoka vise ekrana, a scena unutra je `sticky` — stoji na mjestu
+ * dok sekcija prolazi ispod nje. Taj visak visine je jedini razlog zasto se
+ * traka uopste ima po cemu listati: GSAP ga cita kao napredak i pretvara u
+ * vodoravni pomak. Bez njega bi sekcija bila visoka jedan ekran i ne bi bilo
+ * sta scrubovati.
+ * ------------------------------------------------------------------------- */
+.rail {
+  --rail-gap: clamp(1.25rem, 4.5vw, 4.5rem);
+  /*
+   * Visina sirokog okvira. Iz Marijinog crteza: 473 na 1438 sirine. Gornja
+   * granica je u `svh` jer scena mora stati u jedan ekran zajedno s naslovom
+   * — bez toga uspravni okvir na niskom ekranu izadje ispod ruba.
+   */
+  --rail-h: min(clamp(12rem, 33vw, 30rem), 46svh);
+  /* Jedan ekran za scenu + po pola ekrana skrola na svaki snimak preko prvog. */
+  --rail-step: 55svh;
+
+  position: relative;
+  height: calc(100svh + (var(--rail-count) - 1) * var(--rail-step));
+  background: var(--paper);
+}
+
+.rail__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  overflow: hidden;
+}
+
+.rail__intro {
+  padding-inline: var(--container-padding);
+  max-width: 42rem;
+}
+
+.rail__eyebrow {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* Zlatna na papiru se na sedam desetina rema ne cita; ovdje stoji mastilo,
+   * samo tise — isto kao u sekciji o nasljedju. */
+  color: var(--brown-soft);
+  margin-bottom: 0.9rem;
+}
+
+.rail__heading {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  line-height: 1.12;
+  color: var(--brown);
+}
+
+/*
+ * Prozor trake. Pecati su mu djeca, pa se drze snimaka a ne ruba strane —
+ * kad se traka suzi na telefonu, silaze zajedno s njom.
+ */
+.rail__viewport {
+  position: relative;
+}
+
+/*
+ * Traka nema ni `padding` ni pocetni pomak u CSS-u. Prvi snimak u sredinu
+ * dovodi GSAP, iz izmjerenih pozicija — jer sirine okvira nisu iste, pa se
+ * sredina ne moze pogoditi jednim procentom.
+ *
+ * Okviri se poravnavaju po sredini visine: uspravni je visi od sirokog, pa
+ * mu visak ide podjednako gore i dolje.
+ */
+.rail__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: var(--rail-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  will-change: transform;
+}
+
+/*
+ * Visinu okvira daje `--lift` iz komponente (uspravni je za petinu visi),
+ * sirinu racuna sam iz omjera okvira. Snimak se u okvir uklapa podrezivanjem,
+ * pa se u listu moze staviti bilo koja fotografija bez racunanja.
+ */
+.rail__item {
+  position: relative;
+  height: calc(var(--rail-h) * var(--lift));
+  flex: none;
+  overflow: hidden;
+  background: rgba(136, 91, 39, 0.06);
+}
+
+.rail__img {
+  object-fit: cover;
+}
+
+/*
+ * Pecati stoje uz same rubove, na bocnim snimcima. Pozicije su iz crteza:
+ * sredine krugova na 13.9% i 84.3% sirine, precnik 8.2% — otud pomak od
+ * sredine do lijevog ruba kruga.
+ */
+.rail__seal {
+  position: absolute;
+  top: 50%;
+  width: clamp(5rem, 8.2vw, 7.5rem);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  /*
+   * Sjena, ne obrub. Pecat lezi na fotografiji koja je i sama svijetla i
+   * sarena; bez odvajanja od podloge natpis unutar kruga se izgubi.
+   */
+  filter: drop-shadow(0 1rem 2.25rem rgba(51, 33, 12, 0.35));
+  transition: scale 0.5s var(--ease-out-expo);
+  z-index: 2;
+}
+
+.rail__seal--start {
+  left: 9.8vw;
+}
+
+.rail__seal--end {
+  right: 11.6vw;
+}
+
+.rail__seal:hover,
+.rail__seal:focus-visible {
+  scale: 1.06;
+}
+
+.rail__sealFace,
+.rail__sealRing {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Vrti se samo prsten — natpis ispod njega mora ostati citljiv. */
+.rail__sealRing {
+  animation: seal-spin 26s linear infinite;
+}
+
+.rail__seal--end .rail__sealRing {
+  animation-duration: 34s;
+  animation-direction: reverse;
+}
+
+@keyframes seal-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/*
+ * Ko je iskljucio animacije u sistemu ne dobija ni lepljivu scenu ni scrub:
+ * sekcija je visoka koliko i sadrzaj, a traka se lista prstom ili kolicem.
+ * GSAP se u toj grani i ne pali (`matchMedia`), pa traku niko ne pomjera.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .rail {
+    height: auto;
+    padding-block: clamp(4rem, 9vw, 8rem);
+  }
+
+  .rail__stage {
+    position: static;
+    height: auto;
+  }
+
+  .rail__viewport {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .rail__track {
+    padding-inline: var(--container-padding);
+  }
+
+  .rail__sealRing {
+    animation: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .rail {
+    --rail-h: min(58vw, 38svh);
+    --rail-step: 45svh;
+  }
+
+  /* Na uskom ekranu dva pecata jedan uz drugi pojedu snimak; ostaje prvi. */
+  .rail__seal--end {
+    display: none;
+  }
+
+  .rail__seal--start {
+    left: 5vw;
+  }
 }
