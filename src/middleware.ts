@@ -19,6 +19,6 @@ export const config = {
   // Svaki folder iz `public/` mora ovde — inace bi /hero/jar.png bio
   // preusmeren na /sr/hero/jar.png, gde fajla nema, pa slika ne bi radila.
   matcher: [
-    '/((?!api|_next|images|icons|hero|splash|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)',
+    '/((?!api|_next|images|icons|hero|splash|lab|manifest.json|favicon.ico|robots.txt|sitemap.xml).*)',
   ],
 };
