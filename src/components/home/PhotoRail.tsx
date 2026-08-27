@@ -39,17 +39,27 @@ const FRAME = {
 } as const;
 
 /**
- * Redoslijed snimaka. Nove dodaj ovdje — sirok, uspravan, sirok, uspravan,
- * da u sredinu naizmjenicno dolazi jedan pa drugi oblik.
+ * Redoslijed snimaka. Nove dodaj ovdje — uspravan, sirok, uspravan, sirok, da
+ * u sredinu naizmjenicno dolazi jedan pa drugi oblik.
+ *
+ * Uspravni je prvi zato sto prvi okvir nikad ne dodje u sredinu: on samo viri
+ * iza lijevog ruba dok album stoji na pocetku. Ovako je prvo sto se vidi u
+ * sredini sirok snimak, kako i treba.
  */
 const RAIL = [
-  { src: '/images/real/vrcanje-kosnice.webp', frame: 'wide', key: 'hives' },
   { src: '/images/real/vrcanje-pcelar.webp', frame: 'tall', key: 'frame' },
+  { src: '/images/real/vrcanje-kosnice.webp', frame: 'wide', key: 'hives' },
 ] as const;
 
-/* Dvije slike su premalo da bi listanje imalo smisla; lista se ponovi dok ne
+/*
+ * Dvije slike su premalo da bi listanje imalo smisla; lista se ponovi dok ne
  * bude bar toliko okvira. Kad ih Marija doda dovoljno, ponavljanje prestane
- * samo od sebe. */
+ * samo od sebe.
+ *
+ * Prvi i posljednji okvir nikad ne dodju u sredinu — oni su ti koji vire iza
+ * rubova dok je album na pocetku i na kraju. Zato ih treba dva vise nego sto
+ * ima stanica.
+ */
 const MIN_PLATES = 6;
 
 const PLATES = Array.from({ length: Math.ceil(MIN_PLATES / RAIL.length) }, (_, pass) =>
@@ -119,10 +129,17 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
          */
         const centreOf = (plate: HTMLElement) => plate.offsetLeft + plate.offsetWidth / 2;
 
-        /* Prvi snimak u sredini ekrana — odatle traka krece. */
-        const home0 = () => track.parentElement!.clientWidth / 2 - centreOf(plates[0]);
-        /* Put od prvog do posljednjeg; svi izmedju su usputne stanice. */
-        const travel = () => centreOf(plates[plates.length - 1]) - centreOf(plates[0]);
+        /*
+         * Album se ne otvara na prvom snimku nego na drugom, i ne zavrsava na
+         * posljednjem nego na pretposljednjem. Prvi i posljednji su tu samo da
+         * vire iza rubova — bez njih bi na pocetku lijeva strana ekrana bila
+         * prazan papir, a na kraju desna.
+         */
+        const first = plates[1];
+        const last = plates[plates.length - 2];
+
+        const home0 = () => track.parentElement!.clientWidth / 2 - centreOf(first);
+        const travel = () => centreOf(last) - centreOf(first);
 
         gsap.set(track, { x: home0 });
 

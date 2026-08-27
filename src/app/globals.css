@@ -2356,12 +2356,19 @@ html:not(.is-preloading) .hero-land__arrow {
    * granica je u `svh` jer scena mora stati u jedan ekran zajedno s naslovom
    * — bez toga uspravni okvir na niskom ekranu izadje ispod ruba.
    */
-  --rail-h: min(clamp(12rem, 33vw, 30rem), 46svh);
-  /* Jedan ekran za scenu + po pola ekrana skrola na svaki snimak preko prvog. */
-  --rail-step: 55svh;
+  --rail-h: min(33vw, 52svh);
+  /*
+   * Jedan ekran za scenu + oko trecine ekrana skrola na svaku stanicu preko
+   * prve. Vise od toga i sekcija pojede pola strane: po pola ekrana na snimak
+   * je bilo cetiri hiljade piksela skrola za jedan album.
+   *
+   * Stanica ima dvije manje nego okvira: prvi i posljednji okvir nikad ne
+   * dodju u sredinu, oni samo vire iza rubova.
+   */
+  --rail-step: 38svh;
 
   position: relative;
-  height: calc(100svh + (var(--rail-count) - 1) * var(--rail-step));
+  height: calc(100svh + (var(--rail-count) - 3) * var(--rail-step));
   background: var(--paper);
 }
 
@@ -2534,7 +2541,7 @@ html:not(.is-preloading) .hero-land__arrow {
 @media (max-width: 700px) {
   .rail {
     --rail-h: min(58vw, 38svh);
-    --rail-step: 45svh;
+    --rail-step: 32svh;
   }
 
   /* Na uskom ekranu dva pecata jedan uz drugi pojedu snimak; ostaje prvi. */
