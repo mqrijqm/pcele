@@ -980,6 +980,34 @@ html.is-preloading body {
   border-radius: var(--radius-lg);
   border-bottom-left-radius: var(--radius-sweep);
   background: var(--paper);
+
+  /* Za nijansu blijedje od punog mastila — snimak sjeda u papir umjesto da
+   * stoji na njemu. */
+  opacity: 0.96;
+
+  /*
+   * Donji rub se ne sijece, nego se gasi.
+   *
+   * Kadar je zavrsavao pravom linijom preko trave, tacno tamo gdje snimak
+   * prestaje. Maska mu pojede zadnju sesnaestinu u prelivu, pa se crtez
+   * rasplinjava u papir — kosnicama blijede noge umjesto da ih presijeca rub.
+   *
+   * Da preliv pocinje vise, pojeo bi i same kosnice: one stoje u zadnjoj
+   * petini kadra. Zato je u samom fajlu ispod njih ostavljena traka papira —
+   * preliv najvise radi na njoj, gdje nema sta da izgubi.
+   *
+   * Prelaz nije ravnomjeran: prvo pada polako, pa naglo. Prava linearna maska
+   * se cita kao siva traka preko dna.
+   */
+  --film-fade: linear-gradient(
+    to bottom,
+    #000 0 84%,
+    rgba(0, 0, 0, 0.78) 90%,
+    rgba(0, 0, 0, 0.3) 95%,
+    transparent 100%
+  );
+  -webkit-mask-image: var(--film-fade);
+  mask-image: var(--film-fade);
 }
 
 /*

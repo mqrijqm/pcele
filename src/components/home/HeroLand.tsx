@@ -5,20 +5,19 @@ import type { Locale } from '@/i18n/config';
  * Pocetni ekran: crtez livade, sa wordmarkom i pisanim natpisom polozenim
  * preko njega.
  *
- * Pozadina je snimak, ne crtez: kamera se spusta preko polja do pcelinjaka i
- * stane na pcelaru. Na snimku nema ni slova ni pcele, sve sto se vidi preko
- * njega je zaseban element. Zato se lockup moze pomerati i prevoditi, ostaje
- * ostar na svakoj velicini, i pcela koja leti kroz stranu je jedina pcela u
- * heroju.
+ * Pozadina je snimak, ne crtez: pcela preleti livadu i pred njom se podignu
+ * kosnice. Na snimku nema slova, sve sto se vidi preko njega je zaseban
+ * element. Zato se lockup moze pomerati i prevoditi, i ostaje ostar na svakoj
+ * velicini.
  *
  * Snimak ne ide u krug. Vrti se jednom i stane na zadnjem kadru — pcelinjak
  * ostaje kao mirna slika, kao sto je crtez i bio. Vracanje na pocetak bi na
  * naguravanju kamere bilo trzaj, ne petlja.
  *
- * Kadar je cio kadar iz originala. Ranije je bio isjecen na omjer plate pa
- * naduvan na 1600 — crtez je zbog toga stajao zumiran i mekan. Sada snimak
- * nosi svoju punu sirinu, a razlika do omjera plate je dopunjena bojom papira
- * u samom fajlu, pa se dopuna ne vidi.
+ * Kadar je cio kadar iz originala, nista nije isjeceno. Razlika do omjera
+ * plate je dopunjena bojom papira u samom fajlu, i to sva gore: gornji rub je
+ * prazno nebo pa se dopuna tamo ne vidi, a prednji plan s kosnicama sjeda na
+ * donji rub — tamo gdje ga maska u CSS-u gasi u papir.
  *
  * Svaka pozicija je procenat plate, a plata je container, pa se ceo sklop
  * skalira kao jedan komad na bilo kojoj sirini.
@@ -30,8 +29,8 @@ import type { Locale } from '@/i18n/config';
 export default function HeroLand({ locale }: { locale: Locale }) {
   const alt =
     locale === 'sr'
-      ? 'Crtež livada i brda oko Mračaja'
-      : 'A drawing of the meadows and hills around Mračaj';
+      ? 'Crtež livade oko Mračaja: pčela dolijeće do reda košnica'
+      : 'A drawing of the meadows around Mračaj: a bee flying in to a row of hives';
 
   const script = locale === 'sr' ? 'Listaj i prati pčelu' : 'Scroll and follow the bee';
 
