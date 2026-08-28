@@ -18,8 +18,8 @@ import BeeFlight from '@/components/bee/BeeFlight';
 /**
  * Pocetna, jedan tok bez ponavljanja:
  *
- *   hero i identitet -> prelaz na smedju -> album -> porodicna tradicija ->
- *   mjesto -> utisci -> pitanja -> sorte -> jedan poziv na kraju
+ *   crtez livade -> prelaz na smedju i natrag -> tegla -> album ->
+ *   porodicna tradicija -> mjesto -> utisci -> pitanja -> sorte -> poziv
  *
  * Sorte su sisle s vrha. Odmah iza heroja su tri sorte trazile odluku od
  * citaoca koji jos nije cuo ciji je to med; sada stoje pri dnu, kad je prica
@@ -48,14 +48,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <BeeFlight />
 
       <HeroLand locale={locale} />
-      <HeroJar locale={locale} />
 
       {/*
-        Med se prelije preko ruba i strana prelazi na smedju, pa se na dnu
-        pojasa isto tako vrati na papir. Pojas je prazan namjerno — on je
-        prelaz, ne sekcija.
+        Odmah za herojem: med se prelije preko ruba, strana potamni, pa se na
+        dnu pojasa istim potezom vrati na papir. Pojas je prazan namjerno — on
+        je prelaz izmedju crteza i tegle, ne sekcija.
       */}
       <Drip />
+
+      <HeroJar locale={locale} />
 
       {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
       <PhotoRail locale={locale} />

@@ -1065,10 +1065,24 @@ p {
   width: min(78vw, 62svh);
 }
 
+/*
+ * Rub snimka se rastapa u zavjesu.
+ *
+ * Papir u fajlu je tacno `--paper`, ali snimak do ekrana ide kroz YUV i vrati
+ * se za dvadesetak nivoa tamniji — koliko god se fajl podigao, preglednik ga
+ * stisne natrag, jer video nosi uzi opseg od RGB-a. Kvadrat se zato uvijek
+ * nazirao kao svijetla ploca oko tegle.
+ *
+ * Zato se boja vise i ne pokusava pogoditi: rub snimka se ugasi u prozirno,
+ * pa razlike nema gdje da se vidi. Tegla stoji u sredini, daleko od preliva.
+ */
 #preloader .preloader__clip {
   width: 100%;
   height: auto;
   display: block;
+  --clip-fade: radial-gradient(closest-side, #000 58%, rgba(0, 0, 0, 0.35) 84%, transparent 100%);
+  -webkit-mask-image: var(--clip-fade);
+  mask-image: var(--clip-fade);
 }
 
 /*
@@ -1134,6 +1148,12 @@ html.is-preloading body {
   width: 100%;
   overflow: hidden;
   background-color: var(--paper);
+  /*
+   * Zracnost oko cijelog sklopa. Crtez je ranije isao od ruba do ruba i sjekao
+   * se na sve cetiri strane; sada stoji uvucen, s papirom oko sebe, pa se cita
+   * kao slika polozena na stranu a ne kao pozadina.
+   */
+  padding: clamp(2rem, 7vw, 9rem);
 }
 
 .hero-land__plate {
@@ -1154,9 +1174,12 @@ html.is-preloading body {
  * od medija upita a ne od snimka.
  */
 /*
- * Crtez popunjava platu i uzima isti otvoreni ugao kao svaka slika na sajtu.
- * `object-fit: cover` je tu zbog uskih ekrana, gdje plata dobije svoj omjer
- * od medija upita a ne od crteza.
+ * Crtez staje cio, ne popunjava platu.
+ *
+ * Livada je mnogo sira nego sto je plata visoka (2.32 prema 1.56), pa je
+ * `cover` odsijecao i lijevu i desnu trecinu — otud utisak da je nabijena u
+ * kadar. `contain` je vraca cijelu; papir koji ostane iznad i ispod je isti
+ * papir koji nosi stranu, pa se ne cita kao praznina nego kao margina.
  */
 .hero-land__drawing {
   position: absolute;
@@ -1164,9 +1187,7 @@ html.is-preloading body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-  border-bottom-left-radius: var(--radius-sweep);
+  object-fit: contain;
 }
 
 /*
@@ -2390,32 +2411,46 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Snimak uzima omjer okvira, ne svoj: okvir je crtez fiksnog omjera i ne
- * moze se rastegnuti a da mu rese ne postanu nejednake.
+ * Snimak drzi svoj omjer i vidi se cio — nista se ne podrezuje. Okvir se
+ * povija po njemu, ne obrnuto: crtez ide u sirinu kad i snimak, jer mu
+ * `preserveAspectRatio="none"` dozvoljava da se rastegne. Rese od toga budu
+ * za nijansu nejednake, sto je kod rucnog crteza prije vrlina nego mana.
  */
 .legacy__archive {
   position: relative;
-  aspect-ratio: 400 / 586;
-  width: min(100%, 26rem);
+  aspect-ratio: 1600 / 914;
   margin: 0;
 }
 
 /*
- * Okvir lezi preko snimka i ne hvata klik. Snimak je uvucen za debljinu rese
- * da mu rub ne viri ispod nje.
+ * Okvir stoji izvan snimka, ne preko njega: razmaknut je za svoju sirinu na
+ * sve cetiri strane, pa mu rese padaju na papir a snimak ostaje cio.
+ *
+ * Razmak je veci gore i dolje nego sa strana jer je i crtez takav — resa uz
+ * kracu stranicu je krupnija u odnosu na nju.
  */
 .legacy__frame {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  /*
+   * Mjere su izricite, ne kroz `inset`: SVG bez `width`/`height` atributa nema
+   * svoju velicinu, pa mu preglednik uz `width: auto` da podrazumijevanih
+   * 300x150 i cetiri `inset`-a ne znace nista.
+   *
+   * Pet posto sa strana, sedam i po gore i dolje — resa uz kracu stranicu je
+   * u crtezu krupnija, pa joj treba vise mjesta.
+   */
+  left: -5%;
+  top: -7.5%;
+  width: 110%;
+  /* Bez ovoga ga Tailwindov `img { max-width: 100% }` zadrzi na sirini slike,
+   * pa okvir nikad ne izadje iz nje. */
+  max-width: none;
+  height: 115%;
   pointer-events: none;
 }
 
 .legacy__archive .legacy__img {
-  inset: 4.5%;
-  width: auto;
-  height: auto;
+  object-fit: cover;
   border-radius: 2px;
 }
 
