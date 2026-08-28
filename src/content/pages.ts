@@ -220,23 +220,24 @@ export const home = {
       heading: 'Mračaj',
       body:
         'U seoskom kraju, na opojnim livadama i obroncima, vrcamo jedinstven med prirodnog porijekla.',
-      coords: ['44.89915° N,', '17.53360° E'],
+      coords: '44.89915° N, 17.53360° E',
       alt: 'Red plavih i žutih košnica uz njivu, u ljetno popodne',
+      hillsAlt: 'Crtež brda i puta koji vijuga između njih',
     },
     en: {
       heading: 'Mračaj',
       body:
         'Out in the countryside, on heady meadows and hillsides, we extract a honey of singular, natural origin.',
-      coords: ['44.89915° N,', '17.53360° E'],
+      coords: '44.89915° N, 17.53360° E',
       alt: 'A row of blue and yellow hives beside a field on a summer afternoon',
+      hillsAlt: 'A drawing of hills with a path winding between them',
     },
   } satisfies L<{
     heading: string;
     body: string;
-    /* Dva reda, ne jedan s prelomom: sirina okvira se mijenja, a broj ne
-     * smije da se prelomi gdje mu padne. */
-    coords: [string, string];
+    coords: string;
     alt: string;
+    hillsAlt: string;
   }>,
 
   rail: {

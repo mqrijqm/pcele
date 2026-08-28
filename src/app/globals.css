@@ -2618,24 +2618,59 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
+ * Gore lijevo, jedno pod drugim: crtez brda pa koordinate. Mjere su razlomci
+ * snimka, ne kadra — okvir se skrolom skuplja, a njih dvoje se skupljaju s
+ * njim i ostaju na istom mjestu u slici.
+ */
+.apiary__hills {
+  position: absolute;
+  left: 3.1%;
+  top: 2.6%;
+  width: 15.8%;
+  height: auto;
+}
+
+/*
  * Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku.
- * Dva reda su dva `span`-a, ne prelom u tekstu: sirina okvira se mijenja, a
- * broj ne smije da se lomi gdje mu padne.
+ * Stoje u jednom redu, tacno pod crtezom.
  */
 .apiary__coords {
   position: absolute;
-  left: 3.5%;
-  bottom: 5.5%;
+  left: 3.1%;
+  top: 20.3%;
   font-family: var(--font-sans), system-ui, sans-serif;
   /* Ista mjera kao "VRCANO 2025" uz teglu — oba su natpis uz sliku. */
   font-size: var(--type-caption);
   line-height: 1.35;
+  white-space: nowrap;
   color: var(--paper);
   text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
 }
 
-.apiary__coords span {
-  display: block;
+/*
+ * Sunce stoji uz samo ime sela, gore desno od njega, i jedino se ono vrti.
+ * Krug je simetrican pa se okretanje vidi po zracima — punih trideset sekundi
+ * za krug, taman da se primijeti a da ne vuce pogled sa imena.
+ */
+.apiary__sun {
+  position: absolute;
+  left: 88.5%;
+  top: 45.8%;
+  width: 5.4%;
+  height: auto;
+  animation: sun-spin 30s linear infinite;
+}
+
+@keyframes sun-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apiary__sun {
+    animation: none;
+  }
 }
 
 /*
@@ -2679,6 +2714,19 @@ html:not(.is-preloading) .hero-land__arrow {
     left: 8%;
     top: 44%;
     width: 74%;
+  }
+
+  .apiary__hills {
+    width: 34%;
+  }
+
+  .apiary__coords {
+    top: 24%;
+  }
+
+  /* Na uskom ekranu sunce pada tacno u ime sela; ostaje samo crtez gore. */
+  .apiary__sun {
+    display: none;
   }
 }
 

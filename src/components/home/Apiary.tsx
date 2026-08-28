@@ -103,17 +103,34 @@ export default function Apiary({ locale }: { locale: Locale }) {
             sizes="100vw"
           />
 
+          {/*
+            * Gore lijevo: crtez brda s putem, i pod njim koordinate. Crtez
+            * kaze kakav je kraj, broj kaze koji tacno — jedno bez drugog je
+            * ili ukras ili podatak, a zajedno su mjesto.
+            */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="apiary__hills apiary__copy"
+            src="/images/brand/brda.svg"
+            alt={t.hillsAlt}
+          />
+
+          {/* Koordinate idu grotesknim slogom — to je podatak, ne recenica. */}
+          <p className="apiary__coords apiary__copy">{t.coords}</p>
+
           <figcaption className="apiary__where">
             <h2 className="apiary__heading apiary__copy">{t.heading}</h2>
             <p className="apiary__body apiary__copy">{t.body}</p>
           </figcaption>
 
-          {/* Koordinate idu grotesknim slogom — to je podatak, ne recenica. */}
-          <p className="apiary__coords apiary__copy">
-            {t.coords.map((line) => (
-              <span key={line}>{line}</span>
-            ))}
-          </p>
+          {/* Sunce uz ime sela; jedino se ono vrti. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="apiary__sun apiary__copy"
+            src="/images/brand/sunce.svg"
+            alt=""
+            aria-hidden="true"
+          />
         </figure>
       </div>
     </section>
