@@ -55,6 +55,7 @@ export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
   const beeRef = useRef<HTMLDivElement>(null);
+  const driftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -62,7 +63,8 @@ export default function BeeFlight() {
     if (!mounted) return;
     const layer = layerRef.current;
     const bee = beeRef.current;
-    if (!layer || !bee) return;
+    const drift = driftRef.current;
+    if (!layer || !bee || !drift) return;
 
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -77,6 +79,25 @@ export default function BeeFlight() {
 
     const ctx = gsap.context(() => {
       gsap.set(bee, { xPercent: -50, yPercent: -50 });
+
+      /*
+       * Kruzenje oko mjesta na kojem stoji.
+       *
+       * Bez ovoga pcela samo sjedi u uglu i s vremena na vrijeme preskoci na
+       * drugi — a izmedju ta dva skoka izgleda kao naljepnica. Ovako je stalno
+       * u letu, samo taj let nikud ne vodi.
+       *
+       * Ide na svoj sloj, ne na `.bee`: taj nosi izbor mjesta, i da se dvoje
+       * pise u isti `transform`, jedno bi drugo brisalo. Brojevi su namjerno
+       * neujednaceni — krug jednakih koraka se cita kao mehanizam.
+       */
+      const wander = gsap
+        .timeline({ repeat: -1, defaults: { ease: 'sine.inOut' } })
+        .to(drift, { x: 26, y: -18, duration: 3.1 })
+        .to(drift, { x: 38, y: 14, duration: 2.4 })
+        .to(drift, { x: -14, y: 22, duration: 3.6 })
+        .to(drift, { x: -30, y: -10, duration: 2.8 })
+        .to(drift, { x: 0, y: 0, duration: 3.3 });
       const toX = gsap.quickTo(bee, 'x', { duration: GLIDE, ease: 'power3.out' });
       const toY = gsap.quickTo(bee, 'y', { duration: GLIDE, ease: 'power3.out' });
 
@@ -168,6 +189,7 @@ export default function BeeFlight() {
         window.removeEventListener('scroll', later);
         window.removeEventListener('resize', later);
         ro.disconnect();
+        wander.kill();
       };
     }, layer);
 
@@ -178,10 +200,12 @@ export default function BeeFlight() {
 
   return createPortal(
     <div className="bee-layer" ref={layerRef} aria-hidden="true">
-      {/* dva omotaca: mjesto u kadru -> lebdenje -> crtez */}
+      {/* tri omotaca: mjesto u kadru -> kruzenje oko njega -> lebdenje -> crtez */}
       <div className="bee" ref={beeRef}>
-        <div className="bee__hover">
-          <BeeSvg className="bee__art" />
+        <div className="bee__drift" ref={driftRef}>
+          <div className="bee__hover">
+            <BeeSvg className="bee__art" />
+          </div>
         </div>
       </div>
     </div>,

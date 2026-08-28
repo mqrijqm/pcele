@@ -39,8 +39,8 @@ export default function Legacy({ locale }: { locale: Locale }) {
           className="legacy__figure reveal stagger-1"
           src="/images/brand/pcelar.svg"
           alt={copy.figureAlt}
-          width={5335}
-          height={6000}
+          width={214}
+          height={333}
         />
 
         <div className="legacy__plates reveal stagger-2">

@@ -1321,6 +1321,11 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
+/* Sloj kruzenja: nosi ga GSAP, da ne dira ni izbor mjesta ni lebdenje. */
+.bee__drift {
+  will-change: transform;
+}
+
 /* Srednji omotac: mirno lebdenje, nezavisno od skrola. */
 .bee__hover {
   will-change: transform;
@@ -2399,16 +2404,17 @@ html:not(.is-preloading) .hero-land__arrow {
    * svoju velicinu, pa mu preglednik uz `width: auto` da podrazumijevanih
    * 300x150 i cetiri `inset`-a ne znace nista.
    *
-   * Pet posto sa strana, sedam i po gore i dolje — resa uz kracu stranicu je
-   * u crtezu krupnija, pa joj treba vise mjesta.
+   * Osam i po posto sa strana, trinaest gore i dolje — resa uz kracu stranicu
+   * je u crtezu krupnija, pa joj treba vise mjesta. Sto je razmak veci, to
+   * snimak unutra izgleda manji, a okvir oko njega krupniji.
    */
-  left: -5%;
-  top: -7.5%;
-  width: 110%;
+  left: -8.5%;
+  top: -13%;
+  width: 117%;
   /* Bez ovoga ga Tailwindov `img { max-width: 100% }` zadrzi na sirini slike,
    * pa okvir nikad ne izadje iz nje. */
   max-width: none;
-  height: 115%;
+  height: 126%;
   pointer-events: none;
 }
 
