@@ -23,9 +23,9 @@ gsap.registerPlugin(ScrollTrigger);
  * vidi manje, u sirem vise. Zato se odmicanjem zapravo otvara vise livade,
  * umjesto da se ista slika samo umanji.
  *
- * Mjere okvira na kraju: pet posto sa strana, dvanaest gore i dolje. Time
- * okvir dobije omjer blizak omjeru samog snimka, pa se u njemu vidi gotovo
- * cijela sirina.
+ * Mjere okvira na kraju: dva posto sa strana, tri gore i dolje. Snimak se
+ * jedva odmakne od ruba — dovoljno da se vidi da je slika polozena na papir,
+ * premalo da se cita kao izdvojena ploca.
  */
 export default function Apiary({ locale }: { locale: Locale }) {
   const root = useRef<HTMLElement>(null);
@@ -61,11 +61,11 @@ export default function Apiary({ locale }: { locale: Locale }) {
           shot,
           { top: '0%', right: '0%', bottom: '0%', left: '0%', borderRadius: 0 },
           {
-            top: '12%',
-            right: '5%',
-            bottom: '12%',
-            left: '5%',
-            borderRadius: 20,
+            top: '3%',
+            right: '2%',
+            bottom: '3%',
+            left: '2%',
+            borderRadius: 8,
             ease: 'none',
             duration: 1,
           },

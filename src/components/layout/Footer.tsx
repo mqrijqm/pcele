@@ -20,7 +20,7 @@ export default function Footer({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#885B27] text-[#FCF0DC]">
+    <footer className="bg-[#C39C4A] text-[#FCF0DC]">
       <div className="container pt-28 lg:pt-40">
         {/* Only what someone actually needs: where we are, how to reach us, where to go next. */}
         <div className="reveal grid gap-14 sm:grid-cols-2 lg:grid-cols-[1fr_auto]">

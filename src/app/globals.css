@@ -11,7 +11,9 @@
   --paper: #FCF0DC;  /* 60% — papir; jedina svijetla boja na sajtu */
   --brown: #885B27;  /* 30% — mastilo, tekst i crtez livade u heroju */
   --gold:  #EEC660;  /* 10% — zlatna, akcenat */
-  --sage:  #818765;  /* zelena s pecata; jedina boja izvan tri, i samo na njima */
+  --sage:  #818765;
+  --amber: #C39C4A;  /* med — smedja povrsina; mastilo ostaje --brown */
+  /* zelena s pecata; jedina boja izvan tri, i samo na njima */
 
   /* Sitan tekst: ista smedja, samo tise. Nije cetvrta boja. */
   --brown-soft: rgba(136, 91, 39, 0.75);
@@ -2521,7 +2523,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .drip__body {
   min-height: 40svh;
-  background: var(--brown);
+  background: var(--amber);
 }
 
 /*
@@ -2537,7 +2539,7 @@ html:not(.is-preloading) .hero-land__arrow {
  * strane ga nastavlja sam.
  */
 .drip__tail {
-  background: var(--brown);
+  background: var(--amber);
   height: 23vw;
   overflow: hidden;
 }
@@ -2662,8 +2664,12 @@ html:not(.is-preloading) .hero-land__arrow {
   right: 2.9%;
   top: 94.4%;
   font-family: var(--font-sans), system-ui, sans-serif;
-  /* Ista mjera kao "VRCANO 2025" uz teglu — oba su natpis uz sliku. */
-  font-size: var(--type-caption);
+  /*
+   * Sitno, mjerom kojom su pisani i natpisi iznad naslova po sekcijama. Broj
+   * je fusnota uz sliku, ne natpis na njoj — krupan bi se takmicio s imenom
+   * sela, a njemu nije mjesto u tom razgovoru.
+   */
+  font-size: var(--type-eyebrow);
   line-height: 1.35;
   white-space: nowrap;
   color: var(--paper);
@@ -2689,8 +2695,8 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 
   .apiary__shot {
-    inset: 12% 5%;
-    border-radius: 20px;
+    inset: 3% 2%;
+    border-radius: 8px;
   }
 
   .apiary__copy {
