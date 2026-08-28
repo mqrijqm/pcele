@@ -66,6 +66,23 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Vazduh. Sekcije disu — ovo je glavna poluga za ritam celog sajta. */
+  /*
+   * Tri mjere sloga, da cijela strana govori istim glasom.
+   *
+   * Uzete su iz sekcije s teglom, jer je ona vec bila namjestena po oku:
+   * naslov "Med kakav treba biti" stoji na 4.155vw, natpis "VRCANO 2025" uz
+   * njega na 1.366vw. Tamo su ciste `vw` jer je cijela ta kompozicija fiksna
+   * i skalira se kao jedan komad; ovdje su ogranicene s obje strane, da se na
+   * telefonu ne raspadnu a na vrlo sirokom ekranu ne pobjegnu. U rasponu u
+   * kojem se strana i gleda — od oko 770 do 2100 px — mjera je ista.
+   *
+   * Heroj i podnozje ne ucestvuju: heroj je crtez sa svojim lockupom, a
+   * podnozje ima svoj, sitniji glas.
+   */
+  --type-heading: clamp(2rem, 4.155vw, 5.5rem);
+  --type-caption: clamp(0.85rem, 1.366vw, 1.6rem);
+  --type-eyebrow: 0.82rem;
+
   --section-padding: clamp(7rem, 14vw, 13rem);
   --section-padding-sm: clamp(4.5rem, 9vw, 8rem);
   --container-padding: clamp(1.75rem, 7vw, 7rem);
@@ -813,6 +830,8 @@ p {
   z-index: 2;
   overflow: hidden;
   font-family: var(--font-sans), system-ui, sans-serif;
+  /* Mjera iz koje je izveden `--type-caption`; ovdje ostaje cista `vw` jer se
+   * cijela ova kompozicija skalira kao jedan komad. */
   font-size: 1.366vw;
   font-weight: 400;
   line-height: 1.35;
@@ -1415,7 +1434,7 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: 0 auto;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.82rem;
+  font-size: var(--type-eyebrow);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1428,7 +1447,7 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: clamp(2rem, 4vw, 3.25rem) auto 0;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.35rem, 2.35vw, 2.1rem);
+  font-size: var(--type-heading);
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.015em;
@@ -1698,7 +1717,7 @@ html:not(.is-preloading) .hero-land__arrow {
  * ------------------------------------------------------------------------- */
 .blog-intro__eyebrow {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.82rem;
+  font-size: var(--type-eyebrow);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--brown);
@@ -1709,7 +1728,7 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.7rem, 3.4vw, 3rem);
+  font-size: var(--type-heading);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -1847,7 +1866,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .blog-feature__title {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: var(--type-heading);
   font-weight: 400;
   line-height: 1.02;
   letter-spacing: -0.03em;
@@ -1984,7 +2003,7 @@ html:not(.is-preloading) .hero-land__arrow {
 .opener__eyebrow {
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.82rem;
+  font-size: var(--type-eyebrow);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--brown);
@@ -1995,7 +2014,7 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: clamp(1.5rem, 3vw, 2.5rem) auto 0;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.9rem, 4.4vw, 3.6rem);
+  font-size: var(--type-heading);
   font-weight: 400;
   line-height: 1.08;
   letter-spacing: -0.025em;
@@ -2053,7 +2072,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .frames__eyebrow {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.8rem;
+  font-size: var(--type-eyebrow);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--brown);
@@ -2062,7 +2081,7 @@ html:not(.is-preloading) .hero-land__arrow {
 .frames__heading {
   margin-top: 1.25rem;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.5rem, 2.6vw, 2.25rem);
+  font-size: var(--type-heading);
   font-weight: 400;
   line-height: 1.15;
   letter-spacing: -0.02em;
@@ -2320,7 +2339,7 @@ html:not(.is-preloading) .hero-land__arrow {
 /* --- gornji red: naslov lijevo, pcelar desno ----------------------------- */
 
 .legacy__eyebrow {
-  font-size: 0.7rem;
+  font-size: var(--type-eyebrow);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2352,7 +2371,7 @@ html:not(.is-preloading) .hero-land__arrow {
   max-width: 15ch;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-weight: 400;
-  font-size: clamp(2.4rem, 6vw, 6.75rem);
+  font-size: var(--type-heading);
   line-height: 1.02;
   letter-spacing: -0.02em;
   color: var(--brown);
@@ -2579,7 +2598,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .apiary__heading {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(2.5rem, 5.6vw, 5rem);
+  font-size: var(--type-heading);
   line-height: 1;
   letter-spacing: -0.01em;
   /*
@@ -2608,7 +2627,8 @@ html:not(.is-preloading) .hero-land__arrow {
   left: 3.5%;
   bottom: 5.5%;
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: clamp(0.8rem, 1.05vw, 1.05rem);
+  /* Ista mjera kao "VRCANO 2025" uz teglu — oba su natpis uz sliku. */
+  font-size: var(--type-caption);
   line-height: 1.35;
   color: var(--paper);
   text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
@@ -2712,7 +2732,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .rail__eyebrow {
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: var(--type-eyebrow);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -2724,7 +2744,7 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .rail__heading {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.75rem, 3.4vw, 2.75rem);
+  font-size: var(--type-heading);
   line-height: 1.12;
   color: var(--brown);
 }

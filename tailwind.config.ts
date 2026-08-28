@@ -46,7 +46,8 @@ const config: Config = {
       fontSize: {
         // Display skala je fluidna — raste sa sirinom ekrana, bez skokova.
         'display-sm': ['clamp(1.75rem, 3vw, 2.25rem)', { lineHeight: '1.15', letterSpacing: '-0.01em' }],
-        'display-md': ['clamp(2.25rem, 5vw, 3.5rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
+        // Naslov sekcije. Ista mjera koju nose i naslovi pisani u globals.css.
+        'display-md': ['var(--type-heading)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
         'display-lg': ['clamp(3rem, 8vw, 6rem)', { lineHeight: '0.98', letterSpacing: '-0.035em' }],
         'display-xl': ['clamp(3.5rem, 12vw, 9.5rem)', { lineHeight: '0.92', letterSpacing: '-0.045em' }],
       },
