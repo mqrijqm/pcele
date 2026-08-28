@@ -50,6 +50,24 @@ const MIN_HOP = 0.22;
 /** Raspon trajanja jednog leta, u sekundama. */
 const HOP = { min: 3.4, max: 5.6 };
 
+/**
+ * Polazno mjesto: tik uz vrh isprekidane strelice u heroju.
+ *
+ * Strelica i natpis "Listaj i prati pcelu" pokazuju na pcelu — ako je nema
+ * tamo, crtez pokazuje u prazno. Mjere su razlomci same strelice, ne kadra,
+ * pa je pcela nadje gdje god strelica bila: devet posto njene sirine lijevo
+ * od nje, na sedamdeset posto njene visine.
+ *
+ * Nagib je isti kao na crtezu — pcela ulijece koso, ne vodoravno.
+ */
+const START = { x: -0.093, y: 0.704, tilt: 20 };
+
+/**
+ * Dokle heroj vazi za "u kadru". Dok mu se strelica vidi bar toliko, pcela
+ * stoji na svom mjestu; cim heroj prodje, krece let.
+ */
+const HERO_HOLD = 0.35;
+
 export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
@@ -65,19 +83,27 @@ export default function BeeFlight() {
 
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /*
-     * Polazi gore lijevo i gleda udesno — u stranu, ne u rub. Tu je i vrh
-     * isprekidane strelice u heroju, pa natpis "Listaj i prati pcelu" pokazuje
-     * na nju a ne u prazno.
+    /**
+     * Mjesto uz strelicu u heroju, dok se heroj vidi. Kad prodje — `null`, pa
+     * pcela slobodno leti.
      */
-    const start = { x: 0.12, y: 0.2 };
+    const heroSpot = () => {
+      const arrow = document.querySelector('.hero-land__arrow');
+      if (!arrow) return null;
+      const r = arrow.getBoundingClientRect();
+      if (r.bottom < window.innerHeight * HERO_HOLD) return null;
+      return { x: r.left + r.width * START.x, y: r.top + r.height * START.y };
+    };
+
+    const first = heroSpot() ?? { x: window.innerWidth * 0.12, y: window.innerHeight * 0.2 };
 
     gsap.set(bee, {
       xPercent: -50,
       yPercent: -50,
-      x: window.innerWidth * start.x,
-      y: window.innerHeight * start.y,
+      x: first.x,
+      y: first.y,
       scaleX: 1,
+      rotation: START.tilt,
     });
 
     if (still) {
@@ -86,7 +112,7 @@ export default function BeeFlight() {
     }
 
     const ctx = gsap.context(() => {
-      let at = { x: window.innerWidth * start.x, y: window.innerHeight * start.y };
+      let at = { ...first };
 
       /*
        * Sadrzaj koji je trenutno u kadru. Ukrasi se ne broje: sajt je pun
@@ -131,6 +157,10 @@ export default function BeeFlight() {
        * koja je najdalje od svega.
        */
       const nextStop = () => {
+        /* Dok se heroj vidi, jedino odrediste je njegovo mjesto uz strelicu. */
+        const hero = heroSpot();
+        if (hero) return hero;
+
         const w = window.innerWidth;
         const h = window.innerHeight;
         const boxes = inView();
@@ -154,9 +184,12 @@ export default function BeeFlight() {
 
       const flyOn = () => {
         const to = nextStop();
-        /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda. */
+        const parked = heroSpot() !== null;
+        /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda.
+         * Nagib nosi samo dok stoji uz strelicu — u letu je ravna. */
         gsap.to(bee, {
           scaleX: to.x < at.x ? -1 : 1,
+          rotation: parked ? START.tilt : 0,
           duration: 0.45,
           ease: 'power2.out',
           overwrite: 'auto',
