@@ -1153,7 +1153,12 @@ html.is-preloading body {
  * `object-fit: cover` je tu zbog uskih ekrana, gdje plata dobije svoj omjer
  * od medija upita a ne od snimka.
  */
-.hero-land__film {
+/*
+ * Crtez popunjava platu i uzima isti otvoreni ugao kao svaka slika na sajtu.
+ * `object-fit: cover` je tu zbog uskih ekrana, gdje plata dobije svoj omjer
+ * od medija upita a ne od crteza.
+ */
+.hero-land__drawing {
   position: absolute;
   inset: 0;
   display: block;
@@ -1162,35 +1167,6 @@ html.is-preloading body {
   object-fit: cover;
   border-radius: var(--radius-lg);
   border-bottom-left-radius: var(--radius-sweep);
-  background: var(--paper);
-
-  /* Za nijansu blijedje od punog mastila — snimak sjeda u papir umjesto da
-   * stoji na njemu. */
-  opacity: 0.96;
-
-  /*
-   * Donji rub se ne sijece, nego se gasi.
-   *
-   * Kadar je zavrsavao pravom linijom preko trave, tacno tamo gdje snimak
-   * prestaje. Maska mu pojede zadnju sesnaestinu u prelivu, pa se crtez
-   * rasplinjava u papir — kosnicama blijede noge umjesto da ih presijeca rub.
-   *
-   * Da preliv pocinje vise, pojeo bi i same kosnice: one stoje u zadnjoj
-   * petini kadra. Zato je u samom fajlu ispod njih ostavljena traka papira —
-   * preliv najvise radi na njoj, gdje nema sta da izgubi.
-   *
-   * Prelaz nije ravnomjeran: prvo pada polako, pa naglo. Prava linearna maska
-   * se cita kao siva traka preko dna.
-   */
-  --film-fade: linear-gradient(
-    to bottom,
-    #000 0 84%,
-    rgba(0, 0, 0, 0.78) 90%,
-    rgba(0, 0, 0, 0.3) 95%,
-    transparent 100%
-  );
-  -webkit-mask-image: var(--film-fade);
-  mask-image: var(--film-fade);
 }
 
 /*
@@ -2313,38 +2289,16 @@ html:not(.is-preloading) .hero-land__arrow {
   margin-block: clamp(2.5rem, 7vw, 3.5rem);
 }
 
-/* --- sirok ekran: tri kolone, uspravne linije u razmaku ------------------ */
+/*
+ * Sorte idu jedna ispod druge na svakoj sirini: livadski, bagrem, propolis.
+ *
+ * Ranije su na sirokom ekranu stajale u tri kolone, pa se citalo kao tri
+ * ponude jedne pored druge. Uspravan red ih cita kao redosljed — jedna pa
+ * druga pa treca — a linija izmedju njih je vodoravna, kao razmak u tekstu.
+ */
 @media (min-width: 860px) {
-  .sorte__lista {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .sorte__polje {
-    padding-inline: clamp(1.5rem, 3.5vw, 3rem);
-  }
-
-  .sorte__polje:first-child {
-    padding-left: 0;
-  }
-
-  .sorte__polje:last-child {
-    padding-right: 0;
-  }
-
-  .sorte__razdjelnik {
-    position: absolute;
-    inset-block: 6%;
-    left: 0;
-    margin: 0;
-    width: 10px;
-  }
-
-  .ink-rule.sorte__razdjelnik .ink-rule__h {
-    display: none;
-  }
-
-  .ink-rule.sorte__razdjelnik .ink-rule__v {
-    display: block;
+    padding-inline: clamp(1.5rem, 4vw, 4rem);
   }
 }
 
@@ -2433,32 +2387,36 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .legacy__plates {
   position: relative;
-  /*
-   * Arhivski snimak drzi visinu reda; desni pojas je prazan da sace ima
-   * kuda da izadje iz njega.
-   */
-  padding-right: 14%;
 }
 
+/*
+ * Snimak uzima omjer okvira, ne svoj: okvir je crtez fiksnog omjera i ne
+ * moze se rastegnuti a da mu rese ne postanu nejednake.
+ */
 .legacy__archive {
   position: relative;
-  aspect-ratio: 8 / 5;
+  aspect-ratio: 400 / 586;
+  width: min(100%, 26rem);
   margin: 0;
 }
 
-.legacy__comb {
+/*
+ * Okvir lezi preko snimka i ne hvata klik. Snimak je uvucen za debljinu rese
+ * da mu rub ne viri ispod nje.
+ */
+.legacy__frame {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 27%;
-  aspect-ratio: 5 / 9;
-  margin: 0;
-  /*
-   * Rub u boji papira i tanka sjenka: sace treba da izgleda kao snimak
-   * polozen preko starijeg, a ne kao druga polovina jedne slike.
-   */
-  border: clamp(5px, 0.55vw, 9px) solid var(--paper);
-  box-shadow: 0 10px 30px rgba(136, 91, 39, 0.18);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.legacy__archive .legacy__img {
+  inset: 4.5%;
+  width: auto;
+  height: auto;
+  border-radius: 2px;
 }
 
 .legacy__img {
@@ -2760,6 +2718,104 @@ html:not(.is-preloading) .hero-land__arrow {
 
   .rail__sealRing {
     animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Polica: ista traka, ali s proizvodima.
+ *
+ * Sve mjere i mehanizam nasljedjuje od albuma; ovdje je samo ono cega u
+ * albumu nema — kvadratni okvir tegle i krug koji s njom mijenja boju.
+ * ------------------------------------------------------------------------- */
+.rail--shelf {
+  --rail-h: min(28vw, 46svh);
+  --rail-step: 34svh;
+}
+
+/*
+ * Tegla se ne podrezuje. Snimci proizvoda su kvadratni i vec imaju svoj zrak
+ * oko sebe, pa okvir uzima njihov omjer, a slika u njemu stoji cijela.
+ */
+.rail__item--square {
+  aspect-ratio: 1;
+  background: var(--surface);
+}
+
+.rail__img--fit {
+  object-fit: contain;
+}
+
+/*
+ * Krug uz teglu. Nije slika nego crtez u CSS-u, jer mu se boja mijenja sa
+ * svakim proizvodom — kao fajl bi trazio po jedan po boji.
+ *
+ * Prsten je zaseban sloj da bi se mogao vrtjeti sam, kao i na pecatima u
+ * albumu: natpis unutar kruga mora ostati uspravan.
+ */
+.rail__badge {
+  position: absolute;
+  top: 50%;
+  right: 11vw;
+  width: min(11vw, 22svh);
+  aspect-ratio: 1;
+  translate: 0 -50%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--badge-bg);
+  color: var(--badge-ink);
+  /* Boja se ne prebacuje nego prelazi, jer se tegla u sredinu takodje uvlaci
+   * a ne uskace. */
+  transition:
+    background-color 0.55s var(--ease-out-expo),
+    color 0.55s var(--ease-out-expo);
+  filter: drop-shadow(0 1rem 2.25rem rgba(51, 33, 12, 0.3));
+  z-index: 2;
+}
+
+.rail__badgeRing {
+  position: absolute;
+  inset: 8%;
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+  opacity: 0.75;
+  animation: seal-spin 26s linear infinite;
+}
+
+.rail__badgeText {
+  padding-inline: 12%;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.7rem, 1.35vw, 1.15rem);
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+  /* Natpis se mijenja zajedno s teglom; `key` u komponenti ga ponovo montira,
+   * pa se svaki put ispise iz nule umjesto da se zamijeni u mjestu. */
+  animation: badge-in 0.5s var(--ease-out-expo) both;
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rail__badgeRing,
+  .rail__badgeText {
+    animation: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .rail--shelf {
+    --rail-h: min(62vw, 40svh);
+  }
+
+  .rail__badge {
+    right: 4vw;
+    width: min(26vw, 18svh);
   }
 }
 

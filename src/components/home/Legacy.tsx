@@ -11,13 +11,12 @@ import type { Locale } from '@/i18n/config';
  * ivica naslova i lijeva ivica arhivskog snimka poklapaju, a desna kolona
  * stoji u istoj liniji cijelom visinom.
  *
- * Snimci se preklapaju umjesto da stoje jedan uz drugi: sace izlazi iz
- * arhivskog snimka desno i sjeda na istu donju liniju, sa rubom u boji papira
- * — kao odstampana fotografija polozena preko starije. To je jedino mjesto u
- * sekciji gdje se nesto preklapa, pa pogled prvo ide tamo.
+ * Snimak je jedan, u nazubljenom okviru u zelenoj. Sace koje je stajalo preko
+ * njega je otislo: bila su to dva snimka koja se bore za isti pogled, a prica
+ * ovdje je jedna — pcelinjak kakav je bio.
  *
  * Tekst desno je poravnat po dnu, ne po vrhu: zadnji red ("Med.Porodica.
- * Tradicija") zavrsava tacno tamo gdje i snimci, pa red ispod sekcije ide
+ * Tradicija") zavrsava tacno tamo gdje i snimak, pa red ispod sekcije ide
  * cist.
  *
  * Raster sa linijama i cetiri oblaka iznad crteza su otisli — linije su
@@ -45,24 +44,26 @@ export default function Legacy({ locale }: { locale: Locale }) {
         />
 
         <div className="legacy__plates reveal stagger-2">
-          <figure className="legacy__archive plate">
+          {/*
+            * Arhivski snimak u okviru. Okvir je crtez, ne CSS obrub: rub mu je
+            * nazubljen kao kod stare fotografije s reckastim rubom, a to nijedan
+            * `border` ne moze. Zato stoji kao zaseban sloj preko snimka —
+            * unutrasnjost mu je prazna, pa se snimak vidi kroz nju.
+            */}
+          <figure className="legacy__archive">
             <Image
               className="legacy__img"
               src="/images/real/pcelinjak-arhiva.webp"
               alt={copy.archiveAlt}
               fill
-              sizes="(max-width: 900px) 100vw, 52vw"
+              sizes="(max-width: 900px) 100vw, 46vw"
             />
-          </figure>
-
-          {/* Jedino preklapanje u sekciji: sace lezi preko arhivskog snimka. */}
-          <figure className="legacy__comb plate">
-            <Image
-              className="legacy__img"
-              src="/images/real/sace-posuda.webp"
-              alt={copy.combAlt}
-              fill
-              sizes="(max-width: 900px) 45vw, 17vw"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="legacy__frame"
+              src="/images/brand/okvir.svg"
+              alt=""
+              aria-hidden="true"
             />
           </figure>
         </div>

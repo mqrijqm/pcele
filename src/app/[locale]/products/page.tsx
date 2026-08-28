@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import ProductRail from '@/components/products/ProductRail';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import SorteMeda from '@/components/products/SorteMeda';
 import ImageBreak from '@/components/ui/ImageBreak';
@@ -32,6 +33,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
           <ProductsGrid locale={locale} />
         </div>
       </section>
+
+      {/* Polica: tegle se listaju skrolom, a krug uz njih mijenja boju i naziv. */}
+      <ProductRail locale={locale} />
 
       {/* Poslije prodavnice — od sanduka do police. */}
       <ImageBreak
