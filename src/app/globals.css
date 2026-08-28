@@ -2523,6 +2523,139 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /* ---------------------------------------------------------------------------
+ * Pcelinjak: snimak koji se odmakne, pa progovori.
+ *
+ * Sekcija je visoka dva ekrana i po; scena unutra je lijepljena, pa snimak
+ * stoji dok sekcija prolazi ispod njega. Taj visak visine je jedini razlog
+ * zasto se odmicanje ima po cemu odvijati.
+ * ------------------------------------------------------------------------- */
+.apiary {
+  position: relative;
+  height: 250svh;
+  background: var(--paper);
+}
+
+.apiary__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/*
+ * Okvir snimka. Krece od ruba do ruba, a GSAP mu mijenja same mjere — ne
+ * `scale` — pa `object-fit: cover` u njemu racuna izrez iznova i s odmicanjem
+ * se otvara vise livade.
+ */
+.apiary__shot {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.apiary__img {
+  object-fit: cover;
+}
+
+/*
+ * Natpisi stoje na snimku, desno od sredine. Mjere su iz Marijinog crteza
+ * sekcije: naslov pocinje na dvije trecine sirine i malo ispod polovine
+ * visine, da padne u lisce a ne u kosnice.
+ */
+.apiary__where {
+  position: absolute;
+  left: 64%;
+  top: 50%;
+  width: 30%;
+  color: var(--paper);
+  /*
+   * Sjena je jedva vidljiva i nije ukras: snimak je ljetni i svijetao, pa bi
+   * bijelo na osuncanoj travi inace izgubilo rub.
+   */
+  text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
+}
+
+.apiary__heading {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.5rem, 5.6vw, 5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.apiary__body {
+  margin-top: clamp(1.25rem, 2.5vw, 2.25rem);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+/*
+ * Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku.
+ * Dva reda su dva `span`-a, ne prelom u tekstu: sirina okvira se mijenja, a
+ * broj ne smije da se lomi gdje mu padne.
+ */
+.apiary__coords {
+  position: absolute;
+  left: 3.5%;
+  bottom: 5.5%;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(0.8rem, 1.05vw, 1.05rem);
+  line-height: 1.35;
+  color: var(--paper);
+  text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
+}
+
+.apiary__coords span {
+  display: block;
+}
+
+/*
+ * Natpisi su skriveni i u CSS-u, ne samo u GSAP-u: dok se skripta ne ucita
+ * inace stoje ispisani preko punog kadra pa nestanu da bi se pojavili.
+ */
+.apiary__copy {
+  opacity: 0;
+}
+
+/*
+ * Bez pokreta: snimak stoji odmaknut, s natpisima na sebi — isti zavrsni
+ * raspored, samo bez puta do njega.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .apiary {
+    height: auto;
+  }
+
+  .apiary__stage {
+    position: static;
+    height: 80svh;
+  }
+
+  .apiary__shot {
+    inset: 12% 5%;
+    border-radius: 20px;
+  }
+
+  .apiary__copy {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .apiary {
+    height: 200svh;
+  }
+
+  .apiary__where {
+    left: 8%;
+    top: 44%;
+    width: 74%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
  * Album — snimci koji se listaju skrolom.
  *
  * Sekcija je visoka vise ekrana, a scena unutra je `sticky` — stoji na mjestu

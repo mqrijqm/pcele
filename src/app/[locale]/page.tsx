@@ -4,6 +4,7 @@ import { isLocale } from '@/i18n/config';
 import { photoBreaks } from '@/content/pages';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
+import Apiary from '@/components/home/Apiary';
 import Drip from '@/components/home/Drip';
 import PhotoRail from '@/components/home/PhotoRail';
 import Legacy from '@/components/home/Legacy';
@@ -57,6 +58,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Drip />
 
       <HeroJar locale={locale} />
+
+      {/* Pcelinjak: snimak preko cijelog kadra koji se odmakne i progovori. */}
+      <Apiary locale={locale} />
 
       {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
       <PhotoRail locale={locale} />
