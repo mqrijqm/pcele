@@ -12,8 +12,15 @@ import type { ReactNode } from 'react';
  * kilobajta: kao fajl bi bio jos jedan zahtjev, a ovako uzima boju iz
  * palete i mijenja se zajedno s njom.
  *
- * Tijelo sekcije je zasad prazno. Visinu drzi `.drip__body`, a sadrzaj se
- * prosljedjuje kao djeca kad ga bude.
+ * Pojas ima dva ruba, ne jedan. Gornji je med koji se prelije s papira na
+ * smedju; donji je isti potez, drugom rukom crtan — deblje i mirnije kapi —
+ * kojim se strana vraca na papir. Bez njega bi se smedja zavrsavala pravom
+ * linijom, a poceti prelivom pa zavrsiti rezom je pola posla.
+ *
+ * Donji crtez je jedan potez u boji papira, polozen preko smedje: ono sto
+ * nije potez jesu kapi. Zato je smedja na `.drip__tail`, a ne na putanji.
+ *
+ * Tijelo pojasa je prazno namjerno — pojas je prelaz, ne sekcija.
  */
 export default function Drip({ children }: { children?: ReactNode }) {
   return (
@@ -22,6 +29,12 @@ export default function Drip({ children }: { children?: ReactNode }) {
         <path fill="var(--brown)" d="M0,.2C6.98-.04,17.65-.19,30.61.51c43.26,2.32,103.79,5.58,144.8,45.22,22.78,22.02,31.04,47.05,40.08,74.44,14.52,44,14.06,82.64,12.01,105.91-4.33,26.48,5.77,48.91,21.9,55.37,10.48,4.2,24.82,2.18,33.91-6.2,17.71-16.34,1.9-44.38,3.08-102.35.67-32.97,1.35-66.28,21.58-93.04,24.04-31.8,63.76-38.58,73.99-40.32,76.25-13.01,103.41,48.44,186.95,46.52,56.63-1.3,49.47-29.65,109.31-32.68,88.48-4.47,122.82,56.59,187.74,35.78,36.58-11.73,32.6-33.34,74.59-43.59,44.96-10.97,105.21.02,118.76,32.17,8.11,19.23-.08,41.47,11.82,52.97,6.44,6.38,19.88,9.75,26.35,2.13,8.57-10.73-2.06-41.95,8.99-62.67,12.77-25.41,50.71-42.68,76.4-26.01,8.1,6.46,18.02,12.6,28.82,11.78,21.31-.82,36.28-21.26,64.98-36.72,24.8-13.03,49.18-19.13,88.33-17.11v631.65H0V.2Z" />
       </svg>
       <div className="drip__body">{children}</div>
+
+      <div className="drip__tail">
+        <svg className="drip__edge" viewBox="0 0 1440 691" aria-hidden="true" focusable="false">
+          <path fill="var(--paper)" d="M0 0.218189C7.36352 -0.0434873 18.6198 -0.207035 32.2919 0.556187C77.9288 3.08572 141.785 6.64016 185.048 49.8604C209.08 73.8692 217.793 101.16 227.33 131.024C242.648 178.998 242.163 221.128 240 246.499C235.432 275.371 246.087 299.827 263.103 306.87C274.159 311.449 289.287 309.247 298.876 300.11C317.56 282.294 300.881 251.722 302.126 188.516C302.833 152.568 303.55 116.25 324.891 87.0729C350.252 52.4008 392.155 45.0084 402.947 43.1113C483.386 28.9263 512.039 95.9263 600.169 93.8329C659.91 92.4155 652.357 61.505 715.485 58.2013C808.826 53.3276 845.053 119.902 913.54 97.2129C952.13 84.4234 947.931 60.8617 992.229 49.6859C1039.66 37.7251 1103.22 49.7077 1117.51 84.7614C1126.07 105.728 1117.43 129.977 1129.98 142.516C1136.78 149.472 1150.96 153.146 1157.78 144.838C1166.82 133.139 1155.61 99.0991 1167.27 76.5077C1180.74 48.8027 1220.76 29.973 1247.86 48.1486C1256.41 55.192 1266.87 61.8866 1278.27 60.9925C1300.75 60.0984 1316.54 37.8123 1346.82 20.956C1372.98 6.74919 1398.7 0.0982538 1440 2.3007V691H0V0.218189Z" />
+        </svg>
+      </div>
     </section>
   );
 }

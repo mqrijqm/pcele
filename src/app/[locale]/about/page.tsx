@@ -141,16 +141,6 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
         </div>
       </section>
 
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/mockups/jars-fence-dawn.webp', alt: shot.aboutSeasons.altDawn },
-          { src: '/images/mockups/jars-two-stump.webp', alt: shot.aboutSeasons.altDusk },
-        ]}
-        caption={shot.aboutSeasons.caption}
-        meta={shot.aboutSeasons.meta}
-      />
-
       <section className="bg-[var(--paper)] section-padding">
         <div className="container">
           <div className="max-w-2xl">

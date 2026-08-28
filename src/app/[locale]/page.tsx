@@ -6,7 +6,6 @@ import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import Drip from '@/components/home/Drip';
 import PhotoRail from '@/components/home/PhotoRail';
-import AboutPreview from '@/components/home/AboutPreview';
 import Legacy from '@/components/home/Legacy';
 import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
@@ -19,7 +18,7 @@ import BeeFlight from '@/components/bee/BeeFlight';
 /**
  * Pocetna, jedan tok bez ponavljanja:
  *
- *   hero i identitet -> prelaz na smedju -> porodicna tradicija -> proces ->
+ *   hero i identitet -> prelaz na smedju -> album -> porodicna tradicija ->
  *   mjesto -> utisci -> pitanja -> sorte -> jedan poziv na kraju
  *
  * Sorte su sisle s vrha. Odmah iza heroja su tri sorte trazile odluku od
@@ -52,18 +51,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <HeroJar locale={locale} />
 
       {/*
-        Med se prelije preko ruba i strana prelazi na smedju. U tijelu prelaza
-        stoji traka: snimci s pcelinjaka se prelistavaju sami, u krug.
+        Med se prelije preko ruba i strana prelazi na smedju, pa se na dnu
+        pojasa isto tako vrati na papir. Pojas je prazan namjerno — on je
+        prelaz, ne sekcija.
       */}
-      <Drip>
-        <PhotoRail locale={locale} />
-      </Drip>
+      <Drip />
+
+      {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
+      <PhotoRail locale={locale} />
 
       {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
       <Legacy locale={locale} />
-
-      {/* Proces — cetiri koraka od kosnice do tegle. */}
-      <AboutPreview locale={locale} />
 
       {/* Jedina foto-pauza na strani: pcelinjak, prije nego sto krene prica o mjestu. */}
       <ImageBreak

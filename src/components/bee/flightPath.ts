@@ -48,9 +48,18 @@ export const DESKTOP: Leg[] = [
       [900, 660],
       [1180, 1350],
       [520, 2050],  // tegla
-      [250, 2680],
-      [960, 3260],
-      [1133, 3800], // ispod heroja pocinju izmjerene tacke
+      [700, 2650],
+      /*
+       * Kamilica u donjem desnom uglu sekcije s teglom. Cvijet je stvarna
+       * stvar na strani (`.hero-jar__bloom`), ne tacka nacrtana okom — ako se
+       * njegov polozaj ili velicina promijene u CSS-u, ova tacka ide s njim.
+       *
+       * Visina je birana tako da pcela stigne pri kraju pina, kad pecat i
+       * cvijet vec iskoce: sekcija je tada jos zakovana, pa cvijet stoji u
+       * kadru i pcela ima na sta da sleti.
+       */
+      [1202, 3342], // cvijet
+      [1140, 3800], // ispod heroja pocinju izmjerene tacke
       [1381, 4370], // uz desnu ivicu: sorte drze cijelu mjeru teksta
       [1330, 5750], // naslov nasljedja ide skoro preko cijele mjere
       [900, 6600],

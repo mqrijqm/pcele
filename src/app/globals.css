@@ -465,12 +465,90 @@ p {
 }
 
 /*
- * Ploca: svaka slika na sajtu. Tri ugla su jedva zaobljena, cetvrti se otvara
- * — uvijek isti, donji lijevi, da se cita kao potpis a ne kao slucaj.
+ * Ugao ploce mora biti prijavljen da bi se uopste mogao animirati: nepoznata
+ * custom svojstva preglednik ne interpolira nego ih prebacuje skokom. Ovime
+ * zna da je rijec o duzini i racuna svaki medjukorak.
  */
+@property --plate-corner {
+  syntax: '<length-percentage>';
+  inherits: false;
+  initial-value: 20px;
+}
+
+/*
+ * Ploca: svaka slika na sajtu.
+ *
+ * Tri ugla su zaobljena na dvadeset i tu ostaju. Cetvrti — uvijek isti, donji
+ * lijevi — otvara se dok slika prolazi kroz ekran: krece od istih dvadeset i
+ * ide do sto osamdeset. Nije to ukras nego potpis: sve slike ga rade, uvijek
+ * na istom uglu, pa se cita kao jedan potez kroz cijelu stranu.
+ *
+ * Mjere su iz Figme, u pikselima. Gornja je ogranicena i procentom, jer sto
+ * osamdeset piksela na maloj slici nije zaobljen ugao nego pojedena slika.
+ */
+.plate,
+.blog-mosaic__tile,
+.blog-feature__shot,
+.frames__shot {
+  --plate-corner: 20px;
+
+  border-bottom-left-radius: var(--plate-corner);
+}
+
 .plate {
-  border-radius: var(--radius-lg);
-  border-bottom-left-radius: var(--radius-sweep);
+  border-radius: 20px;
+  border-bottom-left-radius: var(--plate-corner);
+}
+
+/*
+ * Ugao vodi sam skrol, bez ijedne linije JavaScripta: `view()` je vremenska
+ * osa same slike u odnosu na ekran, pa svaka ploca ima svoju — i one koje su
+ * na strani u isto vrijeme ne moraju biti u istom trenutku.
+ *
+ * Ko ovo ne podrzava dobija ugao otvoren do kraja, bez pokreta. To je i dalje
+ * isti potpis, samo bez putovanja do njega.
+ */
+@supports (animation-timeline: view()) {
+  .plate,
+  .blog-mosaic__tile,
+  .blog-feature__shot,
+  .frames__shot {
+    animation: plate-corner linear both;
+    animation-timeline: view();
+    animation-range: entry 15% cover 55%;
+  }
+
+  @keyframes plate-corner {
+    from {
+      --plate-corner: 20px;
+    }
+    to {
+      --plate-corner: min(180px, 42%);
+    }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .plate,
+  .blog-mosaic__tile,
+  .blog-feature__shot,
+  .frames__shot {
+    --plate-corner: min(180px, 42%);
+  }
+}
+
+/*
+ * Ugao stoji na miru ako su animacije iskljucene u sistemu — otvoren, ne
+ * zatvoren, da slika i tada nosi isti potpis.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .plate,
+  .blog-mosaic__tile,
+  .blog-feature__shot,
+  .frames__shot {
+    animation: none;
+    --plate-corner: min(180px, 42%);
+  }
 }
 
 /* Meke forme — nista na sajtu nema ostar ugao. */
@@ -787,6 +865,111 @@ p {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/*
+ * Pecat i cvijet: dvije stvari koje dolaze na kraju.
+ *
+ * Oba stoje samo na `left`/`top`, bez ijednog `transform`-a. GSAP ih uvecava
+ * iz nule, a `scale` pise u `transform` — svaki `translate` koji bi ovdje
+ * stajao bio bi prebrisan cim animacija krene, pa bi elementi skocili u
+ * stranu. Zato su mjere date za gornji lijevi ugao, ne za sredinu.
+ *
+ * `opacity: 0` je i u CSS-u, ne samo u GSAP-u: dok se skripta ne ucita, oba
+ * bi inace stajala vidljiva na svom mjestu i onda nestala da bi iskocila.
+ */
+.hero-jar__pop {
+  position: absolute;
+  opacity: 0;
+}
+
+.hero-jar__bloom img,
+.hero-jar__pop img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero-jar__pop img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*
+ * Scena sijece sve sto iz nje izadje (`overflow: hidden` je tu zbog polovina
+ * naslova koje dolijecu izvana). Zato oba elementa imaju sirinu ogranicenu i
+ * visinom ekrana, ne samo sirinom: na sirokom a niskom prozoru sedamnaest
+ * procenata sirine je trecina visine, pa je cvijetu dno ostajalo vani.
+ */
+
+/* Uz desno rame tegle, preko samog stakla — zato iznad nje u nizu slojeva. */
+.hero-jar__seal {
+  left: 56.5vw;
+  top: 30%;
+  width: min(10.5vw, 21svh);
+  z-index: 4;
+}
+
+/*
+ * Cvijet u donjem desnom uglu. Vezan je za donji desni rub, ne za gornji
+ * lijevi: tako mu razmak do ruba ostaje isti kad se prozor promijeni, umjesto
+ * da mu dno klizi preko ruba scene.
+ *
+ * Tu ga i pcela nalazi: ruta leta se na ovoj visini spusta do njega, pa mu
+ * sirina i polozaj nisu samo ukras — mijenjaj ih zajedno s tackom za cvijet
+ * u `flightPath.ts`.
+ */
+.hero-jar__bloom {
+  position: absolute;
+  right: 9vw;
+  bottom: 3%;
+  width: min(15.5vw, 29svh);
+  aspect-ratio: 700 / 658;
+  z-index: 2;
+}
+
+/*
+ * Dva sloja istog crteza, jedan preko drugog, oba u punoj velicini okvira —
+ * tako se poklapaju piksel u piksel kao da nikad nisu ni bili razdvojeni.
+ *
+ * `opacity` je i ovdje, ne samo u GSAP-u: dok se skripta ne ucita cvijet bi
+ * inace stajao otvoren pa se zatvorio da bi se ponovo otvorio.
+ */
+.hero-jar__heart,
+.hero-jar__petals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+/*
+ * Latice se vrte oko srca cvijeta, ne oko sredine svog kadra. Mjera je iz
+ * same slike: zlatna sredina joj je na 47.8% sirine i 50.6% visine.
+ */
+.hero-jar__petals {
+  transform-origin: 47.8% 50.6%;
+}
+
+/*
+ * Uspravan ekran: tegla zauzima sredinu, pa pecat silazi uz nju a cvijet
+ * ostaje u uglu, ali krupniji — na 390 px sirine sedamnaest procenata je
+ * mrlja, ne crtez.
+ */
+@media (orientation: portrait) {
+  .hero-jar__seal {
+    left: 66vw;
+    top: 26%;
+    width: min(23vw, 17svh);
+  }
+
+  .hero-jar__bloom {
+    right: 4vw;
+    bottom: 4%;
+    width: min(38vw, 26svh);
+  }
 }
 
 /* --- portrait ------------------------------------------------------------
@@ -1609,7 +1792,6 @@ html:not(.is-preloading) .hero-land__arrow {
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-lg);
   background: var(--surface);
-  border-bottom-left-radius: var(--radius-sweep);
 }
 
 @media (min-width: 900px) {
@@ -1717,7 +1899,6 @@ html:not(.is-preloading) .hero-land__arrow {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  border-bottom-left-radius: var(--radius-sweep);
 }
 
 .blog-feature__shot--main {
@@ -1948,7 +2129,6 @@ html:not(.is-preloading) .hero-land__arrow {
   overflow: hidden;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-lg);
-  border-bottom-left-radius: var(--radius-sweep);
 }
 
 /* Druga slika je spustena, isto kao u parovima drugdje na sajtu. */
@@ -2366,6 +2546,23 @@ html:not(.is-preloading) .hero-land__arrow {
 .drip__body {
   min-height: 40svh;
   background: var(--brown);
+}
+
+/*
+ * Donji rub pojasa: smedja se vraca na papir.
+ *
+ * Smedja je na ovom sanduku, a crtez u njemu je potez u boji papira — ono sto
+ * potez ne pokrije jesu kapi. Obrnuto od gornjeg ruba, gdje je potez smedj.
+ *
+ * Visina je `vw` a ne `rem` jer i same kapi rastu sa sirinom: u crtezu su
+ * duge 180 od 1440, dakle dvanaest i po posto sirine. Cetrnaest ostavlja
+ * malo zraka ispod najduze kapi na svakoj sirini. Ostatak crteza je puni
+ * papir i ne treba ga crtati — papir strane ga nastavlja sam.
+ */
+.drip__tail {
+  background: var(--brown);
+  height: 14vw;
+  overflow: hidden;
 }
 
 /* ---------------------------------------------------------------------------

@@ -33,6 +33,8 @@ const copy = {
     labelBottom: '100% SIROVO PRIRODAN',
     jarAlt: 'Tegla livadskog meda Pčelarstvo Jevtić, 1 kg',
     crestAlt: 'Znak Pčelarstva Jevtić',
+    sealAlt: 'Pečat: 100% prirodan',
+    bloomAlt: 'Crtež cvijeta kamilice',
   },
   en: {
     left: 'Honey as',
@@ -41,6 +43,8 @@ const copy = {
     labelBottom: '100% RAW AND NATURAL',
     jarAlt: 'A 1 kg jar of Pčelarstvo Jevtić meadow honey',
     crestAlt: 'The Pčelarstvo Jevtić mark',
+    sealAlt: 'Seal: 100% natural',
+    bloomAlt: 'A drawing of a camomile flower',
   },
 } as const;
 
@@ -58,6 +62,10 @@ export default function HeroJar({ locale }: { locale: Locale }) {
       const right = q('.hero-jar__half--right')[0];
       const crest = q('.hero-jar__crest')[0];
       const caps = q('.hero-jar__label > span');
+      /* Pecat iskace na kraju, cvijet se otvara za njim — dotle ih nema. */
+      const pops = q('.hero-jar__pop');
+      const heart = q('.hero-jar__heart')[0];
+      const petals = q('.hero-jar__petals')[0];
 
       const mm = gsap.matchMedia();
 
@@ -92,6 +100,9 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           gsap.set(crest, { scale: 0 });
           gsap.set(caps, { yPercent: 100 });
           gsap.set([left, right], { opacity: 0 });
+          gsap.set(pops, { scale: 0, opacity: 0 });
+          gsap.set(heart, { scale: 0, opacity: 0 });
+          gsap.set(petals, { scale: 0.45, opacity: 0, rotation: -22 });
 
           const tl = gsap.timeline({ defaults: { ease: 'linear', duration: 1 } });
 
@@ -113,6 +124,28 @@ export default function HeroJar({ locale }: { locale: Locale }) {
            */
           tl.to([left, right], { opacity: 1, duration: 0.55, stagger: 0.15 }, 'titles+=0.35');
           tl.to(caps, { yPercent: 0, stagger: 0.5 });
+          /*
+           * Pecat i cvijet dolaze zadnji, kad je kompozicija vec slozena, i to
+           * skokom: `back.out` ih prebaci malo preko pune velicine pa vrati.
+           * Zato se citaju kao dva pecata koja neko spusti na gotovu stranu, a
+           * ne kao jos dvije stvari koje se pojave usput.
+           *
+           * `scale` pise u `transform`, pa ova dva elementa u CSS-u nemaju
+           * nijedan svoj `transform` — stoje na `left`/`top`, inace bi ih GSAP
+           * pomjerio kad ih uveca.
+           */
+          tl.to(pops, { scale: 1, opacity: 1, ease: 'back.out(1.6)', duration: 0.7, stagger: 0.16 });
+          /*
+           * Cvijet se otvara: prvo sjedne srce, pa se latice rasire oko njega.
+           * Latice krecu manje i zaokrenute, i vrte se natrag u svoje mjesto —
+           * oko srca, ne oko svog kadra (`transform-origin` je u CSS-u).
+           */
+          tl.to(heart, { scale: 1, opacity: 1, ease: 'back.out(2)', duration: 0.5 });
+          tl.to(
+            petals,
+            { scale: 1, opacity: 1, rotation: 0, ease: 'back.out(1.4)', duration: 0.8 },
+            '<0.18',
+          );
           tl.duration(1);
 
           master.add(tl);
@@ -147,6 +180,9 @@ export default function HeroJar({ locale }: { locale: Locale }) {
 
           gsap.set(crest, { scale: 0 });
           gsap.set(caps, { yPercent: 100 });
+          gsap.set(pops, { scale: 0, opacity: 0 });
+          gsap.set(heart, { scale: 0, opacity: 0 });
+          gsap.set(petals, { scale: 0.45, opacity: 0, rotation: -22 });
 
           /*
            * Distance from a half's resting place back to the middle of the
@@ -168,6 +204,18 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           tl.from(left, { opacity: 0, y: () => toCentre(left as HTMLElement) }, 'titles');
           tl.from(right, { opacity: 0, y: () => toCentre(right as HTMLElement) }, 'titles');
           tl.to(caps, { yPercent: 0, stagger: 0.5 });
+          tl.to(pops, { scale: 1, opacity: 1, ease: 'back.out(1.6)', duration: 0.7, stagger: 0.16 });
+          /*
+           * Cvijet se otvara: prvo sjedne srce, pa se latice rasire oko njega.
+           * Latice krecu manje i zaokrenute, i vrte se natrag u svoje mjesto —
+           * oko srca, ne oko svog kadra (`transform-origin` je u CSS-u).
+           */
+          tl.to(heart, { scale: 1, opacity: 1, ease: 'back.out(2)', duration: 0.5 });
+          tl.to(
+            petals,
+            { scale: 1, opacity: 1, rotation: 0, ease: 'back.out(1.4)', duration: 0.8 },
+            '<0.18',
+          );
           tl.duration(1);
 
           master.add(tl);
@@ -217,6 +265,46 @@ export default function HeroJar({ locale }: { locale: Locale }) {
           <p className="hero-jar__label hero-jar__label--bottom">
             <span>{t.labelBottom}</span>
           </p>
+
+          {/*
+            * Dvije stvari koje dodju na kraju: pecat uz rame tegle i cvijet u
+            * donjem desnom uglu. Cvijet je i odrediste pcele koja leti kroz
+            * stranu — ruta u `flightPath` ga dodiruje na ovoj visini.
+            */}
+          <span className="hero-jar__seal hero-jar__pop">
+            <Image
+              src="/images/brand/pecat-prirodan.svg"
+              alt={t.sealAlt}
+              width={127}
+              height={127}
+            />
+          </span>
+
+          {/*
+            * Cvijet je razlozen na dvoje da bi mogao da se otvori: prvo sjedne
+            * srce, pa se oko njega rasire latice. Dva sloja su izrezana iz
+            * istog crteza po boji — zlatna sredina u jedan, sve ostalo u
+            * drugi — pa slozena jedan preko drugog daju tacno original.
+            */}
+          <span className="hero-jar__bloom">
+            <Image
+              className="hero-jar__petals"
+              src="/images/brand/kamilica-latice.webp"
+              alt={t.bloomAlt}
+              width={700}
+              height={658}
+              sizes="(orientation: portrait) 38vw, 16vw"
+            />
+            <Image
+              className="hero-jar__heart"
+              src="/images/brand/kamilica-srce.webp"
+              alt=""
+              aria-hidden="true"
+              width={700}
+              height={658}
+              sizes="(orientation: portrait) 38vw, 16vw"
+            />
+          </span>
         </div>
 
         <div className="hero-jar__jar">
