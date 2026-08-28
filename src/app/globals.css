@@ -2579,16 +2579,27 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Natpisi stoje na snimku, desno od sredine. Mjere su iz Marijinog crteza
- * sekcije: naslov pocinje na dvije trecine sirine i malo ispod polovine
- * visine, da padne u lisce a ne u kosnice.
+ * Potpis snimka je `display: contents`: sva cetiri dijela ostaju jedan
+ * `figcaption`, ali svaki racuna svoje mjesto od samog snimka, ne od kutije
+ * oko sebe.
+ */
+.apiary__caption {
+  display: contents;
+}
+
+/*
+ * Sredina: crtez brda, i ime sela tacno pod njim. Mjere su razlomci snimka —
+ * okvir se skrolom skuplja, a natpis se skuplja s njim i ostaje na istom
+ * mjestu u slici.
  */
 .apiary__where {
   position: absolute;
-  left: 64%;
-  top: 50%;
-  width: 30%;
-  color: var(--paper);
+  left: 50%;
+  top: 34.8%;
+  width: 40%;
+  translate: -50% 0;
+  text-align: center;
+  color: #fff;
   /*
    * Sjena je jedva vidljiva i nije ukras: snimak je ljetni i svijetao, pa bi
    * bijelo na osuncanoj travi inace izgubilo rub.
@@ -2596,67 +2607,45 @@ html:not(.is-preloading) .hero-land__arrow {
   text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
 }
 
+.apiary__hills {
+  display: block;
+  width: 38.3%;
+  height: auto;
+  margin: 0 auto -0.35em;
+}
+
 .apiary__heading {
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: var(--type-heading);
   line-height: 1;
   letter-spacing: -0.01em;
-  /*
-   * Cisto bijelo, ne papir. Ime sela je jedina rijec na snimku koja mora da
-   * odskoci od zelenila; papir je uz njega dovoljno topao da se stopi s
-   * osuncanom travom iza.
-   */
   color: #fff;
 }
 
+/* Dolje lijevo: recenica. */
 .apiary__body {
-  margin-top: clamp(1.25rem, 2.5vw, 2.25rem);
+  position: absolute;
+  left: 3.2%;
+  top: 82.7%;
+  width: 26%;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1rem, 1.5vw, 1.5rem);
   line-height: 1.45;
   text-wrap: pretty;
-}
-
-/*
- * Gore lijevo, jedno pod drugim: crtez brda pa koordinate. Mjere su razlomci
- * snimka, ne kadra — okvir se skrolom skuplja, a njih dvoje se skupljaju s
- * njim i ostaju na istom mjestu u slici.
- */
-.apiary__hills {
-  position: absolute;
-  left: 3.1%;
-  top: 2.6%;
-  width: 15.8%;
-  height: auto;
-}
-
-/*
- * Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku.
- * Stoje u jednom redu, tacno pod crtezom.
- */
-.apiary__coords {
-  position: absolute;
-  left: 3.1%;
-  top: 20.3%;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  /* Ista mjera kao "VRCANO 2025" uz teglu — oba su natpis uz sliku. */
-  font-size: var(--type-caption);
-  line-height: 1.35;
-  white-space: nowrap;
   color: var(--paper);
-  text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
+  text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
 }
 
 /*
- * Sunce stoji uz samo ime sela, gore desno od njega, i jedino se ono vrti.
- * Krug je simetrican pa se okretanje vidi po zracima — punih trideset sekundi
- * za krug, taman da se primijeti a da ne vuce pogled sa imena.
+ * Dolje desno: sunce, i pod njim koordinate. Jedino se sunce vrti; disk mu je
+ * simetrican pa se okretanje cita po zracima — trideset sekundi po krugu,
+ * taman da se primijeti a da ne vuce pogled.
  */
 .apiary__sun {
   position: absolute;
-  left: 88.5%;
-  top: 45.8%;
-  width: 5.4%;
+  left: 92.6%;
+  top: 83.3%;
+  width: 5.1%;
   height: auto;
   animation: sun-spin 30s linear infinite;
 }
@@ -2667,10 +2656,18 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .apiary__sun {
-    animation: none;
-  }
+/* Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku. */
+.apiary__coords {
+  position: absolute;
+  right: 2.9%;
+  top: 94.4%;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  /* Ista mjera kao "VRCANO 2025" uz teglu — oba su natpis uz sliku. */
+  font-size: var(--type-caption);
+  line-height: 1.35;
+  white-space: nowrap;
+  color: var(--paper);
+  text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
 }
 
 /*
@@ -2681,10 +2678,6 @@ html:not(.is-preloading) .hero-land__arrow {
   opacity: 0;
 }
 
-/*
- * Bez pokreta: snimak stoji odmaknut, s natpisima na sebi — isti zavrsni
- * raspored, samo bez puta do njega.
- */
 @media (prefers-reduced-motion: reduce) {
   .apiary {
     height: auto;
@@ -2703,6 +2696,10 @@ html:not(.is-preloading) .hero-land__arrow {
   .apiary__copy {
     opacity: 1;
   }
+
+  .apiary__sun {
+    animation: none;
+  }
 }
 
 @media (max-width: 700px) {
@@ -2711,22 +2708,25 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 
   .apiary__where {
-    left: 8%;
-    top: 44%;
-    width: 74%;
+    width: 76%;
+    top: 30%;
   }
 
-  .apiary__hills {
-    width: 34%;
+  .apiary__body {
+    left: 6%;
+    top: 74%;
+    width: 60%;
+  }
+
+  .apiary__sun {
+    left: 84%;
+    top: 76%;
+    width: 11%;
   }
 
   .apiary__coords {
-    top: 24%;
-  }
-
-  /* Na uskom ekranu sunce pada tacno u ime sela; ostaje samo crtez gore. */
-  .apiary__sun {
-    display: none;
+    right: 5%;
+    top: 92%;
   }
 }
 
