@@ -916,9 +916,6 @@ p {
  * lijevi: tako mu razmak do ruba ostaje isti kad se prozor promijeni, umjesto
  * da mu dno klizi preko ruba scene.
  *
- * Tu ga i pcela nalazi: ruta leta se na ovoj visini spusta do njega, pa mu
- * sirina i polozaj nisu samo ukras — mijenjaj ih zajedno s tackom za cvijet
- * u `flightPath.ts`.
  */
 .hero-jar__bloom {
   position: absolute;
@@ -1294,43 +1291,18 @@ html:not(.is-preloading) .hero-land__arrow {
  * racuna raspored, i nijedan filter na pceli (filter bi je izbacio sa GPU-a i
  * na duge strane bi se osetilo).
  * ------------------------------------------------------------------------- */
+/*
+ * Sloj pcele je zakovan za kadar, ne za dokument: pcela zivi u ekranu, a ne
+ * na strani, pa joj mjesto ne zavisi od toga koliko je strana duga.
+ */
 .bee-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  inset: 0;
   pointer-events: none;
   z-index: 40;
 }
 
-.bee-layer__canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-/*
- * Vodilja po kojoj pcela leti. Nevidljiva je, ali se i dalje crta — da je
- * display:none, getScreenCTM bi vratio null i MotionPathPlugin ne bi umeo da
- * je prevede u koordinate strane.
- */
-.bee-layer__flight {
-  fill: none;
-  stroke: none;
-}
-
-/* Trag: isti potez kao isprekidana strelica u heroju (rati.svg). */
-.bee-layer__trail {
-  fill: none;
-  stroke: #885B27;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-miterlimit: 16;
-  stroke-dasharray: 9 9;
-  opacity: 0.8;
-}
-
-/* Spoljni omotac: njega vodi putanja, on nosi nagib i okretanje. */
+/* Spoljni omotac: njega vodi izbor mjesta, on nosi okretanje. */
 .bee {
   position: absolute;
   top: 0;
@@ -1415,23 +1387,14 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
-/* Bez traga kad pcela samo stoji. */
-.bee-layer[data-still='true'] .bee-layer__trail {
-  display: none;
-}
-
 /*
- * Smireno stanje: nista se ne mice. Pcela ostaje u heroju, kao deo crteza.
+ * Smireno stanje: nista se ne mice. Pcela stoji u uglu i ne trazi mjesto.
  */
 @media (prefers-reduced-motion: reduce) {
   .bee__hover,
   .bee__art #wing-front,
   .bee__art #wing-back {
     animation: none;
-  }
-
-  .bee-layer__trail {
-    display: none;
   }
 }
 
@@ -2547,14 +2510,15 @@ html:not(.is-preloading) .hero-land__arrow {
  * Smedja je na ovom sanduku, a crtez u njemu je potez u boji papira — ono sto
  * potez ne pokrije jesu kapi. Obrnuto od gornjeg ruba, gdje je potez smedj.
  *
- * Visina je `vw` a ne `rem` jer i same kapi rastu sa sirinom: u crtezu su
- * duge 180 od 1440, dakle dvanaest i po posto sirine. Cetrnaest ostavlja
- * malo zraka ispod najduze kapi na svakoj sirini. Ostatak crteza je puni
- * papir i ne treba ga crtati — papir strane ga nastavlja sam.
+ * Visina je `vw` a ne `rem` jer i same kapi rastu sa sirinom. Najduza kap u
+ * crtezu pada do 308 od 1440, dakle dvadeset i jedan i po posto sirine;
+ * dvadeset tri ostavlja malo zraka ispod nje na svakoj sirini, pa nijedna
+ * nije odsjecena. Ostatak crteza je puni papir i ne treba ga crtati — papir
+ * strane ga nastavlja sam.
  */
 .drip__tail {
   background: var(--brown);
-  height: 14vw;
+  height: 23vw;
   overflow: hidden;
 }
 

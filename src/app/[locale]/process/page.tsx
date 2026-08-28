@@ -34,7 +34,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
       <h1 className="sr-only">{copy.heading}</h1>
 
       {/* Pcela leti i ovom stranom, svojom rutom kroz korake. */}
-      <BeeFlight route="process" />
+      <BeeFlight />
       <PageOpener eyebrow={copy.sectionEyebrow} heading={copy.sectionHeading} />
 
       <section className="pb-[var(--section-padding)]">

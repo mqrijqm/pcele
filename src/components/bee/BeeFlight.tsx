@@ -3,33 +3,57 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 
 import BeeSvg from './BeeSvg';
-import { buildPath, ROUTES, startPoint, type Leg, type RouteName } from './flightPath';
-
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-
-/** Koliko pcela sme da se nagne. Preko ovoga bi izgledala kao da pada. */
-const MAX_TILT = 20;
 
 /**
- * Pcela koja prati skrol kroz celu stranu.
+ * Pcela koja stalno stoji u kadru.
  *
- * Sloj je portal u <body>, a ne dete <main>-a, iz dva razloga: putanja treba
- * da ide i preko podnozja (koje je van <main>-a), i ovako nijedan roditelj sa
- * svojim stacking kontekstom ne moze da je zakloni.
+ * Ranije je letjela po putanji nacrtanoj preko cijele strane, a skrol ju je
+ * vukao po njoj. To je zvucalo dobro i radilo lose: putanja je duga koliko i
+ * dokument, pa se pcela cesto zatekne uz sam rub ekrana ili preko naslova, a
+ * gdje ce se zateci zavisi od visine strane — koja se mijenja sa svakom
+ * slikom koja se ucita.
  *
- * z-index 40 je izmedju sadrzaja (1-3, i zrno papira na 20) i headera (60).
+ * Sada ne postoji putanja. Pcela bira mjesto u kadru: najradije sredinu, a
+ * ako je sredina zauzeta sadrzajem — naslovom, slikom, dugmetom — sklanja se
+ * u prvi slobodan ugao. Uvijek je vidljiva i nikad ne stoji preko onoga sto
+ * se cita.
  */
-export default function BeeFlight({ route = 'home' }: { route?: RouteName }) {
-  const plan = ROUTES[route];
+
+/**
+ * Mjesta na koja pcela smije da sjedne, u dijelovima kadra. Redom kojim se
+ * biraju: sredina prva, uglovi kad sredina nije slobodna.
+ */
+const PERCHES = [
+  { x: 0.5, y: 0.46 },
+  { x: 0.14, y: 0.26 },
+  { x: 0.86, y: 0.26 },
+  { x: 0.14, y: 0.76 },
+  { x: 0.86, y: 0.76 },
+] as const;
+
+/**
+ * Sve sto se cita ili dodiruje — preko toga pcela ne stoji.
+ *
+ * Ukrasi se ne broje. Sajt je pun crteza koji pokrivaju cijele pojaseve —
+ * kapi meda, okviri, pecati — i da se i oni racunaju, sredina ekrana ne bi
+ * bila slobodna nikad, pa bi pcela cijelu stranu provela u istom uglu.
+ * Prepoznaju se po `aria-hidden`: ono sto citac ekrana preskace, preskace i
+ * ona.
+ */
+const CONTENT =
+  'h1, h2, h3, h4, p, li, a, button, input, textarea, select, img, video, figure, blockquote';
+
+/** Koliko zraka oko pcele mora biti prazno da bi mjesto vazilo za slobodno. */
+const CLEAR = 46;
+
+/** Kako brzo se premjesta. Dovoljno sporo da se cita kao let, ne kao skok. */
+const GLIDE = 1.15;
+
+export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
-  const flightRef = useRef<SVGPathElement>(null);
-  const trailRef = useRef<SVGPathElement>(null);
-  const maskRef = useRef<SVGPathElement>(null);
   const beeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
@@ -37,166 +61,124 @@ export default function BeeFlight({ route = 'home' }: { route?: RouteName }) {
   useEffect(() => {
     if (!mounted) return;
     const layer = layerRef.current;
-    const flight = flightRef.current;
-    const trail = trailRef.current;
-    const mask = maskRef.current;
     const bee = beeRef.current;
-    if (!layer || !flight || !trail || !mask || !bee) return;
+    if (!layer || !bee) return;
 
-    /** Prepisuje putanju za trenutne mere strane. Vraca duzinu traga. */
-    const draw = (legs: readonly Leg[], ref: { w: number; h: number }) => {
-      const w = document.documentElement.clientWidth;
-      const h = document.documentElement.scrollHeight;
-      layer.style.width = `${w}px`;
-      layer.style.height = `${h}px`;
-      const d = buildPath(legs, ref, w, h);
-      flight.setAttribute('d', d);
-      trail.setAttribute('d', d);
-      mask.setAttribute('d', d);
-      return mask.getTotalLength();
-    };
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const place = (x: number, y: number) => gsap.set(bee, { x, y, xPercent: -50, yPercent: -50 });
+
+    if (still) {
+      /* Bez pokreta: pcela stoji u gornjem lijevom uglu i tu ostaje. */
+      layer.dataset.still = 'true';
+      place(window.innerWidth * PERCHES[1].x, window.innerHeight * PERCHES[1].y);
+      return;
+    }
 
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+      gsap.set(bee, { xPercent: -50, yPercent: -50 });
+      const toX = gsap.quickTo(bee, 'x', { duration: GLIDE, ease: 'power3.out' });
+      const toY = gsap.quickTo(bee, 'y', { duration: GLIDE, ease: 'power3.out' });
 
-      // Smireno stanje: pcela stoji u heroju, bez putanje, bez leta, bez lepeta.
-      mm.add('(prefers-reduced-motion: reduce)', () => {
-        layer.dataset.still = 'true';
-        const w = document.documentElement.clientWidth;
-        const h = document.documentElement.scrollHeight;
-        layer.style.width = `${w}px`;
-        layer.style.height = `${h}px`;
-        const [sx, sy] = startPoint(plan.desktop.legs);
-        gsap.set(bee, {
-          x: (sx / plan.desktop.ref.w) * w,
-          y: (sy / plan.desktop.ref.h) * h,
-          xPercent: -50,
-          yPercent: -50,
+      let at = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.46 };
+      place(at.x, at.y);
+
+      /*
+       * Je li tacka slobodna? Gleda se pravougaonik oko nje, ne sam piksel:
+       * pcela ima svoju sirinu, pa joj ne pomaze da joj je slobodna tacno
+       * sredina ako joj krilo lezi na naslovu.
+       */
+      const taken = (x: number, y: number, boxes: DOMRect[]) =>
+        boxes.some(
+          (b) =>
+            b.left - CLEAR < x && b.right + CLEAR > x && b.top - CLEAR < y && b.bottom + CLEAR > y,
+        );
+
+      /* Sadrzaj koji je trenutno u kadru. Mjeri se rijetko, ne svaki kadar. */
+      const inView = () => {
+        const h = window.innerHeight;
+        const w = window.innerWidth;
+        const out: DOMRect[] = [];
+        document.querySelectorAll<HTMLElement>(CONTENT).forEach((el) => {
+          if (layer.contains(el)) return;
+          if (el.closest('[aria-hidden="true"]')) return;
+          const b = el.getBoundingClientRect();
+          if (b.bottom < 0 || b.top > h || b.right < 0 || b.left > w) return;
+          if (b.width < 8 || b.height < 8) return;
+          out.push(b);
         });
-        return () => {
-          delete layer.dataset.still;
-        };
-      });
-
-      const fly = (legs: readonly Leg[], ref: { w: number; h: number }) => () => {
-        let len = draw(legs, ref);
-        let raw = MotionPathPlugin.getRawPath(flight);
-        MotionPathPlugin.cacheRawPathMeasurements(raw);
-
-        gsap.set(mask, { strokeDasharray: len, strokeDashoffset: len });
-
-        /** Nagib i okretanje za dati polozaj na putanji. */
-        const pose = (p: number) => {
-          const { angle } = MotionPathPlugin.getPositionOnPath(raw, p, true) as {
-            angle: number;
-          };
-
-          // Ugao u -180..180, pa se odluci gleda li pcela ulevo.
-          let a = ((((angle + 180) % 360) + 360) % 360) - 180;
-          let flip = 1;
-          if (a > 90 || a < -90) {
-            flip = -1;
-            a += a > 0 ? -180 : 180;
-          }
-          // rotacija i scaleX idu na isti cvor namerno: GSAP slaze
-          // translate -> rotate -> scale, pa se crtez prvo ogleda a tek
-          // onda nagne. Zato pcela nikad ne zavrsi naglavacke.
-          gsap.set(bee, {
-            rotation: gsap.utils.clamp(-MAX_TILT, MAX_TILT, a),
-            scaleX: flip,
-          });
-
-          gsap.set(mask, { strokeDashoffset: len * (1 - p) });
-        };
-
-        // Deklarisano unapred i sa proverom u onUpdate: ako se strana ucita
-        // vec skrolovana, ScrollTrigger prvi put pozove onUpdate jos unutar
-        // gsap.to(), pre nego sto `tween` uopste dobije vrednost.
-        let tween: gsap.core.Tween | null = null;
-
-        tween = gsap.to(bee, {
-          ease: 'none',
-          motionPath: {
-            path: flight,
-            align: flight,
-            alignOrigin: [0.5, 0.5],
-            // autoRotate je namerno iskljucen: on upisuje pun ugao, a nama
-            // treba nagib omedjen na +-20 stepeni i okretanje po x-u. Ugao se
-            // racuna rucno, iz iste putanje, u onUpdate ispod.
-            autoRotate: false,
-          },
-          scrollTrigger: {
-            trigger: document.documentElement,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: 1.2,
-          },
-          onUpdate: () => tween && pose(tween.progress()),
-        });
-
-        // Na vrhu strane scrub jos nije nista okrenuo, pa bi pcela stajala
-        // ravno umesto da vec gleda niz putanju. Jednom rucno.
-        pose(0);
-
-        // Kad se strana produzi (slike, fontovi, otvoreno pitanje u FAQ-u),
-        // ScrollTrigger meri iznova - putanja mora da se prepise pre toga.
-        const remeasure = () => {
-          len = draw(legs, ref);
-          raw = MotionPathPlugin.getRawPath(flight);
-          MotionPathPlugin.cacheRawPathMeasurements(raw);
-          gsap.set(mask, { strokeDasharray: len });
-          if (!tween) return;
-          tween.invalidate();
-          pose(tween.progress());
-        };
-        ScrollTrigger.addEventListener('refreshInit', remeasure);
-
-        const ro = new ResizeObserver(() => ScrollTrigger.refresh());
-        ro.observe(document.body);
-
-        if (new URLSearchParams(window.location.search).has('editPath')) {
-          void enableHelper(bee, flight, ref);
-        }
-
-        return () => {
-          ScrollTrigger.removeEventListener('refreshInit', remeasure);
-          ro.disconnect();
-        };
+        return out;
       };
 
-      mm.add(
-        '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
-        fly(plan.desktop.legs, plan.desktop.ref),
-      );
-      mm.add(
-        '(max-width: 767px) and (prefers-reduced-motion: no-preference)',
-        fly(plan.mobile.legs, plan.mobile.ref),
-      );
+      const settle = () => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const boxes = inView();
+
+        const perch =
+          PERCHES.find((p) => !taken(p.x * w, p.y * h, boxes)) ??
+          /* Sve zauzeto — ide u ugao koji je najdalje od svega. */
+          PERCHES.reduce((best, p) => {
+            const d = (q: (typeof PERCHES)[number]) =>
+              Math.min(
+                ...boxes.map((b) =>
+                  Math.hypot(
+                    Math.max(b.left - q.x * w, 0, q.x * w - b.right),
+                    Math.max(b.top - q.y * h, 0, q.y * h - b.bottom),
+                  ),
+                ),
+                Infinity,
+              );
+            return d(p) > d(best) ? p : best;
+          }, PERCHES[1]);
+
+        const x = perch.x * w;
+        const y = perch.y * h;
+        if (Math.abs(x - at.x) < 2 && Math.abs(y - at.y) < 2) return;
+
+        /* Gleda tamo gdje leti. Crtez gleda udesno, pa se za lijevo ogleda. */
+        gsap.to(bee, { scaleX: x < at.x ? -1 : 1, duration: 0.3, overwrite: 'auto' });
+        at = { x, y };
+        toX(x);
+        toY(y);
+      };
+
+      settle();
+
+      /*
+       * Mjerenje ide na kraju pomjeranja, ne u toku njega: sadrzaj se ionako
+       * pomjera zajedno sa stranom, pa ga nema smisla mjeriti sto puta u
+       * sekundi — a i skupo je.
+       */
+      let idle: number | undefined;
+      const later = () => {
+        window.clearTimeout(idle);
+        idle = window.setTimeout(settle, 140);
+      };
+
+      window.addEventListener('scroll', later, { passive: true });
+      window.addEventListener('resize', later);
+
+      /* Strana se produzi kad stignu slike i fontovi — i tada se mjeri iznova. */
+      const ro = new ResizeObserver(later);
+      ro.observe(document.body);
+
+      return () => {
+        window.clearTimeout(idle);
+        window.removeEventListener('scroll', later);
+        window.removeEventListener('resize', later);
+        ro.disconnect();
+      };
     }, layer);
 
     return () => ctx.revert();
-  }, [mounted, plan]);
+  }, [mounted]);
 
   if (!mounted) return null;
 
   return createPortal(
     <div className="bee-layer" ref={layerRef} aria-hidden="true">
-      <svg className="bee-layer__canvas" width="100%" height="100%">
-        <defs>
-          {/*
-           * Trag je isprekidan, pa mu pomeranje dashoffset-a ne bi "crtalo"
-           * liniju nego teralo crtice u stranu. Zato se crta punom, debelom
-           * maskom koja raste - a kroz nju se vidi isprekidana linija.
-           */}
-          <mask id="bee-trail-mask" maskUnits="userSpaceOnUse">
-            <path ref={maskRef} fill="none" stroke="#fff" strokeWidth={28} strokeLinecap="round" />
-          </mask>
-        </defs>
-        <path ref={flightRef} className="bee-layer__flight" fill="none" />
-        <path ref={trailRef} className="bee-layer__trail" mask="url(#bee-trail-mask)" />
-      </svg>
-
-      {/* tri omotaca: putanja -> lebdenje -> crtez */}
+      {/* dva omotaca: mjesto u kadru -> lebdenje -> crtez */}
       <div className="bee" ref={beeRef}>
         <div className="bee__hover">
           <BeeSvg className="bee__art" />
@@ -205,38 +187,4 @@ export default function BeeFlight({ route = 'home' }: { route?: RouteName }) {
     </div>,
     document.body,
   );
-}
-
-/**
- * ?editPath - MotionPathHelper preko stvarnog rasporeda.
- *
- * Kad prevuces krivu kako treba, u konzoli otkucaj `beePath()`. Ispisuje
- * putanju nazad u referentnim pikselima, spremnu da se zalepi u flightPath.ts
- * - jer helper radi u pikselima ovog prozora, a fajl cuva razlomke.
- */
-async function enableHelper(
-  bee: HTMLElement,
-  flight: SVGPathElement,
-  ref: { w: number; h: number },
-) {
-  const { MotionPathHelper } = await import('gsap/MotionPathHelper');
-  gsap.registerPlugin(MotionPathHelper);
-  MotionPathHelper.create(bee);
-
-  (window as unknown as { beePath: () => string }).beePath = () => {
-    const w = document.documentElement.clientWidth;
-    const h = document.documentElement.scrollHeight;
-    const sx = ref.w / w;
-    const sy = ref.h / h;
-    let i = 0;
-    const out = (flight.getAttribute('d') ?? '').replace(/-?\d+\.?\d*/g, (n) => {
-      const v = parseFloat(n) * (i++ % 2 === 0 ? sx : sy);
-      return String(Math.round(v * 10) / 10);
-    });
-    // eslint-disable-next-line no-console
-    console.log(out);
-    return out;
-  };
-  // eslint-disable-next-line no-console
-  console.log('[bee] MotionPathHelper je aktivan. Kad zavrsis: beePath()');
 }

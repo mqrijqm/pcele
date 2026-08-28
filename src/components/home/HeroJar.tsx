@@ -268,8 +268,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
 
           {/*
             * Dvije stvari koje dodju na kraju: pecat uz rame tegle i cvijet u
-            * donjem desnom uglu. Cvijet je i odrediste pcele koja leti kroz
-            * stranu — ruta u `flightPath` ga dodiruje na ovoj visini.
+            * donjem desnom uglu.
             */}
           <span className="hero-jar__seal hero-jar__pop">
             <Image

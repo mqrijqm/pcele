@@ -34,7 +34,7 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
       <h1 className="sr-only">{copy.heading}</h1>
 
       {/* Pcela leti i ovom stranom. */}
-      <BeeFlight route="about" />
+      <BeeFlight />
 
       <PageOpener eyebrow={copy.eyebrow} heading={copy.heading} />
       <section className="border-b border-[#885B27]/15 bg-[var(--paper)]">
