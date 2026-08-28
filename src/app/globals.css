@@ -2581,6 +2581,12 @@ html:not(.is-preloading) .hero-land__arrow {
   font-size: clamp(2.5rem, 5.6vw, 5rem);
   line-height: 1;
   letter-spacing: -0.01em;
+  /*
+   * Cisto bijelo, ne papir. Ime sela je jedina rijec na snimku koja mora da
+   * odskoci od zelenila; papir je uz njega dovoljno topao da se stopi s
+   * osuncanom travom iza.
+   */
+  color: #fff;
 }
 
 .apiary__body {
