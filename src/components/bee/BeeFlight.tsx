@@ -7,55 +7,53 @@ import gsap from 'gsap';
 import BeeSvg from './BeeSvg';
 
 /**
- * Pcela koja stalno stoji u kadru.
+ * Pcela koja stalno leti kroz kadar.
  *
- * Ranije je letjela po putanji nacrtanoj preko cijele strane, a skrol ju je
- * vukao po njoj. To je zvucalo dobro i radilo lose: putanja je duga koliko i
- * dokument, pa se pcela cesto zatekne uz sam rub ekrana ili preko naslova, a
- * gdje ce se zateci zavisi od visine strane — koja se mijenja sa svakom
- * slikom koja se ucita.
+ * Prva verzija je isla po putanji nacrtanoj preko cijelog dokumenta, a skrol
+ * ju je vukao po njoj — pa je gdje ce se zateci zavisilo od visine strane,
+ * koja se mijenja sa svakom slikom koja se ucita. Druga je birala jedno od pet
+ * mjesta u kadru i tu sjedila; izmedju dva izbora se citala kao naljepnica.
  *
- * Sada ne postoji putanja. Pcela bira mjesto u kadru: najradije sredinu, a
- * ako je sredina zauzeta sadrzajem — naslovom, slikom, dugmetom — sklanja se
- * u prvi slobodan ugao. Uvijek je vidljiva i nikad ne stoji preko onoga sto
- * se cita.
+ * Ova leti bez prestanka. Kadar je podijeljen u mrezu tacaka, iz nje se izbace
+ * one koje padaju na sadrzaj, i pcela redom putuje od jedne slobodne do druge.
+ * Svaki let traje nekoliko sekundi i ide svojim tempom, pa nema ni skoka ni
+ * mirovanja — a posto se bira samo medju slobodnim tackama, nikad ne stoji
+ * preko onoga sto se cita.
  */
 
-/**
- * Mjesta na koja pcela smije da sjedne, u dijelovima kadra. Redom kojim se
- * biraju: sredina prva, uglovi kad sredina nije slobodna.
- */
-const PERCHES = [
-  { x: 0.5, y: 0.46 },
-  { x: 0.14, y: 0.26 },
-  { x: 0.86, y: 0.26 },
-  { x: 0.14, y: 0.76 },
-  { x: 0.86, y: 0.76 },
-] as const;
+/** Mreza mogucih odredista, u dijelovima kadra. Rubovi su namjerno uvuceni. */
+const COLS = [0.12, 0.3, 0.5, 0.7, 0.88];
+const ROWS = [0.2, 0.45, 0.72];
 
-/**
- * Sve sto se cita ili dodiruje — preko toga pcela ne stoji.
- *
- * Ukrasi se ne broje. Sajt je pun crteza koji pokrivaju cijele pojaseve —
- * kapi meda, okviri, pecati — i da se i oni racunaju, sredina ekrana ne bi
- * bila slobodna nikad, pa bi pcela cijelu stranu provela u istom uglu.
- * Prepoznaju se po `aria-hidden`: ono sto citac ekrana preskace, preskace i
- * ona.
- */
+/** Sve sto se cita ili dodiruje — preko toga pcela ne leti. */
 const CONTENT =
   'h1, h2, h3, h4, p, li, a, button, input, textarea, select, img, video, figure, blockquote';
 
-/** Koliko zraka oko pcele mora biti prazno da bi mjesto vazilo za slobodno. */
-const CLEAR = 46;
+/** Koliko zraka oko pcele mora biti prazno da bi tacka vazila za slobodnu. */
+const CLEAR = 44;
 
-/** Kako brzo se premjesta. Dovoljno sporo da se cita kao let, ne kao skok. */
-const GLIDE = 1.15;
+/**
+ * Sve preko ovolikog dijela kadra je podloga, ne sadrzaj.
+ *
+ * Snimak preko cijelog ekrana — livada u heroju, pcelinjak — jeste `img`, ali
+ * nije nesto sto se cita: to je pozadina, i preko nje pcela smije. Da se i
+ * takve plohe racunaju, slobodne tacke ne bi bilo nigdje osim uz sam rub, pa
+ * bi pcela cijelu stranu klizila gore-dolje uz lijevu ivicu. Ono sto se na
+ * takvoj podlozi zaista cita — naslov, recenica — ima svoju kutiju i dalje se
+ * racuna.
+ */
+const BACKDROP = 0.55;
+
+/** Najkraci let. Ispod ovoga se dvije tacke citaju kao jedna. */
+const MIN_HOP = 0.22;
+
+/** Raspon trajanja jednog leta, u sekundama. */
+const HOP = { min: 3.4, max: 5.6 };
 
 export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
   const beeRef = useRef<HTMLDivElement>(null);
-  const driftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -63,62 +61,42 @@ export default function BeeFlight() {
     if (!mounted) return;
     const layer = layerRef.current;
     const bee = beeRef.current;
-    const drift = driftRef.current;
-    if (!layer || !bee || !drift) return;
+    if (!layer || !bee) return;
 
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    const place = (x: number, y: number) => gsap.set(bee, { x, y, xPercent: -50, yPercent: -50 });
+    /*
+     * Polazi gore lijevo i gleda udesno — u stranu, ne u rub. Tu je i vrh
+     * isprekidane strelice u heroju, pa natpis "Listaj i prati pcelu" pokazuje
+     * na nju a ne u prazno.
+     */
+    const start = { x: 0.12, y: 0.2 };
+
+    gsap.set(bee, {
+      xPercent: -50,
+      yPercent: -50,
+      x: window.innerWidth * start.x,
+      y: window.innerHeight * start.y,
+      scaleX: 1,
+    });
 
     if (still) {
-      /* Bez pokreta: pcela stoji u gornjem lijevom uglu i tu ostaje. */
       layer.dataset.still = 'true';
-      place(window.innerWidth * PERCHES[1].x, window.innerHeight * PERCHES[1].y);
       return;
     }
 
     const ctx = gsap.context(() => {
-      gsap.set(bee, { xPercent: -50, yPercent: -50 });
+      let at = { x: window.innerWidth * start.x, y: window.innerHeight * start.y };
 
       /*
-       * Kruzenje oko mjesta na kojem stoji.
-       *
-       * Bez ovoga pcela samo sjedi u uglu i s vremena na vrijeme preskoci na
-       * drugi — a izmedju ta dva skoka izgleda kao naljepnica. Ovako je stalno
-       * u letu, samo taj let nikud ne vodi.
-       *
-       * Ide na svoj sloj, ne na `.bee`: taj nosi izbor mjesta, i da se dvoje
-       * pise u isti `transform`, jedno bi drugo brisalo. Brojevi su namjerno
-       * neujednaceni — krug jednakih koraka se cita kao mehanizam.
+       * Sadrzaj koji je trenutno u kadru. Ukrasi se ne broje: sajt je pun
+       * crteza koji pokrivaju cijele pojaseve, i da se i oni racunaju, slobodne
+       * tacke ne bi bilo nigdje. Prepoznaju se po `aria-hidden` — sto preskace
+       * citac ekrana, preskace i ona.
        */
-      const wander = gsap
-        .timeline({ repeat: -1, defaults: { ease: 'sine.inOut' } })
-        .to(drift, { x: 26, y: -18, duration: 3.1 })
-        .to(drift, { x: 38, y: 14, duration: 2.4 })
-        .to(drift, { x: -14, y: 22, duration: 3.6 })
-        .to(drift, { x: -30, y: -10, duration: 2.8 })
-        .to(drift, { x: 0, y: 0, duration: 3.3 });
-      const toX = gsap.quickTo(bee, 'x', { duration: GLIDE, ease: 'power3.out' });
-      const toY = gsap.quickTo(bee, 'y', { duration: GLIDE, ease: 'power3.out' });
-
-      let at = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.46 };
-      place(at.x, at.y);
-
-      /*
-       * Je li tacka slobodna? Gleda se pravougaonik oko nje, ne sam piksel:
-       * pcela ima svoju sirinu, pa joj ne pomaze da joj je slobodna tacno
-       * sredina ako joj krilo lezi na naslovu.
-       */
-      const taken = (x: number, y: number, boxes: DOMRect[]) =>
-        boxes.some(
-          (b) =>
-            b.left - CLEAR < x && b.right + CLEAR > x && b.top - CLEAR < y && b.bottom + CLEAR > y,
-        );
-
-      /* Sadrzaj koji je trenutno u kadru. Mjeri se rijetko, ne svaki kadar. */
       const inView = () => {
-        const h = window.innerHeight;
         const w = window.innerWidth;
+        const h = window.innerHeight;
         const out: DOMRect[] = [];
         document.querySelectorAll<HTMLElement>(CONTENT).forEach((el) => {
           if (layer.contains(el)) return;
@@ -126,70 +104,101 @@ export default function BeeFlight() {
           const b = el.getBoundingClientRect();
           if (b.bottom < 0 || b.top > h || b.right < 0 || b.left > w) return;
           if (b.width < 8 || b.height < 8) return;
+          if ((b.width * b.height) / (w * h) > BACKDROP) return;
           out.push(b);
         });
         return out;
       };
 
-      const settle = () => {
+      const free = (x: number, y: number, boxes: DOMRect[]) =>
+        !boxes.some(
+          (b) =>
+            b.left - CLEAR < x && b.right + CLEAR > x && b.top - CLEAR < y && b.bottom + CLEAR > y,
+        );
+
+      /** Koliko je tacka daleko od najblizeg sadrzaja. */
+      const room = (x: number, y: number, boxes: DOMRect[]) =>
+        Math.min(
+          ...boxes.map((b) =>
+            Math.hypot(Math.max(b.left - x, 0, x - b.right), Math.max(b.top - y, 0, y - b.bottom)),
+          ),
+          Infinity,
+        );
+
+      /**
+       * Sljedece odrediste: neka slobodna tacka dovoljno daleko od trenutne.
+       * Ako slobodne nema — a na gustoj strani je ne mora biti — ide na onu
+       * koja je najdalje od svega.
+       */
+      const nextStop = () => {
         const w = window.innerWidth;
         const h = window.innerHeight;
         const boxes = inView();
+        const far = Math.hypot(w, h) * MIN_HOP;
 
-        const perch =
-          PERCHES.find((p) => !taken(p.x * w, p.y * h, boxes)) ??
-          /* Sve zauzeto — ide u ugao koji je najdalje od svega. */
-          PERCHES.reduce((best, p) => {
-            const d = (q: (typeof PERCHES)[number]) =>
-              Math.min(
-                ...boxes.map((b) =>
-                  Math.hypot(
-                    Math.max(b.left - q.x * w, 0, q.x * w - b.right),
-                    Math.max(b.top - q.y * h, 0, q.y * h - b.bottom),
-                  ),
-                ),
-                Infinity,
-              );
-            return d(p) > d(best) ? p : best;
-          }, PERCHES[1]);
+        const all = COLS.flatMap((cx) => ROWS.map((ry) => ({ x: cx * w, y: ry * h })));
+        const open = all.filter((p) => free(p.x, p.y, boxes));
+        const reach = (open.length ? open : all).filter(
+          (p) => Math.hypot(p.x - at.x, p.y - at.y) > far,
+        );
 
-        const x = perch.x * w;
-        const y = perch.y * h;
-        if (Math.abs(x - at.x) < 2 && Math.abs(y - at.y) < 2) return;
+        const pool = reach.length ? reach : open.length ? open : all;
+        if (open.length) return gsap.utils.random(pool);
 
-        /* Gleda tamo gdje leti. Crtez gleda udesno, pa se za lijevo ogleda. */
-        gsap.to(bee, { scaleX: x < at.x ? -1 : 1, duration: 0.3, overwrite: 'auto' });
-        at = { x, y };
-        toX(x);
-        toY(y);
+        return pool.reduce((best, p) =>
+          room(p.x, p.y, boxes) > room(best.x, best.y, boxes) ? p : best,
+        );
       };
 
-      settle();
+      let hop: gsap.core.Tween | null = null;
+
+      const flyOn = () => {
+        const to = nextStop();
+        /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda. */
+        gsap.to(bee, {
+          scaleX: to.x < at.x ? -1 : 1,
+          duration: 0.45,
+          ease: 'power2.out',
+          overwrite: 'auto',
+        });
+        at = to;
+        hop = gsap.to(bee, {
+          x: to.x,
+          y: to.y,
+          duration: gsap.utils.random(HOP.min, HOP.max),
+          ease: 'sine.inOut',
+          onComplete: flyOn,
+        });
+      };
+
+      flyOn();
 
       /*
-       * Mjerenje ide na kraju pomjeranja, ne u toku njega: sadrzaj se ionako
-       * pomjera zajedno sa stranom, pa ga nema smisla mjeriti sto puta u
-       * sekundi — a i skupo je.
+       * Strana se pomjerila pod njom: ako je tamo gdje leti u medjuvremenu
+       * osvanuo naslov, prekida se i bira novo odrediste. Mjeri se kad se
+       * skrol smiri, ne u toku njega.
        */
       let idle: number | undefined;
-      const later = () => {
+      const recheck = () => {
         window.clearTimeout(idle);
-        idle = window.setTimeout(settle, 140);
+        idle = window.setTimeout(() => {
+          if (free(at.x, at.y, inView())) return;
+          hop?.kill();
+          flyOn();
+        }, 180);
       };
 
-      window.addEventListener('scroll', later, { passive: true });
-      window.addEventListener('resize', later);
-
-      /* Strana se produzi kad stignu slike i fontovi — i tada se mjeri iznova. */
-      const ro = new ResizeObserver(later);
+      window.addEventListener('scroll', recheck, { passive: true });
+      window.addEventListener('resize', recheck);
+      const ro = new ResizeObserver(recheck);
       ro.observe(document.body);
 
       return () => {
         window.clearTimeout(idle);
-        window.removeEventListener('scroll', later);
-        window.removeEventListener('resize', later);
+        window.removeEventListener('scroll', recheck);
+        window.removeEventListener('resize', recheck);
         ro.disconnect();
-        wander.kill();
+        hop?.kill();
       };
     }, layer);
 
@@ -200,12 +209,10 @@ export default function BeeFlight() {
 
   return createPortal(
     <div className="bee-layer" ref={layerRef} aria-hidden="true">
-      {/* tri omotaca: mjesto u kadru -> kruzenje oko njega -> lebdenje -> crtez */}
+      {/* dva omotaca: let kroz kadar -> lebdenje -> crtez */}
       <div className="bee" ref={beeRef}>
-        <div className="bee__drift" ref={driftRef}>
-          <div className="bee__hover">
-            <BeeSvg className="bee__art" />
-          </div>
+        <div className="bee__hover">
+          <BeeSvg className="bee__art" />
         </div>
       </div>
     </div>,

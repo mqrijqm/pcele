@@ -1321,11 +1321,6 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
-/* Sloj kruzenja: nosi ga GSAP, da ne dira ni izbor mjesta ni lebdenje. */
-.bee__drift {
-  will-change: transform;
-}
-
 /* Srednji omotac: mirno lebdenje, nezavisno od skrola. */
 .bee__hover {
   will-change: transform;
