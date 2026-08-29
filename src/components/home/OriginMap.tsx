@@ -17,9 +17,8 @@ import { useEffect, useRef } from 'react';
  * omeksan, pa se dvije poluprozirne ivice ne saberu u punu boju. Preklop tu
  * vlas pokriva, a kako je ispod isti piksel, preklop se ne vidi.
  *
- * Ulazak vodi `.in-view` koje na omotac stavlja RevealObserver; sam omotac
- * ovdje ne radi nista (`reveal` mu je ponisten u CSS-u) jer mu transform treba
- * mis.
+ * Ulazak vodi `.in-view`, ali ga ovdje stavlja svoj posmatrac a ne opsti
+ * RevealObserver — karta ceka da se vidi cijela, ne tek da zaviri.
  *
  * Pomak za misem je mali i namjerno spor: karta ne "juri" kursor nego se za
  * njim vuce, pa se pokret osjeti kao tezina, a ne kao efekat. Tacka koja se
@@ -31,6 +30,47 @@ import { useEffect, useRef } from 'react';
  */
 export default function OriginMap({ alt }: { alt: string }) {
   const wrap = useRef<HTMLDivElement>(null);
+
+  /*
+   * Sklapanje ne pocinje cim karta zaviri odozdo, nego kad cijela stoji u
+   * kadru i ispod nje ima jos malo vazduha. Zato ovdje stoji svoj posmatrac, a
+   * ne opsti `reveal`: onaj pali na 5% vidljivosti, pa bi se karta sklopila
+   * dok joj se vidi samo gornja ivica — i najbolji dio pokreta bi prosao
+   * ispod ruba ekrana.
+   *
+   * Cijela sekcija bi bila prirodnija mjera, ali je visa od ekrana (oko 1200
+   * naspram 765 piksela na obicnom laptopu), pa se nikad ne bi vidjela cijela.
+   * Karta je ono sto se zapravo gleda.
+   *
+   * `rootMargin` odsijeca 6% dna, pa se puna vidljivost postize tek kad karta
+   * predje i taj visak. Drugi uslov je za uzak i nizak ekran, gdje je karta
+   * visa od kadra: tamo je "cijela vidljiva" nemoguce, pa je dovoljno da
+   * ispuni ekran.
+   */
+  useEffect(() => {
+    const el = wrap.current;
+    if (!el) return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const r = entry.boundingClientRect;
+          const vh = window.innerHeight;
+          const room = vh * 0.06;
+          const whole = r.top >= 0 && r.bottom <= vh - room;
+          const fills = r.height > vh - room && r.top <= 0 && r.bottom >= vh;
+          if (!whole && !fills) continue;
+          el.classList.add('in-view');
+          io.disconnect();
+          return;
+        }
+      },
+      { threshold: [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1], rootMargin: '0px 0px -6% 0px' },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   /*
    * Kad zadnji komad stane na svoje mjesto, rezovi se sklanjaju i ostaje jedna
@@ -109,7 +149,7 @@ export default function OriginMap({ alt }: { alt: string }) {
   }, []);
 
   return (
-    <div className="origin__map reveal" ref={wrap}>
+    <div className="origin__map" ref={wrap}>
       <div className="origin__map-inner">
         {/*
           * Prvi komad stoji u toku i on daje visinu okvira; druga dva lebde

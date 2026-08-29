@@ -1520,18 +1520,6 @@ html:not(.is-preloading) .hero-land__arrow {
   will-change: transform;
 }
 
-/*
- * Omotac nosi `reveal` samo zato sto ga po toj klasi nalazi RevealObserver;
- * sam se ne pomjera niti se pretapa. Pokret rade komadi unutra, a transform
- * omotaca je rezervisan za mis — kad bi tu stajao i prelaz, prvi pomak misa
- * bi se vukao 0.95s za kursorom.
- */
-.js-reveal .origin__map.reveal {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
 .origin__map-inner {
   position: relative;
 }
