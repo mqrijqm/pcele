@@ -218,24 +218,27 @@ export const home = {
   geslo: {
     sr: {
       /*
-       * Zasad stoji vlastito geslo sajta, ono iz podnozja. Ako sekcija treba
-       * da kaze nesto drugo, mijenja se samo ovdje — raspored ne zavisi od
-       * duzine reda.
+       * Recenica je u tri dijela jer joj sredina ide drugim glasom — bijelo i
+       * kurzivom. Kao jedan tekst se to ne bi dalo obiljeziti a da se prelom
+       * ne veze za odredjenu sirinu ekrana.
        */
-      lead: 'Tradicija u',
-      accent: 'svakoj kapi',
+      lead: 'U Republici Srpskoj proizvodi se med bez dodataka, uz sezonski ritam koji',
+      accent: 'naša porodica',
+      tail: 'prati decenijama.',
       sealAlt: 'Znak: pčela nad cvijetom',
       hiveAlt: 'Crtež košnice u travi',
     },
     en: {
-      lead: 'Tradition in',
-      accent: 'every drop',
+      lead: 'In Republika Srpska honey is made with nothing added, to a seasonal rhythm that',
+      accent: 'our family',
+      tail: 'has kept for decades.',
       sealAlt: 'A mark: a bee above a flower',
       hiveAlt: 'A drawing of a hive in the grass',
     },
   } satisfies L<{
     lead: string;
     accent: string;
+    tail: string;
     sealAlt: string;
     hiveAlt: string;
   }>,

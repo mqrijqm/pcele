@@ -8,9 +8,9 @@ import type { Locale } from '@/i18n/config';
  * med i natrag. Sada nosi jednu recenicu, dovoljno krupnu da bude sve sto se
  * na njoj vidi, i tri crteza oko nje.
  *
- * Recenica je u dva glasa: pocetak u mastilu, kraj u bijelom kurzivu. Ta dva
- * su tu da se jedno od drugog razlikuju, pa se i pisu kao dva `span`-a a ne
- * jednim tekstom s prelomom — prelom bi na uzem ekranu pao gdje mu se prohtije.
+ * Recenica je u dva glasa: mastilo, pa sredina u bijelom kurzivu, pa opet
+ * mastilo. Zato je i pisana u tri dijela a ne jednim tekstom — obiljeziti
+ * sredinu jednog niza znacilo bi vezati se za odredjenu sirinu ekrana.
  *
  * Crtezi su ukras i nose `aria-hidden`; jedini koji nesto znaci je pecat, pa
  * on ima opis.
@@ -21,25 +21,24 @@ export default function Geslo({ locale }: { locale: Locale }) {
   return (
     <section className="geslo" aria-label={`${t.lead} ${t.accent}`}>
       <div className="geslo__inner">
+        {/* Pecat stoji nad recenicom, na istoj lijevoj ivici. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="geslo__seal reveal" src="/images/brand/pecat-cvijet.svg" alt={t.sealAlt} />
 
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="geslo__sun reveal stagger-1"
-          src="/images/brand/sunce.svg"
-          alt=""
-          aria-hidden="true"
-        />
-
-        <p className="geslo__line reveal stagger-2">
-          <span className="geslo__lead">{t.lead}</span>{' '}
-          <span className="geslo__accent">{t.accent}</span>
+        <p className="geslo__line reveal stagger-1">
+          {t.lead}{' '}
+          <span className="geslo__accent">{t.accent}</span> {t.tail}
+          {/*
+            * Sunce zavrsava recenicu, u istom redu s njom — mjera mu je u `em`
+            * pa raste i pada zajedno sa slogom. Jedino se ono vrti.
+            */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="geslo__sun" src="/images/brand/sunce.svg" alt="" aria-hidden="true" />
         </p>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="geslo__hive reveal stagger-3"
+          className="geslo__hive reveal stagger-2"
           src="/images/brand/kosnica.svg"
           alt={t.hiveAlt}
         />
