@@ -181,6 +181,44 @@ export const home = {
     quotes: { text: string; author: string; city: string }[];
   }>,
 
+  /*
+   * Vitrina: uokviren snimak na medenom pojasu, slog s obje strane.
+   *
+   * Recenica je jedna, presjecena fotografijom — lijeva polovina stoji lijevo
+   * od okvira, desna desno od njega. Zato su i dva naslova a ne jedan: da bi
+   * se citalo preko slike, a ne pored nje.
+   */
+  vitrina: {
+    sr: {
+      eyebrowLeft: 'Porodična tradicija',
+      headingLeft: 'Med kakav',
+      body:
+        'U seoskom kraju, na opojnim livadama i obroncima, vrcamo jedinstven med prirodnog porijekla.',
+      eyebrowRight: 'Od 1980.',
+      headingRight: 'treba biti.',
+      seal: 'Proizvodi',
+      alt: 'Red tegli livadskog meda na drvenoj ogradi, iza njih zelenilo',
+    },
+    en: {
+      eyebrowLeft: 'Family tradition',
+      headingLeft: 'Honey as',
+      body:
+        'In the countryside, on heady meadows and hillsides, we extract a honey of one place and no additions.',
+      eyebrowRight: 'Since 1980',
+      headingRight: 'it should be.',
+      seal: 'Products',
+      alt: 'A row of jars of meadow honey on a wooden rail, greenery behind them',
+    },
+  } satisfies L<{
+    eyebrowLeft: string;
+    headingLeft: string;
+    body: string;
+    eyebrowRight: string;
+    headingRight: string;
+    seal: string;
+    alt: string;
+  }>,
+
   legacy: {
     sr: {
       heading: 'Nasljeđe koje traje od 1980.',

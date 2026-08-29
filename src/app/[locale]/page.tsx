@@ -8,7 +8,7 @@ import Priroda from '@/components/home/Priroda';
 import Drip from '@/components/home/Drip';
 import Geslo from '@/components/home/Geslo';
 import PhotoRail from '@/components/home/PhotoRail';
-import Legacy from '@/components/home/Legacy';
+import Vitrina from '@/components/home/Vitrina';
 import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
@@ -75,8 +75,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <PhotoRail locale={locale} />
       </div>
 
-      {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
-      <Legacy locale={locale} />
+      {/* Vitrina: uokviren snimak na medenom pojasu, recenica oko njega. */}
+      <Vitrina locale={locale} />
 
 
       {/* Mjesto i porijeklo. */}
