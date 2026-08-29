@@ -2982,7 +2982,12 @@ html:not(.is-preloading) .hero-land__arrow {
 
   position: relative;
   height: calc(100svh + (var(--rail-count) - 3) * var(--rail-step));
-  background: var(--paper);
+  /*
+   * Bez svoje podloge. Album stoji u polju cvijeca zajedno sa sekcijom iznad
+   * njega, a puna boja papira ovdje je pokrivala uzorak — pa se vidjelo tacno
+   * gdje jedna sekcija prestaje i druga pocinje, sto je i bio razlog da polje
+   * uopste postoji.
+   */
 }
 
 .rail__stage {
@@ -3268,25 +3273,67 @@ html:not(.is-preloading) .hero-land__arrow {
  * pozadine, pa ne treba ni providnost ni filter: sam po sebi je tih koliko
  * treba. Ide preko cijele sirine, i onda kad je slog uzi.
  * ------------------------------------------------------------------------- */
-.priroda {
+/*
+ * Polje cvijeca: uzorak koji ide ispod vise sekcija odjednom.
+ *
+ * Ranije je stajao na samoj sekciji, pa je s njom i prestajao. Sada nosi
+ * omotac oko vise njih, i uzorak tece dalje — nema ruba na kojem se vidi da
+ * je jedna sekcija zavrsila.
+ *
+ * Sirina uzorka je sirina strane, a nizanje je uspravno: da je zadano
+ * `cover`, na omotacu od cetiri ekrana visine crtez bi se razvukao dok cvijet
+ * ne bi bio veci od kadra. Ovako cvijet ostaje iste mjere koliko god polje
+ * bilo dugacko.
+ *
+ * Ukras je, pa je pozadina a ne slika u slogu — citac ekrana nema sta da
+ * procita, a preglednik ga ne cita kao sadrzaj strane.
+ */
+.bloomfield {
   position: relative;
-  padding-block: clamp(4rem, 9vw, 8.75rem);
-  background: var(--paper);
-  overflow: hidden;
+  background-color: var(--paper);
 }
 
 /*
- * Uzorak je ukras, pa je pozadina a ne slika u slogu — citac ekrana nema sta
- * da procita, a preglednik ga ne cita kao sadrzaj strane.
+ * Uzorak stoji na svom sloju, ne na omotacu, da bi mogao da se stopi s
+ * papirom na oba kraja. Da je na omotacu, maska bi progutala i sve sto je u
+ * njemu — snimke, slog, sve.
+ *
+ * Plocica je crtez i njegov uspravni odraz ispod: donji red gornje polovine i
+ * gornji red donje su isti piksel, pa se plocica nastavlja sama na sebe. Bez
+ * toga se na svakoj visini plocice vidjela vodoravna crta i presjeceni
+ * cvjetovi — polje je odavalo da je slika, a ne pozadina.
+ *
+ * Sekcije unutra su pozicionirane, pa se crtaju iznad ovog sloja same od
+ * sebe.
  */
-.priroda::before {
+.bloomfield::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image: url('/images/priroda/cvijece-uzorak.webp');
-  background-size: cover;
-  background-position: center;
+  background-size: 100% auto;
+  background-repeat: repeat;
+  background-position: top center;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 7%,
+    #000 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(to bottom, transparent 0, #000 7%, #000 93%, transparent 100%);
   pointer-events: none;
+}
+
+/*
+ * Iznad sloga je dosta vazduha namjerno: prije ove sekcije zavrsava se snimak
+ * preko cijelog ekrana, i njemu treba mjesto da se izdise prije nego pocne
+ * citanje. Ispod ga je upola manje — dolje se nastavlja isto polje.
+ */
+.priroda {
+  position: relative;
+  padding-block: clamp(7rem, 16vw, 15rem) clamp(4rem, 9vw, 8.75rem);
+  overflow: hidden;
 }
 
 .priroda__inner {

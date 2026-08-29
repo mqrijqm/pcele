@@ -167,12 +167,30 @@ export default function Apiary({ locale }: { locale: Locale }) {
     gsap.set([hills, body], { opacity: 1, clipPath: 'inset(0 100% 0 0)' });
     gsap.set(sun, { opacity: 0, scale: 0 });
 
+    /*
+     * Strana stoji dok snimak ne prodje.
+     *
+     * Sekcija se prvo dovede na mjesto pa se skrol zaustavi; kad se snimak
+     * zavrsi i natpisi se ispisu, skrol se vraca. Zadrzavanje traje koliko i
+     * snimak — nesto preko sest sekundi — plus ispisivanje.
+     *
+     * Otkljucava se na tri nacina, jer je zaglavljena strana gora od
+     * preskocenog snimka: kad natpisi zavrse, po sigurnosnom roku, i kad
+     * sekcija ode iz kadra. Nijedan ne smije izostati.
+     */
+    let free = false;
+    const unlock = () => {
+      if (free) return;
+      free = true;
+      window.dispatchEvent(new Event('scroll:unlock'));
+    };
+
     let told = false;
     const tell = () => {
       if (told) return;
       told = true;
       gsap
-        .timeline()
+        .timeline({ onComplete: unlock })
         .to(head, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
         .to(coords, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
         .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: 'power1.inOut' }, '-=0.15')
@@ -190,24 +208,49 @@ export default function Apiary({ locale }: { locale: Locale }) {
      */
     let late: number | undefined;
 
+    let guard: number | undefined;
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.intersectionRatio < 0.9) return;
         io.disconnect();
+
+        /* Sekcija se dovede na vrh kadra, pa se strana zaustavi. */
+        window.dispatchEvent(new CustomEvent('scroll:lock', { detail: { to: el } }));
+
         /* Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
          * poster, koji je prvi kadar, pa se natpisi ispisu po roku. */
         v.play().catch(() => undefined);
         const runs = (v.duration || 10) / SPEED;
         late = window.setTimeout(tell, (runs + 2.5) * 1000);
+
+        /*
+         * Krajnji rok. Ako snimak ne stigne ili se natpisi zaglave, strana se
+         * pusta svakako — sekunda i po duze nego sto najduzi tok traje.
+         */
+        guard = window.setTimeout(unlock, (runs + 2.5 + 3.5) * 1000);
+
+        /* Ako je posjetilac ipak zavrsio negdje drugdje, brava pada s njim. */
+        exit.observe(el);
       },
       { threshold: [0, 0.5, 0.9, 1] },
     );
     io.observe(stage);
 
+    const exit = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) unlock();
+      },
+      { threshold: 0 },
+    );
+
     return () => {
       io.disconnect();
+      exit.disconnect();
       window.clearTimeout(late);
+      window.clearTimeout(guard);
       v.removeEventListener('ended', tell);
+      unlock();
     };
   }, []);
 

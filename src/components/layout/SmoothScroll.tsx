@@ -65,8 +65,69 @@ export default function SmoothScroll() {
     };
     window.addEventListener('preloader:done', start);
 
+    /*
+     * Zadrzavanje skrola.
+     *
+     * Sekcija sa snimkom pcelinjaka trazi da se strana zaustavi dok snimak ne
+     * prodje. Lenis je ovdje jedini koji zna gdje je strana, ali on nema koga
+     * da pita — zato se javlja dogadjajem, isto kao zavjesa iznad.
+     *
+     * `lenis.stop()` gasi tocak i dodir. Tastatura ide mimo njega, pa se
+     * razmaknica i strelice hvataju posebno; bez toga se strana i dalje moze
+     * pomjeriti tipkom.
+     */
+    const KEYS = new Set([
+      ' ',
+      'PageDown',
+      'PageUp',
+      'ArrowDown',
+      'ArrowUp',
+      'Home',
+      'End',
+      'Spacebar',
+    ]);
+
+    let locked = false;
+    const swallow = (e: KeyboardEvent) => {
+      if (!locked) return;
+      const el = e.target as HTMLElement | null;
+      /* U polju za unos razmaknica je slovo, ne skrol. */
+      if (el?.closest('input, textarea, select, [contenteditable]')) return;
+      if (KEYS.has(e.key)) e.preventDefault();
+    };
+
+    /*
+     * Prije zaustavljanja strana se dovede na mjesto. Bez toga se zamrzne
+     * tamo gdje se zatekla — sekcija napola u kadru, pa izgleda kao da je
+     * strana zapela, a ne da je stala namjerno.
+     */
+    const lock = (e: Event) => {
+      locked = true;
+      const to = (e as CustomEvent<{ to?: Element }>).detail?.to;
+      if (!to) {
+        lenis.stop();
+        return;
+      }
+      lenis.scrollTo(to as HTMLElement, {
+        duration: 0.5,
+        lock: true,
+        onComplete: () => lenis.stop(),
+      });
+    };
+    const unlock = () => {
+      locked = false;
+      lenis.start();
+    };
+
+    window.addEventListener('scroll:lock', lock);
+    window.addEventListener('scroll:unlock', unlock);
+    window.addEventListener('keydown', swallow, { passive: false });
+
     return () => {
       window.removeEventListener('preloader:done', start);
+      window.removeEventListener('scroll:lock', lock);
+      window.removeEventListener('scroll:unlock', unlock);
+      window.removeEventListener('keydown', swallow);
       gsap.ticker.remove(raf);
       lenis.destroy();
     };

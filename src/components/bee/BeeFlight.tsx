@@ -68,6 +68,21 @@ const START = { x: -0.093, y: 0.704, tilt: 20 };
  */
 const HERO_HOLD = 0.35;
 
+/**
+ * Drugo mjesto na kojem pcela sjedi: kamilica uz teglu.
+ *
+ * Sekcija ispod nje je snimak pcelinjaka preko cijelog ekrana, a tamo pcele
+ * nema — snimak je njeno mjesto, ne njena pozadina. Zato se prije njega
+ * spusti na cvijet i tu ostane dok sekcija sa snimkom ne prodje.
+ *
+ * Mjere su razlomci samog cvijeta: gore lijevo od njegove sredine, na
+ * laticama, ne na srcu.
+ */
+const BLOOM = { x: 0.36, y: 0.22, tilt: 12 };
+
+/** Sekcija preko koje pcele nema. */
+const NO_FLY = '.apiary';
+
 export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
   const layerRef = useRef<HTMLDivElement>(null);
@@ -93,6 +108,39 @@ export default function BeeFlight() {
       const r = arrow.getBoundingClientRect();
       if (r.bottom < window.innerHeight * HERO_HOLD) return null;
       return { x: r.left + r.width * START.x, y: r.top + r.height * START.y };
+    };
+
+    /**
+     * Mjesto na kamilici, dok se ona vidi. Trazi se da cvijet bude stvarno u
+     * kadru — ne tek zavirio odozdo — inace bi pcela odletjela na njega jos
+     * dok je sekcija ispod pregiba.
+     */
+    const bloomSpot = () => {
+      const bloom = document.querySelector('.hero-jar__bloom');
+      const petals = document.querySelector('.hero-jar__petals');
+      if (!bloom || !petals) return null;
+      /*
+       * Cvijet se ne iscrta odmah — latice se rasire tek pri kraju sekcije s
+       * teglom. Dok ih nema, pcela nema na sta da sjedne: sjedila bi na
+       * praznom uglu i to se vidi.
+       */
+      if (Number(getComputedStyle(petals).opacity) < 0.9) return null;
+      const r = bloom.getBoundingClientRect();
+      const h = window.innerHeight;
+      if (r.bottom < h * 0.15 || r.top > h * 0.85) return null;
+      return { x: r.left + r.width * BLOOM.x, y: r.top + r.height * BLOOM.y };
+    };
+
+    /** Mjesto na kojem pcela sjedi, ako ga trenutno ima. */
+    const parkSpot = () => heroSpot() ?? bloomSpot();
+
+    /** Da li je sekcija bez pcele trenutno preko sredine kadra. */
+    const noFly = () => {
+      const section = document.querySelector(NO_FLY);
+      if (!section) return false;
+      const r = section.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      return r.top < mid && r.bottom > mid;
     };
 
     const first = heroSpot() ?? { x: window.innerWidth * 0.12, y: window.innerHeight * 0.2 };
@@ -157,9 +205,10 @@ export default function BeeFlight() {
        * koja je najdalje od svega.
        */
       const nextStop = () => {
-        /* Dok se heroj vidi, jedino odrediste je njegovo mjesto uz strelicu. */
-        const hero = heroSpot();
-        if (hero) return hero;
+        /* Dok ima mjesta za sjedanje — strelica u heroju, pa kamilica uz
+         * teglu — pcela ne bira slobodnu tacku nego ide tamo. */
+        const park = parkSpot();
+        if (park) return park;
 
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -182,14 +231,23 @@ export default function BeeFlight() {
 
       let hop: gsap.core.Tween | null = null;
 
+      /*
+       * Sakrivanje nad sekcijom sa snimkom. Pcela i dalje leti, samo se ne
+       * vidi — kad sekcija prodje, vraca se tamo gdje je stigla, a ne tamo
+       * gdje je zamrznuta.
+       */
+      const veil = () => {
+        gsap.to(bee, { autoAlpha: noFly() ? 0 : 1, duration: 0.5, overwrite: 'auto' });
+      };
+
       const flyOn = () => {
         const to = nextStop();
-        const parked = heroSpot() !== null;
+        const parked = parkSpot() !== null;
         /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda.
          * Nagib nosi samo dok stoji uz strelicu — u letu je ravna. */
         gsap.to(bee, {
           scaleX: to.x < at.x ? -1 : 1,
-          rotation: parked ? START.tilt : 0,
+          rotation: parked ? (heroSpot() ? START.tilt : BLOOM.tilt) : 0,
           duration: 0.45,
           ease: 'power2.out',
           overwrite: 'auto',
@@ -205,6 +263,7 @@ export default function BeeFlight() {
       };
 
       flyOn();
+      veil();
 
       /*
        * Strana se pomjerila pod njom: ako je tamo gdje leti u medjuvremenu
@@ -215,6 +274,7 @@ export default function BeeFlight() {
       const recheck = () => {
         window.clearTimeout(idle);
         idle = window.setTimeout(() => {
+          veil();
           if (free(at.x, at.y, inView())) return;
           hop?.kill();
           flyOn();

@@ -63,11 +63,17 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Pcelinjak: snimak preko cijelog kadra koji se odmakne i progovori. */}
       <Apiary locale={locale} />
 
-      {/* U dodiru s prirodom: snimak, naslov i tekst jedno uz drugo. */}
-      <Priroda locale={locale} />
+      {/*
+        Polje cvijeca ide ispod obje sekcije koje slijede, pa uzorak tece
+        preko ruba medju njima — inace bi se vidjelo gdje jedna prestaje.
+      */}
+      <div className="bloomfield">
+        {/* U dodiru s prirodom: snimak, naslov i tekst jedno uz drugo. */}
+        <Priroda locale={locale} />
 
-      {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
-      <PhotoRail locale={locale} />
+        {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
+        <PhotoRail locale={locale} />
+      </div>
 
       {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
       <Legacy locale={locale} />
