@@ -2540,11 +2540,24 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Tijelo pojasa. Visinu mu daje ono sto je u njemu; `min-height` je tu samo za
- * slucaj da ostane prazan, da prelaz ne postane linija.
+ * Vidi se samo pojas s kapima.
+ *
+ * Crtez je visok 46% sirine, ali kapi mu se zavrse na 21% — sve ispod je
+ * puni med, ista boja koju tijelo pojasa ionako nosi. Taj visak je stajao
+ * izmedju kapi i teksta kao prazan prostor bez razloga. Dvadeset tri posto
+ * ostavlja malo zraka ispod najduze kapi na svakoj sirini.
+ */
+.drip__head {
+  overflow: hidden;
+  height: 23vw;
+  background: var(--amber);
+}
+
+/*
+ * Tijelo pojasa. Visinu mu daje iskljucivo ono sto je u njemu — pojas pocinje
+ * cim se kapi zavrse i zavrsava se cim tekst stane.
  */
 .drip__body {
-  min-height: 20svh;
   background: var(--amber);
 }
 
@@ -2555,9 +2568,14 @@ html:not(.is-preloading) .hero-land__arrow {
  * recenice, bijelo za kraj. Crtezi stoje u uglovima i ne diraju red — mjere su
  * procenti pojasa, pa se s njim i skupljaju.
  * ------------------------------------------------------------------------- */
+/*
+ * Razmak je mali namjerno: tekst pocinje odmah pod kapima i sekcija se
+ * zavrsava cim on stane. Dolje ga je nesto vise jer ispod teksta jos stoji
+ * kosnica.
+ */
 .geslo {
   position: relative;
-  padding-block: clamp(4rem, 9vw, 8rem);
+  padding-block: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 4rem);
   overflow: hidden;
 }
 
@@ -2697,6 +2715,10 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 .apiary__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -2775,7 +2797,7 @@ html:not(.is-preloading) .hero-land__arrow {
   position: absolute;
   left: 2.4%;
   bottom: 4.9%;
-  width: 26%;
+  width: 30%;
 }
 
 /*
@@ -2827,6 +2849,34 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .apiary__sun {
   opacity: 0;
+}
+
+/*
+ * Nizak prozor: sredina i donji lijevi ugao se priblize dok se ne dodirnu.
+ *
+ * Sve u ovoj sceni mjeri se u procentima snimka, a snimak je visok koliko i
+ * ekran. Na 1920 x 820 srednjem bloku ostane trideset pet piksela manje nego
+ * sto mu treba, pa "Mracaj" sjedne na recenicu. Zato se na niskom prozoru
+ * sredina podigne, a recenica i sunce se skupe — jedino sto se ne dira je
+ * snimak.
+ */
+@media (max-height: 880px) {
+  .apiary__where {
+    top: 28%;
+  }
+
+  .apiary__foot {
+    width: 34%;
+  }
+
+  .apiary__body {
+    font-size: clamp(0.9rem, 1.15vw, 1.15rem);
+  }
+
+  .apiary__sun {
+    width: 15%;
+    margin-bottom: clamp(0.6rem, 1.2vw, 1.1rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

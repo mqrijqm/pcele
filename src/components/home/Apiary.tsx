@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -29,7 +28,32 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function Apiary({ locale }: { locale: Locale }) {
   const root = useRef<HTMLElement>(null);
+  const film = useRef<HTMLVideoElement>(null);
   const t = home.apiary[locale];
+
+  /*
+   * Snimak krece kad sekcija udje u kadar, ne pri ucitavanju strane. Traje
+   * deset sekundi; da krene odmah, do njega bi se stiglo tek kad je gotov.
+   */
+  useEffect(() => {
+    const el = root.current;
+    const v = film.current;
+    if (!el || !v) return;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          /* Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
+           * poster, koji je prvi kadar, pa se nista ne raspada. */
+          v.play().catch(() => undefined);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const el = root.current;
@@ -155,13 +179,23 @@ export default function Apiary({ locale }: { locale: Locale }) {
     <section className="apiary" ref={root} aria-label={t.heading}>
       <div className="apiary__stage">
         <figure className="apiary__shot">
-          <Image
+          {/*
+            * Snimak, ne slika: kamera klizi niz red kosnica. Ne ide u krug —
+            * pocetak i kraj su dva razlicita mjesta u pcelinjaku, pa bi
+            * vracanje bilo rez. Vrti se jednom i stane na zadnjem kadru.
+            */}
+          <video
+            ref={film}
             className="apiary__img"
-            src="/images/real/pcelinjak-mracaj.webp"
-            alt={t.alt}
-            fill
-            sizes="100vw"
-          />
+            poster="/images/real/pcelinjak-mracaj-poster.webp"
+            muted
+            playsInline
+            preload="metadata"
+            aria-label={t.alt}
+          >
+            <source src="/images/real/pcelinjak-mracaj.webm" type="video/webm" />
+            <source src="/images/real/pcelinjak-mracaj.mp4" type="video/mp4" />
+          </video>
 
           {/*
             * `display: contents` na natpisu: sve troje su i dalje jedan potpis

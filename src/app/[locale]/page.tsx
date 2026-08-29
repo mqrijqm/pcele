@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 
 import { isLocale } from '@/i18n/config';
-import { photoBreaks } from '@/content/pages';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import Apiary from '@/components/home/Apiary';
@@ -14,7 +13,6 @@ import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
-import ImageBreak from '@/components/ui/ImageBreak';
 import BeeFlight from '@/components/bee/BeeFlight';
 
 /**
@@ -42,7 +40,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
 
-  const shot = photoBreaks[locale];
 
   return (
     <>
@@ -71,17 +68,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       {/* Porodicna tradicija: crtez pcelara i arhivski snimci. */}
       <Legacy locale={locale} />
 
-      {/* Jedina foto-pauza na strani: pcelinjak, prije nego sto krene prica o mjestu. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/pcelinjak-2.webp', alt: shot.homeHives.altA },
-          { src: '/images/real/pcelinjak-3.webp', alt: shot.homeHives.altB },
-        ]}
-        caption={shot.homeHives.caption}
-        meta={shot.homeHives.meta}
-        emblem
-      />
 
       {/* Mjesto i porijeklo. */}
       <Origin locale={locale} />
