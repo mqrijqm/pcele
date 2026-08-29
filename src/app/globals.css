@@ -2590,14 +2590,14 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Sredina: crtez brda, i ime sela tacno pod njim. Mjere su razlomci snimka —
+ * Sredina: crtez brda, ime sela pod njim, pa koordinate. Mjere su razlomci snimka —
  * okvir se skrolom skuplja, a natpis se skuplja s njim i ostaje na istom
  * mjestu u slici.
  */
 .apiary__where {
   position: absolute;
   left: 50%;
-  top: 34.8%;
+  top: 35.9%;
   width: 40%;
   translate: -50% 0;
   text-align: center;
@@ -2624,12 +2624,12 @@ html:not(.is-preloading) .hero-land__arrow {
   color: #fff;
 }
 
-/* Dolje lijevo: recenica. */
+/* Dolje lijevo, pod suncem: recenica. */
 .apiary__body {
   position: absolute;
-  left: 3.2%;
-  top: 82.7%;
-  width: 26%;
+  left: 3.1%;
+  top: 81.4%;
+  width: 25.4%;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1rem, 1.5vw, 1.5rem);
   line-height: 1.45;
@@ -2639,15 +2639,15 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Dolje desno: sunce, i pod njim koordinate. Jedino se sunce vrti; disk mu je
+ * Dolje lijevo, nad recenicom: sunce. Jedino se ono vrti; disk mu je
  * simetrican pa se okretanje cita po zracima — trideset sekundi po krugu,
  * taman da se primijeti a da ne vuce pogled.
  */
 .apiary__sun {
   position: absolute;
-  left: 92.6%;
-  top: 83.3%;
-  width: 5.1%;
+  left: 3.4%;
+  top: 69%;
+  width: 4.9%;
   height: auto;
   animation: sun-spin 30s linear infinite;
 }
@@ -2658,11 +2658,13 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
-/* Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku. */
+/*
+ * Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku.
+ * Stoje pod imenom sela, u istoj osi: crtez kaze kakav je kraj, ime koji je,
+ * broj gdje je tacno — troje jedno pod drugim, od opsteg ka odredjenom.
+ */
 .apiary__coords {
-  position: absolute;
-  right: 2.9%;
-  top: 94.4%;
+  margin-top: 0.35em;
   font-family: var(--font-sans), system-ui, sans-serif;
   /*
    * Sitno, mjerom kojom su pisani i natpisi iznad naslova po sekcijama. Broj
@@ -2720,19 +2722,14 @@ html:not(.is-preloading) .hero-land__arrow {
 
   .apiary__body {
     left: 6%;
-    top: 74%;
-    width: 60%;
+    top: 78%;
+    width: 66%;
   }
 
   .apiary__sun {
-    left: 84%;
-    top: 76%;
+    left: 6%;
+    top: 66%;
     width: 11%;
-  }
-
-  .apiary__coords {
-    right: 5%;
-    top: 92%;
   }
 }
 

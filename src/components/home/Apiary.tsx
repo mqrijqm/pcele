@@ -118,7 +118,7 @@ export default function Apiary({ locale }: { locale: Locale }) {
             * morao biti kutija, a onda bi im pozicije racunao on a ne snimak.
             */}
           <figcaption className="apiary__caption">
-            {/* Sredina: crtez brda, i ime sela tacno pod njim. */}
+            {/* Sredina: crtez brda, ime sela pod njim, pa koordinate. */}
             <div className="apiary__where">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -127,12 +127,10 @@ export default function Apiary({ locale }: { locale: Locale }) {
                 alt={t.hillsAlt}
               />
               <h2 className="apiary__heading apiary__copy">{t.heading}</h2>
+              <p className="apiary__coords apiary__copy">{t.coords}</p>
             </div>
 
-            {/* Dolje lijevo: recenica. */}
-            <p className="apiary__body apiary__copy">{t.body}</p>
-
-            {/* Dolje desno: sunce, i pod njim koordinate. */}
+            {/* Dolje lijevo: sunce, i pod njim recenica. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className="apiary__sun apiary__copy"
@@ -140,7 +138,7 @@ export default function Apiary({ locale }: { locale: Locale }) {
               alt=""
               aria-hidden="true"
             />
-            <p className="apiary__coords apiary__copy">{t.coords}</p>
+            <p className="apiary__body apiary__copy">{t.body}</p>
           </figcaption>
         </figure>
       </div>
