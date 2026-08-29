@@ -2575,6 +2575,13 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 .drip__body {
   background: var(--amber);
+  /*
+   * Jedan piksel pod gornju ivicu. Ona je odsjecena na visini u `vw`, sto
+   * skoro nikad ne padne na cio piksel, pa zadnji red ostane napola pokriven i
+   * preko cijele sirine se vidi svijetla nit. Tijelo je iste boje, pa je
+   * pokrije.
+   */
+  margin-top: -1px;
 }
 
 /* ---------------------------------------------------------------------------
@@ -2585,13 +2592,19 @@ html:not(.is-preloading) .hero-land__arrow {
  * procenti pojasa, pa se s njim i skupljaju.
  * ------------------------------------------------------------------------- */
 /*
- * Razmak je mali namjerno: tekst pocinje odmah pod kapima i sekcija se
- * zavrsava cim on stane. Dolje ga je nesto vise jer ispod teksta jos stoji
- * kosnica.
+ * Razmaci nisu jednaki, a treba da izgledaju tako.
+ *
+ * Gore pojas ne pocinje svojom ivicom nego najdubljom kapi, a ispod nje stoji
+ * jos tridesetak piksela pune medene plohe prije nego slog pocne — taj komad
+ * se broji u vazduh iako ga zadaje crtez, ne razmak. Dolje takve zalihe nema:
+ * ispod zadnjeg reda odmah je ivica s koje kapi padaju.
+ *
+ * Zato je gornji razmak upola manji od donjeg. Tako slog stoji vise u pojasu,
+ * a oku je podjednako udaljen od oba kraja.
  */
 .geslo {
   position: relative;
-  padding-block: clamp(1.5rem, 3vw, 3rem) clamp(2rem, 4vw, 4rem);
+  padding-block: clamp(0.75rem, 1.5vw, 1.6rem) clamp(3.25rem, 6.7vw, 6rem);
   overflow: hidden;
 }
 
