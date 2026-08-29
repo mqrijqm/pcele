@@ -1,3 +1,10 @@
+/* Strana "Nasi pcelinjaci" ima svoj trakasti raspored; drzi se u svom fajlu
+ * jer ga ne dijeli ni sa jednom drugom stranom. `@import` mora stajati prije
+ * svih pravila, pa i prije Tailwindovih direktiva — sva pravila u njemu su
+ * klasna i nadjacavaju preflight bez obzira na redoslijed.
+ */
+@import './pcelinjak.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

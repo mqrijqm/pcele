@@ -1,0 +1,426 @@
+/* ===========================================================================
+ * Strana "Nasi pcelinjaci" — trakasti raspored.
+ *
+ * Sistem je preuzet sa strane o vinogradima na moncalisse.com i prekucan u
+ * nase mjere. Ono sto je odande: mreza od dvadeset i cetiri kolone preko koje
+ * se sve poravnava, tri sirine trake (usko / normalno / siroko) koje se na toj
+ * mrezi razlikuju samo rasponom kolona, razmaci u odnosu 1:2:4, i tipografska
+ * skala u kojoj naslovi idu 75 / 60 / 45 / 32 px na 1440, a sitan natpis nad
+ * njima 14.4 px sa razmaknutim slovima.
+ *
+ * Ono sto nije odande: boje, pismo i svaka rijec. Boje su nase tri —
+ * papir, mastilo, zlatna — i slog je nas serif nad grotesknim natpisom.
+ *
+ * Zasto mreza a ne obicni stupci: sirine se ovdje ne zadaju u procentima nego
+ * u broju kolona, pa se traka koja pocinje na trecoj koloni poravnava sa
+ * slikom koja pocinje na trecoj koloni bez i jednog dogovorenog broja izmedju
+ * njih. Kad se mreza jednom postavi, sve ostalo je raspon.
+ * ========================================================================= */
+
+.pcl {
+  --pcl-cols: 24;
+  /*
+   * Dvije razlicite mjere, koje se lako pobrkaju.
+   *
+   * `gutter` je razmak od ruba strane do sloga. `gap` je razmak izmedju dvije
+   * od dvadeset i cetiri kolone — a njih je dvadeset i tri, pa i sitna mjera
+   * ovdje postaje velika: na uzoru je kolona 50 px a razmak nepunih pet, sto
+   * na cijelu mrezu dodje sto i nesto piksela. Kad sam ih drzao istim, dvadeset
+   * i tri razmaka po trideset piksela pojela su sedam stotina piksela mreze i
+   * strana je pobjegla u stranu.
+   */
+  --pcl-gutter: clamp(1.25rem, 3vw, 3rem);
+  --pcl-gap: clamp(0.2rem, 0.35vw, 0.5rem);
+  /* Razmaci: srednji, veliki, najveci — 1 : 2 : 4, kao na uzoru. */
+  --pcl-md: clamp(1.25rem, 2.4vw, 1.728rem);
+  --pcl-lg: clamp(2.5rem, 4.8vw, 3.456rem);
+  --pcl-xl: clamp(4rem, 9.6vw, 6.912rem);
+
+  background: var(--paper);
+  color: var(--brown);
+  padding-bottom: var(--pcl-xl);
+}
+
+/*
+ * Traka. Svaka je siroka koliko i strana; sto je uze, uze je ono unutra —
+ * `strip__inner` je taj koji sjeda na mrezu.
+ */
+.strip {
+  position: relative;
+  width: 100%;
+}
+
+.strip__inner {
+  display: grid;
+  grid-template-columns: repeat(var(--pcl-cols), minmax(0, 1fr));
+  column-gap: var(--pcl-gap);
+  width: min(100%, 92rem);
+  margin-inline: auto;
+  padding-inline: var(--pcl-gutter);
+}
+
+/* Sirine se zadaju rasponom kolona, ne procentom. */
+.strip--narrow .strip__inner > * {
+  grid-column: 3 / span 12;
+}
+
+.strip--normal .strip__inner > * {
+  grid-column: 3 / span 20;
+}
+
+.strip--wide .strip__inner > * {
+  grid-column: 1 / -1;
+}
+
+/*
+ * Dvostupacna traka: natpis i naslov lijevo, tekst desno — pola prema pola,
+ * s praznom kolonom izmedju.
+ */
+.strip__cols {
+  display: grid;
+  grid-template-columns: repeat(var(--pcl-cols), minmax(0, 1fr));
+  column-gap: var(--pcl-gap);
+}
+
+/*
+ * `strip__cols` stoji na istom divu kao i `strip__inner`, pa se u selektoru
+ * pisu jedno do drugog, bez razmaka. Dok je ovdje pisalo `.strip__inner >
+ * .strip__cols`, pravilo nije imalo sta da nadje i tekst je ostajao preko
+ * cijele mjere umjesto u svojoj polovini.
+ */
+.strip--columns .strip__inner.strip__cols > *:first-child {
+  grid-column: 3 / span 9;
+}
+
+.strip--columns .strip__inner.strip__cols > *:last-child {
+  grid-column: 13 / span 10;
+}
+
+.mb-md {
+  margin-bottom: var(--pcl-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--pcl-lg);
+}
+
+.mb-xl {
+  margin-bottom: var(--pcl-xl);
+}
+
+/* --- slog ---------------------------------------------------------------- */
+
+/*
+ * Sitan natpis nad naslovom. Groteskan, razmaknut, verzalan — jedini takav na
+ * strani, pa se cita kao oznaka a ne kao recenica.
+ */
+.strip__pretitle {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.9rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+  margin-bottom: var(--pcl-md);
+}
+
+/*
+ * Naslovi. Odnos medju njima je s uzora — 75 / 60 / 45 / 32 na 1440 — ali su
+ * ovdje u nasem serifu i bez verzala, jer nas serif verzalom gubi ono po cemu
+ * se prepoznaje.
+ */
+.strip__title1 {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.75rem, 5.22vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.strip__title2 {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.25rem, 4.18vw, 4.75rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+
+.strip__title3 {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.75rem, 3.11vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.strip__title4 {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.35rem, 2.2vw, 2.25rem);
+  line-height: 1.1;
+}
+
+.strip__lead {
+  margin-top: var(--pcl-md);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.6rem);
+  line-height: 1.4;
+  color: var(--brown-soft);
+  text-wrap: pretty;
+}
+
+.strip__copy p {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1vw, 1.05rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.strip__copy p + p {
+  margin-top: var(--pcl-md);
+}
+
+/* --- heroj --------------------------------------------------------------- */
+
+.pcl__hero {
+  padding-top: var(--pcl-lg);
+  padding-bottom: var(--pcl-lg);
+}
+
+/*
+ * Mjesto crteza pcelinjaka. Prazno je namjerno — drzi visinu koju ce crtez
+ * uzeti, da se strana ne prelomi kad stigne. Tanka linija je jedino sto se
+ * vidi, da se u pregledu zna da mjesto postoji.
+ */
+.pcl__plate {
+  width: min(100% - 2 * var(--pcl-gutter), 92rem);
+  margin: var(--pcl-lg) auto 0;
+  aspect-ratio: 16 / 7;
+  border: 1px dashed rgba(136, 91, 39, 0.22);
+  border-radius: 20px;
+}
+
+/* --- siroka traka sa snimcima -------------------------------------------- */
+
+/*
+ * Tri snimka u redu, srednji uspravan i spusten — red se ne cita kao mreza
+ * nego kao tri stvari polozene jedna pored druge.
+ */
+.pcl__band {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1.2fr;
+  align-items: start;
+  gap: var(--pcl-gutter);
+  width: min(100%, 100rem);
+  margin-inline: auto;
+  padding-inline: var(--pcl-gutter);
+}
+
+.pcl__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.pcl__shot--tall {
+  margin-top: var(--pcl-xl);
+}
+
+/* --- istaknuti pcelinjak -------------------------------------------------- */
+
+/*
+ * Dvije mreze, dva elementa. Ova traka je nekad bila i `strip__inner` i
+ * `pcl__feature` na istom divu — pa je jedna mreza od dvadeset i cetiri kolone
+ * dobila pravilo za dvije, a njena su djeca i dalje trazila kolonu 3 do 22.
+ * Tih dvadeset kolona vise nije bilo, pa su ih napravile prazne, sirine nula,
+ * i tekst je iscurio desno od strane.
+ */
+.pcl__feature {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+  gap: var(--pcl-lg);
+}
+
+.pcl__featureCopy p {
+  margin-top: var(--pcl-md);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1vw, 1.05rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.pcl__featureShot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* --- tri pcelinjaka ------------------------------------------------------- */
+
+.pcl__places {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--pcl-lg) var(--pcl-gutter);
+  list-style: none;
+  margin: 0;
+  width: min(100%, 92rem);
+  margin-inline: auto;
+  padding: 0 var(--pcl-gutter);
+}
+
+.pcl__placeShot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.pcl__place h3 {
+  margin-top: var(--pcl-md);
+}
+
+/*
+ * Podaci idu u redove, ne u recenice: naziv lijevo, vrijednost desno, linija
+ * izmedju. Tri reda po pcelinjaku i tri pcelinjaka — sve se cita i uspravno i
+ * vodoravno.
+ */
+.pcl__rows {
+  margin: var(--pcl-md) 0 0;
+  border-top: 1px solid rgba(136, 91, 39, 0.15);
+}
+
+.pcl__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(136, 91, 39, 0.15);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: clamp(0.78rem, 0.92vw, 0.95rem);
+  line-height: 1.4;
+}
+
+.pcl__row dt {
+  color: var(--brown-soft);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.82em;
+  white-space: nowrap;
+}
+
+.pcl__row dd {
+  margin: 0;
+  text-align: right;
+}
+
+/* --- zavrsni snimak ------------------------------------------------------- */
+
+.pcl__wide {
+  width: min(100% - 2 * var(--pcl-gutter), 78rem);
+  margin-inline: auto;
+}
+
+.pcl__wide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* --- poziv ---------------------------------------------------------------- */
+
+.pcl__cta {
+  padding-block: var(--pcl-xl);
+  text-align: center;
+}
+
+.pcl__cta .strip__inner > * {
+  grid-column: 7 / span 12;
+}
+
+.pcl__ctaLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+  margin-top: var(--pcl-lg);
+}
+
+.pcl__button {
+  display: inline-block;
+  padding: 0.9rem 1.9rem;
+  border-radius: var(--radius-pill);
+  background: var(--brown);
+  color: var(--paper);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: opacity 0.3s var(--ease-out-expo);
+}
+
+.pcl__button:hover {
+  opacity: 0.82;
+}
+
+.pcl__button--quiet {
+  background: transparent;
+  color: var(--brown);
+  box-shadow: inset 0 0 0 1px rgba(136, 91, 39, 0.3);
+}
+
+/* --- uzi ekrani ----------------------------------------------------------- */
+
+/*
+ * Ispod devetsto mreza se svodi na jedan stupac. Raspon kolona nema smisla
+ * kad ih je koliko i sadrzaja, pa sve ide preko cijele mjere, jedno pod
+ * drugim, a slike u redu postaju red koji se lista.
+ */
+@media (max-width: 900px) {
+  /*
+   * Mreza se gasi, ne samo rasponi.
+   *
+   * Dvadeset i cetiri kolone nose dvadeset i tri razmaka; na tri stotine
+   * devedeset piksela to je cetiri stotine sezdeset piksela samog razmaka,
+   * pa strana pobjegne u stranu i prije nego sto se u nju bilo sta stavi.
+   * Zato ovdje ostaje jedan stupac i nijedan razmak.
+   */
+  .strip__inner,
+  .strip__cols {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .strip--narrow .strip__inner > *,
+  .strip--normal .strip__inner > *,
+  .strip--wide .strip__inner > *,
+  .pcl__cta .strip__inner > *,
+  .strip--columns .strip__inner.strip__cols > *:first-child,
+  .strip--columns .strip__inner.strip__cols > *:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .strip--columns .strip__inner.strip__cols > *:last-child {
+    margin-top: var(--pcl-md);
+  }
+
+  .pcl__band {
+    grid-template-columns: 1fr;
+  }
+
+  .pcl__shot--tall {
+    margin-top: 0;
+  }
+
+  .pcl__feature,
+  .pcl__places {
+    grid-template-columns: 1fr;
+  }
+
+  .pcl__plate {
+    aspect-ratio: 4 / 3;
+  }
+}
