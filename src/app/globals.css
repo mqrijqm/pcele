@@ -781,10 +781,11 @@ p {
   top: 19.02%;
   /*
    * Novi snimak tegle nema praznine oko stakla koliko je imao stari crtez, pa
-   * na istoj visini kutije staklo izgleda krupnije. Otud manji postotak — na
-   * ekranu tegla zauzima onoliko koliko je i prije zauzimala.
+   * na istoj visini kutije staklo izgleda krupnije. Otud znatno manji
+   * postotak nego sto ga je crtez imao — na ekranu tegla zauzima onoliko
+   * koliko je i prije zauzimala, i sekcija oko nje dise.
    */
-  height: 60%;
+  height: 52%;
   /* Visina ostaje ista, sirinu racuna omjer — inace bi se staklo razvuklo. */
   aspect-ratio: 853 / 1285;
   transform: translateX(-50%);
@@ -949,11 +950,17 @@ p {
  * da mu dno klizi preko ruba scene.
  *
  */
+/*
+ * Kamilica u donjem desnom uglu. Razmak do dna je velik namjerno: na tri
+ * posto joj je do ruba ostajalo dvadesetak piksela, sto oko cita kao da je
+ * odsjecena — a scena sijece sve sto iz nje izadje, pa je to i bila istina na
+ * niskom prozoru.
+ */
 .hero-jar__bloom {
   position: absolute;
-  right: 9vw;
-  bottom: 3%;
-  width: min(15.5vw, 29svh);
+  right: 7vw;
+  bottom: 9%;
+  width: min(13vw, 24svh);
   aspect-ratio: 700 / 658;
   z-index: 2;
 }
@@ -996,8 +1003,8 @@ p {
 
   .hero-jar__bloom {
     right: 4vw;
-    bottom: 4%;
-    width: min(38vw, 26svh);
+    bottom: 8%;
+    width: min(34vw, 22svh);
   }
 }
 
