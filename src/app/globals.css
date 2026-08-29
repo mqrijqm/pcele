@@ -2571,10 +2571,14 @@ html:not(.is-preloading) .hero-land__arrow {
   width: 100%;
   height: auto;
   /*
-   * Dno crteza i tijelo sekcije su ista boja. Jedan piksel preklopa gasi
-   * svijetlu nit koja se na frakcionom zumu zna pojaviti izmedju njih.
+   * Bez preklopa. Nekada je crtez bio povucen jedan piksel navise da mu se dno
+   * ne bi vidjelo kao nit — ali od kada su i gornja i donja ivica odsjecene na
+   * visinu u `vw`, dno crteza je ionako duboko van vidljivog. Taj piksel je
+   * tada radio suprotno: na donjoj ivici je otkrivao red medene podloge ispod
+   * papira, pa je nit bila tamna umjesto svijetla, i to preko cijele sirine.
+   *
+   * Svijetlu nit na gornjoj ivici gasi tijelo, koje sjeda jedan piksel pod nju.
    */
-  margin-bottom: -1px;
 }
 
 /*
@@ -3326,6 +3330,16 @@ html:not(.is-preloading) .hero-land__arrow {
  * Sekcije unutra su pozicionirane, pa se crtaju iznad ovog sloja same od
  * sebe.
  */
+/*
+ * Album stoji izdvojen: iznad njega je kraj prethodnog sloga, ispod pocetak
+ * kapi koja uvodi sljedecu sekciju. Oboje trazi vazduh — traka se lista
+ * vodoravno i bez razmaka se cita kao nastavak onoga nad njom.
+ */
+.bloomfield .rail {
+  margin-top: clamp(3rem, 7vw, 7rem);
+  margin-bottom: clamp(4.5rem, 10vw, 10rem);
+}
+
 .bloomfield::before {
   content: '';
   position: absolute;
@@ -3518,10 +3532,20 @@ html:not(.is-preloading) .hero-land__arrow {
  * onaj s geslom — dva medena pojasa drze stranu, jedan na pocetku i jedan pri
  * kraju, a izmedju njih je sve papir.
  * ------------------------------------------------------------------------- */
+/*
+ * Bez svoje podloge i s manjim razmakom nego prije: sekcija sada stoji unutar
+ * kapi, a med pod njom dolazi od nje. Kap gore i dolje nosi jos po dvadeset i
+ * tri posto sirine visine, pa bi stari razmak povrh toga bio prazan ekran.
+ */
 .vitrina {
   position: relative;
-  padding-block: clamp(4.5rem, 10vw, 9rem);
-  background: var(--amber);
+  /*
+   * Gore manje nego dolje, iz istog razloga kao na pojasu s geslom: iznad
+   * sloga stoji jos komad pune medene plohe ispod najdublje kapi, i oko ga
+   * broji u vazduh. Ispod zadnjeg elementa te zalihe nema — tamo je odmah
+   * ivica s koje kapi padaju.
+   */
+  padding-block: clamp(2rem, 5vw, 4.5rem) clamp(4.5rem, 9.3vw, 8.5rem);
   color: #fff;
   overflow: hidden;
 }

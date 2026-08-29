@@ -75,8 +75,15 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <PhotoRail locale={locale} />
       </div>
 
-      {/* Vitrina: uokviren snimak na medenom pojasu, recenica oko njega. */}
-      <Vitrina locale={locale} />
+      {/*
+        Vitrina stoji u drugoj kapi: med se opet prelije preko papira, sekcija
+        se odvija u njemu, pa se istim potezom vrati na papir. Isti prelaz kao
+        na pojasu s geslom — dva medena pojasa drze stranu, jedan pri vrhu i
+        jedan pri kraju.
+      */}
+      <Drip>
+        <Vitrina locale={locale} />
+      </Drip>
 
 
       {/* Mjesto i porijeklo. */}
