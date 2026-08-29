@@ -876,7 +876,12 @@ p {
 /* --- decorations --------------------------------------------------------- */
 .hero-jar__crest {
   position: absolute;
-  left: 6.67vw;
+  /*
+   * Ista lijeva ivica kao naslov i natpis pod njim — sve troje krece od 12vw.
+   * Znak je ranije stajao na 6.67vw, pet vw lijevo od sloga, pa je visio sam
+   * uz rub umjesto da pripada koloni.
+   */
+  left: 12vw;
   top: 26.68%;
   width: 7.99vw;
   z-index: 2;

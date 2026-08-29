@@ -4,7 +4,7 @@ import type { Locale } from '@/i18n/config';
  * Pocetni ekran: crtez livade, sa wordmarkom i pisanim natpisom polozenim
  * preko njega.
  *
- * Pozadina je opet crtez, ne snimak: livada u vektoru, u smedjoj. Na crtezu
+ * Pozadina je crtez livade, u smedjoj, s redom kosnica na grebenu. Na crtezu
  * nema ni slova ni pcele, sve sto se vidi preko njega je zaseban element.
  * Zato se lockup moze pomerati i prevoditi, ostaje ostar na svakoj velicini,
  * i pcela koja leti kroz stranu je jedina pcela u heroju.
@@ -28,7 +28,7 @@ export default function HeroLand({ locale }: { locale: Locale }) {
     <section className="hero-land">
       <div className="hero-land__plate">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="hero-land__drawing" src="/hero/livada.svg" alt={alt} />
+        <img className="hero-land__drawing" src="/hero/livada.webp" alt={alt} />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="hero-land__script" src="/hero/rati-script.svg" alt={script} />
