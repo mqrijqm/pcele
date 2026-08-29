@@ -2601,13 +2601,14 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Recenica je krupna i lijevo poravnata, u cetiri reda. Sirina joj je
- * ogranicena da se prelom ne rastegne preko cijelog pojasa — red duzi od
- * osamdesetak znakova se ne cita nego skenira.
+ * Recenica stoji u sredini pojasa. Sirina joj je i dalje ogranicena — red
+ * duzi od osamdesetak znakova se ne cita nego skenira — ali je sada ta mjera
+ * centrirana, pa se prelom lomi oko osi pojasa a ne uz lijevu ivicu.
  */
 .geslo__line {
-  margin: 0;
+  margin: 0 auto;
   max-width: 86%;
+  text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1.5rem, 4.15vw, 3.85rem);
   line-height: 1.24;
@@ -2624,14 +2625,14 @@ html:not(.is-preloading) .hero-land__arrow {
 /* --- crtezi ------------------------------------------------------------- */
 
 /*
- * Pecat stoji nad recenicom i s njom dijeli lijevu ivicu, pa ide u tok a ne u
+ * Pecat stoji nad recenicom, na istoj osi s njom, pa ide u tok a ne u
  * apsolutnu poziciju — tako mu razmak do teksta ostaje isti na svakoj sirini.
  */
 .geslo__seal {
   display: block;
   width: clamp(2.75rem, 6vw, 5.6rem);
   height: auto;
-  margin-bottom: clamp(1.5rem, 3.6vw, 2.75rem);
+  margin: 0 auto clamp(1.5rem, 3.6vw, 2.75rem);
 }
 
 /*
@@ -2647,12 +2648,18 @@ html:not(.is-preloading) .hero-land__arrow {
   animation: sun-spin 30s linear infinite;
 }
 
-/* Kosnica dolje desno, u travi — jedina od tri koja stoji na necemu. */
+/*
+ * Kosnica dolje desno, u travi — jedina od tri koja stoji na necemu.
+ *
+ * Otkad recenica stoji u sredini, siri se na obje strane i dolazi kosnici u
+ * travu. Zato je kosnica manja i gurnuta blize rubu: sada joj je lijeva ivica
+ * desno od mjere sloga, pa se ni najduzi red ne moze u nju zabiti.
+ */
 .geslo__hive {
   position: absolute;
-  right: 4%;
+  right: 2%;
   bottom: 0;
-  width: clamp(6rem, 15vw, 14rem);
+  width: clamp(5rem, 12vw, 11rem);
   height: auto;
 }
 
@@ -3004,13 +3011,6 @@ html:not(.is-preloading) .hero-land__arrow {
    * samo tise — isto kao u sekciji o nasljedju. */
   color: var(--brown-soft);
   margin-bottom: 0.9rem;
-}
-
-.rail__heading {
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--type-heading);
-  line-height: 1.12;
-  color: var(--brown);
 }
 
 /*

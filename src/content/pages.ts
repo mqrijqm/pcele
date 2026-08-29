@@ -300,7 +300,6 @@ export const home = {
     sr: {
       label: 'Snimci s pčelinjaka',
       eyebrow: 'Iz našeg albuma',
-      heading: 'Ljeto na pčelinjaku, red po red.',
       sealHives: 'Pogledaj naše pčelinjake',
       sealProcess: 'Pogledaj proces vrcanja',
       alt: {
@@ -311,7 +310,6 @@ export const home = {
     en: {
       label: 'Photographs from the apiary',
       eyebrow: 'From our album',
-      heading: 'Summer at the apiary, row by row.',
       sealHives: 'See our apiaries',
       sealProcess: 'See the extraction process',
       alt: {
@@ -322,7 +320,6 @@ export const home = {
   } satisfies L<{
     label: string;
     eyebrow: string;
-    heading: string;
     sealHives: string;
     sealProcess: string;
     alt: Record<'hives' | 'frame', string>;

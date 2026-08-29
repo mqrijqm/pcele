@@ -177,7 +177,6 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
       <div className="rail__stage">
         <header className="rail__intro">
           <p className="rail__eyebrow">{copy.eyebrow}</p>
-          <h2 className="rail__heading">{copy.heading}</h2>
         </header>
 
         <div className="rail__viewport">
