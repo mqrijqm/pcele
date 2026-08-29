@@ -9,6 +9,11 @@ import type { Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/** Koliko je snimak ubrzan. Deset sekundi postaje nesto preko sest. */
+const SPEED = 1.6;
+
+
+
 /**
  * Pcelinjak: snimak koji se odmakne, pa progovori.
  *
@@ -31,30 +36,6 @@ export default function Apiary({ locale }: { locale: Locale }) {
   const film = useRef<HTMLVideoElement>(null);
   const t = home.apiary[locale];
 
-  /*
-   * Snimak krece kad sekcija udje u kadar, ne pri ucitavanju strane. Traje
-   * deset sekundi; da krene odmah, do njega bi se stiglo tek kad je gotov.
-   */
-  useEffect(() => {
-    const el = root.current;
-    const v = film.current;
-    if (!el || !v) return;
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          /* Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
-           * poster, koji je prvi kadar, pa se nista ne raspada. */
-          v.play().catch(() => undefined);
-          io.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
   useEffect(() => {
     const el = root.current;
     if (!el) return;
@@ -62,12 +43,7 @@ export default function Apiary({ locale }: { locale: Locale }) {
     const ctx = gsap.context((self) => {
       const q = self.selector as (sel: string) => Element[];
       const shot = q('.apiary__shot')[0];
-      const head = q('.apiary__heading')[0] as HTMLElement | undefined;
-      const coords = q('.apiary__coords')[0] as HTMLElement | undefined;
-      const hills = q('.apiary__hills')[0];
-      const body = q('.apiary__body')[0];
-      const sun = q('.apiary__sun')[0];
-      if (!shot || !head || !coords) return;
+      if (!shot) return;
 
       /*
        * Koordinate se sirinom poravnavaju s imenom sela — red pod redom, oba
@@ -81,6 +57,10 @@ export default function Apiary({ locale }: { locale: Locale }) {
        * Oba su `inline-block`, inace bi im kutija bila siroka koliko i cijeli
        * stupac, a ne koliko slog u njoj.
        */
+      const head = q('.apiary__heading')[0] as HTMLElement | undefined;
+      const coords = q('.apiary__coords')[0] as HTMLElement | undefined;
+      if (!head || !coords) return;
+
       const fitCoords = () => {
         coords.style.fontSize = '';
         const base = parseFloat(getComputedStyle(coords).fontSize);
@@ -134,32 +114,6 @@ export default function Apiary({ locale }: { locale: Locale }) {
           },
         );
 
-        /*
-         * Natpisi stizu tek kad se snimak vec odmakao, i to jedan po jedan.
-         *
-         * Redom: ime sela, pa se crtez brda iznad njega iscrta, pa se recenica
-         * dolje ispise, pa sunce iskoci. Ime je ono zbog cega je snimak tu,
-         * ostalo dolazi kad je mjesto vec imenovano.
-         *
-         * Crtez i recenica se otkrivaju `clip-path`-om slijeva nadesno — kao
-         * da ih neko vuce olovkom. Crtez je puna povrsina a ne potez, pa mu se
-         * dash-offset ne moze animirati; brisanje preko njega daje isti utisak
-         * a radi na svemu.
-         *
-         * `set` pa `to`, ne `from`: uz `from` meta ciji red jos nije dosao
-         * zadrzava svoju prirodnu vrijednost, pa su koordinate stajale
-         * ispisane preko punog kadra dok naslova jos nije bilo.
-         */
-        gsap.set([head, coords], { opacity: 0, y: 26 });
-        gsap.set([hills, body], { opacity: 1, clipPath: 'inset(0 100% 0 0)' });
-        gsap.set(sun, { opacity: 0, scale: 0 });
-
-        tl.to(head, { opacity: 1, y: 0, duration: 0.34 }, 0.42);
-        tl.to(coords, { opacity: 1, y: 0, duration: 0.3 }, 0.56);
-        tl.to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 0.5 }, 0.62);
-        tl.to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.6 }, 0.78);
-        tl.to(sun, { opacity: 1, scale: 1, ease: 'back.out(1.7)', duration: 0.5 }, 0.94);
-
         /* Zavrsni raspored ostaje da stoji dok sekcija ne prodje. */
         tl.to({}, { duration: 0.5 });
 
@@ -173,6 +127,88 @@ export default function Apiary({ locale }: { locale: Locale }) {
     }, el);
 
     return () => ctx.revert();
+  }, []);
+
+  /*
+   * Snimak vodi natpise.
+   *
+   * Krece kad scena ispuni ekran, i tek tada. Ranije je gledana cijela
+   * sekcija, a ona je visoka dva i po ekrana — pa je petnaest posto njene
+   * visine bilo vidljivo jos dok je duboko ispod pregiba: snimak bi krenuo
+   * tamo, odsvirao svojih deset sekundi i stao na zadnjem kadru prije nego se
+   * do njega uopste stigne. Otud utisak da je slika, ne snimak.
+   *
+   * Kad odsvira, ispisu se natpisi: ime sela, koordinate pod njim, pa se
+   * crtez brda iscrta, pa recenica, pa sunce iskoci. Mjesto se prvo pokaze,
+   * pa onda imenuje.
+   *
+   * Crtez i recenica se otkrivaju `clip-path`-om slijeva nadesno, kao da ih
+   * neko vuce olovkom. Crtez je puna povrsina a ne potez, pa mu se
+   * dash-offset ne moze animirati; brisanje preko njega daje isti utisak i
+   * radi jednako na tekstu.
+   */
+  useEffect(() => {
+    const el = root.current;
+    const v = film.current;
+    if (!el || !v) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const stage = el.querySelector('.apiary__stage');
+    if (!stage) return;
+
+    const q = (sel: string) => el.querySelector(sel);
+    const head = q('.apiary__heading');
+    const coords = q('.apiary__coords');
+    const hills = q('.apiary__hills');
+    const body = q('.apiary__body');
+    const sun = q('.apiary__sun');
+
+    gsap.set([head, coords], { opacity: 0, y: 26 });
+    gsap.set([hills, body], { opacity: 1, clipPath: 'inset(0 100% 0 0)' });
+    gsap.set(sun, { opacity: 0, scale: 0 });
+
+    let told = false;
+    const tell = () => {
+      if (told) return;
+      told = true;
+      gsap
+        .timeline()
+        .to(head, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
+        .to(coords, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
+        .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: 'power1.inOut' }, '-=0.15')
+        .to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' }, '-=0.35')
+        .to(sun, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3');
+    };
+
+    v.playbackRate = SPEED;
+    v.addEventListener('ended', tell);
+
+    /*
+     * Sigurnosni rok. Broji se od trenutka kad je snimak pusten, ne od
+     * ucitavanja strane — inace istekne dok se do sekcije jos nije ni stiglo,
+     * pa natpisi docekaju posjetioca vec ispisani.
+     */
+    let late: number | undefined;
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.intersectionRatio < 0.9) return;
+        io.disconnect();
+        /* Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
+         * poster, koji je prvi kadar, pa se natpisi ispisu po roku. */
+        v.play().catch(() => undefined);
+        const runs = (v.duration || 10) / SPEED;
+        late = window.setTimeout(tell, (runs + 2.5) * 1000);
+      },
+      { threshold: [0, 0.5, 0.9, 1] },
+    );
+    io.observe(stage);
+
+    return () => {
+      io.disconnect();
+      window.clearTimeout(late);
+      v.removeEventListener('ended', tell);
+    };
   }, []);
 
   return (
