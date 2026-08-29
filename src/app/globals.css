@@ -2546,11 +2546,13 @@ html:not(.is-preloading) .hero-land__arrow {
  * puni med, ista boja koju tijelo pojasa ionako nosi. Taj visak je stajao
  * izmedju kapi i teksta kao prazan prostor bez razloga. Dvadeset tri posto
  * ostavlja malo zraka ispod najduze kapi na svakoj sirini.
+ *
+ * Sanduk je proziran, bez svoje boje: iznad kapi se mora vidjeti papir. S
+ * medenom pozadinom kapi nestanu i prelaz postane ravan rez.
  */
 .drip__head {
   overflow: hidden;
   height: 23vw;
-  background: var(--amber);
 }
 
 /*
