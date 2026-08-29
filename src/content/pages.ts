@@ -190,10 +190,10 @@ export const home = {
    */
   vitrina: {
     sr: {
-      eyebrowLeft: 'Porodična tradicija',
+      eyebrowLeft: 'Treća generacija, ista livada',
       headingLeft: 'Med kakav',
       body:
-        'U seoskom kraju, na opojnim livadama i obroncima, vrcamo jedinstven med prirodnog porijekla.',
+        'Ne kupujemo med da bismo popunili teglu — vrcamo samo ono što naše pčele saberu na livadama oko Mračaja, sezonu po sezonu, otkad je djed počeo 1980.',
       eyebrowRight: 'Od 1980.',
       headingRight: 'treba biti.',
       seal: 'Proizvodi',
@@ -288,9 +288,9 @@ export const home = {
        * kurzivom. Kao jedan tekst se to ne bi dalo obiljeziti a da se prelom
        * ne veze za odredjenu sirinu ekrana.
        */
-      lead: 'U Republici Srpskoj proizvodi se med bez dodataka, uz sezonski ritam koji',
-      accent: 'naša porodica',
-      tail: 'prati decenijama.',
+      lead: 'U srcu Republike Srpske, u selu Mračaju kod Prnjavora,',
+      accent: 'med se i dalje vrca ručno',
+      tail: '— onako kako se radilo i prije četrdeset godina.',
       sealAlt: 'Znak: pčela nad cvijetom',
     },
     en: {
