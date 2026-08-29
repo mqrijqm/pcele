@@ -2609,8 +2609,8 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: 0;
   max-width: 86%;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.25rem, 3.4vw, 3.1rem);
-  line-height: 1.28;
+  font-size: clamp(1.5rem, 4.15vw, 3.85rem);
+  line-height: 1.24;
   letter-spacing: -0.015em;
   color: var(--brown);
 }
@@ -2629,9 +2629,9 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 .geslo__seal {
   display: block;
-  width: clamp(4rem, 9vw, 8.5rem);
+  width: clamp(2.75rem, 6vw, 5.6rem);
   height: auto;
-  margin-bottom: clamp(1.75rem, 4.5vw, 3.5rem);
+  margin-bottom: clamp(1.5rem, 3.6vw, 2.75rem);
 }
 
 /*
@@ -2662,7 +2662,7 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 
   .geslo__seal {
-    width: 20vw;
+    width: 14vw;
   }
 
   /* Kosnica bi na uskom ekranu legla u zadnji red recenice. */
