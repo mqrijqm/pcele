@@ -37,12 +37,15 @@ export default function Priroda({ locale }: { locale: Locale }) {
             pola na papiru. Isti je znak koji stoji nad geslom; zato ne dolazi
             kao novi fajl nego se uzima onaj koji vec stoji u projektu.
 
+            Dolazi zadnji, kad se snimak i slog vec smire: iskoci iz nicega, s
+            malim prebacajem preko svoje mjere.
+
             Ukras je, pa nosi `aria-hidden`: znak koji se vec jednom procitao
             gore ne treba citati i ovdje.
           */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="priroda__seal"
+            className="priroda__seal reveal-pop stagger-6"
             src="/images/brand/pecat-cvijet.svg"
             alt=""
             aria-hidden="true"

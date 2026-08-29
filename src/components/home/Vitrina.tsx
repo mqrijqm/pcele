@@ -16,7 +16,8 @@ import { localeHref, type Locale } from '@/i18n/config';
  * pod cipku i nigdje se ne vidi gdje jedno prestaje a drugo pocinje.
  *
  * Pecat sjedi na donjem desnom uglu okvira i vodi na proizvode — jedini je
- * ovdje sto se moze kliknuti, pa nosi i jedini opis.
+ * ovdje sto se moze kliknuti. Rijec u njemu je nacrtana, savijena u luk, pa
+ * je ne moze procitati niko: zato ista ta rijec stoji i kao `aria-label`.
  */
 export default function Vitrina({ locale }: { locale: Locale }) {
   const t = home.vitrina[locale];
@@ -49,11 +50,12 @@ export default function Vitrina({ locale }: { locale: Locale }) {
             />
           </figure>
 
-          <Link className="vitrina__seal" href={localeHref(locale, '/products')}>
-            <span className="vitrina__sealText">{t.seal}</span>
-            <span className="vitrina__sealArrow" aria-hidden="true">
-              →
-            </span>
+          <Link
+            className="vitrina__seal reveal-pop stagger-3"
+            href={localeHref(locale, '/products')}
+            aria-label={t.seal}
+          >
+            <Image src="/images/brand/pecat-proizvodi.svg" alt="" width={423} height={423} />
           </Link>
         </div>
 

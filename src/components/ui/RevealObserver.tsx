@@ -10,7 +10,8 @@ const MAX_STEPS = 5;
 /** Ako zavjesa nikad ne javi da je otisla, gledamo sami. */
 const WATCHDOG_MS = 6000;
 
-const SELECTOR = '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-draw';
+const SELECTOR =
+  '.reveal, .reveal-left, .reveal-right, .reveal-scale, .reveal-draw, .reveal-pop';
 
 /**
  * Adds `.in-view` to every `.reveal*` element once it scrolls into view.

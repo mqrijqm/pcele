@@ -394,6 +394,30 @@ p {
 .js-reveal .reveal-scale {
   transform: scale(0.95);
 }
+/*
+ * Iskakanje: iz nicega u punu mjeru, s malim prebacajem preko nje.
+ *
+ * Ne ide u istu grupu s ostalima jer mu je pocetno stanje `scale(0)`, a ne
+ * pomak — i jer mu treba drugo popustanje: `expo` bi ga samo naduvao, a ovdje
+ * treba da prebaci mjeru pa da se vrati. Sve sto ovako izlazi mora polozaj
+ * drzati svojstvom `translate`, ne `transform`, inace bi ga skala odnijela sa
+ * mjesta.
+ */
+.js-reveal .reveal-pop {
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: opacity, transform;
+}
+
+.js-reveal .reveal-pop.in-view {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
 .js-reveal .reveal.in-view,
 .js-reveal .reveal-left.in-view,
 .js-reveal .reveal-right.in-view,
@@ -3373,9 +3397,23 @@ html:not(.is-preloading) .hero-land__arrow {
   position: absolute;
   left: 100%;
   top: 92.5%;
-  transform: translate(-50%, -50%);
+  /*
+   * Polozaj nosi `translate`, ne `transform` — `transform` je ostavljen
+   * iskakanju, koje ga skalira. Da su na istom svojstvu, jedno bi ponistilo
+   * drugo i pecat bi skocio u ugao.
+   */
+  translate: -50% -50%;
   width: 41%;
   height: auto;
+}
+
+/*
+ * Pecat dolazi zadnji, kad se snimak i slog vec smire. Kasnjenje je ovdje a ne
+ * u `stagger` klasi jer je duze od svih njih; klasa stoji na elementu samo da
+ * posmatrac ne upise svoje.
+ */
+.js-reveal .priroda__seal {
+  transition-delay: 0.55s;
 }
 
 /*
@@ -3593,44 +3631,27 @@ html:not(.is-preloading) .hero-land__arrow {
 
 /*
  * Pecat na donjem desnom uglu okvira: pola na slici, pola na pojasu. Mjere su
- * procenti okvira, pa ostaje na svom uglu na svakoj sirini.
+ * procenti okvira, pa ostaje na svom uglu na svakoj sirini — vezan za prozor
+ * skupljao bi se brze nego slika pod njim.
+ *
+ * Sam crtez je gotov: zeleni krug, isprekidani prsten i rijec u luku. Sklapati
+ * to iz kruga i teksta znacilo bi pisati rijec pravo tamo gdje je na crtezu
+ * savijena.
  */
 .vitrina__seal {
   position: absolute;
   left: 90%;
   top: 92%;
   translate: -50% -50%;
-  display: grid;
-  place-content: center;
-  gap: 0.35em;
-  /*
-   * Mjera je dio okvira, ne dio prozora. Vezan za `vw`, pecat se na uzem
-   * ekranu skupljao brze nego slika pod njim, pa je rijec u njemu dodirivala
-   * prsten s obje strane.
-   */
+  display: block;
   width: 36%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: var(--sage);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: clamp(0.7rem, 0.95vw, 0.9rem);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--paper);
   transition: scale 0.5s var(--ease-out-expo);
 }
 
-/*
- * Isprekidani prsten je obrub unutar kruga, ne drugi krug. Jedan element
- * manje, a razmak do ruba se zada jednom mjerom.
- */
-.vitrina__seal::before {
-  content: '';
-  position: absolute;
-  inset: 8%;
-  border: 1px dashed var(--paper);
-  border-radius: 50%;
+.vitrina__seal img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .vitrina__seal:hover,
@@ -3638,10 +3659,6 @@ html:not(.is-preloading) .hero-land__arrow {
   scale: 1.06;
 }
 
-.vitrina__sealArrow {
-  font-size: 1.35em;
-  line-height: 1;
-}
 
 /* --- uzi ekrani ----------------------------------------------------------- */
 
