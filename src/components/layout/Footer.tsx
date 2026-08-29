@@ -6,6 +6,7 @@ import { createTranslator, localeHref, type Locale } from '@/i18n/config';
 const navLinks = [
   { href: '/products', key: 'nav.shop' },
   { href: '/about', key: 'nav.about' },
+  { href: '/pcelinjak', key: 'nav.apiaries' },
   { href: '/process', key: 'nav.process' },
   { href: '/contact', key: 'nav.contact' },
 ];

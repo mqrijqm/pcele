@@ -12,6 +12,7 @@ import { useCart } from '@/lib/cart';
 const navItems = [
   { href: '/products', key: 'nav.shop' },
   { href: '/about', key: 'nav.about' },
+  { href: '/pcelinjak', key: 'nav.apiaries' },
   { href: '/process', key: 'nav.process' },
   { href: '/blog', key: 'blog.navLabel' },
   { href: '/contact', key: 'nav.contact' },
