@@ -2607,11 +2607,16 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 .geslo__line {
   margin: 0 auto;
-  max-width: 86%;
+  /*
+   * Desni ugao je prazan otkad je crtez kosnice otisao, pa recenica ide preko
+   * skoro cijele mjere pojasa. Krupna je koliko slog dozvoljava: na sirokom
+   * ekranu prelazi osamdeset piksela, i to je sve sto se na pojasu vidi.
+   */
+  max-width: 92%;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.5rem, 4.15vw, 3.85rem);
-  line-height: 1.24;
+  font-size: clamp(1.9rem, 5.6vw, 5.2rem);
+  line-height: 1.16;
   letter-spacing: -0.015em;
   color: var(--brown);
 }
@@ -2648,20 +2653,6 @@ html:not(.is-preloading) .hero-land__arrow {
   animation: sun-spin 30s linear infinite;
 }
 
-/*
- * Kosnica dolje desno, u travi — jedina od tri koja stoji na necemu.
- *
- * Otkad recenica stoji u sredini, siri se na obje strane i dolazi kosnici u
- * travu. Zato je kosnica manja i gurnuta blize rubu: sada joj je lijeva ivica
- * desno od mjere sloga, pa se ni najduzi red ne moze u nju zabiti.
- */
-.geslo__hive {
-  position: absolute;
-  right: 2%;
-  bottom: 0;
-  width: clamp(5rem, 12vw, 11rem);
-  height: auto;
-}
 
 @media (max-width: 700px) {
   .geslo__line {
@@ -2670,14 +2661,6 @@ html:not(.is-preloading) .hero-land__arrow {
 
   .geslo__seal {
     width: 14vw;
-  }
-
-  /* Kosnica bi na uskom ekranu legla u zadnji red recenice. */
-  .geslo__hive {
-    position: static;
-    width: 34vw;
-    margin: clamp(2rem, 8vw, 4rem) 0 0 auto;
-    display: block;
   }
 }
 

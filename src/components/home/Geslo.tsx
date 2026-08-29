@@ -12,8 +12,11 @@ import type { Locale } from '@/i18n/config';
  * mastilo. Zato je i pisana u tri dijela a ne jednim tekstom — obiljeziti
  * sredinu jednog niza znacilo bi vezati se za odredjenu sirinu ekrana.
  *
- * Crtezi su ukras i nose `aria-hidden`; jedini koji nesto znaci je pecat, pa
- * on ima opis.
+ * Uz recenicu su jos dva crteza: pecat nad njom, na istoj osi, i sunce koje
+ * je zavrsava, u njenom redu. Crtez kosnice u desnom uglu je otisao — pojas
+ * je pun kad je recenica ovoliko krupna, i uz nju je smetao.
+ *
+ * Sunce je ukras i nosi `aria-hidden`; pecat nesto znaci, pa ima opis.
  */
 export default function Geslo({ locale }: { locale: Locale }) {
   const t = home.geslo[locale];
@@ -21,7 +24,7 @@ export default function Geslo({ locale }: { locale: Locale }) {
   return (
     <section className="geslo" aria-label={`${t.lead} ${t.accent}`}>
       <div className="geslo__inner">
-        {/* Pecat stoji nad recenicom, na istoj lijevoj ivici. */}
+        {/* Pecat stoji nad recenicom, na istoj osi s njom. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="geslo__seal reveal" src="/images/brand/pecat-cvijet.svg" alt={t.sealAlt} />
 
@@ -35,13 +38,6 @@ export default function Geslo({ locale }: { locale: Locale }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="geslo__sun" src="/images/brand/sunce.svg" alt="" aria-hidden="true" />
         </p>
-
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="geslo__hive reveal stagger-2"
-          src="/images/brand/kosnica.svg"
-          alt={t.hiveAlt}
-        />
       </div>
     </section>
   );
