@@ -3306,15 +3306,33 @@ html:not(.is-preloading) .hero-land__arrow {
  * sajtu koja ih nema. Ovdje bi zaobljenje odvojilo sliku od uzorka iza nje.
  */
 .priroda__shot {
+  position: relative;
   margin: 0;
 }
 
-.priroda__shot img {
+.priroda__shot > img:first-child {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 716 / 1073;
   object-fit: cover;
+}
+
+/*
+ * Pecat na ivici snimka, pri dnu.
+ *
+ * Mjere su u procentima snimka a ne u remima: tako ostaje na istom mjestu
+ * fotografije koliko god se ona mijenjala sa sirinom prozora. Sredina mu je
+ * tacno na desnoj ivici, pa pola stoji na slici a pola na papiru — zato mu i
+ * treba puna podloga u boji papira, koju crtez vec nosi u sebi.
+ */
+.priroda__seal {
+  position: absolute;
+  left: 100%;
+  top: 92.5%;
+  transform: translate(-50%, -50%);
+  width: 41%;
+  height: auto;
 }
 
 /*
@@ -3380,6 +3398,16 @@ html:not(.is-preloading) .hero-land__arrow {
   .priroda__heading {
     max-width: none;
   }
+
+  /*
+   * Na dva stupca tekst stoji odmah desno od snimka, pa pecat vise ne smije
+   * preko njegove ivice — tamo bi legao na rijeci. Ulazi cijeli u sliku.
+   */
+  .priroda__seal {
+    left: 76%;
+    top: 88%;
+    width: 34%;
+  }
 }
 
 /* Ispod toga se sve slaze jedno pod drugo. */
@@ -3391,5 +3419,13 @@ html:not(.is-preloading) .hero-land__arrow {
   .priroda__shot {
     grid-row: auto;
     max-width: 22rem;
+  }
+
+  /* Na uskom ekranu snimak stoji sam, pa se pecat vraca na ivicu — ali ne do
+   * kraja, jer iza nje nema margine nego rub telefona. */
+  .priroda__seal {
+    left: 84%;
+    top: 90%;
+    width: 34%;
   }
 }

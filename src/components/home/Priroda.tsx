@@ -31,6 +31,22 @@ export default function Priroda({ locale }: { locale: Locale }) {
             height={1073}
             sizes="(max-width: 900px) 70vw, 26vw"
           />
+
+          {/*
+            Pecat sjedi na desnoj ivici snimka, pri dnu — pola na fotografiji,
+            pola na papiru. Isti je znak koji stoji nad geslom; zato ne dolazi
+            kao novi fajl nego se uzima onaj koji vec stoji u projektu.
+
+            Ukras je, pa nosi `aria-hidden`: znak koji se vec jednom procitao
+            gore ne treba citati i ovdje.
+          */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="priroda__seal"
+            src="/images/brand/pecat-cvijet.svg"
+            alt=""
+            aria-hidden="true"
+          />
         </figure>
 
         <h2 className="priroda__heading reveal stagger-1">{t.heading}</h2>
