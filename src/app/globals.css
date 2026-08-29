@@ -1520,10 +1520,191 @@ html:not(.is-preloading) .hero-land__arrow {
   will-change: transform;
 }
 
-.origin__map img {
+/*
+ * Omotac nosi `reveal` samo zato sto ga po toj klasi nalazi RevealObserver;
+ * sam se ne pomjera niti se pretapa. Pokret rade komadi unutra, a transform
+ * omotaca je rezervisan za mis — kad bi tu stajao i prelaz, prvi pomak misa
+ * bi se vukao 0.95s za kursorom.
+ */
+.js-reveal .origin__map.reveal {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.origin__map-inner {
+  position: relative;
+}
+
+.origin__piece {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/*
+ * Druga dva komada lebde preko prvog. Prvi ostaje u toku jer on drzi visinu
+ * okvira — bez njega bi sekcija imala rupu tamo gdje je karta.
+ */
+.origin__piece--b,
+.origin__piece--c {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/*
+ * Rezovi idu po linijama koje na karti vec postoje — po unutrasnjim medjama
+ * opstine, ne popreko preko njih. Zato komadi izgledaju kao da su se
+ * razdvojili sami od sebe, a ne kao da ih je neko presjekao.
+ *
+ * Dva reza dijele kartu na tri: jedan silazi s vrha nadolje i odvaja istok
+ * (Mracaj), drugi ide slijeva nadesno i dijeli ostatak na sjever (Orasje) i
+ * jug (Otpocivaljka). Sastaju se oko 54% / 66%.
+ *
+ * Jedno mjesto rez ne postuje mapu: donji dio okomitog reza obilazi zdesna
+ * natpis "OTPOCIVALJKA", jer bi po medji prosao tacno kroz njega i razdvojio
+ * ga na dva komada. Ispalo je kao jezicak slagalice, sto ovdje ne smeta.
+ *
+ * Svaki poligon prelazi oko 1.5% preko susjedovog reza — preklop, ne dodir
+ * (zasto: vidi OriginMap.tsx).
+ */
+.origin__piece--a {
+  clip-path: polygon(
+    0% 0%,
+    62% 0%,
+    62% 27.6%,
+    62.9% 34%,
+    62.5% 38.9%,
+    61% 42.5%,
+    59.2% 46.7%,
+    58.2% 51.7%,
+    57.3% 56.7%,
+    56.1% 61.6%,
+    55.2% 67.4%,
+    50.7% 66.7%,
+    46.9% 64.1%,
+    43.1% 62.1%,
+    39.3% 59.9%,
+    29.9% 57%,
+    20.4% 54.6%,
+    15.7% 52.5%,
+    8.6% 50.4%,
+    0% 50.4%
+  );
+  transform-origin: 28% 28%;
+}
+
+.origin__piece--b {
+  clip-path: polygon(
+    59% 0%,
+    100% 0%,
+    100% 100%,
+    56.6% 100%,
+    56.9% 87.1%,
+    56.2% 81.4%,
+    57.5% 78.5%,
+    60% 75.8%,
+    62% 73.5%,
+    62.5% 70%,
+    61% 67.2%,
+    56% 66.4%,
+    52.2% 65.9%,
+    53.1% 61.6%,
+    54.3% 56.7%,
+    55.2% 51.7%,
+    56.2% 46.7%,
+    58% 42.5%,
+    59.5% 38.9%,
+    59.9% 34%,
+    59% 27.6%
+  );
+  transform-origin: 76% 50%;
+}
+
+.origin__piece--c {
+  clip-path: polygon(
+    0% 47.4%,
+    8.6% 47.4%,
+    15.7% 49.5%,
+    20.4% 51.6%,
+    29.9% 54%,
+    39.3% 56.9%,
+    43.1% 59.1%,
+    46.9% 61.1%,
+    50.7% 63.7%,
+    53.7% 64.4%,
+    55.2% 65.9%,
+    59% 66.4%,
+    64% 67.2%,
+    65.5% 70%,
+    65% 73.5%,
+    63% 75.8%,
+    60.5% 78.5%,
+    59.2% 81.4%,
+    59.9% 87.1%,
+    59.6% 100%,
+    0% 100%
+  );
+  transform-origin: 28% 78%;
+}
+
+/*
+ * Sklapanje. Komadi cekaju razmaknuti, blago zakrenuti i malo manji — skala
+ * ide oko sopstvenog tezista, pa se svaki povuce u sebe i tako izmedju njih
+ * nastane vazduh. Kad sekcija udje u kadar, sva tri transforma se ponistavaju
+ * i tri slike se poklope u jednu.
+ *
+ * Prozirnost stize prije pomaka: komad je vec tu dok jos putuje, pa se ulazak
+ * cita kao sklapanje a ne kao dolijetanje niotkuda.
+ */
+.js-reveal .origin__piece {
+  opacity: 0;
+  transition:
+    opacity 0.8s var(--ease-out-expo) var(--piece-delay, 0s),
+    transform 1.4s var(--ease-out-expo) var(--piece-delay, 0s);
+  will-change: transform, opacity;
+}
+
+.js-reveal .origin__piece--a {
+  --piece-delay: 0s;
+  transform: translate3d(-4.5%, -4%, 0) rotate(-2.8deg) scale(0.945);
+}
+
+.js-reveal .origin__piece--b {
+  --piece-delay: 0.12s;
+  transform: translate3d(6%, 1.5%, 0) rotate(2.6deg) scale(0.945);
+}
+
+.js-reveal .origin__piece--c {
+  --piece-delay: 0.24s;
+  transform: translate3d(-1%, 6.5%, 0) rotate(-1.8deg) scale(0.945);
+}
+
+.js-reveal .origin__map.in-view .origin__piece {
+  opacity: 1;
+  transform: none;
+  /* Sloj se vraca cim je sklapanje gotovo — tri karte drzane na GPU-u su
+     skupe, a poslije ovoga se ne micu. */
+  will-change: auto;
+}
+
+/*
+ * Kad se sklopi, rezovi se sklanjaju i ostaje jedna neisjecena karta.
+ *
+ * Zbog ovoga preklop nije dovoljan tamo gdje rez presijeca samu konturu
+ * karte: rub konture je omeksan prema papiru, pa dvije kopije jedna preko
+ * druge daju tamniju vlas duzine dva-tri piksela. Ne vidi se dok komadi
+ * putuju, ali ostane zauvijek — a karta poslije toga stoji mirno. Klasu
+ * stavlja OriginMap kad zadnji komad zavrsi.
+ */
+.origin__map--whole .origin__piece--a {
+  clip-path: none;
+}
+
+.origin__map--whole .origin__piece--b,
+.origin__map--whole .origin__piece--c {
+  display: none;
 }
 
 .origin__note {
