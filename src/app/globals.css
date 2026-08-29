@@ -1173,23 +1173,23 @@ html.is-preloading body {
   width: 100%;
   overflow: hidden;
   background-color: var(--paper);
-  /*
-   * Zracnost oko cijelog sklopa. Crtez je ranije isao od ruba do ruba i sjekao
-   * se na sve cetiri strane; sada stoji uvucen, s papirom oko sebe, pa se cita
-   * kao slika polozena na stranu a ne kao pozadina.
-   */
-  padding: clamp(2rem, 7vw, 9rem);
 }
 
 .hero-land__plate {
   position: relative;
   width: 100%;
   /*
-   * Plata drzi omjer snimka. Sve nadgradnje — wordmark, natpis i strelica —
-   * su postotak plate, a omjer je gotovo isti kao kod crteza koji je tu bio
-   * (1.556 prema 1.503), pa nijedna nije morala da se pomjeri.
+   * Plata drzi omjer 1.503.
+   *
+   * To nije omjer bilo kojeg crteza nego mjera na koju je namjesten lockup:
+   * wordmark, pisani natpis i strelica su postoci plate, i svi su odmjereni
+   * na tom kadru. Cim se plata razvuce, oni se pomjeraju jedno preko drugog —
+   * na omjeru 2.0 wordmark padne u oblake.
+   *
+   * Crtez se u nju uklapa `cover`-om: sirok crtez ostane bez rubova sa strana,
+   * a nebo iznad horizonta zadrzi visinu koja lockupu treba.
    */
-  aspect-ratio: 1600 / 1028;
+  aspect-ratio: 1537 / 1023;
   container-type: inline-size;
 }
 
@@ -1199,12 +1199,8 @@ html.is-preloading body {
  * od medija upita a ne od snimka.
  */
 /*
- * Crtez staje cio, ne popunjava platu.
- *
- * Livada je mnogo sira nego sto je plata visoka (2.32 prema 1.56), pa je
- * `cover` odsijecao i lijevu i desnu trecinu — otud utisak da je nabijena u
- * kadar. `contain` je vraca cijelu; papir koji ostane iznad i ispod je isti
- * papir koji nosi stranu, pa se ne cita kao praznina nego kao margina.
+ * Crtez popunjava platu. Sto od njega ne stane sa strana, odsijeca se — nebo
+ * i horizont su ono sto lockup treba da nadje na svom mjestu.
  */
 .hero-land__drawing {
   position: absolute;
@@ -1212,7 +1208,7 @@ html.is-preloading body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 /*
