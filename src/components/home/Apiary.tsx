@@ -138,9 +138,11 @@ export default function Apiary({ locale }: { locale: Locale }) {
    * tamo, odsvirao svojih deset sekundi i stao na zadnjem kadru prije nego se
    * do njega uopste stigne. Otud utisak da je slika, ne snimak.
    *
-   * Kad odsvira, ispisu se natpisi: ime sela, koordinate pod njim, pa se
-   * crtez brda iscrta, pa recenica, pa sunce iskoci. Mjesto se prvo pokaze,
-   * pa onda imenuje.
+   * Natpisi idu uz snimak, ne poslije njega. Ime sela, koordinate pod njim i
+   * crtez brda ispisuju se od prvog kadra, razvuceni preko cijele duzine
+   * snimka i tik pred njegov kraj gotovi — sporo, kao da se upisuju u sliku, a
+   * ne kao da su pale na nju. Kad snimak stane, dodje jos samo recenica dolje
+   * lijevo i sunce nad njom.
    *
    * Crtez i recenica se otkrivaju `clip-path`-om slijeva nadesno, kao da ih
    * neko vuce olovkom. Crtez je puna povrsina a ne potez, pa mu se
@@ -185,16 +187,40 @@ export default function Apiary({ locale }: { locale: Locale }) {
       window.dispatchEvent(new Event('scroll:unlock'));
     };
 
+    /*
+     * Ispis uz snimak: ime sela, koordinate, pa crtez brda.
+     *
+     * Trajanja su zapisana za snimak od nekih sest sekundi i zajedno traju
+     * `WRITE`. Stvarna duzina se zna tek kad snimak krene, pa se cijeli tok
+     * `timeScale`-om razvuce ili stisne na nju — drugi snimak ne trazi nova
+     * cetiri broja. Pola sekunde se ostavi na kraju, da zadnji potez ne pada
+     * u istom trenutku kad i posljednji kadar.
+     */
+    const WRITE = 5.9;
+    let runs = 10 / SPEED;
+
+    let wrote = false;
+    const write = () => {
+      if (wrote) return;
+      wrote = true;
+      gsap
+        .timeline()
+        .to(head, { opacity: 1, y: 0, duration: 1.8, ease: 'power2.out' }, 0.3)
+        .to(coords, { opacity: 1, y: 0, duration: 1.7, ease: 'power2.out' }, 2)
+        .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 2.6, ease: 'power1.inOut' }, 3.3)
+        .timeScale(WRITE / Math.max(runs - 0.5, 2.5));
+    };
+
     let told = false;
     const tell = () => {
       if (told) return;
       told = true;
+      /* Ako snimak nikad nije ni krenuo, ispis kasni ovdje — bolje kasno nego
+       * da natpisa nema. */
+      write();
       gsap
         .timeline({ onComplete: unlock })
-        .to(head, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
-        .to(coords, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, '-=0.2')
-        .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 0.7, ease: 'power1.inOut' }, '-=0.15')
-        .to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' }, '-=0.35')
+        .to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' })
         .to(sun, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3');
     };
 
@@ -218,10 +244,14 @@ export default function Apiary({ locale }: { locale: Locale }) {
         /* Sekcija se dovede na vrh kadra, pa se strana zaustavi. */
         window.dispatchEvent(new CustomEvent('scroll:lock', { detail: { to: el } }));
 
-        /* Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
-         * poster, koji je prvi kadar, pa se natpisi ispisu po roku. */
-        v.play().catch(() => undefined);
-        const runs = (v.duration || 10) / SPEED;
+        /*
+         * Preglednik smije odbiti pustanje (stedljivi rezim); tada ostaje
+         * poster, koji je prvi kadar. Ispis krece svakako — obecanje se
+         * ispunjava kad snimak stvarno pocne, a odbija se odmah — pa se natpisi
+         * upisuju i preko mirnog kadra.
+         */
+        runs = (v.duration || 10) / SPEED;
+        v.play().then(write, write);
         late = window.setTimeout(tell, (runs + 2.5) * 1000);
 
         /*
