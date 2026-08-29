@@ -215,6 +215,34 @@ export const home = {
     combAlt: string;
   }>,
 
+  /*
+   * "U dodiru sa prirodom": snimak, naslov i tekst jedno uz drugo.
+   *
+   * Naslov je kratak namjerno — u slogu ide verzalom i lomi se u tri reda, pa
+   * svaka rijec vise razvlaci stupac. Tekst je u dva pasusa; prvi govori o
+   * mjestu, drugi o onome sto iz njega izlazi.
+   */
+  priroda: {
+    sr: {
+      heading: 'U dodiru sa prirodom',
+      body: [
+        'Naši pčelinjaci su mirna, netaknuta mesta gde vekovno pčelarsko znanje i poštovanje prema prirodi žive u savršenom skladu. Priroda se pažljivo neguje kroz tradicionalne metode i brigu o biodiverzitetu, dozvoljavajući svakoj košnici da razvije svoj puni potencijal.',
+        'Ovde se nadmorska visina, mikroklima i raznolikost cvetnog pokrivača spajaju u suptilnu ravnotežu, stvarajući čist, autentičan med u kojem se prepliću bogatstvo ukusa i nežna postojanost — nepogrešiv potpis Pčelarstva Jevtić.',
+      ],
+      link: 'Naše porijeklo',
+      photoAlt: 'Pčela na otvorenom dlanu',
+    },
+    en: {
+      heading: 'Close to nature',
+      body: [
+        'Our apiaries are quiet, untouched places where a century of beekeeping knowledge and respect for nature live in perfect accord. The land is tended carefully, by traditional methods and with an eye to its biodiversity, so that every hive can come into its own.',
+        'Here altitude, microclimate and the range of the flowering cover meet in a fine balance, making a clean, honest honey in which a wealth of flavour and a gentle constancy are woven together — the unmistakable signature of Pčelarstvo Jevtić.',
+      ],
+      link: 'Our origin',
+      photoAlt: 'A bee on an open palm',
+    },
+  },
+
   geslo: {
     sr: {
       /*

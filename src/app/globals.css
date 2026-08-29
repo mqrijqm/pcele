@@ -3257,3 +3257,139 @@ html:not(.is-preloading) .hero-land__arrow {
     left: 5vw;
   }
 }
+
+/* -------------------------------------------------------------------------
+ * U dodiru sa prirodom
+ *
+ * Tri stupca u jednom redu: snimak, naslov, tekst. Svi pocinju na istoj
+ * visini — to je jedino sto ih drzi zajedno, jer su razlicite duzine.
+ *
+ * Iza njih je uzorak cvijeca. Nacrtan je u boji papira nesto tamnijoj od
+ * pozadine, pa ne treba ni providnost ni filter: sam po sebi je tih koliko
+ * treba. Ide preko cijele sirine, i onda kad je slog uzi.
+ * ------------------------------------------------------------------------- */
+.priroda {
+  position: relative;
+  padding-block: clamp(4rem, 9vw, 8.75rem);
+  background: var(--paper);
+  overflow: hidden;
+}
+
+/*
+ * Uzorak je ukras, pa je pozadina a ne slika u slogu — citac ekrana nema sta
+ * da procita, a preglednik ga ne cita kao sadrzaj strane.
+ */
+.priroda::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/images/priroda/cvijece-uzorak.webp');
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
+
+.priroda__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+  column-gap: clamp(2rem, 4.8vw, 4.5rem);
+  width: 100%;
+  max-width: 1600px;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+/*
+ * Snimak zadrzava svoj odnos strana i nema zaobljene uglove — jedina slika na
+ * sajtu koja ih nema. Ovdje bi zaobljenje odvojilo sliku od uzorka iza nje.
+ */
+.priroda__shot {
+  margin: 0;
+}
+
+.priroda__shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 716 / 1073;
+  object-fit: cover;
+}
+
+/*
+ * Naslov je u slogu malim slovima a u prikazu verzalom — tako ostaje citljiv
+ * kad se prekopira i kad ga procita glas. Mjera mu je zadana da se lomi u tri
+ * reda, kao na crtezu.
+ */
+.priroda__heading {
+  margin: 0;
+  max-width: 11ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.1rem, 4.3vw, 4rem);
+  font-weight: 400;
+  line-height: 1.28;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+/*
+ * Tekst ide serifom kao i naslov, ali sitno i s dosta vazduha medju redovima.
+ * Pri toj velicini prored od dva reda je ono sto ga cini stupcem a ne blokom.
+ */
+.priroda__copy {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+  line-height: 2;
+  color: var(--brown);
+}
+
+.priroda__copy p + p {
+  margin-top: 1.9em;
+}
+
+.priroda__link {
+  display: inline-block;
+  margin-top: 2em;
+  font-size: 0.95em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 0.28em;
+  text-decoration-thickness: 1px;
+  color: var(--brown);
+  transition: opacity 0.3s ease;
+}
+
+.priroda__link:hover {
+  opacity: 0.65;
+}
+
+/* Na uzem ekranu tri stupca ne stanu: snimak ostaje lijevo, slog ide desno. */
+@media (max-width: 1100px) {
+  .priroda__inner {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    row-gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .priroda__shot {
+    grid-row: 1 / span 2;
+  }
+
+  .priroda__heading {
+    max-width: none;
+  }
+}
+
+/* Ispod toga se sve slaze jedno pod drugo. */
+@media (max-width: 760px) {
+  .priroda__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .priroda__shot {
+    grid-row: auto;
+    max-width: 22rem;
+  }
+}

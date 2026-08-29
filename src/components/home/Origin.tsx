@@ -19,7 +19,7 @@ export default function Origin({ locale }: { locale: Locale }) {
   const copy = home.origin[locale];
 
   return (
-    <section className="origin section-padding">
+    <section id="porijeklo" className="origin section-padding">
       <div className="container">
         <p className="origin__eyebrow reveal">{copy.eyebrow}</p>
 

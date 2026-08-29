@@ -4,6 +4,7 @@ import { isLocale } from '@/i18n/config';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import Apiary from '@/components/home/Apiary';
+import Priroda from '@/components/home/Priroda';
 import Drip from '@/components/home/Drip';
 import Geslo from '@/components/home/Geslo';
 import PhotoRail from '@/components/home/PhotoRail';
@@ -61,6 +62,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Pcelinjak: snimak preko cijelog kadra koji se odmakne i progovori. */}
       <Apiary locale={locale} />
+
+      {/* U dodiru s prirodom: snimak, naslov i tekst jedno uz drugo. */}
+      <Priroda locale={locale} />
 
       {/* Album: snimci s pcelinjaka koji se listaju skrolom. */}
       <PhotoRail locale={locale} />
