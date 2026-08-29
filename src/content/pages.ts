@@ -215,6 +215,31 @@ export const home = {
     combAlt: string;
   }>,
 
+  geslo: {
+    sr: {
+      /*
+       * Zasad stoji vlastito geslo sajta, ono iz podnozja. Ako sekcija treba
+       * da kaze nesto drugo, mijenja se samo ovdje — raspored ne zavisi od
+       * duzine reda.
+       */
+      lead: 'Tradicija u',
+      accent: 'svakoj kapi',
+      sealAlt: 'Znak: pčela nad cvijetom',
+      hiveAlt: 'Crtež košnice u travi',
+    },
+    en: {
+      lead: 'Tradition in',
+      accent: 'every drop',
+      sealAlt: 'A mark: a bee above a flower',
+      hiveAlt: 'A drawing of a hive in the grass',
+    },
+  } satisfies L<{
+    lead: string;
+    accent: string;
+    sealAlt: string;
+    hiveAlt: string;
+  }>,
+
   apiary: {
     sr: {
       heading: 'Mračaj',

@@ -6,6 +6,7 @@ import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
 import Apiary from '@/components/home/Apiary';
 import Drip from '@/components/home/Drip';
+import Geslo from '@/components/home/Geslo';
 import PhotoRail from '@/components/home/PhotoRail';
 import Legacy from '@/components/home/Legacy';
 import SorteMeda from '@/components/products/SorteMeda';
@@ -52,10 +53,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/*
         Odmah za herojem: med se prelije preko ruba, strana potamni, pa se na
-        dnu pojasa istim potezom vrati na papir. Pojas je prazan namjerno — on
-        je prelaz izmedju crteza i tegle, ne sekcija.
+        dnu pojasa istim potezom vrati na papir. U pojasu stoji geslo — jedan
+        red preko cijele sirine, s crtezima oko njega.
       */}
-      <Drip />
+      <Drip>
+        <Geslo locale={locale} />
+      </Drip>
 
       <HeroJar locale={locale} />
 

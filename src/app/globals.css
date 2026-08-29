@@ -2531,9 +2531,116 @@ html:not(.is-preloading) .hero-land__arrow {
   margin-bottom: -1px;
 }
 
+/*
+ * Tijelo pojasa. Visinu mu daje ono sto je u njemu; `min-height` je tu samo za
+ * slucaj da ostane prazan, da prelaz ne postane linija.
+ */
 .drip__body {
-  min-height: 40svh;
+  min-height: 20svh;
   background: var(--amber);
+}
+
+/* ---------------------------------------------------------------------------
+ * Geslo: jedan red preko cijelog pojasa, i tri crteza oko njega.
+ *
+ * Pojas je med, pa se sve na njemu mjeri prema njemu: mastilo za pocetak
+ * recenice, bijelo za kraj. Crtezi stoje u uglovima i ne diraju red — mjere su
+ * procenti pojasa, pa se s njim i skupljaju.
+ * ------------------------------------------------------------------------- */
+.geslo {
+  position: relative;
+  padding-block: clamp(5rem, 12vw, 11rem);
+  overflow: hidden;
+}
+
+.geslo__inner {
+  position: relative;
+  padding-inline: var(--container-padding);
+}
+
+/*
+ * Red je namjerno velik: on je jedino sto se na pojasu cita, pa nosi cijelu
+ * sirinu. Kraj recenice ide kurzivom i u bijelom — dva glasa u istom redu.
+ */
+.geslo__line {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.25rem, 8.5vw, 10rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.geslo__lead {
+  color: var(--brown);
+}
+
+.geslo__accent {
+  font-style: italic;
+  color: #fff;
+}
+
+/* --- crtezi oko reda ------------------------------------------------------ */
+.geslo__seal,
+.geslo__sun,
+.geslo__hive {
+  position: absolute;
+  height: auto;
+}
+
+/*
+ * Pecat gore lijevo. Odmaci su pozitivni: pojas sijece sve sto iz njega
+ * izadje, pa bi ga negativan odmak presjekao po pola.
+ */
+.geslo__seal {
+  left: 4%;
+  top: 5%;
+  width: clamp(3.5rem, 8vw, 7.5rem);
+}
+
+/*
+ * Sunce gore desno, i jedino se ono vrti — isto kao na snimku pcelinjaka, pa
+ * se cita kao ista stvar na dva mjesta.
+ */
+.geslo__sun {
+  right: 8%;
+  top: 7%;
+  width: clamp(2.5rem, 5.5vw, 5rem);
+  animation: sun-spin 30s linear infinite;
+}
+
+/* Kosnica dolje desno, u travi — jedina od tri koja stoji na necemu. */
+.geslo__hive {
+  right: 3%;
+  bottom: 5%;
+  width: clamp(6rem, 15vw, 14rem);
+}
+
+@media (max-width: 700px) {
+  .geslo__seal {
+    left: 2%;
+    top: 3%;
+    width: 22vw;
+  }
+
+  .geslo__sun {
+    right: 4%;
+    top: 4%;
+    width: 14vw;
+  }
+
+  .geslo__hive {
+    right: 2%;
+    bottom: 4%;
+    width: 34vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .geslo__sun {
+    animation: none;
+  }
 }
 
 /*
