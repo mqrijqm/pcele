@@ -1449,7 +1449,14 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: clamp(2rem, 4vw, 3.25rem) auto 0;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--type-heading);
+  /*
+   * Jedini naslov koji ne nosi mjeru ostalih. Ostali su imena i kratke
+   * tvrdnje — "Mracaj", "Nasljedje koje traje od 1980." — a ovaj je cijela
+   * recenica s tri toponima; na mjeri naslova sekcije isao bi u pet redova i
+   * pojeo bi sekciju. Manji je zato sto je duzi, ne zato sto je manje vazan.
+   */
+  font-size: clamp(1.25rem, 2.2vw, 2.25rem);
+  line-height: 1.25;
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: -0.015em;
@@ -2624,31 +2631,34 @@ html:not(.is-preloading) .hero-land__arrow {
   color: #fff;
 }
 
-/* Dolje lijevo, pod suncem: recenica. */
-.apiary__body {
+/*
+ * Dolje lijevo: sunce i recenica u jednom bloku.
+ *
+ * Razmak do lijeve i do donje ivice je isti u pikselima, ne u procentima —
+ * snimak je dvaput siri nego visi, pa bi jednak procenat dao dva razlicita
+ * razmaka. Otud 2.4% sirine sa strane i 4.9% visine odozdo: na omjeru na
+ * kojem snimak stoji, to je ista mjera.
+ */
+.apiary__foot {
   position: absolute;
-  left: 3.1%;
-  top: 81.4%;
-  width: 25.4%;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1rem, 1.5vw, 1.5rem);
-  line-height: 1.45;
-  text-wrap: pretty;
-  color: var(--paper);
-  text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
+  left: 2.4%;
+  bottom: 4.9%;
+  width: 26%;
 }
 
 /*
- * Dolje lijevo, nad recenicom: sunce. Jedino se ono vrti; disk mu je
- * simetrican pa se okretanje cita po zracima — trideset sekundi po krugu,
- * taman da se primijeti a da ne vuce pogled.
+ * Sunce nad recenicom. Jedino se ono vrti; disk mu je simetrican pa se
+ * okretanje cita po zracima — trideset sekundi po krugu, taman da se
+ * primijeti a da ne vuce pogled.
+ *
+ * Vrtnja ide na `rotate`, zasebno svojstvo, a ne na `transform` — tako ne
+ * smeta GSAP-u koji na iskoku pise `scale` u `transform`.
  */
 .apiary__sun {
-  position: absolute;
-  left: 3.4%;
-  top: 69%;
-  width: 4.9%;
+  display: block;
+  width: 19%;
   height: auto;
+  margin-bottom: clamp(1rem, 2vw, 2rem);
   animation: sun-spin 30s linear infinite;
 }
 
@@ -2658,31 +2668,32 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 }
 
-/*
- * Koordinate su podatak, pa idu grotesknim slogom — jedini takav na snimku.
- * Stoje pod imenom sela, u istoj osi: crtez kaze kakav je kraj, ime koji je,
- * broj gdje je tacno — troje jedno pod drugim, od opsteg ka odredjenom.
- */
-.apiary__coords {
-  margin-top: 0.35em;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  /*
-   * Sitno, mjerom kojom su pisani i natpisi iznad naslova po sekcijama. Broj
-   * je fusnota uz sliku, ne natpis na njoj — krupan bi se takmicio s imenom
-   * sela, a njemu nije mjesto u tom razgovoru.
-   */
-  font-size: var(--type-eyebrow);
-  line-height: 1.35;
-  white-space: nowrap;
+.apiary__body {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  line-height: 1.45;
+  text-wrap: pretty;
   color: var(--paper);
-  text-shadow: 0 2px 18px rgba(24, 15, 5, 0.5);
+  text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
 }
 
 /*
- * Natpisi su skriveni i u CSS-u, ne samo u GSAP-u: dok se skripta ne ucita
- * inace stoje ispisani preko punog kadra pa nestanu da bi se pojavili.
+ * Skriveni su i u CSS-u, ne samo u GSAP-u: dok se skripta ne ucita inace
+ * stoje ispisani preko punog kadra pa nestanu da bi se pojavili.
+ *
+ * Naslov i broj se gase providnoscu, crtez i recenica se odsijecaju — jer se
+ * oni ne pojavljuju nego iscrtavaju.
  */
 .apiary__copy {
+  opacity: 0;
+}
+
+.apiary__hills,
+.apiary__body {
+  clip-path: inset(0 100% 0 0);
+}
+
+.apiary__sun {
   opacity: 0;
 }
 
@@ -2705,7 +2716,13 @@ html:not(.is-preloading) .hero-land__arrow {
     opacity: 1;
   }
 
+  .apiary__hills,
+  .apiary__body {
+    clip-path: none;
+  }
+
   .apiary__sun {
+    opacity: 1;
     animation: none;
   }
 }
@@ -2720,16 +2737,14 @@ html:not(.is-preloading) .hero-land__arrow {
     top: 30%;
   }
 
-  .apiary__body {
+  .apiary__foot {
     left: 6%;
-    top: 78%;
+    bottom: 6%;
     width: 66%;
   }
 
   .apiary__sun {
-    left: 6%;
-    top: 66%;
-    width: 11%;
+    width: 17%;
   }
 }
 

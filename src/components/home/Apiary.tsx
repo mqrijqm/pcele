@@ -39,9 +39,10 @@ export default function Apiary({ locale }: { locale: Locale }) {
       const q = self.selector as (sel: string) => Element[];
       const shot = q('.apiary__shot')[0];
       const head = q('.apiary__heading')[0];
+      const coords = q('.apiary__coords')[0];
       const hills = q('.apiary__hills')[0];
-      const rest = q('.apiary__body, .apiary__sun, .apiary__coords');
-      const copy = q('.apiary__copy');
+      const body = q('.apiary__body')[0];
+      const sun = q('.apiary__sun')[0];
       if (!shot) return;
 
       const mm = gsap.matchMedia();
@@ -72,21 +73,30 @@ export default function Apiary({ locale }: { locale: Locale }) {
         );
 
         /*
-         * Natpisi stizu tek kad se snimak vec odmakao. Da krecu zajedno s
-         * njim, citali bi se dok se kadar jos pomjera ispod njih.
+         * Natpisi stizu tek kad se snimak vec odmakao, i to jedan po jedan.
          *
-         * Redom: prvo ime sela, pa crtez brda nad njim, pa sve ostalo. Ime je
-         * ono zbog cega je snimak tu, crtez ga zaokruzi, a recenica, sunce i
-         * broj dolaze kad je mjesto vec imenovano.
+         * Redom: ime sela, pa se crtez brda iznad njega iscrta, pa se recenica
+         * dolje ispise, pa sunce iskoci. Ime je ono zbog cega je snimak tu,
+         * ostalo dolazi kad je mjesto vec imenovano.
          *
-         * `set` pa `to`, ne `from`: uz `stagger` meta ciji red jos nije dosao
+         * Crtez i recenica se otkrivaju `clip-path`-om slijeva nadesno — kao
+         * da ih neko vuce olovkom. Crtez je puna povrsina a ne potez, pa mu se
+         * dash-offset ne moze animirati; brisanje preko njega daje isti utisak
+         * a radi na svemu.
+         *
+         * `set` pa `to`, ne `from`: uz `from` meta ciji red jos nije dosao
          * zadrzava svoju prirodnu vrijednost, pa su koordinate stajale
          * ispisane preko punog kadra dok naslova jos nije bilo.
          */
-        gsap.set(copy, { opacity: 0, y: 26 });
-        tl.to(head, { opacity: 1, y: 0, duration: 0.4 }, 0.5);
-        tl.to(hills, { opacity: 1, y: 0, duration: 0.4 }, 0.68);
-        tl.to(rest, { opacity: 1, y: 0, stagger: 0.1, duration: 0.4 }, 0.86);
+        gsap.set([head, coords], { opacity: 0, y: 26 });
+        gsap.set([hills, body], { opacity: 1, clipPath: 'inset(0 100% 0 0)' });
+        gsap.set(sun, { opacity: 0, scale: 0 });
+
+        tl.to(head, { opacity: 1, y: 0, duration: 0.34 }, 0.42);
+        tl.to(coords, { opacity: 1, y: 0, duration: 0.3 }, 0.56);
+        tl.to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 0.5 }, 0.62);
+        tl.to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.6 }, 0.78);
+        tl.to(sun, { opacity: 1, scale: 1, ease: 'back.out(1.7)', duration: 0.5 }, 0.94);
 
         /* Zavrsni raspored ostaje da stoji dok sekcija ne prodje. */
         tl.to({}, { duration: 0.5 });
@@ -130,15 +140,20 @@ export default function Apiary({ locale }: { locale: Locale }) {
               <p className="apiary__coords apiary__copy">{t.coords}</p>
             </div>
 
-            {/* Dolje lijevo: sunce, i pod njim recenica. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="apiary__sun apiary__copy"
-              src="/images/brand/sunce.svg"
-              alt=""
-              aria-hidden="true"
-            />
-            <p className="apiary__body apiary__copy">{t.body}</p>
+            {/*
+              * Dolje lijevo: sunce, i pod njim recenica. Jedan blok, da im
+              * lijeva ivica bude ista i da zajedno drze isti razmak od ugla.
+              */}
+            <div className="apiary__foot">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="apiary__sun"
+                src="/images/brand/sunce.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <p className="apiary__body">{t.body}</p>
+            </div>
           </figcaption>
         </figure>
       </div>
