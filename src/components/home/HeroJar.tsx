@@ -309,10 +309,10 @@ export default function HeroJar({ locale }: { locale: Locale }) {
         <div className="hero-jar__jar">
           <Image
             id="hero-jar-image"
-            src="/hero/jar.png"
+            src="/hero/jar.webp"
             alt={t.jarAlt}
-            width={489}
-            height={771}
+            width={721}
+            height={1222}
             priority
             fetchPriority="high"
             loading="eager"

@@ -38,12 +38,50 @@ export default function Apiary({ locale }: { locale: Locale }) {
     const ctx = gsap.context((self) => {
       const q = self.selector as (sel: string) => Element[];
       const shot = q('.apiary__shot')[0];
-      const head = q('.apiary__heading')[0];
-      const coords = q('.apiary__coords')[0];
+      const head = q('.apiary__heading')[0] as HTMLElement | undefined;
+      const coords = q('.apiary__coords')[0] as HTMLElement | undefined;
       const hills = q('.apiary__hills')[0];
       const body = q('.apiary__body')[0];
       const sun = q('.apiary__sun')[0];
-      if (!shot) return;
+      if (!shot || !head || !coords) return;
+
+      /*
+       * Koordinate se sirinom poravnavaju s imenom sela — red pod redom, oba
+       * jednako duga.
+       *
+       * To ne moze stajati u CSS-u: ime je jedna rijec u serifu, broj je
+       * cifre u grotesku, i koliko ce koji biti dug zavisi od fonta koji jos
+       * nije stigao i od sirine prozora. Zato se oboje izmjeri, pa se broju
+       * zada mjera koja mu izjednaci duzinu s imenom.
+       *
+       * Oba su `inline-block`, inace bi im kutija bila siroka koliko i cijeli
+       * stupac, a ne koliko slog u njoj.
+       */
+      const fitCoords = () => {
+        coords.style.fontSize = '';
+        const base = parseFloat(getComputedStyle(coords).fontSize);
+        /*
+         * Mjeri se sam slog, rasponom preko sadrzaja, a ne kutija elementa.
+         * Kutija je siroka koliko joj dopusti stupac, a nas zanima koliko je
+         * dugacak ispisani red — i tako oboje smiju ostati blokovi, jedan pod
+         * drugim. Da smo im kutije stisnuli na slog, sjeli bi jedan pored
+         * drugog u isti red.
+         */
+        const span = (el: HTMLElement) => {
+          const r = document.createRange();
+          r.selectNodeContents(el);
+          return r.getBoundingClientRect().width;
+        };
+        const name = span(head);
+        const line = span(coords);
+        if (!base || !name || !line) return;
+        coords.style.fontSize = `${(base * name) / line}px`;
+      };
+
+      fitCoords();
+      /* Slog se mjeri iznova kad stigne pravi font i kad se prozor promijeni. */
+      document.fonts?.ready.then(fitCoords).catch(() => undefined);
+      window.addEventListener('resize', fitCoords);
 
       const mm = gsap.matchMedia();
 
@@ -104,7 +142,10 @@ export default function Apiary({ locale }: { locale: Locale }) {
         return () => tl.scrollTrigger?.kill();
       });
 
-      return () => mm.revert();
+      return () => {
+        window.removeEventListener('resize', fitCoords);
+        mm.revert();
+      };
     }, el);
 
     return () => ctx.revert();
