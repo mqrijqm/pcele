@@ -28,12 +28,13 @@
   /*
    * Skoro bijela — jedina povrsina na sajtu koja nije papir.
    *
-   * Drzi je samo navigacija: pilula i meni preko cijelog ekrana. Papir je
-   * topao i zut, pa je navigacija na njemu bila jedva odvojena od strane;
-   * ovako se cita kao sloj iznad nje. Nije cista bijela, nego papir kojem je
-   * skinuta zutina — inace bi na toplom papiru izgledala plavo.
+   * Nose je navigacija (pilula i meni preko cijelog ekrana) i sekcija s
+   * propolisom. Papir je topao i zut, pa je na njemu i navigacija bila jedva
+   * odvojena od strane, a crtez grancice se gubio u podlozi iste boje. Nije
+   * cista bijela nego papir kojem je skinuta zutina — cista bi na toplom
+   * papiru izgledala plavo.
    */
-  --nav-white: #FDFBF7;
+  --white-soft: #FDFBF7;
 
   /*
    * Podloga iza snimaka proizvoda. Nekad je bila za nijansu svjetlija od
@@ -770,7 +771,7 @@ p {
    * odvajala od strane — sad stoji kao sloj iznad nje, a linija je drzi da ne
    * ispadne kao tudji, cisto bijeli element.
    */
-  background: var(--nav-white);
+  background: var(--white-soft);
   border: 1px solid rgba(136, 91, 39, 0.14);
   transform: translateX(calc(-100% - var(--header-gutter)));
   transition:
@@ -3114,7 +3115,12 @@ html:not(.is-preloading) .hero-land__arrow {
 .propolis {
   position: relative;
   overflow: hidden;
-  background-color: var(--paper);
+  /*
+   * Bijela, ne papir. Crtez grancice je tanka smedja linija; na toplom zutom
+   * papiru joj je podloga bila blizu njene sopstvene boje, pa se gubila. Ovdje
+   * stoji na svijetlom i cita se kao crtez na listu.
+   */
+  background-color: var(--white-soft);
   padding-block: clamp(3rem, 7vw, 7rem);
 }
 

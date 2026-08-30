@@ -152,7 +152,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
       {/* Meni preko celog ekrana — sad je jedina navigacija, na svim sirinama. */}
       <div
-        className={`fixed inset-0 z-50 bg-[var(--nav-white)] px-6 pt-[9rem] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-[var(--white-soft)] px-6 pt-[9rem] transition-opacity duration-300 ${
           menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
