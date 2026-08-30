@@ -99,13 +99,18 @@ export default function Propolis({ locale }: { locale: Locale }) {
         </div>
 
         {/*
+          Naslov se ne vidi — na crtezu sekcije ga nema, ime proizvoda stoji na
+          samoj etiketi. Ostaje u slogu za citac ekrana i za strukturu strane:
+          sekcija bez naslova je za njega samo gomila recenica bez imena.
+        */}
+        <h2 className="sr-only">{t.heading}</h2>
+
+        {/*
           Tri natpisa oko bocice. Svaki nosi svoju isprekidanu vezu ka njoj —
           kratak potez, pa stoji ovdje a ne u fajlu; ukras je i ne cita se.
         */}
+
         <div className="propolis__note propolis__note--lead">
-          <h2 className="propolis__heading" data-no-type>
-            {t.heading}
-          </h2>
           {t.lead.map((line, i) => (
             <p className="propolis__line" style={{ '--i': i + 1 } as React.CSSProperties} key={line}>
               {line}

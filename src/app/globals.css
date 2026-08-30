@@ -28,11 +28,10 @@
   /*
    * Skoro bijela — jedina povrsina na sajtu koja nije papir.
    *
-   * Nose je navigacija (pilula i meni preko cijelog ekrana) i sekcija s
-   * propolisom. Papir je topao i zut, pa je na njemu i navigacija bila jedva
-   * odvojena od strane, a crtez grancice se gubio u podlozi iste boje. Nije
-   * cista bijela nego papir kojem je skinuta zutina — cista bi na toplom
-   * papiru izgledala plavo.
+   * Drzi je samo navigacija: pilula i meni preko cijelog ekrana. Papir je
+   * topao i zut, pa je navigacija na njemu bila jedva odvojena od strane;
+   * ovako se cita kao sloj iznad nje. Nije cista bijela nego papir kojem je
+   * skinuta zutina — cista bi na toplom papiru izgledala plavo.
    */
   --white-soft: #FDFBF7;
 
@@ -3116,11 +3115,10 @@ html:not(.is-preloading) .hero-land__arrow {
   position: relative;
   overflow: hidden;
   /*
-   * Bijela, ne papir. Crtez grancice je tanka smedja linija; na toplom zutom
-   * papiru joj je podloga bila blizu njene sopstvene boje, pa se gubila. Ovdje
-   * stoji na svijetlom i cita se kao crtez na listu.
+   * Isti papir kao sekcija iznad: propolis se nastavlja na nju, bez reza. Boja
+   * se ovdje uopste ne mijenja — sve sto sekciju odvaja je vazduh oko crteza.
    */
-  background-color: var(--white-soft);
+  background-color: var(--paper);
   padding-block: clamp(3rem, 7vw, 7rem);
 }
 
@@ -3138,7 +3136,12 @@ html:not(.is-preloading) .hero-land__arrow {
   position: absolute;
   left: 27.8%;
   top: 9.7%;
-  width: 41%;
+  /*
+   * Sirina je mjerena tako da donji vrh grancice stane iznad reda s
+   * prednostima: na 41% je posljednja grana ulazila u slog i presijecala prvi
+   * red.
+   */
+  width: 39%;
   height: auto;
   color: var(--brown);
   overflow: visible;
@@ -3239,12 +3242,12 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .propolis__note--lead {
   left: 17.5%;
-  top: 10.8%;
+  top: 11.1%;
 }
 
 .propolis__note--use {
   left: 72.8%;
-  top: 47.8%;
+  top: 47.7%;
   text-align: right;
 }
 
@@ -3253,19 +3256,7 @@ html:not(.is-preloading) .hero-land__arrow {
   top: 81.7%;
 }
 
-/*
- * Naslov je jedini serif u punoj mjeri; natpisi oko njega su isti slog, samo
- * verzalom i sitno — ista tipografija kao nadnaslovi drugdje na strani.
- */
-.propolis__heading {
-  margin: 0 0 0.9em;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.1rem, 2.1cqi, 2rem);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--brown);
-}
-
+/* Natpisi su isti slog kao nadnaslovi drugdje na strani: serif, verzal, sitno. */
 .propolis__list {
   list-style: none;
   margin: 0;
@@ -3275,8 +3266,8 @@ html:not(.is-preloading) .hero-land__arrow {
 .propolis__line {
   margin: 0;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(0.6rem, 0.92cqi, 0.9rem);
-  line-height: 1.9;
+  font-size: clamp(0.58rem, 0.86cqi, 0.86rem);
+  line-height: 1.62;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--brown-soft);
@@ -3292,13 +3283,11 @@ html:not(.is-preloading) .hero-land__arrow {
  * Natpisi ulaze red po red, i to tek kad je crtez gotov. `--i` je redni broj
  * reda i dolazi iz komponente — razmak medju redovima je jedno mjesto, ovdje.
  */
-.propolis__heading,
 .propolis__line {
   opacity: 0;
   transform: translateY(0.75rem);
 }
 
-.is-drawn .propolis__heading,
 .is-drawn .propolis__line {
   animation: propolis-rise 0.6s var(--ease-out-expo) forwards;
   animation-delay: calc(2s + var(--i, 0) * 0.09s);
@@ -3384,10 +3373,6 @@ html:not(.is-preloading) .hero-land__arrow {
     white-space: normal;
   }
 
-  .propolis__heading {
-    font-size: clamp(1.35rem, 6vw, 1.9rem);
-  }
-
   /* Veze vode od natpisa do bocice; uspravno slozeni, nemaju sta da povezu. */
   .propolis__thread {
     display: none;
@@ -3400,7 +3385,6 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 @media (prefers-reduced-motion: reduce) {
   .propolis__bottle,
-  .propolis__heading,
   .propolis__line {
     opacity: 1;
     transform: none;
