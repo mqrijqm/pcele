@@ -34,6 +34,12 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         </div>
       </section>
 
+      {/*
+        Pojas u boji meda, jos prazan — mjesto je zauzeto, sadrzaj dolazi.
+        Visinu mu dok je prazan daje CSS; kad dobije sadrzaj, ta mjera ide van.
+      */}
+      <section className="honey-band" aria-hidden="true" />
+
       {/* Polica: tegle se listaju skrolom, a krug uz njih mijenja boju i naziv. */}
       <ProductRail locale={locale} />
 

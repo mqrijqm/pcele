@@ -3088,6 +3088,19 @@ html:not(.is-preloading) .hero-land__arrow {
  * Med se prelije preko ruba strane: iznad je papir, ispod smedja, a granicu
  * crta sam potez a ne prava linija. Sekcija ispod je zasad prazna.
  * ------------------------------------------------------------------------- */
+/*
+ * Prazan pojas u boji meda. Ista povrsina kao medeni pojasevi na pocetnoj —
+ * `--amber`, ne nova boja.
+ *
+ * `min-height` je privremena: prazna sekcija je visoka nula i na strani je ne
+ * bi bilo. Kad pojas dobije sadrzaj, mjera se brise i visinu daje ono sto je
+ * u njemu.
+ */
+.honey-band {
+  min-height: 60svh;
+  background: var(--amber);
+}
+
 .drip {
   background: var(--paper);
   /*
