@@ -3618,16 +3618,42 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /*
- * Visinu okvira daje `--lift` iz komponente (uspravni je za petinu visi),
- * sirinu racuna sam iz omjera okvira. Snimak se u okvir uklapa podrezivanjem,
- * pa se u listu moze staviti bilo koja fotografija bez racunanja.
+ * Visinu okvira daje `--rail-h`, sirinu racuna sam iz omjera. Snimak se u
+ * okvir uklapa podrezivanjem, pa se u listu moze staviti bilo koja
+ * fotografija bez racunanja.
  */
 .rail__item {
   position: relative;
-  height: calc(var(--rail-h) * var(--lift));
+  height: var(--rail-h);
   flex: none;
   overflow: hidden;
   background: rgba(136, 91, 39, 0.06);
+}
+
+/*
+ * Album ide punom visinom scene: prozor uzima sve sto pretekne ispod
+ * nadnaslova, a okvir se rasteze kroz njega. Polica s proizvodima ostaje na
+ * svojoj mjeri, zato izuzetak.
+ *
+ * `min-height: 0` je uslov, ne ukras: bez njega se stavka u okomitom flexu ne
+ * da stisnuti ispod visine svog sadrzaja, pa bi prozor izasao ispod ruba
+ * ekrana umjesto da stane u njega.
+ *
+ * Gornja granica je u `vw`: na telefonu bi puna visina dala okvir siri od
+ * ekrana, pa bi se snimak u sredini gledao kroz procjep. `110.7vw` je visina
+ * na kojoj je okvir tacno 78% sirine ekrana.
+ */
+.rail:not(.rail--shelf) .rail__viewport {
+  flex: 1;
+  min-height: 0;
+}
+
+.rail:not(.rail--shelf) .rail__track {
+  height: 100%;
+}
+
+.rail:not(.rail--shelf) .rail__item {
+  height: min(100%, 110.7vw);
 }
 
 .rail__img {
@@ -3710,6 +3736,19 @@ html:not(.is-preloading) .hero-land__arrow {
   .rail__viewport {
     overflow-x: auto;
     overscroll-behavior-x: contain;
+  }
+
+  /*
+   * Scena ovdje nije lijepljena i visinu joj daje sadrzaj, pa puna visina
+   * nema od cega da se racuna — okvir bi se stisnuo u nistavilo. Vraca se
+   * mjera.
+   */
+  .rail:not(.rail--shelf) .rail__viewport {
+    flex: none;
+  }
+
+  .rail:not(.rail--shelf) .rail__item {
+    height: min(70svh, 110.7vw);
   }
 
   .rail__track {

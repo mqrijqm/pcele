@@ -26,32 +26,26 @@ gsap.registerPlugin(ScrollTrigger);
  */
 
 /**
- * Dva okvira, ne dva odnosa strana.
+ * Jedan okvir za sve.
  *
- * Snimak se ne prikazuje u svom omjeru nego u omjeru okvira u koji je stavljen
- * — `object-fit: cover` ga podreze. Zato album ostaje isti bez obzira sta se
- * u njega doda: sirok okvir je uvijek jednako sirok, uspravni uvijek jednako
- * uzak i za petinu visi. Brojevi su izmjereni iz Marijinog crteza sekcije.
+ * Snimak se ne prikazuje u svom omjeru nego u omjeru okvira — `object-fit:
+ * cover` ga podreze — pa album ostaje isti bez obzira sta se u njega doda.
+ *
+ * Okvira je do sada bilo dva, sirok i uspravan, da traka ima ritam. Sad je
+ * jedan: svi snimci u albumu su uspravni, a sirok okvir uspravnu fotografiju
+ * odsijece na trecinu. Mjera je iz Marijinog crteza sekcije.
  */
-const FRAME = {
-  wide: { aspect: 836 / 473, lift: 1 },
-  tall: { aspect: 405 / 575, lift: 1.216 },
-} as const;
+const FRAME = 405 / 575;
 
 /**
  * Redoslijed snimaka — ovim redom dolaze u sredinu.
- *
- * Oblik okvira bira fotografija, ne ritam: sirok okvir podreze uspravan
- * snimak na trecinu, pa u njega ide samo ono sto je i snimljeno polezecke.
- * Od pet snimaka u albumu takav je jedan, i stoji drugi po redu — dovoljno
- * da traka ima jedan siri predah, a da nijedan snimak ne bude odsjecen.
  */
 const RAIL = [
-  { src: '/images/real/album-tegla-dlan.webp', frame: 'tall', key: 'dlan' },
-  { src: '/images/real/album-kosnice.webp', frame: 'wide', key: 'kosnice' },
-  { src: '/images/real/album-korpa.webp', frame: 'tall', key: 'korpa' },
-  { src: '/images/real/album-tegla-rame.webp', frame: 'tall', key: 'rame' },
-  { src: '/images/real/album-tegle-svjetlo.webp', frame: 'tall', key: 'svjetlo' },
+  { src: '/images/real/album-tegla-dlan.webp', key: 'dlan' },
+  { src: '/images/real/album-panj.webp', key: 'panj' },
+  { src: '/images/real/album-korpa.webp', key: 'korpa' },
+  { src: '/images/real/album-tegla-rame.webp', key: 'rame' },
+  { src: '/images/real/album-tegle-svjetlo.webp', key: 'svjetlo' },
 ] as const;
 
 /*
@@ -186,14 +180,9 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
           <ul className="rail__track">
             {PLATES.map((shot, i) => (
               <li
-                className={`rail__item rail__item--${shot.frame}`}
+                className="rail__item"
                 key={shot.id}
-                style={
-                  {
-                    aspectRatio: String(FRAME[shot.frame].aspect),
-                    '--lift': FRAME[shot.frame].lift,
-                  } as React.CSSProperties
-                }
+                style={{ aspectRatio: String(FRAME) }}
               >
                 <Image
                   className="rail__img"

@@ -339,7 +339,7 @@ export const home = {
       sealProcess: 'Pogledaj proces vrcanja',
       alt: {
         dlan: 'Tegla livadskog meda na otvorenom dlanu, iza nje livada i brda',
-        kosnice: 'Dvije plavo-žute drvene košnice jedna do druge, u hladu',
+        panj: 'Tegle livadskog i bagremovog meda na panju, na platnu, u visokoj travi',
         korpa: 'Pletena korpa s teglama meda i propolisom, nošena kroz livadu bijelih rada',
         rame: 'Djevojka u bijeloj haljini drži teglu livadskog meda uz rame',
         svjetlo: 'Tegle meda složene jedna na drugu, sunce prolazi kroz njih',
@@ -352,7 +352,7 @@ export const home = {
       sealProcess: 'See the extraction process',
       alt: {
         dlan: 'A jar of meadow honey resting on an open palm, meadow and hills behind it',
-        kosnice: 'Two blue and yellow wooden hives side by side, standing in shade',
+        panj: 'Jars of meadow and acacia honey on a tree stump, on linen, in tall grass',
         korpa: 'A woven basket of honey jars and propolis carried through a meadow of daisies',
         rame: 'A young woman in a white dress holding a jar of meadow honey at her shoulder',
         svjetlo: 'Jars of honey stacked one on another, sunlight coming through them',
@@ -363,7 +363,7 @@ export const home = {
     eyebrow: string;
     sealHives: string;
     sealProcess: string;
-    alt: Record<'dlan' | 'kosnice' | 'korpa' | 'rame' | 'svjetlo', string>;
+    alt: Record<'dlan' | 'panj' | 'korpa' | 'rame' | 'svjetlo', string>;
   }>,
 
   origin: {
