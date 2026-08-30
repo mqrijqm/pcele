@@ -2031,7 +2031,7 @@ html:not(.is-preloading) .hero-land__arrow {
  * kao sve ostalo, samo prigusena — mjera slova je u `vw` da red uvijek dodje
  * do oba ruba, na svakoj sirini.
  */
-.livada__note {
+.dev-note {
   width: 92%;
   margin: clamp(4.5rem, 14vw, 15rem) auto 0;
   text-align: center;
@@ -3235,8 +3235,8 @@ html:not(.is-preloading) .hero-land__arrow {
 .propolis__line {
   margin: 0;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(0.58rem, 0.86cqi, 0.86rem);
-  line-height: 1.62;
+  font-size: clamp(0.72rem, 1.15cqi, 1.15rem);
+  line-height: 1.7;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--brown-soft);
@@ -3275,20 +3275,24 @@ html:not(.is-preloading) .hero-land__arrow {
   scale: 1 -1;
 }
 
+/*
+ * Veze pocinju tamo gdje slog prestaje. Mjere su pomjerene kad je slog
+ * narastao: na starim je prva crtica padala usred zadnje rijeci.
+ */
 .propolis__thread--lead {
-  left: 31.6%;
+  left: 38%;
   top: 15.1%;
   width: 8.7%;
 }
 
 .propolis__thread--use {
-  left: 61.8%;
+  left: 56.5%;
   top: 49.8%;
   width: 6.9%;
 }
 
 .propolis__thread--benefits {
-  left: 31.6%;
+  left: 38%;
   top: 81.4%;
   width: 8.7%;
 }

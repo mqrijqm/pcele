@@ -403,7 +403,6 @@ export const home = {
       recenica:
         'Vrcamo samo ono što naše pčele saberu na livadama. Sezonu po sezonu, otkad je djed počeo 1980.',
       sealLabel: 'Pogledaj naš pčelinjak',
-      note: 'Sljedeće sekcije su u razvoju.',
       photoLabels: ['Domaće.', 'Ukusno.', 'Ručno.', 'Čisto.', 'Prirodno.'],
       photoAlts: [
         'Tegla livadskog meda na ogradnom stubu, iza nje pokošena livada i brdo',
@@ -418,7 +417,6 @@ export const home = {
       recenica:
         'We extract only what our bees gather on the meadows. Season after season, since our grandfather began in 1980.',
       sealLabel: 'See our apiary',
-      note: 'Next sections in progress.',
       photoLabels: ['Homemade.', 'Delicious.', 'By hand.', 'Clean.', 'Natural.'],
       photoAlts: [
         'A jar of meadow honey on a fence post, a mown meadow and a hill behind it',
@@ -432,7 +430,6 @@ export const home = {
     pejzazAlt: string;
     recenica: string;
     sealLabel: string;
-    note: string;
     photoLabels: readonly [string, string, string, string, string];
     photoAlts: readonly [string, string, string, string, string];
   }>,
@@ -477,6 +474,7 @@ export const home = {
     sr: {
       eyebrow: 'O medu',
       heading: 'Mala pitanja prije prve tegle.',
+      note: 'Sljedeće sekcije su u razvoju.',
       intro: 'Kratki odgovori o čuvanju, kristalizaciji i tome šta se nalazi u našim teglama.',
       items: [
         {
@@ -504,6 +502,7 @@ export const home = {
     en: {
       eyebrow: 'About honey',
       heading: 'Small questions before the first jar.',
+      note: 'Next sections in progress.',
       intro: 'Straight answers about storage, crystallization, and what goes into every jar.',
       items: [
         {
@@ -532,6 +531,7 @@ export const home = {
     eyebrow: string;
     heading: string;
     intro: string;
+    note: string;
     items: { question: string; answer: string }[];
   }>,
 

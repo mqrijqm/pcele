@@ -97,8 +97,8 @@ export async function generateMetadata({
           height: 630,
           alt:
             l === 'sr'
-              ? 'Tegle livadskog meda u travi'
-              : 'Jars of meadow honey lying in grass',
+              ? 'Tegla livadskog meda u pletenoj korpi, na platnu i poljskom cvijeću'
+              : 'A jar of meadow honey in a woven basket, on linen and wild flowers',
         },
       ],
     },

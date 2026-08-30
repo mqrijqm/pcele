@@ -119,12 +119,6 @@ export default function Livada({ locale }: { locale: Locale }) {
         ))}
       </div>
 
-      {/*
-        * Napomena da strana ovdje jos nije gotova. Stoji u istoj mjeri kao
-        * sve iznad nje i u istom mastilu, samo prigusena — tu je da se vidi
-        * kad se trazi, a ne da prekine tok.
-        */}
-      <p className="livada__note reveal">{t.note}</p>
     </section>
   );
 }

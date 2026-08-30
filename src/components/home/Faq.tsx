@@ -66,6 +66,13 @@ export default function Faq({ locale }: { locale: Locale }) {
           </div>
         </div>
       </div>
+
+      {/*
+        * Napomena da strana ovdje jos nije gotova. Stoji pod pitanjima, u
+        * mjeri naslova i u istom mastilu, samo prigusena — tu je da se vidi
+        * kad se trazi, a ne da prekine tok.
+        */}
+      <p className="dev-note reveal">{copy.note}</p>
     </section>
   );
 }
