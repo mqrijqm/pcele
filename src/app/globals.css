@@ -3100,6 +3100,319 @@ html:not(.is-preloading) .hero-land__arrow {
  * Med se prelije preko ruba strane: iznad je papir, ispod smedja, a granicu
  * crta sam potez a ne prava linija. Sekcija ispod je zasad prazna.
  * ------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------
+ * Propolis — bocica u sredini, grancica iza nje, tri natpisa oko njih.
+ *
+ * Scena drzi omjer i sve u njoj stoji u procentima te scene, pa se cio raspored
+ * skalira kao jedan komad na bilo kojoj sirini. Isto kao heroj: mjere su iz
+ * Marijinog crteza sekcije, a ne iz ekrana.
+ *
+ * Slijed ulaska stoji ovdje, u zakasnjenjima, i cita se odozgo nadolje kako se
+ * i odigrava: bocica, pa grancica, pa natpisi. Komponenta samo javi da je
+ * sekcija usla u kadar.
+ * ------------------------------------------------------------------------- */
+.propolis {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--paper);
+  padding-block: clamp(3rem, 7vw, 7rem);
+}
+
+.propolis__scene {
+  position: relative;
+  width: min(100%, 96rem);
+  margin-inline: auto;
+  aspect-ratio: 1512 / 928;
+  container-type: inline-size;
+}
+
+/* --- grancica ------------------------------------------------------------ */
+
+.propolis__branch {
+  position: absolute;
+  left: 27.8%;
+  top: 9.7%;
+  width: 41%;
+  height: auto;
+  color: var(--brown);
+  overflow: visible;
+}
+
+/*
+ * Kontura koja se povlaci. `pathLength` na samom potezu je jedinica, pa je i
+ * crtica duga jedinicu: pomjerena za cijelu svoju duzinu potez je prazan, na
+ * nuli je cio ispisan.
+ *
+ * Debljina je u mjerama crteza, ne ekrana: crtez se skalira, pa se s njim
+ * skalira i kontura — na sirokom ekranu bi potez stalne debljine bio pretanak
+ * da se vidi kako se povlaci.
+ */
+.propolis__trace {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0.75;
+}
+
+.is-drawn .propolis__trace {
+  animation: propolis-draw 1.6s ease-in-out 0.45s forwards;
+}
+
+/* Ispuna dolazi kad kontura stigne do kraja, i preuzima crtez od nje. */
+.propolis__ink {
+  fill: currentColor;
+  opacity: 0;
+}
+
+.is-drawn .propolis__ink {
+  animation: propolis-fill 0.55s ease-out 1.75s forwards;
+}
+
+.is-drawn .propolis__trace {
+  animation:
+    propolis-draw 1.6s ease-in-out 0.45s forwards,
+    propolis-trace-out 0.55s ease-out 1.75s forwards;
+}
+
+@keyframes propolis-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes propolis-fill {
+  to {
+    opacity: 0.55;
+  }
+}
+
+@keyframes propolis-trace-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* --- bocica -------------------------------------------------------------- */
+
+.propolis__bottle {
+  position: absolute;
+  left: 46.3%;
+  top: 27%;
+  width: 8.6%;
+  opacity: 0;
+  transform: translateY(1.25rem) scale(0.94);
+  /* Sjena je jedva vidljiva: bocica stoji na papiru, ne lebdi nad njim. */
+  filter: drop-shadow(0 1.5rem 2.5rem rgba(51, 33, 12, 0.18));
+}
+
+.is-drawn .propolis__bottle {
+  animation: propolis-rise 0.55s var(--ease-out-expo) forwards;
+}
+
+.propolis__bottle img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes propolis-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- natpisi ------------------------------------------------------------- */
+
+.propolis__note {
+  position: absolute;
+  width: 19%;
+}
+
+.propolis__note--lead {
+  left: 17.5%;
+  top: 10.8%;
+}
+
+.propolis__note--use {
+  left: 72.8%;
+  top: 47.8%;
+  text-align: right;
+}
+
+.propolis__note--benefits {
+  left: 17.5%;
+  top: 81.7%;
+}
+
+/*
+ * Naslov je jedini serif u punoj mjeri; natpisi oko njega su isti slog, samo
+ * verzalom i sitno — ista tipografija kao nadnaslovi drugdje na strani.
+ */
+.propolis__heading {
+  margin: 0 0 0.9em;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.1rem, 2.1cqi, 2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--brown);
+}
+
+.propolis__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.propolis__line {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.6rem, 0.92cqi, 0.9rem);
+  line-height: 1.9;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+  /*
+   * Redovi su prelomljeni u slogu, ne u kutiji: svaki je zasebna recenica u
+   * sadrzaju i ulazi svojim redom. Da im preglednik lomi red po sirini,
+   * kaskada bi se raspala — jedan red bi ulazio kao dva.
+   */
+  white-space: nowrap;
+}
+
+/*
+ * Natpisi ulaze red po red, i to tek kad je crtez gotov. `--i` je redni broj
+ * reda i dolazi iz komponente — razmak medju redovima je jedno mjesto, ovdje.
+ */
+.propolis__heading,
+.propolis__line {
+  opacity: 0;
+  transform: translateY(0.75rem);
+}
+
+.is-drawn .propolis__heading,
+.is-drawn .propolis__line {
+  animation: propolis-rise 0.6s var(--ease-out-expo) forwards;
+  animation-delay: calc(2s + var(--i, 0) * 0.09s);
+}
+
+/* --- isprekidane veze ---------------------------------------------------- */
+
+.propolis__thread {
+  position: absolute;
+  width: 62%;
+  height: auto;
+  color: var(--brown-soft);
+  opacity: 0;
+}
+
+.is-drawn .propolis__thread {
+  animation: propolis-fill 0.6s ease-out 2.1s forwards;
+}
+
+.propolis__thread--lead {
+  left: 104%;
+  top: 42%;
+}
+
+.propolis__thread--use {
+  right: 104%;
+  top: 30%;
+}
+
+.propolis__thread--benefits {
+  left: 104%;
+  top: 22%;
+}
+
+/* --- uspravno slaganje --------------------------------------------------- */
+
+/*
+ * Na uskom ekranu raspored oko bocice nema gdje: natpisi bi se sveli na dvije
+ * rijeci po redu. Zato scena prestaje da bude scena — bocica pa natpisi, jedno
+ * pod drugim, a grancica ostaje iza njih kao podloga i dalje se iscrtava.
+ */
+@media (max-width: 900px) {
+  .propolis__scene {
+    aspect-ratio: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 3rem);
+    padding-inline: var(--container-padding);
+  }
+
+  .propolis__branch {
+    left: 50%;
+    top: 0;
+    width: 118%;
+    translate: -50% 0;
+    opacity: 0.5;
+  }
+
+  .propolis__bottle,
+  .propolis__note {
+    position: static;
+    width: auto;
+  }
+
+  .propolis__bottle {
+    width: 46%;
+    max-width: 15rem;
+  }
+
+  .propolis__note {
+    max-width: 26rem;
+    text-align: center;
+  }
+
+  .propolis__note--use {
+    text-align: center;
+  }
+
+  .propolis__line {
+    font-size: 0.78rem;
+    /* Uspravno slozeno ima punu sirinu strane; red smije da se prelomi. */
+    white-space: normal;
+  }
+
+  .propolis__heading {
+    font-size: clamp(1.35rem, 6vw, 1.9rem);
+  }
+
+  /* Veze vode od natpisa do bocice; uspravno slozeni, nemaju sta da povezu. */
+  .propolis__thread {
+    display: none;
+  }
+}
+
+/*
+ * Ko je iskljucio animacije dobija sekciju ispisanu: bez povlacenja, bez
+ * ulaska, sve na svom mjestu.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .propolis__bottle,
+  .propolis__heading,
+  .propolis__line {
+    opacity: 1;
+    transform: none;
+  }
+
+  .propolis__trace {
+    display: none;
+  }
+
+  .propolis__ink {
+    opacity: 0.55;
+  }
+
+  .propolis__thread {
+    opacity: 1;
+  }
+}
+
 /*
  * Prazan pojas u boji meda. Ista povrsina kao medeni pojasevi na pocetnoj —
  * `--amber`, ne nova boja.

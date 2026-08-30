@@ -13,6 +13,7 @@ import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Livada from '@/components/home/Livada';
+import Propolis from '@/components/home/Propolis';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
@@ -95,6 +96,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         mjere, recenica pod njim, pa tri snimka u stepenicu.
       */}
       <Livada locale={locale} />
+
+      {/* Propolis: bocica, grancica koja se iscrta oko nje, pa natpisi. */}
+      <Propolis locale={locale} />
 
       <Testimonials locale={locale} />
 

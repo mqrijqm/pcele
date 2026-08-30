@@ -437,6 +437,42 @@ export const home = {
     photoAlts: readonly [string, string, string, string, string];
   }>,
 
+  /*
+   * Propolis: bocica u sredini, grancica iza nje, tri natpisa oko njih.
+   *
+   * Natpisi su stigli i kao SVG, slog pretvoren u krivulje. Ovdje stoje kao
+   * tekst: tako se citaju, prevode i biraju, a mjeru i razmak slova im daje
+   * ista tipografija kojom su i nacrtani.
+   */
+  propolis: {
+    sr: {
+      heading: 'Pčelinji propolis',
+      volume: '20 ml',
+      lead: ['Prirodna smola koju pčele', 'sakupljaju sa pupoljaka', 'i kore drveta.'],
+      use: ['Mešaju je sa sopstvenim', 'enzimima i koriste', 'za zaštitu košnice.'],
+      benefits: ['100% prirodno porijeklo', 'Bez aditiva', 'Organsko pčelarstvo'],
+      bottleAlt: 'Braon staklena bočica pčelinjeg propolisa od 20 ml, sa kapaljkom',
+      branchAlt: 'Crtež grančice sa cvjetovima i pupoljcima',
+    },
+    en: {
+      heading: 'Bee propolis',
+      volume: '20 ml',
+      lead: ['A natural resin bees gather', 'from tree buds', 'and bark.'],
+      use: ['They mix it with their own', 'enzymes and use it', 'to guard the hive.'],
+      benefits: ['100% natural origin', 'No additives', 'Organic beekeeping'],
+      bottleAlt: 'A 20 ml amber glass bottle of bee propolis with a dropper',
+      branchAlt: 'A drawing of a branch with blossoms and buds',
+    },
+  } satisfies L<{
+    heading: string;
+    volume: string;
+    lead: readonly string[];
+    use: readonly string[];
+    benefits: readonly string[];
+    bottleAlt: string;
+    branchAlt: string;
+  }>,
+
   faq: {
     sr: {
       eyebrow: 'O medu',
