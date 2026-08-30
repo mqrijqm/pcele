@@ -56,6 +56,14 @@ const LAG = 0.045;
 const TURN = 0.35;
 
 /**
+ * Na koju stranu crtez gleda.
+ *
+ * Pcela je nacrtana glavom nalijevo, pa je ogledana ona koja gleda udesno. To
+ * je lako pomijesati — otud imena umjesto jedinice i minus jedinice.
+ */
+const FACE = { left: 1, right: -1 };
+
+/**
  * Polazno mjesto: tik uz vrh isprekidane strelice u heroju.
  *
  * Strelica i natpis "Listaj i prati pcelu" pokazuju na pcelu — ako je nema
@@ -188,7 +196,7 @@ export default function BeeFlight() {
       yPercent: -50,
       x: at.x,
       y: at.y,
-      scaleX: 1,
+      scaleX: FACE.right,
       rotation: first.tilt,
     });
 
@@ -201,7 +209,7 @@ export default function BeeFlight() {
       const setX = gsap.quickSetter(bee, 'x', 'px');
       const setY = gsap.quickSetter(bee, 'y', 'px');
 
-      let facing = 1;
+      let facing = FACE.right;
       let tilt = first.tilt;
       let hidden = false;
 
@@ -221,8 +229,8 @@ export default function BeeFlight() {
         setX(at.x);
         setY(at.y);
 
-        /* Gleda tamo kuda ide; crtez gleda udesno, pa se za lijevo ogleda. */
-        const want = Math.abs(dx) < TURN ? facing : dx < 0 ? -1 : 1;
+        /* Gleda tamo kuda ide. Dok stoji, ostaje kako je zadnji put okrenuta. */
+        const want = Math.abs(dx) < TURN ? facing : dx < 0 ? FACE.left : FACE.right;
         if (want !== facing) {
           facing = want;
           gsap.to(bee, { scaleX: facing, duration: 0.45, ease: 'power2.out', overwrite: 'auto' });
