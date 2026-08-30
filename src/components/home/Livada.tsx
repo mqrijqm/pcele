@@ -1,18 +1,36 @@
+import type { CSSProperties } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { home } from '@/content/pages';
 import { localeHref, type Locale } from '@/i18n/config';
 
-/** Snimci idu redom kojim su i nacrtani — svaki sljedeci nize i desnije. */
-const PHOTOS = [
-  { src: '/images/real/tegla-stub-livada.webp', width: 684, height: 1040 },
-  { src: '/images/real/tegla-kafa-sto.webp', width: 684, height: 1028 },
-  { src: '/images/real/ramovi-sace.webp', width: 684, height: 1028 },
+/*
+ * Tri stupca, pet snimaka.
+ *
+ * Redoslijed u kojem se citaju je cik-cak: prva tri silaze udesno, druga dva
+ * se vracaju ulijevo, i svaki je nizi od prethodnog. Zato su ovdje slozeni po
+ * stupcima a ne po redu citanja — stupac je ono sto layout drzi, a `i` je
+ * mjesto natpisa u sadrzaju.
+ *
+ * `label` kaze na kojoj strani snimka stoji natpis. Nije ukras: gornji natpis
+ * najavljuje snimak, donji ga potpisuje, i tako se pet natpisa ne poredaju u
+ * liniju.
+ */
+const COLUMNS = [
+  [
+    { i: 0, src: '/images/real/tegla-stub-livada.webp', w: 684, h: 1040, label: 'top' },
+    { i: 4, src: '/images/real/pcele-leto.webp', w: 701, h: 1028, label: 'bottom' },
+  ],
+  [
+    { i: 1, src: '/images/real/tegla-kafa-sto.webp', w: 684, h: 1028, label: 'top' },
+    { i: 3, src: '/images/real/vrcaljka-tegla.webp', w: 684, h: 1028, label: 'bottom' },
+  ],
+  [{ i: 2, src: '/images/real/ramovi-sace.webp', w: 684, h: 1028, label: 'bottom' }],
 ] as const;
 
 /**
- * Livada: crtez pcelinjaka, recenica pod njim, pa tri snimka u stepenicu.
+ * Livada: crtez pcelinjaka, recenica pod njim, pa pet snimaka u stepenicu.
  *
  * Sekcija stoji na istom papiru kao karta prije nje, bez svog pojasa i bez
  * okvira — crtez je taj koji je drzi. Ide preko gotovo cijele mjere strane,
@@ -47,49 +65,17 @@ export default function Livada({ locale }: { locale: Locale }) {
           decoding="async"
         />
 
+        {/*
+          * Pecat je crtez: rijec u njemu je savijena u luk i niko je ne moze
+          * procitati, pa ista ta rijec stoji kao `aria-label` na vezi — isto
+          * kao pecat na vitrini.
+          */}
         <Link
           className="livada__seal"
           href={localeHref(locale, '/pcelinjak')}
           aria-label={t.sealLabel}
         >
-          <svg viewBox="0 0 127 127" aria-hidden="true" focusable="false">
-            <circle cx="63.5" cy="63.5" r="63.5" fill="var(--gold)" />
-
-            {/*
-              * Rijec ide po luku kao slog, ne kao crtez — tako se prevodi
-              * zajedno s ostatkom strane i ostaje ostra na svakoj mjeri.
-              *
-              * Luk je siri od kruga i sredina mu je ispod njega, pa se rijec
-              * jedva savija i sjedi blizu sredine pecata, kao na ostalima —
-              * luk po samom rubu bi je odnio pod gornju ivicu.
-              */}
-            <path id="livada-seal-arc" d="M 22 68 A 62 62 0 0 1 105 68" fill="none" />
-            <text className="livada__sealWord">
-              <textPath href="#livada-seal-arc" startOffset="50%" textAnchor="middle">
-                {t.seal}
-              </textPath>
-            </text>
-
-            {/* Strelica pod rijecju: potez i vrh, u istom glasu kao ostali pecati. */}
-            <path
-              className="livada__sealArrow"
-              d="M 55.5 78 H 71.5 M 67 73.5 L 71.5 78 L 67 82.5"
-            />
-
-            {/*
-              * Prsten se vrti, natpis stoji — zato je zadnji i sam za sebe.
-              */}
-            <circle
-              className="livada__sealRing"
-              cx="63.5"
-              cy="63.5"
-              r="55.1187"
-              fill="none"
-              stroke="var(--paper)"
-              strokeWidth="0.762519"
-              strokeDasharray="7 7"
-            />
-          </svg>
+          <Image src="/images/brand/pecat-pcelinjak.svg" alt="" width={423} height={423} />
         </Link>
       </div>
 
@@ -105,23 +91,40 @@ export default function Livada({ locale }: { locale: Locale }) {
       />
 
       {/*
-        * Tri snimka u stepenicu: svaki sljedeci je nize za nesto manje od
-        * pola svoje visine. Pomak je u postocima sirine omotaca, ne u
-        * pikselima — tako stepenica ostaje ista i kad se stupci suze.
+        * Snimci u stepenicu: svaki sljedeci je nize za nesto manje od pola
+        * svoje visine. Pomak je u postocima, ne u pikselima — tako stepenica
+        * ostaje ista i kad se stupci suze.
         */}
       <div className="livada__photos">
-        {PHOTOS.map((photo, i) => (
-          <figure className={`livada__photo reveal stagger-${i + 1}`} key={photo.src}>
-            <Image
-              src={photo.src}
-              alt={t.photoAlts[i]}
-              width={photo.width}
-              height={photo.height}
-              sizes="(max-width: 899px) 78vw, 26vw"
-            />
-          </figure>
+        {COLUMNS.map((column, c) => (
+          <div className={`livada__column livada__column--${c + 1}`} key={c}>
+            {column.map((photo) => (
+              <figure
+                className={`livada__photo livada__photo--${photo.label} reveal stagger-${photo.i + 1}`}
+                key={photo.src}
+                /* Na uskom ekranu stupci nestaju, pa poredak vraca ovaj broj. */
+                style={{ '--i': photo.i } as CSSProperties}
+              >
+                <figcaption className="livada__label">{t.photoLabels[photo.i]}</figcaption>
+                <Image
+                  src={photo.src}
+                  alt={t.photoAlts[photo.i]}
+                  width={photo.w}
+                  height={photo.h}
+                  sizes="(max-width: 899px) 78vw, 26vw"
+                />
+              </figure>
+            ))}
+          </div>
         ))}
       </div>
+
+      {/*
+        * Napomena da strana ovdje jos nije gotova. Stoji u istoj mjeri kao
+        * sve iznad nje i u istom mastilu, samo prigusena — tu je da se vidi
+        * kad se trazi, a ne da prekine tok.
+        */}
+      <p className="livada__note reveal">{t.note}</p>
     </section>
   );
 }

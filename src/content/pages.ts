@@ -288,9 +288,9 @@ export const home = {
        * kurzivom. Kao jedan tekst se to ne bi dalo obiljeziti a da se prelom
        * ne veze za odredjenu sirinu ekrana.
        */
-      lead: 'U srcu Republike Srpske, u selu Mračaju kod Prnjavora,',
-      accent: 'med se i dalje vrca ručno',
-      tail: '— onako kako se radilo i prije četrdeset godina.',
+      lead: 'U Republici Srpskoj proizvodi se med bez dodataka, uz sezonski ritam koji',
+      accent: 'naša porodica',
+      tail: 'prati decenijama.',
       sealAlt: 'Znak: pčela nad cvijetom',
     },
     en: {
@@ -385,7 +385,7 @@ export const home = {
   }>,
 
   /*
-   * Livada: crtez pcelinjaka, recenica pod njim, pa tri snimka u stepenicu.
+   * Livada: crtez pcelinjaka, recenica pod njim, pa pet snimaka u stepenicu.
    *
    * Crtez i recenica su isporuceni kao SVG — recenica je slog pretvoren u
    * krivulje, sa dvije vlati trave u sebi, pa ovdje stoji i kao tekst: to je
@@ -396,32 +396,39 @@ export const home = {
       pejzazAlt: 'Crtež reda košnica na livadi, iza njih brda i oblaci',
       recenica:
         'Vrcamo samo ono što naše pčele saberu na livadama. Sezonu po sezonu, otkad je djed počeo 1980.',
-      seal: 'Pčelinjak',
       sealLabel: 'Pogledaj naš pčelinjak',
+      note: 'Sljedeće sekcije su u razvoju.',
+      photoLabels: ['Domaće.', 'Ukusno.', 'Ručno.', 'Čisto.', 'Prirodno.'],
       photoAlts: [
         'Tegla livadskog meda na ogradnom stubu, iza nje pokošena livada i brdo',
         'Tegla livadskog meda na stolu, uz kafu i kašiku za med',
         'Ramovi sa saćem izvađeni iz košnice, na njima pčele',
+        'Med teče iz vrcaljke u staklenu teglu',
+        'Pčele na letu košnice, na dasci sa oljuštenom bojom',
       ],
     },
     en: {
       pejzazAlt: 'A drawing of a row of hives in a meadow, hills and clouds behind them',
       recenica:
         'We extract only what our bees gather on the meadows. Season after season, since our grandfather began in 1980.',
-      seal: 'Apiary',
       sealLabel: 'See our apiary',
+      note: 'Next sections in progress.',
+      photoLabels: ['Homemade.', 'Delicious.', 'By hand.', 'Clean.', 'Natural.'],
       photoAlts: [
         'A jar of meadow honey on a fence post, a mown meadow and a hill behind it',
         'A jar of meadow honey on a table, beside coffee and a honey dipper',
         'Frames of comb lifted out of a hive, bees on them',
+        'Honey running from the extractor into a glass jar',
+        'Bees at the hive entrance, on a board with flaking paint',
       ],
     },
   } satisfies L<{
     pejzazAlt: string;
     recenica: string;
-    seal: string;
     sealLabel: string;
-    photoAlts: readonly [string, string, string];
+    note: string;
+    photoLabels: readonly [string, string, string, string, string];
+    photoAlts: readonly [string, string, string, string, string];
   }>,
 
   faq: {

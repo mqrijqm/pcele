@@ -1788,11 +1788,7 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /* ---------------------------------------------------------------------------
- * Pecat na uglu crteza.
- *
- * Mjere su iz porodice ostalih pecata: krug od 127, isprekidan prsten na
- * 55.1187 i razmakom 7/7. Vrti se samo prsten — rijec pod njim mora ostati
- * citljiva.
+ * Pecat na uglu crteza. Crtez je, kao i ostali pecati na strani.
  * ------------------------------------------------------------------------- */
 .livada__seal {
   position: absolute;
@@ -1801,15 +1797,13 @@ html:not(.is-preloading) .hero-land__arrow {
   bottom: -5%;
   display: block;
   width: clamp(5rem, 9vw, 8.5rem);
-  aspect-ratio: 1;
   transition: scale 0.5s var(--ease-out-expo);
 }
 
-.livada__seal svg {
+.livada__seal img {
   display: block;
   width: 100%;
-  height: 100%;
-  overflow: visible;
+  height: auto;
 }
 
 .livada__seal:hover,
@@ -1817,40 +1811,31 @@ html:not(.is-preloading) .hero-land__arrow {
   scale: 1.06;
 }
 
-.livada__sealWord {
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  fill: var(--paper);
-}
-
-.livada__sealArrow {
-  fill: none;
-  stroke: var(--paper);
-  stroke-width: 1.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.livada__sealRing {
-  transform-origin: 50% 50%;
-  animation: seal-spin 30s linear infinite;
-}
-
 /* ---------------------------------------------------------------------------
- * Tri snimka u stepenicu.
+ * Pet snimaka u stepenicu, sa natpisom uz svaki.
  *
- * Pomak nadolje je `margin-top` u postotku, ne u pikselima i ne `translate`:
- * postotak se racuna po sirini, pa stepenica ostaje ista na svakoj mjeri, a
- * visina bloka pomak uracuna — `translate` bi ga izgurao van sekcije.
+ * Cita se cik-cak: prva tri silaze udesno, druga dva se vracaju ulijevo, i
+ * svaki je nizi od prethodnog. To se ne da posloziti u redove mreze — snimak
+ * u drugom redu pocinje iznad nego sto se prvi red zavrsio — pa nosivi oblik
+ * nije red nego stupac. Tri stupca stoje u mrezi, a unutar svakog snimci idu
+ * jedan pod drugim.
  *
- * Mjeri se po stupcu, ne po cijelom bloku: postotak na stavci mreze racuna se
- * prema njenom polju, a ne prema omotacu. Stupac je oko trecine bloka, pa su
- * i brojevi tri puta veci nego sto na crtezu izgledaju — 65% stupca je onih
- * 20% bloka koliko snimak stvarno sidje.
+ * Sav pomak je `margin-top` u postotku, ne u pikselima i ne `translate`:
+ * postotak se racuna po sirini stupca, pa stepenica ostaje ista na svakoj
+ * mjeri, a visina bloka pomak uracuna — `translate` bi ga izgurao van
+ * sekcije.
  * ------------------------------------------------------------------------- */
 .livada__photos {
+  /*
+   * Natpis nad snimkom ne gura samo taj snimak nego cijeli stupac — a treci
+   * stupac natpis nosi dolje, pa bi bez ovoga stajao za tu visinu previsoko.
+   * Zato mjere natpisa stoje ovdje, na jednom mjestu, i pomak treceg stupca
+   * ih uzima odavde: da se ne razidju kad se natpis promijeni.
+   */
+  --label-size: clamp(0.8rem, 1.05vw, 0.95rem);
+  --label-gap: clamp(1.1rem, 3.2vw, 3rem);
+  --label-lead: calc(1.2 * var(--label-size) + var(--label-gap));
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0 3.4%;
@@ -1859,22 +1844,86 @@ html:not(.is-preloading) .hero-land__arrow {
   margin: clamp(4.5rem, 14vw, 15rem) auto 0;
 }
 
+.livada__column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Koliko stupac krece nize od prvog. */
+.livada__column--2 {
+  margin-top: 64%;
+}
+
+.livada__column--3 {
+  margin-top: calc(127% + var(--label-lead));
+}
+
+/*
+ * Razmak izmedju dva snimka u istom stupcu. Nejednak je namjerno: u srednjem
+ * stupcu se snimci gotovo dodiruju, u lijevom ih dijeli poldrug svoje sirine.
+ * Da su oba ista, cik-cak bi se izravnao u dvije obicne kolone.
+ */
+.livada__column--1 .livada__photo + .livada__photo {
+  margin-top: 150%;
+}
+
+.livada__column--2 .livada__photo + .livada__photo {
+  margin-top: 7.5%;
+}
+
 .livada__photo {
+  display: flex;
+  flex-direction: column;
   margin: 0;
-}
-
-.livada__photo:nth-child(2) {
-  margin-top: 65%;
-}
-
-.livada__photo:nth-child(3) {
-  margin-top: 130%;
 }
 
 .livada__photo img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/*
+ * Natpis uz snimak. Stoji nad njim ili pod njim — nad njim najavljuje, pod
+ * njim potpisuje — i to je jedino sto ga drzi da se pet natpisa ne poredaju u
+ * liniju. Kad ide dolje, mijenja mu se samo redoslijed iscrtavanja: u kodu je
+ * uvijek prvi, jer je potpis snimka i tu mu je mjesto za citac ekrana.
+ */
+.livada__label {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: var(--label-size);
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.livada__photo--top .livada__label {
+  margin-bottom: var(--label-gap);
+}
+
+.livada__photo--bottom .livada__label {
+  order: 1;
+  margin-top: var(--label-gap);
+}
+
+/*
+ * Napomena pod slikama. Ide preko cijele mjere strane i u istom je mastilu
+ * kao sve ostalo, samo prigusena — mjera slova je u `vw` da red uvijek dodje
+ * do oba ruba, na svakoj sirini.
+ */
+.livada__note {
+  width: 92%;
+  margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.1rem, 5.6vw, 6.5rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--brown);
+  opacity: 0.2;
 }
 
 @media (max-width: 899px) {
@@ -1884,28 +1933,43 @@ html:not(.is-preloading) .hero-land__arrow {
   }
 
   /*
-   * Stepenica ne stane na usku stranu: tri stupca bi bila tri trake. Snimci
-   * idu jedan pod drugim, naizmjenicno uz lijevi pa uz desni rub, pa se ritam
-   * cita i ovdje.
+   * Stepenica ne stane na usku stranu: tri stupca bi bila tri trake.
+   *
+   * Stupci se rasformiraju (`display: contents`) i svih pet snimaka postanu
+   * djeca istog niza, pa se poredak vraca u onaj kojim se sadrzaj cita —
+   * u kodu su slozeni po stupcima, a ovdje ih `order` vraca u red.
+   *
+   * Uz koji rub ce koji stati i dalje govori stupac iz kojeg je dosao: lijevi
+   * uz lijevu ivicu, srednji u sredinu, desni uz desnu. Tako cik-cak ostaje i
+   * na telefonu, samo uspravan.
    */
   .livada__photos {
-    grid-template-columns: 1fr;
-    gap: clamp(1.5rem, 5vw, 2.5rem) 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 7vw, 3.5rem);
     width: 86%;
+  }
+
+  .livada__column {
+    display: contents;
   }
 
   .livada__photo {
     width: 78%;
+    order: var(--i);
   }
 
-  .livada__photo:nth-child(2) {
+  .livada__column--1 .livada__photo + .livada__photo,
+  .livada__column--2 .livada__photo + .livada__photo {
     margin-top: 0;
-    margin-left: auto;
   }
 
-  .livada__photo:nth-child(3) {
-    margin-top: 0;
+  .livada__column--2 .livada__photo {
     margin-inline: auto;
+  }
+
+  .livada__column--3 .livada__photo {
+    margin-left: auto;
   }
 }
 
