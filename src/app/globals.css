@@ -1411,7 +1411,15 @@ html.is-preloading body {
    */
   left: 33.1%;
   top: 3.47%;
-  width: 24.87%;
+  /*
+   * Sire nego prije (24.87%). Natpis je pisan rukom i sitan; na suzenoj plati
+   * se sveo na potez koji se naslucuje.
+   *
+   * Raste udesno, sa svoje ivice: pomjeri li se i ivica, s njom se pomjeri i
+   * vrh strelice u istom crtezu — a na vrhu strelice sjedi pcela, pa bi sjela
+   * na ime ispod sebe.
+   */
+  width: 29%;
   height: auto;
 }
 
@@ -1470,11 +1478,11 @@ html:not(.is-preloading) .hero-land__arrow {
    * `top` je fiksan, pa smanjivanje sirine ne mice gornju ivicu — razmak do
    * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
    *
-   * Ime stoji na praznom papiru iznad crteza, pod pcelom. Mjera je racunata
-   * na visinu plate: kad je plata narasla da napravi mjesta papiru, ista tacka
-   * u pikselima je u procentima pala sa 30% na 23.5%.
+   * Ime stoji na praznom papiru iznad crteza, pod pcelom. Spusteno je kad je
+   * natpis narastao: veci natpis znaci i vecu strelicu, a vrh strelice je
+   * time sisao nize — s njim i pcela, taman na prvi red imena.
    */
-  top: 23.5%;
+  top: 28%;
   width: 11.27%;
   margin: 0;
   line-height: 0;
@@ -1527,7 +1535,12 @@ html:not(.is-preloading) .hero-land__arrow {
   position: absolute;
   top: 0;
   left: 0;
-  width: clamp(52px, 4.6vw, 76px);
+  /*
+   * Manja nego prije (52-76px). Heroj se od nedavno suzava da stane u visinu
+   * ekrana, a pcela je zadata u sirini ekrana, ne u mjeri heroja — pa je ostala
+   * ista dok se sve oko nje smanjilo i ispala krupna na crtezu.
+   */
+  width: clamp(38px, 3.3vw, 54px);
   will-change: transform;
 }
 

@@ -311,8 +311,8 @@ export default function HeroJar({ locale }: { locale: Locale }) {
             id="hero-jar-image"
             src="/hero/jar.webp"
             alt={t.jarAlt}
-            width={853}
-            height={1285}
+            width={407}
+            height={612}
             priority
             fetchPriority="high"
             loading="eager"
