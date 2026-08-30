@@ -1320,7 +1320,20 @@ html.is-preloading body {
 
 .hero-land__plate {
   position: relative;
-  width: 100%;
+  /*
+   * Sirina, ali ne veca nego sto ekran ima visine.
+   *
+   * Plati visinu daje omjer, a omjer je vezan za sirinu — pa je na sirokom i
+   * niskom ekranu heroj ispadao visi od samog ekrana i nije se vidio do kraja.
+   * Ovdje se cio sklop smanji umjesto da izadje iz kadra: lockup je zadat u
+   * procentima plate, pa se s njom smanji i on, i ostaje tacno gdje je bio.
+   *
+   * `96svh` ostavlja i tanku traku papira ispod heroja, da se vidi da strana
+   * ide dalje. Nize od toga se heroj na sirokom ekranu poce vidno suzavati i
+   * izgleda kao slika u sredini strane, a ne kao pocetni ekran.
+   */
+  width: min(100%, calc(96svh * 1000 / 620));
+  margin-inline: auto;
   /*
    * Plata drzi omjer crteza uvecan za razmak oko njega.
    *
@@ -3124,7 +3137,12 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .propolis__scene {
   position: relative;
-  width: min(100%, 96rem);
+  /*
+   * Sirina, ali ne veca nego sto ekran ima visine — isto kao heroj. Scena drzi
+   * omjer, pa bi na niskom ekranu bila visa od njega i ne bi se vidjela u
+   * jednom pogledu, a cijeli joj je smisao da se procita odjednom.
+   */
+  width: min(100%, 96rem, calc(92svh * 1512 / 928));
   margin-inline: auto;
   aspect-ratio: 1512 / 928;
   container-type: inline-size;
@@ -3912,6 +3930,12 @@ html:not(.is-preloading) .hero-land__arrow {
    * ekranu uspravni okvir ne izadje ispod ruba scene.
    */
   padding-top: min(var(--header-h), 14svh);
+  /*
+   * I zrak pod okvirima. Puna visina scene znaci da snimak dodiruje donju
+   * ivicu prozora, a slika prislonjena uz rub ekrana se ne cita kao cijela
+   * nego kao odsjecena — makar joj ispod nista ne nedostajalo.
+   */
+  padding-bottom: clamp(1rem, 5svh, 3rem);
 }
 
 .rail__intro {
