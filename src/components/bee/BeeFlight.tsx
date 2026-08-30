@@ -312,10 +312,17 @@ export default function BeeFlight() {
         const to = nextStop();
         const parked = parkSpot() !== null;
 
-        /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda.
-         * Nagib nosi samo dok stoji uz strelicu — u letu je ravna. */
+        /*
+         * Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda.
+         * Nagib nosi samo dok stoji uz strelicu — u letu je ravna.
+         *
+         * Dok sjedi, smjer se ne racuna nego se vraca na crtez kakav jeste.
+         * Polaziste i odrediste su tada ista tacka, a razlika im je debljina
+         * zaokruzenja — pa je pcela znala da sjedne uz strelicu okrenuta na
+         * pogresnu stranu, ledjima onome sto na nju pokazuje.
+         */
         gsap.to(bee, {
-          scaleX: to.x < from.x ? -1 : 1,
+          scaleX: parked || to.x >= from.x ? 1 : -1,
           rotation: parked ? (heroSpot() ? START.tilt : BLOOM.tilt) : 0,
           duration: 0.45,
           ease: 'power2.out',

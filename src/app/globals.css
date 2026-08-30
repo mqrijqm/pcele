@@ -3212,8 +3212,6 @@ html:not(.is-preloading) .hero-land__arrow {
   width: 8.6%;
   opacity: 0;
   transform: translateY(1.25rem) scale(0.94);
-  /* Sjena je jedva vidljiva: bocica stoji na papiru, ne lebdi nad njim. */
-  filter: drop-shadow(0 1.5rem 2.5rem rgba(51, 33, 12, 0.18));
 }
 
 .is-drawn .propolis__bottle {
