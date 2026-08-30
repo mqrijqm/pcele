@@ -26,6 +26,16 @@
   --brown-soft: rgba(136, 91, 39, 0.75);
 
   /*
+   * Skoro bijela — jedina povrsina na sajtu koja nije papir.
+   *
+   * Drzi je samo navigacija: pilula i meni preko cijelog ekrana. Papir je
+   * topao i zut, pa je navigacija na njemu bila jedva odvojena od strane;
+   * ovako se cita kao sloj iznad nje. Nije cista bijela, nego papir kojem je
+   * skinuta zutina — inace bi na toplom papiru izgledala plavo.
+   */
+  --nav-white: #FDFBF7;
+
+  /*
    * Podloga iza snimaka proizvoda. Nekad je bila za nijansu svjetlija od
    * papira; sada je isti papir — bijelog na sajtu nema uopste.
    */
@@ -756,12 +766,11 @@ p {
   max-width: calc(100vw - 1.5rem);
   border-radius: var(--radius-pill);
   /*
-   * Topli off-white i tanka smedja linija umjesto ciste bijele i sjenke:
-   * pilula je stajala kao zaseban bijeli objekat iznad papirne strane. Sada
-   * je istog roda kao papir, samo za nijansu svjetlija, pa se cita kao list
-   * koji lezi na strani a ne kao element sucelja.
+   * Skoro bijela, uz tanku smedju liniju. Na papiru iste boje pilula se nije
+   * odvajala od strane — sad stoji kao sloj iznad nje, a linija je drzi da ne
+   * ispadne kao tudji, cisto bijeli element.
    */
-  background: var(--shot);
+  background: var(--nav-white);
   border: 1px solid rgba(136, 91, 39, 0.14);
   transform: translateX(calc(-100% - var(--header-gutter)));
   transition:
@@ -1315,18 +1324,16 @@ html.is-preloading body {
   /*
    * Plata drzi omjer crteza uvecan za razmak oko njega.
    *
-   * Crtez je 393:163, a oko njega ide 6% sirine plate sa svake strane. Da
-   * plata drzi goli omjer crteza, uspravnog viska bi bilo tacno dva puta po
-   * 6% sirine — a to je vise nego sto stane u visinu, pa bi crtez unutar
-   * plate lebdio i mijenjao mjesto sa svakom promjenom sirine ekrana. Ovaj
-   * omjer je izracunat tako da crtez sa svojim razmakom popuni platu tacno:
-   * 0.88 / 2.411 + 0.12 = 0.485.
+   * Crtez je 393:163 i lezi pri dnu plate, a iznad njega ostaje prazan papir
+   * za lockup. Racun: crtez sa svojim razmakom je visok 0.88 / 2.411 + 0.12 =
+   * 0.485 sirine, a plata je 0.62 — razlika, 0.135 sirine, je taj papir.
    *
    * To nije kozmetika nego uslov: cio lockup — ime, natpis, strelica, mjesto
    * na kojem pcela sjedi — zadat je u procentima plate, i vrijedi samo ako
-   * crtez u njoj uvijek stoji na istom mjestu.
+   * crtez u njoj uvijek stoji na istom mjestu. Zato je i visina plate vezana
+   * za sirinu, a ne za ekran.
    */
-  aspect-ratio: 1000 / 485;
+  aspect-ratio: 1000 / 620;
   container-type: inline-size;
 }
 
@@ -1351,6 +1358,12 @@ html.is-preloading body {
    * vazduh — sto je i smisao razmaka ispod.
    */
   object-fit: contain;
+  /*
+   * Crtez sjeda na dno plate. Dok je stajao po sredini, brda su ulazila medju
+   * natpis, pcelu i ime — pa je lockup morao da se sklanja od njih. Ovako je
+   * pejzaz ono sto jeste: linija horizonta pod sadrzajem, a ne iza njega.
+   */
+  object-position: bottom;
   /*
    * Isto kao crtez pcelinjaka nize na strani: podloga, ne slika. Punim
    * mastilom nadjacava ime i natpis koji stoje na njemu.
@@ -1384,7 +1397,7 @@ html.is-preloading body {
    * sada u mjerama crteza.
    */
   left: 33.1%;
-  top: 4.44%;
+  top: 3.47%;
   width: 24.87%;
   height: auto;
 }
@@ -1444,12 +1457,11 @@ html:not(.is-preloading) .hero-land__arrow {
    * `top` je fiksan, pa smanjivanje sirine ne mice gornju ivicu — razmak do
    * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
    *
-   * Pomjereno sa 32.5% kad je crtez zamijenjen: na starom crtezu je tu bilo
-   * nebo, na novom tuda prolazi greben, pa je ime lezalo tacno na liniji brda.
-   * Sada stoji vise, u nebu iznad grebena, a pcela uz strelicu tacno iznad
-   * njega.
+   * Ime stoji na praznom papiru iznad crteza, pod pcelom. Mjera je racunata
+   * na visinu plate: kad je plata narasla da napravi mjesta papiru, ista tacka
+   * u pikselima je u procentima pala sa 30% na 23.5%.
    */
-  top: 30%;
+  top: 23.5%;
   width: 11.27%;
   margin: 0;
   line-height: 0;
@@ -3349,10 +3361,11 @@ html:not(.is-preloading) .hero-land__arrow {
   text-align: center;
   color: #fff;
   /*
-   * Sjena je jedva vidljiva i nije ukras: snimak je ljetni i svijetao, pa bi
-   * bijelo na osuncanoj travi inace izgubilo rub.
+   * Bez sjene. Ime sela je krupno i puno bijelo, pa mu rub ne treba pomoc —
+   * sjena je pod njim pravila sivi oreol koji se na svijetloj travi vidio
+   * vise nego samo slovo. Koordinate pod njim su sitne i nose svoju.
    */
-  text-shadow: 0 2px 22px rgba(24, 15, 5, 0.45);
+  text-shadow: none;
 }
 
 .apiary__hills {

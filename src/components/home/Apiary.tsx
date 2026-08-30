@@ -9,8 +9,8 @@ import type { Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Koliko je snimak ubrzan. Deset sekundi postaje nesto preko sest. */
-const SPEED = 1.6;
+/** Koliko je snimak ubrzan. Deset sekundi prodje za nesto preko cetiri. */
+const SPEED = 2.2;
 
 
 
