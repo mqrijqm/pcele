@@ -16,6 +16,7 @@ import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
 import CookieConsent from '@/components/layout/CookieConsent';
 import RevealObserver from '@/components/ui/RevealObserver';
+import HeadingTypewriter from '@/components/ui/HeadingTypewriter';
 
 /*
  * Dva pisma, i nista vise: Inter nosi sve sitno — navigaciju, tekst, dugmad,
@@ -168,6 +169,7 @@ export default async function LocaleLayout({
         <CartProvider>
           <WishlistProvider>
             <RevealObserver />
+            <HeadingTypewriter />
             <Header locale={locale} />
             <main className="flex-1">{children}</main>
             <Footer locale={locale} />

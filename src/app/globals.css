@@ -472,6 +472,98 @@ p {
   clip-path: inset(0 0 -2px 0);
 }
 
+/*
+ * Naslov se ne pojavljuje nego se ispisuje — slovo po slovo, s kursorom koji
+ * ide ispred sloga i na kraju odtrepce.
+ *
+ * Slog ovdje niko ne lomi rukom: `HeadingTypewriter` razlomi svaki naslov u
+ * `main` cim strana stane, pa su sve klase odavde njegove — `.tw` je naslov,
+ * `.tw__w` rijec, `.tw__c` slovo.
+ *
+ * Rijec je blok da se ne bi prelomila po sredini; slovo ostaje u redu, jer bi
+ * mu blok pokvario par (kerning) — a u serifu se par prvo vidi.
+ *
+ * Kursor nije zaseban element nego sjenka slova: `::after` na svakom slovu se
+ * upali tacno za jedan korak pa ugasi, i to izgleda kao da putuje kroz rijec.
+ * Zadnje slovo nosi jos jedan, `::before`, koji pocne da trepce kad je slog
+ * gotov i ugasi se poslije cetiri otkucaja.
+ */
+.js-reveal .tw {
+  --tw-step: 34ms;
+}
+
+.js-reveal .tw__w {
+  display: inline-block;
+}
+
+.js-reveal .tw .tw__c {
+  position: relative;
+  opacity: 0;
+}
+
+/* Slovo ne blijedi nego upada — kucanje nema medjukorake. */
+.js-reveal .tw.is-typing .tw__c {
+  animation: tw-char 1ms linear forwards;
+  animation-delay: calc(var(--d) * var(--tw-step));
+}
+
+.js-reveal .tw.is-typing .tw__c::after,
+.js-reveal .tw.is-typing .tw__c--last::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 0.15em;
+  width: 0.06em;
+  height: 0.74em;
+  margin-left: 0.05em;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Kursor koji putuje: gori tacno jedan korak, pa ga preuzme sljedece slovo. */
+.js-reveal .tw.is-typing .tw__c::after {
+  animation: tw-caret var(--tw-step) steps(1, end);
+  animation-delay: calc(var(--d) * var(--tw-step));
+}
+
+/*
+ * Kursor koji ostane. `forwards`, ne `both`: sa `both` bi preglednik drzao
+ * prvi kadar (upaljen kursor) sve vrijeme dok se slog jos ispisuje, pa bi se
+ * na kraju reda vidio drugi kursor koji ceka.
+ */
+.js-reveal .tw.is-typing .tw__c--last::before {
+  animation: tw-blink 0.72s steps(1, end) 4 forwards;
+  animation-delay: calc((var(--d) + 1) * var(--tw-step));
+}
+
+@keyframes tw-char {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tw-caret {
+  from,
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes tw-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .stagger-1 {
   transition-delay: 0.05s;
 }
