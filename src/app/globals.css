@@ -3132,7 +3132,7 @@ html:not(.is-preloading) .hero-land__arrow {
    * se ovdje uopste ne mijenja — sve sto sekciju odvaja je vazduh oko crteza.
    */
   background-color: var(--paper);
-  padding-block: clamp(3rem, 7vw, 7rem);
+  padding-block: clamp(4rem, 9vw, 9rem);
 }
 
 .propolis__scene {
@@ -3152,14 +3152,17 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .propolis__branch {
   position: absolute;
-  left: 27.8%;
-  top: 9.7%;
   /*
+   * Grancica stoji oko sredine scene, tek nesto lijevo od nje — kao na crtezu,
+   * gdje joj masa pada nalijevo pa je kutija pomjerena da se tezina izravna.
+   *
    * Sirina je mjerena tako da donji vrh grancice stane iznad reda s
-   * prednostima: na 41% je posljednja grana ulazila u slog i presijecala prvi
-   * red.
+   * prednostima i da joj ostane zraka do natpisa sa strane: na 41% je
+   * posljednja grana ulazila u slog i presijecala prvi red.
    */
-  width: 39%;
+  left: 31%;
+  top: 9.7%;
+  width: 36%;
   height: auto;
   color: var(--brown);
   overflow: visible;
@@ -3225,7 +3228,8 @@ html:not(.is-preloading) .hero-land__arrow {
 
 .propolis__bottle {
   position: absolute;
-  left: 46.3%;
+  /* Sredina bocice je sredina scene: 50% manje pola njene sirine. */
+  left: 45.7%;
   top: 27%;
   width: 8.6%;
   opacity: 0;
@@ -3251,24 +3255,35 @@ html:not(.is-preloading) .hero-land__arrow {
 
 /* --- natpisi ------------------------------------------------------------- */
 
+/*
+ * Kutija natpisa je siroka tacno koliko i najduzi red u njemu. Sa zadatom
+ * sirinom je bila sira od sloga, pa se desni natpis — poravnat udesno — lijepio
+ * uz rub scene i cijela slika je visila na desnu stranu.
+ */
 .propolis__note {
   position: absolute;
-  width: 19%;
+  width: max-content;
 }
 
+/*
+ * Natpisi stoje na istoj udaljenosti od svog ruba scene, lijevi od lijevog a
+ * desni od desnog, pa je sve oko bocice u ravnotezi. Odmaknuti su i od crteza:
+ * ranije je slog zavrsavao dvadesetak piksela prije prve grane i to se citalo
+ * kao da se dodiruju.
+ */
 .propolis__note--lead {
-  left: 17.5%;
+  left: 14%;
   top: 11.1%;
 }
 
 .propolis__note--use {
-  left: 72.8%;
+  right: 14%;
   top: 47.7%;
   text-align: right;
 }
 
 .propolis__note--benefits {
-  left: 17.5%;
+  left: 14%;
   top: 81.7%;
 }
 
