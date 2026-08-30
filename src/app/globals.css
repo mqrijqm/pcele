@@ -1352,6 +1352,11 @@ html.is-preloading body {
    */
   object-fit: contain;
   /*
+   * Isto kao crtez pcelinjaka nize na strani: podloga, ne slika. Punim
+   * mastilom nadjacava ime i natpis koji stoje na njemu.
+   */
+  opacity: 0.4;
+  /*
    * Razmak oko crteza: crtez vise ne ide od ruba do ruba ekrana nego stoji
    * uvucen, kao otisak na papiru.
    *
@@ -1889,6 +1894,11 @@ html:not(.is-preloading) .hero-land__arrow {
   display: block;
   width: 100%;
   height: auto;
+  /*
+   * Crtez je podloga, ne slika: punim mastilom je tezi od svega oko sebe i
+   * povlaci pogled sa recenice pod njim. Utisan je da stoji kao vodeni znak.
+   */
+  opacity: 0.4;
 }
 
 /*

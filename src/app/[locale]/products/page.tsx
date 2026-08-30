@@ -26,7 +26,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
 
   return (
     <div className="bg-ivory header-offset">
-      {/* Strana pocinje pretragom; naslov ostaje za citace ekrana. */}
+      {/* Strana pocinje samom policom; naslov ostaje za citace ekrana. */}
       <h1 className="sr-only">{copy.heading}</h1>
       <section className="bg-ivory section-padding">
         <div className="container">
