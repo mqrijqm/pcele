@@ -1,25 +1,36 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { home } from '@/content/pages';
 import { type Locale } from '@/i18n/config';
 
 import { BRANCH_PATH, BRANCH_VIEWBOX } from './propolisBranch';
 
+gsap.registerPlugin(ScrollTrigger);
+
 /**
  * Propolis: bocica u sredini, grancica iza nje, tri natpisa oko njih.
  *
- * Sekcija se odigra jednom, kad prvi put udje u kadar, i to redom:
+ * Sekcija je visoka vise ekrana, a scena u njoj je `position: sticky`. Dok
+ * strana ide dalje, slika stoji na mjestu i skrol je ne nosi nego je ispisuje —
+ * strana kao da je stala da se sve moze pogledati. Nema pina; sticky to radi
+ * bez diranja rasporeda, sto je uz Lenis mirnije. Isti mehanizam nose heroj s
+ * teglom i album.
+ *
+ * Redoslijed je taj koji skrol otkljucava:
  *
  * 1. bocica — izadje iz nicega, s malim uvecanjem;
  * 2. grancica — iscrta se, kao da je neko upravo povlaci;
- * 3. natpisi — red po red, svaki malo iza prethodnog.
+ * 3. natpis gore lijevo, red po red, pa njegova isprekidana veza;
+ * 4. natpis desno, pa njegova veza;
+ * 5. natpis dolje lijevo, pa njegova.
  *
- * Redoslijed i trajanja stoje u CSS-u, u zakasnjenjima; ovdje je samo prekidac
- * koji ga pusti. Tako se cijeli slijed cita na jednom mjestu, a ne razbijen
- * izmedju skripte i stila.
+ * Svaki natpis dobije svoju vezu prije nego sto krene sljedeci: veza pokazuje
+ * odakle je slog dosao, a pokazivati na slog kojeg jos nema nema sta.
  *
  * **Zasto se grancica crta dva puta.** Crtez je stigao kao jedan slozen potez
  * u kojem linije nisu potezi nego tanke popunjene plohe. `stroke-dashoffset`
@@ -29,124 +40,212 @@ import { BRANCH_PATH, BRANCH_VIEWBOX } from './propolisBranch';
  * kad kontura stigne do kraja. Podaci o potezu stoje jednom, u `defs`, a oba
  * sloja su `use` nad njima — inace bi ista dva megabajta stajala dva puta.
  */
+
+/**
+ * Gdje u skrolu sekcije pada koji korak, kao dio puta kroz nju.
+ *
+ * Cio slijed stoji na jednom mjestu i cita se odozgo nadolje kako se i
+ * odigrava. Poslije zadnjeg koraka ostaje jos malo puta — da se sva tri
+ * natpisa vide zajedno prije nego sto scena krene dalje.
+ */
+const BEAT = {
+  bottle: [0, 0.1],
+  trace: [0.08, 0.38],
+  ink: [0.36, 0.44],
+  lead: [0.46, 0.55],
+  leadThread: [0.55, 0.6],
+  use: [0.62, 0.71],
+  useThread: [0.71, 0.76],
+  benefits: [0.78, 0.87],
+  benefitsThread: [0.87, 0.92],
+} as const;
+
+/** Puna vidljivost popunjene grancice. Ona je podloga, ne slika. */
+const INK = 0.55;
+
 export default function Propolis({ locale }: { locale: Locale }) {
   const t = home.propolis[locale];
   const root = useRef<HTMLElement>(null);
-  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = root.current;
-    if (!el || shown) return;
+    if (!el) return;
 
-    /*
-     * Ko je iskljucio animacije u sistemu dobija sekciju odmah ispisanu, bez
-     * cekanja da udje u kadar: nema sta da se odigra, pa nema ni razloga da
-     * bilo sta stoji sakriveno.
-     */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setShown(true);
-      return;
-    }
+    const ctx = gsap.context((self) => {
+      const q = self.selector!;
+      const mm = gsap.matchMedia();
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        setShown(true);
-        observer.disconnect();
-      },
       /*
-       * Trazi se cetvrtina sekcije u kadru, ne prvi piksel: slijed traje oko
-       * tri sekunde i dobar dio njega bi se inace odigrao ispod ruba ekrana.
+       * Ko je iskljucio animacije, i telefon na kojem je sve slozeno jedno pod
+       * drugim, dobijaju sekciju ispisanu. Na uskom ekranu scena nije lijepljena
+       * pa nema ni puta po kojem bi se ispisivala; ostaviti je sakrivenu znacilo
+       * bi da se tamo ne vidi nikad.
        */
-      { threshold: 0.25 },
-    );
+      mm.add('(prefers-reduced-motion: reduce), (max-width: 900px)', () => {
+        gsap.set(q('.propolis__bottle'), { opacity: 1, y: 0, scale: 1 });
+        gsap.set(q('.propolis__ink'), { opacity: INK });
+        gsap.set(q('.propolis__trace'), { opacity: 0 });
+        gsap.set(q('.propolis__line'), { opacity: 1, y: 0 });
+        gsap.set(q('.propolis__thread'), { opacity: 1 });
+      });
 
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [shown]);
+      mm.add('(prefers-reduced-motion: no-preference) and (min-width: 901px)', () => {
+        const tl = gsap.timeline({
+          defaults: { ease: 'none' },
+          scrollTrigger: {
+            trigger: el,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+
+        /* Korak s liste, na svoje mjesto u putu — pocetak i trajanje iz `BEAT`. */
+        const at = (
+          beat: readonly [number, number],
+          target: gsap.TweenTarget,
+          vars: gsap.TweenVars,
+        ) => tl.to(target, { ...vars, duration: beat[1] - beat[0] }, beat[0]);
+
+        /*
+         * Redovi jednog natpisa, jedan za drugim, ali tako da cijela grupa
+         * stane u svoj korak.
+         *
+         * Razmak medju redovima se racuna iz duzine koraka, ne zadaje rukom: sa
+         * zadatim razmakom duzim od koraka drugi red krece tek kad je korak vec
+         * prosao, ostatak slijeda se pomjeri za toliko, i cio put kroz sekciju
+         * se stisne u prvu polovinu.
+         */
+        const linesIn = (beat: readonly [number, number], note: string) => {
+          const targets = q(`.propolis__note--${note} .propolis__line`);
+          const span = beat[1] - beat[0];
+          const each = span / 2;
+          const gap = targets.length > 1 ? (span - each) / (targets.length - 1) : 0;
+          return tl.to(
+            targets,
+            { opacity: 1, y: 0, duration: each, stagger: gap },
+            beat[0],
+          );
+        };
+
+        at(BEAT.bottle, q('.propolis__bottle'), { opacity: 1, y: 0, scale: 1 });
+
+        /*
+         * Kontura se ne povlaci preko `strokeDashoffset` nego preko broja koji
+         * se sam upisuje.
+         *
+         * GSAP na ovom svojstvu ne racuna medjukorake — upise pocetnu pa
+         * krajnju vrijednost i kontura preskoci iz praznog u ispisano. Ovako se
+         * animira obican broj, a upis je nas: jedno svojstvo, jedan element, i
+         * nema sta da se ne prepozna.
+         */
+        const drawn = { at: 1 };
+        const trace = q('.propolis__trace')[0] as SVGElement | undefined;
+        at(BEAT.trace, drawn, {
+          at: 0,
+          onUpdate: () => trace?.style.setProperty('stroke-dashoffset', String(drawn.at)),
+        });
+        at(BEAT.ink, q('.propolis__ink'), { opacity: INK });
+        at(BEAT.ink, q('.propolis__trace'), { opacity: 0 });
+
+        linesIn(BEAT.lead, 'lead');
+        at(BEAT.leadThread, q('.propolis__thread--lead'), { opacity: 1 });
+
+        linesIn(BEAT.use, 'use');
+        at(BEAT.useThread, q('.propolis__thread--use'), { opacity: 1 });
+
+        linesIn(BEAT.benefits, 'benefits');
+        at(BEAT.benefitsThread, q('.propolis__thread--benefits'), { opacity: 1 });
+
+        return () => {
+          tl.scrollTrigger?.kill();
+          tl.kill();
+        };
+      });
+
+      return () => mm.revert();
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className={`propolis${shown ? ' is-drawn' : ''}`} ref={root}>
-      <div className="propolis__scene">
-        {/* Grancica: lezi iza bocice i ne nosi znacenje koje se cita. */}
-        <svg
-          className="propolis__branch"
-          viewBox={BRANCH_VIEWBOX}
-          role="img"
-          aria-label={t.branchAlt}
-          focusable="false"
-        >
-          <defs>
-            {/*
-              `pathLength` normalizuje duzinu poteza na jedinicu, pa crtanje
-              ide isto bez obzira koliko je crtez velik na ekranu.
-            */}
-            <path id="propolis-branch" d={BRANCH_PATH} pathLength={1} />
-          </defs>
+    <section className="propolis" ref={root}>
+      <div className="propolis__stage">
+        <div className="propolis__scene">
+          {/* Grancica: lezi iza bocice i ne nosi znacenje koje se cita. */}
+          <svg
+            className="propolis__branch"
+            viewBox={BRANCH_VIEWBOX}
+            role="img"
+            aria-label={t.branchAlt}
+            focusable="false"
+          >
+            <defs>
+              {/*
+                `pathLength` normalizuje duzinu poteza na jedinicu, pa crtanje
+                ide isto bez obzira koliko je crtez velik na ekranu.
+              */}
+              <path id="propolis-branch" d={BRANCH_PATH} pathLength={1} />
+            </defs>
 
-          <use className="propolis__trace" href="#propolis-branch" />
-          <use className="propolis__ink" href="#propolis-branch" />
-        </svg>
+            <use className="propolis__trace" href="#propolis-branch" />
+            <use className="propolis__ink" href="#propolis-branch" />
+          </svg>
 
-        <div className="propolis__bottle">
-          <Image
-            src="/images/real/propolis-bocica.webp"
-            alt={t.bottleAlt}
-            width={373}
-            height={1275}
-            sizes="(max-width: 900px) 46vw, 18vw"
-          />
-        </div>
+          <div className="propolis__bottle">
+            <Image
+              src="/images/real/propolis-bocica.webp"
+              alt={t.bottleAlt}
+              width={373}
+              height={1275}
+              sizes="(max-width: 900px) 46vw, 18vw"
+            />
+          </div>
 
-        {/*
-          Naslov se ne vidi — na crtezu sekcije ga nema, ime proizvoda stoji na
-          samoj etiketi. Ostaje u slogu za citac ekrana i za strukturu strane:
-          sekcija bez naslova je za njega samo gomila recenica bez imena.
-        */}
-        <h2 className="sr-only">{t.heading}</h2>
+          {/*
+            Naslov se ne vidi — na crtezu sekcije ga nema, ime proizvoda stoji na
+            samoj etiketi. Ostaje u slogu za citac ekrana i za strukturu strane:
+            sekcija bez naslova je za njega samo gomila recenica bez imena.
+          */}
+          <h2 className="sr-only">{t.heading}</h2>
 
-        {/*
-          Tri natpisa oko bocice. Svaki nosi svoju isprekidanu vezu ka njoj —
-          kratak potez, pa stoji ovdje a ne u fajlu; ukras je i ne cita se.
-        */}
-
-        <div className="propolis__note propolis__note--lead">
-          {t.lead.map((line, i) => (
-            <p className="propolis__line" style={{ '--i': i + 1 } as React.CSSProperties} key={line}>
-              {line}
-            </p>
-          ))}
-        </div>
-
-        <div className="propolis__note propolis__note--use">
-          {t.use.map((line, i) => (
-            <p className="propolis__line" style={{ '--i': i + 1 } as React.CSSProperties} key={line}>
-              {line}
-            </p>
-          ))}
-        </div>
-
-        <div className="propolis__note propolis__note--benefits">
-          <ul className="propolis__list">
-            {t.benefits.map((line, i) => (
-              <li
-                className="propolis__line"
-                style={{ '--i': i + 1 } as React.CSSProperties}
-                key={line}
-              >
+          <div className="propolis__note propolis__note--lead">
+            {t.lead.map((line) => (
+              <p className="propolis__line" key={line}>
                 {line}
-              </li>
+              </p>
             ))}
-          </ul>
+          </div>
+
+          <div className="propolis__note propolis__note--use">
+            {t.use.map((line) => (
+              <p className="propolis__line" key={line}>
+                {line}
+              </p>
+            ))}
+          </div>
+
+          <div className="propolis__note propolis__note--benefits">
+            <ul className="propolis__list">
+              {t.benefits.map((line) => (
+                <li className="propolis__line" key={line}>
+                  {line}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/*
+            Tri isprekidane veze: od svakog natpisa ka crtezu. Nisu djeca
+            natpisa nego stoje u sceni, na svojim mjerama — kutija natpisa je
+            sira od sloga u njoj, pa bi vezana za nju svaka veza pala drugdje.
+          */}
+          <Thread className="propolis__thread--lead" flip />
+          <Thread className="propolis__thread--use" />
+          <Thread className="propolis__thread--benefits" />
         </div>
-        {/*
-          Tri isprekidane veze: od svakog natpisa ka crtezu. Nisu djeca
-          natpisa nego stoje u sceni, na svojim mjerama — kutija natpisa je
-          sira od sloga u njoj, pa bi vezana za nju svaka veza pala drugdje.
-        */}
-        <Thread className="propolis__thread--lead" flip />
-        <Thread className="propolis__thread--use" />
-        <Thread className="propolis__thread--benefits" />
       </div>
     </section>
   );

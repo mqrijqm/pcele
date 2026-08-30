@@ -73,15 +73,11 @@ function split(heading: HTMLElement): number {
     node.replaceWith(frag);
   });
 
-  // Kursor koji ostane da trepce visi o zadnjem slovu, pa mu je poravnanje isto
-  // kao onom koji je do njega doputovao.
-  letters[letters.length - 1]?.classList.add('tw__c--last');
-
   return letters.length;
 }
 
 /**
- * Svaki naslov se ispisuje slovo po slovo, s kursorom, cim sekcija udje u kadar.
+ * Svaki naslov se ispisuje slovo po slovo cim sekcija udje u kadar.
  *
  * Slog se ne lomi u markupu nego ovdje, u pregledniku. Tako naslov u izvoru
  * strane ostaje jedna rijec teksta — onakav kakvog ga uzimaju pretrazivac,
