@@ -3293,9 +3293,12 @@ html:not(.is-preloading) .hero-land__arrow {
 
 /* --- isprekidane veze ---------------------------------------------------- */
 
+/*
+ * Veze stoje u sceni, ne u natpisu, i mjere su im iz crteza sekcije. Visinu
+ * racuna sama kriva iz svog omjera — zadata je samo sirina.
+ */
 .propolis__thread {
   position: absolute;
-  width: 62%;
   height: auto;
   color: var(--brown-soft);
   opacity: 0;
@@ -3305,19 +3308,27 @@ html:not(.is-preloading) .hero-land__arrow {
   animation: propolis-fill 0.6s ease-out 2.1s forwards;
 }
 
+/* Kriva se penje nadesno; gornja veza pada, pa se ogleda po visini. */
+.propolis__thread--flip {
+  scale: 1 -1;
+}
+
 .propolis__thread--lead {
-  left: 104%;
-  top: 42%;
+  left: 31.6%;
+  top: 15.1%;
+  width: 8.7%;
 }
 
 .propolis__thread--use {
-  right: 104%;
-  top: 30%;
+  left: 61.8%;
+  top: 49.8%;
+  width: 6.9%;
 }
 
 .propolis__thread--benefits {
-  left: 104%;
-  top: 22%;
+  left: 31.6%;
+  top: 81.4%;
+  width: 8.7%;
 }
 
 /* --- uspravno slaganje --------------------------------------------------- */

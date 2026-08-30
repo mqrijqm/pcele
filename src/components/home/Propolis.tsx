@@ -116,7 +116,6 @@ export default function Propolis({ locale }: { locale: Locale }) {
               {line}
             </p>
           ))}
-          <Connector className="propolis__thread propolis__thread--lead" flip />
         </div>
 
         <div className="propolis__note propolis__note--use">
@@ -125,7 +124,6 @@ export default function Propolis({ locale }: { locale: Locale }) {
               {line}
             </p>
           ))}
-          <Connector className="propolis__thread propolis__thread--use" />
         </div>
 
         <div className="propolis__note propolis__note--benefits">
@@ -140,37 +138,46 @@ export default function Propolis({ locale }: { locale: Locale }) {
               </li>
             ))}
           </ul>
-          <Connector className="propolis__thread propolis__thread--benefits" flip />
         </div>
+        {/*
+          Tri isprekidane veze: od svakog natpisa ka crtezu. Nisu djeca
+          natpisa nego stoje u sceni, na svojim mjerama — kutija natpisa je
+          sira od sloga u njoj, pa bi vezana za nju svaka veza pala drugdje.
+        */}
+        <Thread className="propolis__thread--lead" flip />
+        <Thread className="propolis__thread--use" />
+        <Thread className="propolis__thread--benefits" />
       </div>
     </section>
   );
 }
 
 /**
- * Isprekidana veza od natpisa ka bocici.
+ * Isprekidana veza od natpisa ka crtezu.
  *
- * Jedna kriva iz crteza, u svojim mjerama. `flip` je okrece naopako — dva
- * natpisa lijevo od bocice vezu vuku nadolje, onaj desno nagore, a kriva je
- * ista.
+ * Jedna te ista kriva iz crteza, u svojim mjerama. Sama se penje nadesno; dva
+ * natpisa je nose takvu, a gornji lijevi je okrece naopako, jer njegova veza
+ * pada nadolje. Zato `flip` ogleda po visini, a ne po sirini — ogledana po
+ * sirini bi kriva pocela tamo gdje treba da zavrsi.
+ *
+ * Potez se skalira zajedno sa krivom, bez `non-scaling-stroke`: na mjeri koju
+ * veza ima u sceni to je oko dva piksela. Sa stalnom debljinom su crtice bile
+ * dvaput deblje nego na crtezu i citale su se kao potez, ne kao trag.
  */
-function Connector({ className, flip = false }: { className: string; flip?: boolean }) {
+function Thread({ className, flip = false }: { className: string; flip?: boolean }) {
   return (
     <svg
-      className={className}
-      viewBox="0 0 240 60"
+      className={`propolis__thread${flip ? ' propolis__thread--flip' : ''} ${className}`}
+      viewBox="0 0 235 119"
       fill="none"
       aria-hidden="true"
       focusable="false"
-      preserveAspectRatio="none"
     >
       <path
-        d={flip ? 'M236 4C210 52 160 62 4 44' : 'M236 56C210 8 160 -2 4 16'}
+        d="M232.585 1.05196C163.654 112.48 114.392 138.932 0.673641 98.2533"
         stroke="currentColor"
         strokeWidth={4}
-        strokeLinecap="round"
-        strokeDasharray="8 10"
-        vectorEffect="non-scaling-stroke"
+        strokeDasharray="8 8"
       />
     </svg>
   );
