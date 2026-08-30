@@ -3529,6 +3529,39 @@ html:not(.is-preloading) .hero-land__arrow {
   color: #fff;
 }
 
+/*
+ * Recenica stoji u pojasu i prije nego sto se ispise — samo blijeda.
+ *
+ * `--geslo-faint` je koliko se od nje vidi dok ceka: dovoljno da se nazire da
+ * tu nesto pise, premalo da se procita. Skrol je odatle vodi do pune boje,
+ * rijec po rijeku (`Geslo.tsx`).
+ *
+ * Blijedost je na `opacity`, ne na svjetlijoj boji, jer recenica ide u dva
+ * glasa — mastilo i bijeli kurziv. Jedna zadata blijeda boja bi ubila tu
+ * razliku; ovako svaka rijec blijedi iz svoje boje i u nju se vraca.
+ *
+ * Vrijedi samo uz JavaScript: bez njega nema sta da je popuni, pa recenica
+ * stoji ispisana kao i do sada.
+ */
+.js-reveal .geslo__w,
+.js-reveal .geslo__sun {
+  --geslo-faint: 0.15;
+  opacity: var(--geslo-faint);
+  /*
+   * Omotac je `inline`, ne `inline-block`: red se lomi izmedju rijeci kao da
+   * omotaca nema. `will-change` drzi svaku rijec na svom sloju, da preglednik
+   * ne precrtava cio pojas na svaki pomak skrola.
+   */
+  will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal .geslo__w,
+  .js-reveal .geslo__sun {
+    opacity: 1;
+  }
+}
+
 /* --- crtezi ------------------------------------------------------------- */
 
 /*
