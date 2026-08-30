@@ -39,32 +39,35 @@ const FRAME = {
 } as const;
 
 /**
- * Redoslijed snimaka. Nove dodaj ovdje — uspravan, sirok, uspravan, sirok, da
- * u sredinu naizmjenicno dolazi jedan pa drugi oblik.
+ * Redoslijed snimaka — ovim redom dolaze u sredinu.
  *
- * Uspravni je prvi zato sto prvi okvir nikad ne dodje u sredinu: on samo viri
- * iza lijevog ruba dok album stoji na pocetku. Ovako je prvo sto se vidi u
- * sredini sirok snimak, kako i treba.
+ * Oblik okvira bira fotografija, ne ritam: sirok okvir podreze uspravan
+ * snimak na trecinu, pa u njega ide samo ono sto je i snimljeno polezecke.
+ * Od pet snimaka u albumu takav je jedan, i stoji drugi po redu — dovoljno
+ * da traka ima jedan siri predah, a da nijedan snimak ne bude odsjecen.
  */
 const RAIL = [
-  { src: '/images/real/vrcanje-pcelar.webp', frame: 'tall', key: 'frame' },
-  { src: '/images/real/vrcanje-kosnice.webp', frame: 'wide', key: 'hives' },
+  { src: '/images/real/album-tegla-dlan.webp', frame: 'tall', key: 'dlan' },
+  { src: '/images/real/album-kosnice.webp', frame: 'wide', key: 'kosnice' },
+  { src: '/images/real/album-korpa.webp', frame: 'tall', key: 'korpa' },
+  { src: '/images/real/album-tegla-rame.webp', frame: 'tall', key: 'rame' },
+  { src: '/images/real/album-tegle-svjetlo.webp', frame: 'tall', key: 'svjetlo' },
 ] as const;
 
 /*
- * Dvije slike su premalo da bi listanje imalo smisla; lista se ponovi dok ne
- * bude bar toliko okvira. Kad ih Marija doda dovoljno, ponavljanje prestane
- * samo od sebe.
- *
  * Prvi i posljednji okvir nikad ne dodju u sredinu — oni su ti koji vire iza
- * rubova dok je album na pocetku i na kraju. Zato ih treba dva vise nego sto
- * ima stanica.
+ * rubova dok album stoji na pocetku i na kraju. Zato traka pocinje zadnjim
+ * snimkom a zavrsava prvim: svaki snimak iz liste tako dobije svoju stanicu u
+ * sredini tacno jednom, a rubovi se popune onim sto ionako slijedi.
+ *
+ * Ta dva ruba su odjek, ne novi snimak, pa nemaju svoj opis: citac ekrana bi
+ * inace dva puta procitao istu fotografiju.
  */
-const MIN_PLATES = 6;
-
-const PLATES = Array.from({ length: Math.ceil(MIN_PLATES / RAIL.length) }, (_, pass) =>
-  RAIL.map((shot) => ({ ...shot, id: `${shot.key}-${pass}` })),
-).flat();
+const PLATES = [
+  { ...RAIL[RAIL.length - 1], id: 'edge-start', echo: true },
+  ...RAIL.map((shot) => ({ ...shot, id: shot.key, echo: false })),
+  { ...RAIL[0], id: 'edge-end', echo: true },
+];
 
 /**
  * Pecat: zeleni krug s isprekidanim prstenom.
@@ -183,7 +186,7 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
           <ul className="rail__track">
             {PLATES.map((shot, i) => (
               <li
-                className={`rail__item plate rail__item--${shot.frame}`}
+                className={`rail__item rail__item--${shot.frame}`}
                 key={shot.id}
                 style={
                   {
@@ -195,7 +198,7 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
                 <Image
                   className="rail__img"
                   src={shot.src}
-                  alt={i < RAIL.length ? copy.alt[shot.key] : ''}
+                  alt={shot.echo ? '' : copy.alt[shot.key]}
                   fill
                   sizes="(max-width: 900px) 90vw, 60vw"
                   priority={i === 0}

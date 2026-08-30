@@ -3529,22 +3529,36 @@ html:not(.is-preloading) .hero-land__arrow {
   justify-content: center;
   gap: clamp(2rem, 5vw, 4.5rem);
   overflow: hidden;
+  /*
+   * Mjesto za zaglavlje. Nadnaslov je centriran kao i traka pod njim, pa mu
+   * je znak s menijem tacno iznad glave — dok je stajao uz lijevu ivicu, tu
+   * se sudarati nije imao s cim. Gornja granica je u `svh` da na niskom
+   * ekranu uspravni okvir ne izadje ispod ruba scene.
+   */
+  padding-top: min(var(--header-h), 14svh);
 }
 
 .rail__intro {
   padding-inline: var(--container-padding);
   max-width: 42rem;
+  /* Nadnaslov stoji nad sredinom trake, ne uz njen lijevi rub: traka je
+     centrirana pa je i natpis nad njom. */
+  margin-inline: auto;
+  text-align: center;
 }
 
+/*
+ * Isti nadnaslov kao nad kartom u "Odakle smo?" — serif, verzal, sitno. Prije
+ * je ovdje stajao sans, pa su dvije susjedne sekcije imale dva razlicita
+ * natpisa na istom mjestu i istoj mjeri.
+ */
 .rail__eyebrow {
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-gazpacho), Georgia, serif;
   font-size: var(--type-eyebrow);
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  /* Zlatna na papiru se na sedam desetina rema ne cita; ovdje stoji mastilo,
-   * samo tise — isto kao u sekciji o nasljedju. */
-  color: var(--brown-soft);
+  color: var(--brown);
   margin-bottom: 0.9rem;
 }
 

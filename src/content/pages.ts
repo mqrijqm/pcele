@@ -338,8 +338,11 @@ export const home = {
       sealHives: 'Pogledaj naše pčelinjake',
       sealProcess: 'Pogledaj proces vrcanja',
       alt: {
-        hives: 'Red košnica pod drvetom, iza njih pokošena livada',
-        frame: 'Pčelar u bijelom odijelu vadi ram pun pčela iz žute košnice',
+        dlan: 'Tegla livadskog meda na otvorenom dlanu, iza nje livada i brda',
+        kosnice: 'Dvije plavo-žute drvene košnice jedna do druge, u hladu',
+        korpa: 'Pletena korpa s teglama meda i propolisom, nošena kroz livadu bijelih rada',
+        rame: 'Djevojka u bijeloj haljini drži teglu livadskog meda uz rame',
+        svjetlo: 'Tegle meda složene jedna na drugu, sunce prolazi kroz njih',
       },
     },
     en: {
@@ -348,8 +351,11 @@ export const home = {
       sealHives: 'See our apiaries',
       sealProcess: 'See the extraction process',
       alt: {
-        hives: 'A row of hives under a tree, a mown meadow behind them',
-        frame: 'A beekeeper in white lifting a frame full of bees out of a yellow hive',
+        dlan: 'A jar of meadow honey resting on an open palm, meadow and hills behind it',
+        kosnice: 'Two blue and yellow wooden hives side by side, standing in shade',
+        korpa: 'A woven basket of honey jars and propolis carried through a meadow of daisies',
+        rame: 'A young woman in a white dress holding a jar of meadow honey at her shoulder',
+        svjetlo: 'Jars of honey stacked one on another, sunlight coming through them',
       },
     },
   } satisfies L<{
@@ -357,7 +363,7 @@ export const home = {
     eyebrow: string;
     sealHives: string;
     sealProcess: string;
-    alt: Record<'hives' | 'frame', string>;
+    alt: Record<'dlan' | 'kosnice' | 'korpa' | 'rame' | 'svjetlo', string>;
   }>,
 
   origin: {
