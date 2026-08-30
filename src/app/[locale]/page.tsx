@@ -12,6 +12,7 @@ import Vitrina from '@/components/home/Vitrina';
 import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
+import Livada from '@/components/home/Livada';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
@@ -88,6 +89,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Mjesto i porijeklo. */}
       <Origin locale={locale} />
+
+      {/*
+        Iza karte, na istom papiru: crtez pcelinjaka preko gotovo cijele
+        mjere, recenica pod njim, pa tri snimka u stepenicu.
+      */}
+      <Livada locale={locale} />
 
       <Testimonials locale={locale} />
 

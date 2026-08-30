@@ -384,6 +384,46 @@ export const home = {
     mapAlt: string;
   }>,
 
+  /*
+   * Livada: crtez pcelinjaka, recenica pod njim, pa tri snimka u stepenicu.
+   *
+   * Crtez i recenica su isporuceni kao SVG — recenica je slog pretvoren u
+   * krivulje, sa dvije vlati trave u sebi, pa ovdje stoji i kao tekst: to je
+   * ono sto procita citac ekrana i ono sto ide u `alt`.
+   */
+  livada: {
+    sr: {
+      pejzazAlt: 'Crtež reda košnica na livadi, iza njih brda i oblaci',
+      recenica:
+        'Vrcamo samo ono što naše pčele saberu na livadama. Sezonu po sezonu, otkad je djed počeo 1980.',
+      seal: 'Pčelinjak',
+      sealLabel: 'Pogledaj naš pčelinjak',
+      photoAlts: [
+        'Tegla livadskog meda na ogradnom stubu, iza nje pokošena livada i brdo',
+        'Tegla livadskog meda na stolu, uz kafu i kašiku za med',
+        'Ramovi sa saćem izvađeni iz košnice, na njima pčele',
+      ],
+    },
+    en: {
+      pejzazAlt: 'A drawing of a row of hives in a meadow, hills and clouds behind them',
+      recenica:
+        'We extract only what our bees gather on the meadows. Season after season, since our grandfather began in 1980.',
+      seal: 'Apiary',
+      sealLabel: 'See our apiary',
+      photoAlts: [
+        'A jar of meadow honey on a fence post, a mown meadow and a hill behind it',
+        'A jar of meadow honey on a table, beside coffee and a honey dipper',
+        'Frames of comb lifted out of a hive, bees on them',
+      ],
+    },
+  } satisfies L<{
+    pejzazAlt: string;
+    recenica: string;
+    seal: string;
+    sealLabel: string;
+    photoAlts: readonly [string, string, string];
+  }>,
+
   faq: {
     sr: {
       eyebrow: 'O medu',

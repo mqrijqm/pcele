@@ -1748,6 +1748,174 @@ html:not(.is-preloading) .hero-land__arrow {
 }
 
 /* ---------------------------------------------------------------------------
+ * Livada: crtez pcelinjaka, recenica pod njim, pa tri snimka u stepenicu.
+ *
+ * Nastavlja se na kartu, na istom papiru i bez svog pojasa. Crtez ide preko
+ * gotovo cijele mjere strane; sve ostalo se ravna po njemu.
+ * ------------------------------------------------------------------------- */
+.livada {
+  position: relative;
+  background-color: var(--paper);
+  overflow: hidden;
+}
+
+.livada__scene {
+  position: relative;
+  width: min(86%, 1240px);
+  margin: 0 auto;
+}
+
+.livada__pejzaz {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/*
+ * Recenica je uz crtez u sirini, ali joj treba vazduh iznad: crtez se pri dnu
+ * rasplinjava u travu, pa bi slog prislonjen uz njega izgledao kao potpis.
+ */
+.livada__recenica {
+  display: block;
+  width: min(86%, 1240px);
+  height: auto;
+  /*
+   * Vazduha, i to mnogo. Crtez se pri dnu rasplinjava u travu, a recenica je
+   * krupna — prislonjeni jedno uz drugo citaju se kao potpis pod slikom.
+   * Mjera je u `vw` da razmak raste zajedno s crtezom nad njim.
+   */
+  margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+}
+
+/* ---------------------------------------------------------------------------
+ * Pecat na uglu crteza.
+ *
+ * Mjere su iz porodice ostalih pecata: krug od 127, isprekidan prsten na
+ * 55.1187 i razmakom 7/7. Vrti se samo prsten — rijec pod njim mora ostati
+ * citljiva.
+ * ------------------------------------------------------------------------- */
+.livada__seal {
+  position: absolute;
+  right: 7%;
+  /* Malo visi ispod crteza, kao pecat udaren preko ruba. */
+  bottom: -5%;
+  display: block;
+  width: clamp(5rem, 9vw, 8.5rem);
+  aspect-ratio: 1;
+  transition: scale 0.5s var(--ease-out-expo);
+}
+
+.livada__seal svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.livada__seal:hover,
+.livada__seal:focus-visible {
+  scale: 1.06;
+}
+
+.livada__sealWord {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  fill: var(--paper);
+}
+
+.livada__sealArrow {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.livada__sealRing {
+  transform-origin: 50% 50%;
+  animation: seal-spin 30s linear infinite;
+}
+
+/* ---------------------------------------------------------------------------
+ * Tri snimka u stepenicu.
+ *
+ * Pomak nadolje je `margin-top` u postotku, ne u pikselima i ne `translate`:
+ * postotak se racuna po sirini, pa stepenica ostaje ista na svakoj mjeri, a
+ * visina bloka pomak uracuna — `translate` bi ga izgurao van sekcije.
+ *
+ * Mjeri se po stupcu, ne po cijelom bloku: postotak na stavci mreze racuna se
+ * prema njenom polju, a ne prema omotacu. Stupac je oko trecine bloka, pa su
+ * i brojevi tri puta veci nego sto na crtezu izgledaju — 65% stupca je onih
+ * 20% bloka koliko snimak stvarno sidje.
+ * ------------------------------------------------------------------------- */
+.livada__photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 3.4%;
+  width: min(78%, 1120px);
+  /* Isti vazduh kao nad recenicom — tri koraka jednako razmaknuta. */
+  margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+}
+
+.livada__photo {
+  margin: 0;
+}
+
+.livada__photo:nth-child(2) {
+  margin-top: 65%;
+}
+
+.livada__photo:nth-child(3) {
+  margin-top: 130%;
+}
+
+.livada__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 899px) {
+  .livada__scene,
+  .livada__recenica {
+    width: 92%;
+  }
+
+  /*
+   * Stepenica ne stane na usku stranu: tri stupca bi bila tri trake. Snimci
+   * idu jedan pod drugim, naizmjenicno uz lijevi pa uz desni rub, pa se ritam
+   * cita i ovdje.
+   */
+  .livada__photos {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 5vw, 2.5rem) 0;
+    width: 86%;
+  }
+
+  .livada__photo {
+    width: 78%;
+  }
+
+  .livada__photo:nth-child(2) {
+    margin-top: 0;
+    margin-left: auto;
+  }
+
+  .livada__photo:nth-child(3) {
+    margin-top: 0;
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .livada__sealRing {
+    animation: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
  * Heroj koji zumira: tri kadra istog snimka, od najsireg do najblizeg.
  *
  * Kadrovi se pretapaju i uz to rastu, pa se tri odvojene slike citaju kao
@@ -2801,6 +2969,19 @@ html:not(.is-preloading) .hero-land__arrow {
  */
 .geslo {
   position: relative;
+  /*
+   * Podignuto u sredinu pojasa.
+   *
+   * Smedja ne pocinje ovdje nego 23vw vise, na gornjoj ivici, i cijeli taj
+   * pojas je pun — kapi su gore, u papiru. Recenica je zato stajala nisko:
+   * iznad nje je bilo 350 piksela smedje, ispod nje 96. Pomak je otprilike
+   * pola te razlike, pa sada stoji na sredini onoga sto se vidi kao pojas.
+   *
+   * Pomak je `top`, ne `margin`: kutija sekcije ostaje gdje jeste, pa se
+   * visina pojasa i donja ivica ne miču — pomjeri se samo ono što se vidi.
+   * `vw` zato što je i sve ostalo na pojasu u `vw`: ivice, pečat i slog.
+   */
+  top: -9vw;
   padding-block: clamp(0.75rem, 1.5vw, 1.6rem) clamp(3.25rem, 6.7vw, 6rem);
   overflow: hidden;
 }
