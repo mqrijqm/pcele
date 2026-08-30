@@ -1313,15 +1313,20 @@ html.is-preloading body {
   position: relative;
   width: 100%;
   /*
-   * Plata drzi omjer samog crteza.
+   * Plata drzi omjer crteza uvecan za razmak oko njega.
    *
-   * Ranije je drzala 1.503, mjeru na koju je lockup bio namjesten, pa je
-   * `cover` sirok crtez morao uvecati za trecinu da je popuni — otud utisak
-   * da je heroj nabijen u kadar. Sada crtez staje tacno, bez uvecanja i bez
-   * odsijecanja, a lockup je preracunat: svaka njegova mjera je pomjerena
-   * tako da na crtezu padne tacno tamo gdje je i prije padala.
+   * Crtez je 393:163, a oko njega ide 6% sirine plate sa svake strane. Da
+   * plata drzi goli omjer crteza, uspravnog viska bi bilo tacno dva puta po
+   * 6% sirine — a to je vise nego sto stane u visinu, pa bi crtez unutar
+   * plate lebdio i mijenjao mjesto sa svakom promjenom sirine ekrana. Ovaj
+   * omjer je izracunat tako da crtez sa svojim razmakom popuni platu tacno:
+   * 0.88 / 2.411 + 0.12 = 0.485.
+   *
+   * To nije kozmetika nego uslov: cio lockup — ime, natpis, strelica, mjesto
+   * na kojem pcela sjedi — zadat je u procentima plate, i vrijedi samo ako
+   * crtez u njoj uvijek stoji na istom mjestu.
    */
-  aspect-ratio: 1431 / 716;
+  aspect-ratio: 1000 / 485;
   container-type: inline-size;
 }
 
@@ -1340,7 +1345,24 @@ html.is-preloading body {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /*
+   * `contain`, ne `cover`: crtez je vektor i plosnatiji je od plate, pa bi ga
+   * `cover` odsjekao s obje strane. Ovako stane cio, a visak visine ostaje kao
+   * vazduh — sto je i smisao razmaka ispod.
+   */
+  object-fit: contain;
+  /*
+   * Razmak oko crteza: crtez vise ne ide od ruba do ruba ekrana nego stoji
+   * uvucen, kao otisak na papiru.
+   *
+   * Mjera je u procentima, ne u `vw` ili `rem`. Procenat se i za gore i za
+   * dolje racuna od sirine plate, pa crtez unutar nje uvijek zauzima isti dio
+   * — a cio lockup (ime, natpis, strelica) je izrazen u procentima plate i
+   * racuna na to. Sa `vw` mjerom crtez bi unutar plate plutao gore-dolje kako
+   * se ekran mijenja, i ime bi na jednoj sirini stajalo na polju a na drugoj
+   * na grebenu.
+   */
+  padding: 6%;
 }
 
 /*
@@ -1416,8 +1438,13 @@ html:not(.is-preloading) .hero-land__arrow {
   /*
    * `top` je fiksan, pa smanjivanje sirine ne mice gornju ivicu — razmak do
    * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
+   *
+   * Pomjereno sa 32.5% kad je crtez zamijenjen: na starom crtezu je tu bilo
+   * nebo, na novom tuda prolazi greben, pa je ime lezalo tacno na liniji brda.
+   * Sada stoji vise, u nebu iznad grebena, a pcela uz strelicu tacno iznad
+   * njega.
    */
-  top: 32.5%;
+  top: 30%;
   width: 11.27%;
   margin: 0;
   line-height: 0;
@@ -1440,6 +1467,7 @@ html:not(.is-preloading) .hero-land__arrow {
     width: 215%;
     margin-left: -42%;
   }
+
 }
 
 /* ---------------------------------------------------------------------------

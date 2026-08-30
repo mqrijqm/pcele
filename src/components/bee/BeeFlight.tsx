@@ -47,24 +47,42 @@ const BACKDROP = 0.55;
 /** Najkraci let. Ispod ovoga se dvije tacke citaju kao jedna. */
 const MIN_HOP = 0.22;
 
-/** Raspon trajanja jednog leta, u sekundama. */
-const HOP = { min: 3.4, max: 5.6 };
+/**
+ * Raspon trajanja jednog leta, u sekundama.
+ *
+ * Duze nego prije (3.4-5.6): na kracem letu je pcela presijecala kadar prije
+ * nego sto joj oko stigne za trag, pa se citala kao da klizi a ne kao da leti.
+ */
+const HOP = { min: 5, max: 7.6 };
+
+/**
+ * Koliko let odstupa od prave linije, kao dio duzine same deonice.
+ *
+ * Pcela ne ide pravo nego u luku — prava linija izmedju dvije tacke je jedina
+ * putanja koju ziva stvar ne pravi. Luk se svaki put savija na drugu stranu,
+ * inace bi cijela strana bila jedan te isti zamah.
+ */
+const ARC = 0.18;
 
 /**
  * Polazno mjesto: tik uz vrh isprekidane strelice u heroju.
  *
  * Strelica i natpis "Listaj i prati pcelu" pokazuju na pcelu — ako je nema
  * tamo, crtez pokazuje u prazno. Mjere su razlomci same strelice, ne kadra,
- * pa je pcela nadje gdje god strelica bila: devet posto njene sirine lijevo
- * od nje, na sedamdeset posto njene visine.
+ * pa je pcela nadje gdje god strelica bila: nesto vise od desetine njene
+ * sirine lijevo od nje, na pola i po njene visine — tacno u produzetku vrha.
+ *
+ * Spustena je na visinu vrha strelice kad je crtez zamijenjen: na starom
+ * mjestu, nize i lijevo, sjela bi tacno na ime ispod sebe.
  *
  * Nagib je isti kao na crtezu — pcela ulijece koso, ne vodoravno.
  */
-const START = { x: -0.093, y: 0.704, tilt: 20 };
+const START = { x: -0.115, y: 0.55, tilt: 20 };
 
 /**
- * Dokle heroj vazi za "u kadru". Dok mu se strelica vidi bar toliko, pcela
- * stoji na svom mjestu; cim heroj prodje, krece let.
+ * Dokle heroj vazi za "u kadru": dok mu dno jos stoji ispod ove crte, mjerene
+ * od vrha ekrana. Dok je tako, pcela sjedi uz strelicu; cim heroj prodje,
+ * krece let.
  */
 const HERO_HOLD = 0.35;
 
@@ -80,8 +98,17 @@ const HERO_HOLD = 0.35;
  */
 const BLOOM = { x: 0.36, y: 0.22, tilt: 12 };
 
-/** Sekcija preko koje pcele nema. */
-const NO_FLY = '.apiary';
+/**
+ * Sekcije preko kojih pcele nema.
+ *
+ * Snimak pcelinjaka preko cijelog ekrana je njeno mjesto, ne njena pozadina.
+ * Album je drugi razlog: sedam okvira koji klize vodoravno vec vode oko, i
+ * pcela preko njih nema sta da pokazuje — samo odvlaci pogled s fotografija.
+ *
+ * Traka s proizvodima nosi iste klase kao album, pa je iz izbora izuzeta
+ * imenom: tamo pcela smije.
+ */
+const NO_FLY = '.apiary, .rail:not(.rail--shelf)';
 
 export default function BeeFlight() {
   const [mounted, setMounted] = useState(false);
@@ -104,9 +131,18 @@ export default function BeeFlight() {
      */
     const heroSpot = () => {
       const arrow = document.querySelector('.hero-land__arrow');
-      if (!arrow) return null;
+      const hero = document.querySelector('.hero-land');
+      if (!arrow || !hero) return null;
+      /*
+       * Mjeri se heroj, ne strelica.
+       *
+       * Ranije se gledalo dno same strelice: ona stoji pri vrhu crteza, pa joj
+       * je dno na visokom ekranu vec u prvom kadru bilo iznad ove crte — i
+       * pcela nije sjedala uz nju ni na samom vrhu strane. Strelica je pokazivala
+       * u prazno, a pcela je bila na drugom kraju ekrana.
+       */
+      if (hero.getBoundingClientRect().bottom < window.innerHeight * HERO_HOLD) return null;
       const r = arrow.getBoundingClientRect();
-      if (r.bottom < window.innerHeight * HERO_HOLD) return null;
       return { x: r.left + r.width * START.x, y: r.top + r.height * START.y };
     };
 
@@ -134,13 +170,13 @@ export default function BeeFlight() {
     /** Mjesto na kojem pcela sjedi, ako ga trenutno ima. */
     const parkSpot = () => heroSpot() ?? bloomSpot();
 
-    /** Da li je sekcija bez pcele trenutno preko sredine kadra. */
+    /** Da li je neka od sekcija bez pcele trenutno preko sredine kadra. */
     const noFly = () => {
-      const section = document.querySelector(NO_FLY);
-      if (!section) return false;
-      const r = section.getBoundingClientRect();
       const mid = window.innerHeight / 2;
-      return r.top < mid && r.bottom > mid;
+      return Array.from(document.querySelectorAll(NO_FLY)).some((section) => {
+        const r = section.getBoundingClientRect();
+        return r.top < mid && r.bottom > mid;
+      });
     };
 
     const first = heroSpot() ?? { x: window.innerWidth * 0.12, y: window.innerHeight * 0.2 };
@@ -200,9 +236,22 @@ export default function BeeFlight() {
         );
 
       /**
-       * Sljedece odrediste: neka slobodna tacka dovoljno daleko od trenutne.
-       * Ako slobodne nema — a na gustoj strani je ne mora biti — ide na onu
-       * koja je najdalje od svega.
+       * Sljedece odrediste: slobodna tacka dovoljno daleko od trenutne, i sto
+       * blize onome sto se gleda.
+       *
+       * Ranije se biralo nasumicno medju slobodnima, a slobodne su po
+       * definiciji one najdalje od sadrzaja — pa je pcela zivjela po uglovima
+       * kadra, tamo gdje na strani nema niceg. Sad se medju slobodnima uzimaju
+       * one najtjesnje: tacke koje su tek toliko odmakle od naslova ili snimka
+       * da ga ne pokrivaju. Pcela tako kruzi oko onoga sto se cita, uz sam rub,
+       * umjesto da sjedi u praznom cosku.
+       *
+       * Bira se nasumicno iz te trecine, ne uvijek najtjesnja — inace bi svaki
+       * put isla na isto mjesto.
+       *
+       * Ako slobodne tacke nema — a na gustoj strani je ne mora biti — vrijedi
+       * staro pravilo: ide tamo gdje ima najvise zraka, jer preko sloga ne
+       * smije.
        */
       const nextStop = () => {
         /* Dok ima mjesta za sjedanje — strelica u heroju, pa kamilica uz
@@ -217,16 +266,19 @@ export default function BeeFlight() {
 
         const all = COLS.flatMap((cx) => ROWS.map((ry) => ({ x: cx * w, y: ry * h })));
         const open = all.filter((p) => free(p.x, p.y, boxes));
-        const reach = (open.length ? open : all).filter(
-          (p) => Math.hypot(p.x - at.x, p.y - at.y) > far,
-        );
 
-        const pool = reach.length ? reach : open.length ? open : all;
-        if (open.length) return gsap.utils.random(pool);
+        if (!open.length) {
+          const reach = all.filter((p) => Math.hypot(p.x - at.x, p.y - at.y) > far);
+          return (reach.length ? reach : all).reduce((best, p) =>
+            room(p.x, p.y, boxes) > room(best.x, best.y, boxes) ? p : best,
+          );
+        }
 
-        return pool.reduce((best, p) =>
-          room(p.x, p.y, boxes) > room(best.x, best.y, boxes) ? p : best,
-        );
+        const reach = open.filter((p) => Math.hypot(p.x - at.x, p.y - at.y) > far);
+        const pool = reach.length ? reach : open;
+
+        const hugging = [...pool].sort((a, b) => room(a.x, a.y, boxes) - room(b.x, b.y, boxes));
+        return gsap.utils.random(hugging.slice(0, Math.max(1, Math.ceil(hugging.length / 3))));
       };
 
       let hop: gsap.core.Tween | null = null;
@@ -240,24 +292,65 @@ export default function BeeFlight() {
         gsap.to(bee, { autoAlpha: noFly() ? 0 : 1, duration: 0.5, overwrite: 'auto' });
       };
 
+      /*
+       * Luk se svaki put savija na drugu stranu. Znak se pamti izmedju letova,
+       * ne bira se nasumicno: dva slucajna izbora zaredom mogu ispasti ista, a
+       * dva luka na istu stranu se citaju kao jedan siri zaokret.
+       */
+      let bow = 1;
+
       const flyOn = () => {
+        /*
+         * Polazi se odande gdje pcela stvarno jeste, ne odande gdje je trebalo
+         * da stigne. To dvoje se razilazi kad joj skrol prekine let u pola —
+         * a to se desava stalno.
+         */
+        const from = {
+          x: Number(gsap.getProperty(bee, 'x')),
+          y: Number(gsap.getProperty(bee, 'y')),
+        };
         const to = nextStop();
         const parked = parkSpot() !== null;
+
         /* Gleda tamo gdje leti; crtez gleda udesno, pa se za lijevo ogleda.
          * Nagib nosi samo dok stoji uz strelicu — u letu je ravna. */
         gsap.to(bee, {
-          scaleX: to.x < at.x ? -1 : 1,
+          scaleX: to.x < from.x ? -1 : 1,
           rotation: parked ? (heroSpot() ? START.tilt : BLOOM.tilt) : 0,
           duration: 0.45,
           ease: 'power2.out',
           overwrite: 'auto',
         });
         at = to;
-        hop = gsap.to(bee, {
-          x: to.x,
-          y: to.y,
+
+        /*
+         * Kontrolna tacka luka: sredina deonice, pomjerena okomito na nju.
+         * Odatle se racuna kvadratna Bezierova kriva, tacka po tacka — jedna
+         * pcela na strani, pa se to i po kadru isplati vise nego dovlaciti
+         * cio dodatak za putanje.
+         */
+        const dx = to.x - from.x;
+        const dy = to.y - from.y;
+        const span = Math.hypot(dx, dy) || 1;
+        const ctrl = {
+          x: (from.x + to.x) / 2 + (-dy / span) * span * ARC * bow,
+          y: (from.y + to.y) / 2 + (dx / span) * span * ARC * bow,
+        };
+        bow = -bow;
+
+        const path = { t: 0 };
+        hop = gsap.to(path, {
+          t: 1,
           duration: gsap.utils.random(HOP.min, HOP.max),
           ease: 'sine.inOut',
+          onUpdate: () => {
+            const t = path.t;
+            const m = 1 - t;
+            gsap.set(bee, {
+              x: m * m * from.x + 2 * m * t * ctrl.x + t * t * to.x,
+              y: m * m * from.y + 2 * m * t * ctrl.y + t * t * to.y,
+            });
+          },
           onComplete: flyOn,
         });
       };

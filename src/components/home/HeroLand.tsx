@@ -19,8 +19,8 @@ import type { Locale } from '@/i18n/config';
 export default function HeroLand({ locale }: { locale: Locale }) {
   const alt =
     locale === 'sr'
-      ? 'Crtež livade oko Mračaja: pčela dolijeće do reda košnica'
-      : 'A drawing of the meadows around Mračaj: a bee flying in to a row of hives';
+      ? 'Crtež livade oko Mračaja: niski brežuljci s drvoredima i grmljem'
+      : 'A drawing of the meadows around Mračaj: low hills lined with trees and shrubs';
 
   const script = locale === 'sr' ? 'Listaj i prati pčelu' : 'Scroll and follow the bee';
 
@@ -28,7 +28,7 @@ export default function HeroLand({ locale }: { locale: Locale }) {
     <section className="hero-land">
       <div className="hero-land__plate">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="hero-land__drawing" src="/hero/livada.webp" alt={alt} />
+        <img className="hero-land__drawing" src="/hero/livada-crtez.svg" alt={alt} />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="hero-land__script" src="/hero/rati-script.svg" alt={script} />
