@@ -1855,7 +1855,7 @@ html.is-preloading body {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 90svh;
+  height: 100svh;
   /*
    * Da se na niskom ekranu sadrzaj ne zbije. Ispod ove mjere heroj prestaje
    * da bude ekran i postaje blok — pa neka radije viri u sekciju pod sobom.
@@ -1874,21 +1874,23 @@ html.is-preloading body {
  * pilule s menijem, a pilula stoji na vrhu kadra — dakle mjeri se ekranom.
  */
 .hero-land__content {
-  position: relative;
+  position: absolute;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 48rem;
-  margin-inline: auto;
-  padding-inline: var(--container-padding);
-  padding-top: clamp(5.5rem, 12svh, 9rem);
-  text-align: center;
+  align-items: flex-start;
+  left: clamp(2rem, 7vw, 7rem);
+  bottom: clamp(2.5rem, 6vh, 4.8rem);
+  width: min(21rem, calc(100% - 4rem));
+  text-align: left;
 }
 
 .hero-land__wordmark {
-  width: clamp(11rem, 21vw, 17.5rem);
+  position: absolute;
+  z-index: 2;
+  top: clamp(7.5rem, 19vh, 9.5rem);
+  left: clamp(50%, 59vw, 62%);
+  width: clamp(10.5rem, 13.5vw, 13.5rem);
   margin: 0;
   line-height: 0;
 }
@@ -1900,14 +1902,14 @@ html.is-preloading body {
 }
 
 .hero-land__title {
-  margin: clamp(1.4rem, 3.2svh, 2.3rem) 0 0;
+  margin: 0;
   /*
    * Mjera je u `ch`, ne u `rem`: prelom onda ide po duzini recenice a ne po
    * sirini ekrana, pa naslov na svakoj velikoj sirini pada u ista dva reda.
    */
-  max-width: 17ch;
+  max-width: 20ch;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.7rem, 3.4vw, 2.85rem);
+  font-size: clamp(1.45rem, 1.7vw, 1.75rem);
   font-weight: 500;
   line-height: 1.14;
   letter-spacing: -0.015em;
@@ -1915,7 +1917,7 @@ html.is-preloading body {
 }
 
 .hero-land__lead {
-  margin: clamp(0.7rem, 1.6svh, 1.1rem) 0 0;
+  margin: 0.85rem 0 0;
   max-width: 42ch;
   font-size: clamp(0.94rem, 1.05vw, 1.06rem);
   line-height: 1.55;
@@ -1923,7 +1925,16 @@ html.is-preloading body {
 }
 
 .hero-land__cta {
-  margin-top: clamp(1.2rem, 2.6svh, 1.85rem);
+  display: block;
+  width: clamp(10rem, 12vw, 11.5rem);
+  margin-top: clamp(1.4rem, 3vh, 2rem);
+  line-height: 0;
+}
+
+.hero-land__cta img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /*
@@ -1941,14 +1952,14 @@ html.is-preloading body {
 .hero-land__drawing {
   position: absolute;
   z-index: 1;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 54%;
+  left: 7vw;
+  right: auto;
+  bottom: 11%;
+  width: 86%;
+  height: 67%;
   object-fit: cover;
   object-position: center bottom;
-  opacity: 0.4;
+  opacity: 1;
   pointer-events: none;
 }
 
@@ -1959,68 +1970,27 @@ html.is-preloading body {
  * se cio pejzaz, samo mu krajevi izlaze iz kadra.
  */
 @media (max-width: 767px) {
+  .hero-land__content {
+    left: 1.5rem;
+    bottom: 2rem;
+    width: min(21rem, calc(100% - 3rem));
+  }
+
+  .hero-land__wordmark {
+    top: 6.75rem;
+    left: 50%;
+    width: min(11.5rem, 52vw);
+    transform: translateX(-50%);
+  }
+
   .hero-land__drawing {
     left: 50%;
     right: auto;
-    width: 185%;
+    bottom: 10%;
+    width: 190%;
     height: auto;
     transform: translateX(-50%);
     object-fit: contain;
-  }
-}
-
-/* ---------------------------------------------------------------------------
- * Isto dugme, u uglu.
- *
- * Javi se tek kad pravo dugme iz heroja izadje iz kadra, i nestane cim se
- * vrati — pa dva ista poziva nikad ne stoje na ekranu zajedno.
- *
- * `visibility`, a ne samo prozirnost: prozirno dugme se i dalje moze fokusirati
- * tabulatorom i citac ekrana ga i dalje vidi, pa bi se isti poziv procitao
- * dvaput. Zato se `visibility` mijenja s odgodom duzine same tranzicije —
- * gasi se tek kad je vec nevidljivo, a pali odmah.
- *
- * z-index 45 je iznad sloja s pcelom (40), a ispod menija (50), korpe (50) i
- * zaglavlja (60) — pilula ne smije da stoji preko onoga sto se otvori.
- * ------------------------------------------------------------------------- */
-.hero-cta-dock {
-  position: fixed;
-  z-index: 45;
-  right: clamp(1rem, 2.4vw, 2rem);
-  /* Iznad zone koju telefon rezervise za svoj potez odozdo, pa jos 16px. */
-  bottom: calc(clamp(1rem, 2.4vw, 2rem) + env(safe-area-inset-bottom));
-  min-height: 2.75rem;
-  padding-inline: 1.4rem;
-  font-size: 0.82rem;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(0.4rem);
-  box-shadow: 0 12px 32px -20px rgba(136, 91, 39, 0.7);
-  transition:
-    opacity 0.32s var(--ease-out-expo),
-    transform 0.32s var(--ease-out-expo),
-    background-color 0.35s var(--ease-out-expo),
-    color 0.35s var(--ease-out-expo),
-    visibility 0s linear 0.32s;
-}
-
-.hero-cta-dock[data-shown='true'] {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition-delay: 0s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-cta-dock {
-    transform: none;
-    transition:
-      opacity 0.01ms,
-      visibility 0s linear 0.01ms;
-  }
-
-  .hero-cta-dock[data-shown='true'] {
-    transform: none;
   }
 }
 
@@ -4046,6 +4016,7 @@ html.is-preloading body {
  */
 .geslo {
   position: relative;
+  height: 190svh;
   /*
    * Podignuto u sredinu pojasa.
    *
@@ -4059,13 +4030,18 @@ html.is-preloading body {
    * `vw` zato što je i sve ostalo na pojasu u `vw`: ivice, pečat i slog.
    */
   top: -9vw;
-  padding-block: clamp(0.75rem, 1.5vw, 1.6rem) clamp(3.25rem, 6.7vw, 6rem);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .geslo__inner {
-  position: relative;
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
   padding-inline: var(--container-padding);
+  overflow: hidden;
 }
 
 /*
@@ -4126,9 +4102,10 @@ html.is-preloading body {
    * je onda takvu kopirao mis i citao citac ekrana.
    */
   display: inline-block;
+  opacity: clamp(0.25, calc((var(--p) * (var(--n) + 3) - var(--i)) / 3), 1);
+  will-change: opacity;
 }
 
-.js-reveal .geslo__w,
 .js-reveal .geslo__sun {
   /*
    * Koliko se od rijeci vidi dok ceka svoj red.
@@ -4144,8 +4121,24 @@ html.is-preloading body {
   will-change: opacity;
 }
 
+/* The text fill does not include the decorative sun. */
+.js-reveal .geslo__sun {
+  opacity: 1;
+  will-change: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .js-reveal .geslo__w,
+  .geslo {
+    height: auto;
+    padding-block: clamp(0.75rem, 1.5vw, 1.6rem) clamp(3.25rem, 6.7vw, 6rem);
+  }
+
+  .geslo__inner {
+    position: relative;
+    min-height: 0;
+  }
+
+  .geslo__w,
   .js-reveal .geslo__sun {
     opacity: 1;
   }
