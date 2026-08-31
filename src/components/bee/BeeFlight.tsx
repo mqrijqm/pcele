@@ -64,25 +64,34 @@ const TURN = 0.35;
 const FACE = { left: 1, right: -1 };
 
 /**
- * Polazno mjesto: tik uz vrh isprekidane strelice u heroju.
+ * Polazno mjesto: uz gornji desni ugao imena u heroju.
  *
- * Strelica i natpis "Listaj i prati pcelu" pokazuju na pcelu — ako je nema
- * tamo, crtez pokazuje u prazno. Mjere su razlomci same strelice, ne kadra,
- * pa je pcela nadje gdje god strelica bila: nesto vise od desetine njene
- * sirine lijevo od nje, na pola i po njene visine — tacno u produzetku vrha.
+ * Prije je sjedila na vrhu isprekidane strelice; strelice i natpisa "Listaj i
+ * prati pcelu" vise nema, pa je mjerena tacka sada samo ime. Mjere su razlomci
+ * njegovog okvira, ne kadra: tik uz desnu ivicu, malo iznad gornje — dovoljno
+ * blizu da se cita kao pcela nad imenom, dovoljno van da mu ne sjedne na slovo.
  */
-const START = { x: -0.115, y: 0.55, tilt: 20 };
+const START = { x: 1.03, y: -0.06, tilt: 14 };
 
 /**
- * Dokle pcela sjedi uz strelicu: dok je dno strelice jos ispod ove crte,
- * mjerene od vrha ekrana. Cim strelica ode, preuzima je skrol.
+ * Koliko se pcela mice dok sjedi, u pikselima.
  *
- * Crta je namjerno niska. Na jednu stranu, mjeriti heroj umjesto strelice
- * znaci da pcela ostaje uz nju i kad je strelica odavno izasla iznad ruba —
- * ode s njom van kadra i vrati se tek kad heroj prodje. Na drugu, visoka crta
- * je isto tako lose: strelica stoji pri vrhu crteza, pa joj je dno na visokom
- * ekranu vec u prvom kadru iznad trecine ekrana — i pcela ne bi sjela uz nju
- * ni na samom vrhu strane, a strelica bi pokazivala u prazno.
+ * Nekoliko piksela, u dva perioda razlicite duzine — pa se ne vrti u krug nego
+ * lebdi. Toliko da se vidi da je ziva, i premalo da odvuce pogled sa naslova
+ * pod njom. Ko je iskljucio animacije ne dobija ni ovo: tamo se ticker uopste
+ * ne pali.
+ */
+const IDLE = { x: 4, y: 3 };
+
+/**
+ * Dokle pcela sjedi uz ime: dok je dno imena jos ispod ove crte, mjerene od
+ * vrha ekrana. Cim ime ode, preuzima je skrol.
+ *
+ * Crta je namjerno niska. Mjeriti cio heroj umjesto imena znaci da pcela
+ * ostaje uz njega i kad je odavno izaslo iznad ruba — ode van kadra i vrati se
+ * tek kad heroj prodje. Visoka crta je isto tako lose: ime stoji pri vrhu
+ * heroja, pa bi mu dno na visokom ekranu vec u prvom kadru bilo iznad crte, i
+ * pcela ne bi sjela uz njega ni na samom vrhu strane.
  */
 const HERO_HOLD = 0.12;
 
@@ -126,13 +135,13 @@ export default function BeeFlight() {
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     /**
-     * Mjesto uz strelicu u heroju, dok se heroj vidi. Kad prodje — `null`, pa
+     * Mjesto uz ime u heroju, dok se heroj vidi. Kad prodje — `null`, pa
      * pcelu preuzima skrol.
      */
     const heroSpot = () => {
-      const arrow = document.querySelector('.hero-land__arrow');
-      if (!arrow) return null;
-      const r = arrow.getBoundingClientRect();
+      const name = document.querySelector('.hero-land__wordmark');
+      if (!name) return null;
+      const r = name.getBoundingClientRect();
       if (r.bottom < window.innerHeight * HERO_HOLD) return null;
       return { x: r.left + r.width * START.x, y: r.top + r.height * START.y, tilt: START.tilt };
     };
@@ -213,8 +222,20 @@ export default function BeeFlight() {
       let tilt = first.tilt;
       let hidden = false;
 
-      const update = (_time: number, delta: number) => {
-        const to = parkSpot() ?? scrollSpot();
+      const update = (time: number, delta: number) => {
+        /*
+         * Dok sjedi, mjestu se dodaje lagano lebdenje od nekoliko piksela. Dva
+         * perioda su razlicite duzine i nesamjerljivi, pa se putanja ne
+         * zatvara u krug koji bi oko prepoznalo.
+         */
+        const parked = parkSpot();
+        const to = parked
+          ? {
+              x: parked.x + Math.sin(time * 1.1) * IDLE.x,
+              y: parked.y + Math.sin(time * 0.7) * IDLE.y,
+              tilt: parked.tilt,
+            }
+          : scrollSpot();
 
         /*
          * Zaostajanje se racuna po proteklom vremenu, ne po kadru: na ekranu

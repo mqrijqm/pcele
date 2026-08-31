@@ -9,7 +9,7 @@ import type { Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Koliko je snimak ubrzan. Deset sekundi prodje za nesto preko cetiri. */
+/** Koliko je snimak ubrzan. Sedam sekundi prodje za nesto preko tri. */
 const SPEED = 2.2;
 
 
@@ -102,13 +102,12 @@ export default function Apiary({ locale }: { locale: Locale }) {
 
         tl.fromTo(
           shot,
-          { top: '0%', right: '0%', bottom: '0%', left: '0%', borderRadius: 0 },
+          { top: '0%', right: '0%', bottom: '0%', left: '0%' },
           {
             top: '3%',
             right: '2%',
             bottom: '3%',
             left: '2%',
-            borderRadius: 8,
             ease: 'none',
             duration: 1,
           },
@@ -139,9 +138,9 @@ export default function Apiary({ locale }: { locale: Locale }) {
    * do njega uopste stigne. Otud utisak da je slika, ne snimak.
    *
    * Natpisi idu uz snimak, ne poslije njega. Ime sela, koordinate pod njim i
-   * crtez brda ispisuju se od prvog kadra, razvuceni preko cijele duzine
-   * snimka i tik pred njegov kraj gotovi — sporo, kao da se upisuju u sliku, a
-   * ne kao da su pale na nju. Kad snimak stane, dodje jos samo recenica dolje
+   * crtez brda ispisuju se od prvog kadra i gotovi su vec na dvije trecine
+   * snimka — dovoljno sporo da se citaju kao upisivanje u sliku, dovoljno brzo
+   * da ne kasne za kadrom. Kad snimak stane, dodje jos samo recenica dolje
    * lijevo i sunce nad njom.
    *
    * Crtez i recenica se otkrivaju `clip-path`-om slijeva nadesno, kao da ih
@@ -174,7 +173,7 @@ export default function Apiary({ locale }: { locale: Locale }) {
      *
      * Sekcija se prvo dovede na mjesto pa se skrol zaustavi; kad se snimak
      * zavrsi i natpisi se ispisu, skrol se vraca. Zadrzavanje traje koliko i
-     * snimak — nesto preko sest sekundi — plus ispisivanje.
+     * snimak — nesto preko tri sekunde — plus ispisivanje.
      *
      * Otkljucava se na tri nacina, jer je zaglavljena strana gora od
      * preskocenog snimka: kad natpisi zavrse, po sigurnosnom roku, i kad
@@ -190,14 +189,14 @@ export default function Apiary({ locale }: { locale: Locale }) {
     /*
      * Ispis uz snimak: ime sela, koordinate, pa crtez brda.
      *
-     * Trajanja su zapisana za snimak od nekih sest sekundi i zajedno traju
-     * `WRITE`. Stvarna duzina se zna tek kad snimak krene, pa se cijeli tok
-     * `timeScale`-om razvuce ili stisne na nju — drugi snimak ne trazi nova
-     * cetiri broja. Pola sekunde se ostavi na kraju, da zadnji potez ne pada
-     * u istom trenutku kad i posljednji kadar.
+     * Trajanja dolje zajedno traju `WRITE`. Ispis vise ne ceka kraj snimka
+     * nego je gotov na nekih dvije trecine njega — natpisi tako stignu dok se
+     * jos ima sta gledati, umjesto da se dovlace do zadnjeg kadra. Stvarna
+     * duzina snimka zna se tek kad krene, pa se tok `timeScale`-om stisne na
+     * tu mjeru; razvlaci se nikad — ispod pune brzine ispis ne ide.
      */
-    const WRITE = 5.9;
-    let runs = 10 / SPEED;
+    const WRITE = 2.6;
+    let runs = 6.9 / SPEED;
 
     let wrote = false;
     const write = () => {
@@ -205,10 +204,10 @@ export default function Apiary({ locale }: { locale: Locale }) {
       wrote = true;
       gsap
         .timeline()
-        .to(head, { opacity: 1, y: 0, duration: 1.8, ease: 'power2.out' }, 0.3)
-        .to(coords, { opacity: 1, y: 0, duration: 1.7, ease: 'power2.out' }, 2)
-        .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 2.6, ease: 'power1.inOut' }, 3.3)
-        .timeScale(WRITE / Math.max(runs - 0.5, 2.5));
+        .to(head, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, 0.15)
+        .to(coords, { opacity: 1, y: 0, duration: 0.75, ease: 'power2.out' }, 0.75)
+        .to(hills, { clipPath: 'inset(0 0% 0 0)', duration: 1.35, ease: 'power1.inOut' }, 1.25)
+        .timeScale(Math.max(1, WRITE / Math.max(runs * 0.66, 1.2)));
     };
 
     let told = false;
@@ -220,8 +219,8 @@ export default function Apiary({ locale }: { locale: Locale }) {
       write();
       gsap
         .timeline({ onComplete: unlock })
-        .to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power1.inOut' })
-        .to(sun, { opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3');
+        .to(body, { clipPath: 'inset(0 0% 0 0)', duration: 0.6, ease: 'power1.inOut' })
+        .to(sun, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.7)' }, '-=0.25');
     };
 
     v.playbackRate = SPEED;

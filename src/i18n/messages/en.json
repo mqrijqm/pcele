@@ -750,14 +750,6 @@
     "networkError": "Network error",
     "networkErrorMessage": "Please check your internet connection."
   },
-  "cookieConsent": {
-    "ariaLabel": "Cookie notice",
-    "title": "We use cookies",
-    "description": "Essential cookies keep the site running. With your consent, we also use additional cookies to analyze site visits.",
-    "learnMore": "Learn more",
-    "essentialOnly": "Essential only",
-    "accept": "Accept"
-  },
   "contactForm": {
     "validation": {
       "nameRequired": "Name is required.",

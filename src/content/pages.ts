@@ -306,6 +306,96 @@ export const home = {
     sealAlt: string;
   }>,
 
+  /*
+   * Dvije sorte, jedna nasuprot druge.
+   *
+   * Sekcija pocinje kao dvije fotografije preko cijelog kadra, po pola svaka,
+   * bez razmaka medju njima; skrol ih skuplja u dvije karte na papiru. Natpis
+   * ide u slog a ne u sliku — na prelazu se tekst gasi a crtez ostaje, pa to
+   * ne mogu biti jedan te isti fajl.
+   */
+  podjela: {
+    sr: {
+      livadski: {
+        ime: 'livadski MED',
+        photoAlt: 'Livada bijelih rada, snimljena u pokretu',
+        jarAlt: 'Tegla livadskog meda u pletenoj korpi, uz poljsko cvijeće',
+      },
+      bagremov: {
+        ime: 'bagremov MED',
+        photoAlt: 'Grozdovi bagremovog cvijeta, snimljeni u pokretu',
+        jarAlt: 'Tegla bagremovog meda na panju, u visokoj travi',
+      },
+      cta: 'PČELINJAK',
+      ctaAria: 'Pogledaj pčelinjak',
+    },
+    en: {
+      livadski: {
+        ime: 'meadow HONEY',
+        photoAlt: 'A meadow of ox-eye daisies, caught in motion',
+        jarAlt: 'A jar of meadow honey in a woven basket, among wild flowers',
+      },
+      bagremov: {
+        ime: 'acacia HONEY',
+        photoAlt: 'Clusters of acacia blossom, caught in motion',
+        jarAlt: 'A jar of acacia honey on a stump, in tall grass',
+      },
+      cta: 'THE APIARY',
+      ctaAria: 'See the apiary',
+    },
+  } satisfies L<{
+    livadski: { ime: string; photoAlt: string; jarAlt: string };
+    bagremov: { ime: string; photoAlt: string; jarAlt: string };
+    cta: string;
+    ctaAria: string;
+  }>,
+
+  /*
+   * Ponuda: jedna tegla, jedan izbor, jedno dugme.
+   *
+   * Cijene i varijante se ne pisu ovdje nego se citaju iz `data/products.ts` —
+   * isti izvor iz kojeg zivi i webshop. Da stoje na dva mjesta, prije ili
+   * kasnije bi se razisle.
+   */
+  ponuda: {
+    sr: {
+      eyebrow: 'BERBA 2026 · MRAČAJ',
+      ime: 'Livadski med',
+      podnaslov: 'Cvjetan, pun i svakodnevan',
+      cinjenice: [
+        { oznaka: 'UKUS', vrijednost: 'Cvjetan' },
+        { oznaka: 'BOJA', vrijednost: 'Zlatna' },
+        { oznaka: 'PAŠA', vrijednost: 'Jun–jul' },
+      ],
+      tekst:
+        'Ljetna paša sa livada oko Mračaja, vrcano jula 2026. Zlatna boja, pun cvjetni ukus — med za svaki dan: za čaj, kolače i kašiku ujutru. Do zime kristališe, jer ga ne zagrijavamo.',
+      pecat: 'NARUČI',
+      teglaAlt: 'Tegla livadskog meda od 1 kg',
+    },
+    en: {
+      eyebrow: 'HARVEST 2026 · MRAČAJ',
+      ime: 'Meadow honey',
+      podnaslov: 'Floral, full and everyday',
+      cinjenice: [
+        { oznaka: 'TASTE', vrijednost: 'Floral' },
+        { oznaka: 'COLOUR', vrijednost: 'Golden' },
+        { oznaka: 'FLOW', vrijednost: 'Jun–Jul' },
+      ],
+      tekst:
+        'A summer flow from the meadows around Mračaj, extracted in July 2026. Golden in colour, full and floral — a honey for every day: for tea, for baking, for a spoonful in the morning. It sets by winter, because we never heat it.',
+      pecat: 'ORDER',
+      teglaAlt: 'A 1 kg jar of meadow honey',
+    },
+  } satisfies L<{
+    eyebrow: string;
+    ime: string;
+    podnaslov: string;
+    cinjenice: ReadonlyArray<{ oznaka: string; vrijednost: string }>;
+    tekst: string;
+    pecat: string;
+    teglaAlt: string;
+  }>,
+
   apiary: {
     sr: {
       heading: 'Mračaj',

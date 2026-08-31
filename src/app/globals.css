@@ -721,19 +721,39 @@ p {
    * ispadne kao tudji, cisto bijeli element.
    */
   background: var(--white-soft);
-  border: 1px solid rgba(136, 91, 39, 0.14);
+  /*
+   * Linija i sjena su tise nego prije (0.14 / -20px, odnosno -26px u sredini).
+   * Pilula je manja, pa joj i rub mora biti manji: na istoj jacini je sada
+   * crtala oko sebe okvir umjesto da samo odvoji sloj od papira.
+   */
+  border: 1px solid rgba(136, 91, 39, 0.1);
   transform: translateX(calc(-100% - var(--header-gutter)));
   transition:
     left 0.8s var(--ease-out-expo),
     transform 0.8s var(--ease-out-expo),
     box-shadow 0.5s ease;
-  box-shadow: 0 6px 22px -20px rgba(136, 91, 39, 0.45);
+  box-shadow: 0 4px 16px -16px rgba(136, 91, 39, 0.4);
 }
 
 .site-header[data-docked='true'] .header-pill {
   left: 50%;
   transform: translateX(-50%);
-  box-shadow: 0 16px 44px -26px rgba(136, 91, 39, 0.65);
+  box-shadow: 0 12px 34px -28px rgba(136, 91, 39, 0.5);
+}
+
+/*
+ * Vlas izmedju menija i korpe.
+ *
+ * "Meni" i tri prstena su jedno dugme — jedan otvarac, ne dva poziva — pa im
+ * nista ne stoji izmedju. Korpa je druga radnja, i ovo je sve sto joj treba
+ * da se to vidi.
+ */
+.header-pill-split {
+  width: 1px;
+  align-self: stretch;
+  margin-inline: 0.15rem;
+  margin-block: 0.4rem;
+  background: rgba(136, 91, 39, 0.16);
 }
 
 /* Prorez za logo unutar pilule — sirina raste iz nule, pa se pilula sama sirI. */
@@ -757,8 +777,8 @@ p {
 
 .site-header[data-docked='true'] .header-pill-logo {
   grid-template-columns: 1fr;
-  margin-left: 1.1rem;
-  margin-right: 1.5rem;
+  margin-left: 0.8rem;
+  margin-right: 1.05rem;
   opacity: 1;
 }
 
@@ -768,19 +788,20 @@ p {
   flex-direction: column;
   justify-content: center;
   gap: 2px;
-  width: 1.5rem;
+  width: 1.15rem;
 }
 
 .menu-glyph span {
   display: block;
-  height: 0.42rem;
-  border: 1.1px solid currentColor;
+  height: 0.32rem;
+  border: 1px solid currentColor;
   border-radius: 999px;
   transition: transform 0.4s var(--ease-out-expo), opacity 0.25s ease;
 }
 
+/* Pomak je zbir visine prstena i razmaka — mijenja se s njima. */
 .menu-glyph[data-open='true'] span:nth-child(1) {
-  transform: translateY(0.53rem) rotate(45deg);
+  transform: translateY(0.44rem) rotate(45deg);
 }
 
 .menu-glyph[data-open='true'] span:nth-child(2) {
@@ -788,7 +809,7 @@ p {
 }
 
 .menu-glyph[data-open='true'] span:nth-child(3) {
-  transform: translateY(-0.53rem) rotate(-45deg);
+  transform: translateY(-0.44rem) rotate(-45deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -816,8 +837,8 @@ p {
 
   .header-pill-logo {
     grid-template-columns: 1fr;
-    margin-left: 0.9rem;
-    margin-right: 1.2rem;
+    margin-left: 0.65rem;
+    margin-right: 0.85rem;
     opacity: 1;
   }
 }
@@ -865,17 +886,17 @@ p {
    *
    * Sidro je `top`, pa bi sama veca visina teglu spustila — narasla bi samo
    * nadolje, prema natpisu i cvijetu. Zato `top` ide gore za pola prirasta
-   * (2.5% od 5%): staklo se siri na obje strane oko iste ose, a sve sto je
+   * (2.85% od 5.7%): staklo se siri na obje strane oko iste ose, a sve sto je
    * oko njega — kruna, naslov, natpisi — stoji netaknuto.
    */
-  top: 16.52%;
+  top: 13.67%;
   /*
    * Novi snimak tegle nema praznine oko stakla koliko je imao stari crtez, pa
    * na istoj visini kutije staklo izgleda krupnije. Otud znatno manji
    * postotak nego sto ga je crtez imao — na ekranu tegla zauzima onoliko
    * koliko je i prije zauzimala, i sekcija oko nje dise.
    */
-  height: 57%;
+  height: 62.7%;
   /* Visina ostaje ista, sirinu racuna omjer — inace bi se staklo razvuklo. */
   aspect-ratio: 853 / 1285;
   transform: translateX(-50%);
@@ -1109,8 +1130,8 @@ p {
 
   /* Isti prirast i ista racunica kao u pejzazu: pola prirasta ide u `top`. */
   .hero-jar__jar {
-    top: 23.75%;
-    height: 52%;
+    top: 21.15%;
+    height: 57.2%;
   }
 
   /*
@@ -1156,6 +1177,556 @@ p {
 @media (prefers-reduced-motion: reduce) {
   .hero-jar {
     height: 100svh;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Podjela: dvije sorte, jedna nasuprot druge.
+ *
+ * Sekcija je visoka, a u njoj stoji `sticky` pozornica visine kadra — isti pin
+ * kao na `hero-jar`, sticky stack a ne `ScrollTrigger.pin`. Visak visine iznad
+ * kadra je put kroz koji se dvije karte skupljaju iz punog kadra na svoju
+ * mjeru.
+ *
+ * Svaka polovina ima `overflow: hidden`: dok je karta uvecana, ono sto predje
+ * preko sredine se odsijeca, pa dvije fotografije stoje spojene po sredini bez
+ * razmaka i bez preklapanja.
+ * ------------------------------------------------------------------------- */
+.podjela {
+  position: relative;
+  width: 100%;
+  height: 260svh;
+  background-color: var(--paper);
+}
+
+.podjela__stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.podjela__half {
+  position: relative;
+  flex: 1 1 50%;
+  /* Rub uvecane karte se odsijeca na sredini, da se dvije slike dodiruju. */
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+/*
+ * Karta uvijek stoji u svojoj konacnoj mjeri; puni kadar je samo `scale`.
+ * `--fill` upisuje JS iz odnosa polovine i karte (vidi `Podjela.tsx`), a GSAP
+ * odatle vozi `scale` do jedan.
+ */
+.podjela__card {
+  --fill: 1;
+
+  position: relative;
+  width: 24vw;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  /* Skuplja se ka svojoj sredini, a karta je u sredini polovine. */
+  transform-origin: center center;
+  will-change: transform;
+  cursor: pointer;
+}
+
+.podjela__card:focus-visible {
+  outline: 2px solid var(--brown);
+  outline-offset: 6px;
+}
+
+.podjela__photo,
+.podjela__jar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Tegla ceka na nuli i dolazi tek na prelaz. */
+.podjela__jar {
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- natpis u donjem lijevom uglu karte ---------------------------------- */
+.podjela__label {
+  position: absolute;
+  left: 10%;
+  bottom: 5%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1.8vw;
+  line-height: 1;
+  color: #fff;
+}
+
+.podjela__icon {
+  width: auto;
+  height: 2.7em;
+}
+
+/* Na prelazu se gasi slog, a crtez ostaje. */
+.podjela__label-text {
+  transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- krug izmedju polovina ----------------------------------------------- */
+.podjela__circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.15em;
+  width: 12.6vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: #A9713C;
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Tanki iscrtkani prsten stoji unutar kruga, odmaknut od ruba. */
+.podjela__ring {
+  position: absolute;
+  inset: 7%;
+  border: 1px dashed rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+}
+
+.podjela__cta {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1.11vw;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.podjela__arrow {
+  font-size: 1.25vw;
+  line-height: 1;
+}
+
+/* --- prelaz preko karte, tek kad je sekcija otvorena ---------------------- */
+/*
+ * Karta pod misem: tegla se prelije preko fotografije, slog se ugasi.
+ * Suprotna karta — i slika i natpis zajedno — padne skoro u papir.
+ *
+ * Sve ide preko `transition`, pa se izlaskom misa vraca istom krivom kojom je
+ * i doslo, bez ijedne posebne staze za povratak.
+ */
+.podjela__card {
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.podjela.is-open.is-active-0 .podjela__half:nth-child(1) .podjela__jar,
+.podjela.is-open.is-active-1 .podjela__half:nth-child(2) .podjela__jar {
+  opacity: 1;
+}
+
+.podjela.is-open.is-active-0 .podjela__half:nth-child(1) .podjela__label-text,
+.podjela.is-open.is-active-1 .podjela__half:nth-child(2) .podjela__label-text {
+  opacity: 0;
+}
+
+.podjela.is-open.is-active-0 .podjela__half:nth-child(2) .podjela__card,
+.podjela.is-open.is-active-1 .podjela__half:nth-child(1) .podjela__card {
+  opacity: 0.3;
+}
+
+/* --- uspravno: polovine jedna nad drugom --------------------------------- */
+@media (orientation: portrait) {
+  .podjela {
+    height: 240svh;
+  }
+
+  .podjela__stage {
+    flex-direction: column;
+  }
+
+  /*
+   * Karta i krug su mjereni jedno prema drugom: krug stoji na samom spoju
+   * dvije polovine, pa mu polovina precnika mora stati u prazninu koja ostaje
+   * iznad i ispod karte. Na 54vw / 26vw to izlazi taman — sire karte i krug
+   * bi se preklopili preko fotografija.
+   */
+  .podjela__card {
+    width: 54vw;
+  }
+
+  .podjela__label {
+    font-size: 4.2vw;
+  }
+
+  .podjela__circle {
+    width: 26vw;
+  }
+
+  .podjela__cta {
+    font-size: 2.5vw;
+  }
+
+  .podjela__arrow {
+    font-size: 2.8vw;
+  }
+}
+
+/*
+ * Ko je iskljucio animacije dobija zavrsni raspored odmah: nema pina, sekcija
+ * je visoka tacno koliko i kadar, karte stoje na svojoj mjeri.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .podjela {
+    height: 100svh;
+  }
+
+  .podjela__card,
+  .podjela__jar,
+  .podjela__label-text {
+    transition: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Ponuda: jedna tegla, jedan izbor, jedno dugme.
+ *
+ * Jedina sekcija na sajtu koja stoji na punoj medenoj plohi. Zato ovdje nema
+ * ni bijelog ni kremastog sloga: sve sto se cita je u mastilu, a krem se
+ * pojavljuje jedino kao slog na tamnom dugmetu i kao ploha kruga iza tegle.
+ * Krem na medenom bi bio svijetlo na svijetlom — cita se tesko i razbija ton.
+ * ------------------------------------------------------------------------- */
+.ponuda {
+  --ponuda-med: #E8C46A;   /* ploha sekcije */
+  --ponuda-ime: #885B27;   /* mastilo, isto koje nosi cio sajt */
+  --ponuda-slog: #5A3A1C;  /* tamniji ton istog mastila, za sve ostalo */
+  --ponuda-tama: #6B4423;  /* dugme */
+  --ponuda-krem: #F5E6BD;  /* slog na dugmetu i ploha kruga */
+
+  /*
+   * Razmak gore-dolje je mjeren tako da cijela sekcija stane u kadar: tegla,
+   * ime, cijena, izbor i dugme moraju se vidjeti bez skrola.
+   *
+   * Mjera je uzeta prema engleskom, ne prema srpskom: isti pasus je na
+   * engleskom za jedan red duzi, pa je on taj koji odredjuje granicu. Da je
+   * mjereno po srpskom, na `/en` bi dugme zavrsilo ispod ruba kadra.
+   */
+  padding-block: clamp(2.25rem, 3.8vw, 4.25rem);
+  background-color: var(--ponuda-med);
+  color: var(--ponuda-slog);
+}
+
+.ponuda__inner {
+  display: grid;
+  /*
+   * Slog je uzi od snimka: stupac teksta preko sezdesetak znakova se ne cita
+   * nego skenira, a ovdje se svaki red zaista cita.
+   */
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  max-width: var(--container-max, 1360px);
+  margin: 0 auto;
+  padding-inline: var(--container-padding);
+}
+
+/* --- lijevo: tegla u krugu ----------------------------------------------- */
+.ponuda__shot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  /*
+   * Visina kolone je mjera tegle: tegla uzima oko sedamdeset posto, a ostatak
+   * je zrak oko nje. `min` drzi sekciju u kadru i na niskim ekranima.
+   */
+  min-height: min(74svh, 40vw);
+}
+
+/*
+ * Krug s kamilicom stoji iza tegle i pomjeren je gore-desno, kao na predlosku.
+ * Ne izlazi iz svoje kolone — iza sloga desno nema sta da trazi, linija crteza
+ * bi prosla kroz slova.
+ */
+.ponuda__cvijet {
+  position: absolute;
+  z-index: 0;
+  width: min(78%, 30vw);
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-28%, -58%);
+  pointer-events: none;
+}
+
+.ponuda__tegla {
+  position: relative;
+  z-index: 1;
+  width: auto;
+  height: min(70svh, 38vw);
+  transform: translateX(-18%);
+}
+
+/*
+ * Pecat je znacka uz teglu — namjerno manji od dugmeta u koloni pored, da se
+ * ne cita kao druga radnja.
+ */
+.ponuda__pecat {
+  position: absolute;
+  z-index: 2;
+  right: 2%;
+  bottom: 6%;
+  display: grid;
+  place-content: center;
+  width: clamp(4.5rem, 7.5vw, 7rem);
+  aspect-ratio: 1;
+  border: 1px dashed var(--ponuda-krem);
+  border-radius: 50%;
+  background-color: var(--ponuda-tama);
+  color: var(--ponuda-krem);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.7rem, 1.05vw, 0.95rem);
+  letter-spacing: 0.06em;
+  transform: rotate(-8deg);
+}
+
+/* --- desno: slog --------------------------------------------------------- */
+.ponuda__copy {
+  max-width: 45ch;
+}
+
+/* Nadnaslov se ocitava, ne cita — ostaje u sansu. */
+.ponuda__eyebrow {
+  margin: 0 0 clamp(0.75rem, 1.6vw, 1.25rem);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ponuda__ime {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.6rem, 5vw, 5.5rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ponuda-ime);
+}
+
+.ponuda__podnaslov {
+  margin: clamp(0.6rem, 1.2vw, 1rem) 0 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.05rem, 1.5vw, 1.35rem);
+  line-height: 1.3;
+}
+
+/* --- tri cinjenice u redu ------------------------------------------------ */
+.ponuda__cinjenice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  margin: clamp(1.1rem, 2.4vw, 1.9rem) 0 0;
+}
+
+.ponuda__cinjenice div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3em;
+}
+
+.ponuda__cinjenice dt {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+.ponuda__cinjenice dd {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+}
+
+.ponuda__tekst {
+  margin: clamp(1.1rem, 2.4vw, 1.9rem) 0 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* --- izbor mjere --------------------------------------------------------- */
+.ponuda__mjere {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: clamp(1.25rem, 2.6vw, 2rem);
+}
+
+.ponuda__mjera {
+  padding: 0.7em 1.4em;
+  border: 1px solid var(--ponuda-slog);
+  border-radius: 999px;
+  background: none;
+  color: var(--ponuda-slog);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  /* Cijena nosi odluku, pa je krupnija od tekuceg sloga oko sebe. */
+  font-size: clamp(1.1rem, 1.45vw, 1.35rem);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Izabrana mjera je ispunjena — jedina tamna ploha osim dugmeta. */
+.ponuda__mjera.is-selected {
+  background-color: var(--ponuda-slog);
+  color: var(--ponuda-krem);
+}
+
+.ponuda__mjera:focus-visible {
+  outline: 2px solid var(--ponuda-tama);
+  outline-offset: 3px;
+}
+
+.ponuda__usteda {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+}
+
+/* --- dugme, tacno ispod izbora i na istoj lijevoj ivici ------------------ */
+.ponuda__dugme {
+  display: block;
+  width: 100%;
+  height: 52px;
+  margin-top: clamp(0.85rem, 1.8vw, 1.15rem);
+  border: none;
+  background-color: var(--ponuda-tama);
+  color: var(--ponuda-krem);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: opacity 0.25s ease;
+}
+
+.ponuda__dugme:hover {
+  opacity: 0.9;
+}
+
+.ponuda__dugme:focus-visible {
+  outline: 2px solid var(--ponuda-slog);
+  outline-offset: 3px;
+}
+
+.ponuda__sitno {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  opacity: 0.85;
+}
+
+.ponuda__utisak {
+  margin: clamp(1.1rem, 2.2vw, 1.8rem) 0 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-style: italic;
+}
+
+.ponuda__utisak p {
+  margin: 0;
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.5;
+}
+
+.ponuda__utisak cite {
+  display: block;
+  margin-top: 0.4em;
+  font-style: normal;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/*
+ * Nizak kadar, a sekcija i dalje u dvije kolone.
+ *
+ * Razmaci su dosad rasli samo sa sirinom, a granica je visina: na 1280x800 je
+ * stupac teksta uzi nego na 1440, pa pasus dobije jos redova — a kadar je za
+ * stotinu piksela nizi. Zato se ovdje ritam veze za `vh`, da dugme ostane u
+ * kadru i kad je tekst duzi (engleski pasus je za jedan red duzi od srpskog).
+ */
+@media (min-width: 901px) and (max-height: 860px) {
+  .ponuda {
+    padding-block: clamp(1.5rem, 3vh, 3rem);
+  }
+
+  .ponuda__cinjenice,
+  .ponuda__tekst {
+    margin-top: clamp(0.7rem, 1.8vh, 1.3rem);
+  }
+
+  .ponuda__mjere {
+    margin-top: clamp(0.8rem, 2vh, 1.5rem);
+  }
+
+  .ponuda__utisak {
+    margin-top: clamp(0.8rem, 2vh, 1.5rem);
+  }
+}
+
+/* --- usko: slog pod teglom ----------------------------------------------- */
+@media (max-width: 900px) {
+  .ponuda__inner {
+    grid-template-columns: 1fr;
+    gap: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .ponuda__shot {
+    min-height: 0;
+  }
+
+  .ponuda__tegla {
+    height: min(52svh, 74vw);
+    transform: none;
+  }
+
+  .ponuda__cvijet {
+    width: min(86%, 62vw);
+    transform: translate(-42%, -56%);
+  }
+
+  .ponuda__pecat {
+    right: 4%;
+    bottom: 2%;
+  }
+
+  .ponuda__copy {
+    max-width: none;
+  }
+
+  .ponuda__dugme {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ponuda__mjera,
+  .ponuda__dugme {
+    transition: none;
   }
 }
 
@@ -1264,185 +1835,60 @@ html.is-preloading body {
 }
 
 /* ---------------------------------------------------------------------------
- * Opening screen: the drawn meadow.
+ * Pocetni ekran: ime, naslov, opis, dugme — i crtez livade pod njima.
  *
- * The plate is a container, and every overlay is a percentage of it, so the
- * wordmark keeps its place against the drawing at any width. Positions come
- * from the original composite at 1447 x 969 (see HeroLand.tsx).
+ * Heroj je obican tok, ne geometrija. Do ove dorade je sve stajalo u "plati" —
+ * kutiji zadatog omjera u kojoj je svaki element imao svoj postotak — jer su
+ * se cetiri crteza morala poklopiti u pikselu: strelica je pokazivala na
+ * pcelu, pcela je sjedila na vrhu strelice, natpis se naslanjao na ime. Kad su
+ * natpis i strelica otisli, ostalo je cetiri stvari jedna pod drugom, a njima
+ * omjer ne treba: razmake drzi `clamp`, i heroj se ponasa isto na svakoj
+ * visini ekrana umjesto da se sam skuplja da bi omjer ostao tacan.
+ *
+ * Visina je 90svh, ne pun ekran: pri dnu ostaje traka papira iz koje se vidi
+ * da strana ide dalje. `svh` a ne `vh` — na telefonu se adresna traka skuplja
+ * pri skrolu, pa bi se heroj mjeren u `vh` pomjerio pod prstom.
  * ------------------------------------------------------------------------- */
 .hero-land {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  height: 90svh;
+  /*
+   * Da se na niskom ekranu sadrzaj ne zbije. Ispod ove mjere heroj prestaje
+   * da bude ekran i postaje blok — pa neka radije viri u sekciju pod sobom.
+   */
+  min-height: 36rem;
   overflow: hidden;
   background-color: var(--paper);
 }
 
-.hero-land__plate {
+/*
+ * Jedna kolona po sredini. Razmaci medju clanovima su namjerno manji od onih
+ * koje bi sekcija inace imala: ime, naslov, opis i dugme treba da se citaju
+ * kao jedna grupa, a grupu pravi blizina.
+ *
+ * Gornji razmak je u `svh` a ne u `rem` jer mu je posao da odmakne sadrzaj od
+ * pilule s menijem, a pilula stoji na vrhu kadra — dakle mjeri se ekranom.
+ */
+.hero-land__content {
   position: relative;
-  /*
-   * Sirina, ali ne veca nego sto ekran ima visine.
-   *
-   * Plati visinu daje omjer, a omjer je vezan za sirinu — pa je na sirokom i
-   * niskom ekranu heroj ispadao visi od samog ekrana i nije se vidio do kraja.
-   * Ovdje se cio sklop smanji umjesto da izadje iz kadra: lockup je zadat u
-   * procentima plate, pa se s njom smanji i on, i ostaje tacno gdje je bio.
-   *
-   * `96svh` ostavlja i tanku traku papira ispod heroja, da se vidi da strana
-   * ide dalje. Nize od toga se heroj na sirokom ekranu poce vidno suzavati i
-   * izgleda kao slika u sredini strane, a ne kao pocetni ekran.
-   */
-  width: min(100%, calc(96svh * 1000 / 620));
-  margin-inline: auto;
-  /*
-   * Plata drzi omjer crteza uvecan za razmak oko njega.
-   *
-   * Crtez je 393:163 i lezi pri dnu plate, a iznad njega ostaje prazan papir
-   * za lockup. Racun: crtez sa svojim razmakom je visok 0.88 / 2.411 + 0.12 =
-   * 0.485 sirine, a plata je 0.62 — razlika, 0.135 sirine, je taj papir.
-   *
-   * To nije kozmetika nego uslov: cio lockup — ime, natpis, strelica, mjesto
-   * na kojem pcela sjedi — zadat je u procentima plate, i vrijedi samo ako
-   * crtez u njoj uvijek stoji na istom mjestu. Zato je i visina plate vezana
-   * za sirinu, a ne za ekran.
-   */
-  aspect-ratio: 1000 / 620;
-  container-type: inline-size;
-}
-
-/*
- * Snimak popunjava platu i uzima isti otvoreni ugao kao svaka slika na sajtu.
- * `object-fit: cover` je tu zbog uskih ekrana, gdje plata dobije svoj omjer
- * od medija upita a ne od snimka.
- */
-/*
- * Crtez i plata su istog omjera, pa `cover` nista ne uvecava niti odsijeca —
- * stoji tu radi uskih ekrana, gdje plata omjer dobija od medija upita.
- */
-.hero-land__drawing {
-  position: absolute;
-  inset: 0;
-  display: block;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  height: 100%;
-  /*
-   * `contain`, ne `cover`: crtez je vektor i plosnatiji je od plate, pa bi ga
-   * `cover` odsjekao s obje strane. Ovako stane cio, a visak visine ostaje kao
-   * vazduh — sto je i smisao razmaka ispod.
-   */
-  object-fit: contain;
-  /*
-   * Crtez sjeda na dno plate. Dok je stajao po sredini, brda su ulazila medju
-   * natpis, pcelu i ime — pa je lockup morao da se sklanja od njih. Ovako je
-   * pejzaz ono sto jeste: linija horizonta pod sadrzajem, a ne iza njega.
-   */
-  object-position: bottom;
-  /*
-   * Isto kao crtez pcelinjaka nize na strani: podloga, ne slika. Punim
-   * mastilom nadjacava ime i natpis koji stoje na njemu.
-   */
-  opacity: 0.4;
-  /*
-   * Razmak oko crteza: crtez vise ne ide od ruba do ruba ekrana nego stoji
-   * uvucen, kao otisak na papiru.
-   *
-   * Mjera je u procentima, ne u `vw` ili `rem`. Procenat se i za gore i za
-   * dolje racuna od sirine plate, pa crtez unutar nje uvijek zauzima isti dio
-   * — a cio lockup (ime, natpis, strelica) je izrazen u procentima plate i
-   * racuna na to. Sa `vw` mjerom crtez bi unutar plate plutao gore-dolje kako
-   * se ekran mijenja, i ime bi na jednoj sirini stajalo na polju a na drugoj
-   * na grebenu.
-   */
-  padding: 6%;
-}
-
-/*
- * Natpis i strelica dele isti okvir — isti viewBox, ista pozicija — pa se
- * poklapaju kao da su i dalje jedan fajl.
- */
-.hero-land__script,
-.hero-land__arrow {
-  position: absolute;
-  /*
-   * Mjere su preracunate kad je plata dobila omjer crteza. Prije je crtez bio
-   * uvecan 1.331 puta i odsjecen po 16.55% sa svake strane, pa je tacka na
-   * plati padala drugdje nego tacka na crtezu; ovo su iste tacke, izrazene
-   * sada u mjerama crteza.
-   */
-  left: 33.1%;
-  top: 3.47%;
-  /*
-   * Sire nego prije (24.87%). Natpis je pisan rukom i sitan; na suzenoj plati
-   * se sveo na potez koji se naslucuje.
-   *
-   * Raste udesno, sa svoje ivice: pomjeri li se i ivica, s njom se pomjeri i
-   * vrh strelice u istom crtezu — a na vrhu strelice sjedi pcela, pa bi sjela
-   * na ime ispod sebe.
-   */
-  width: 29%;
-  height: auto;
-}
-
-/*
- * Ispisivanje. Natpis se ne moze "crtati" pomeranjem dash-offseta jer slova
- * nisu potezi nego popunjene konture — nema linije po kojoj bi olovka isla.
- * Zato ih otkriva kosi rez koji putuje slijeva udesno: gornja ivica malo vodi,
- * u smeru u kojem se rukopis i penje, pa poteza izgleda kao da izlazi ispod
- * pera a ne ispod lenjira.
- */
-@keyframes hero-write {
-  from {
-    clip-path: polygon(-20% 0%, -20% 0%, -29% 100%, -29% 100%);
-  }
-  to {
-    clip-path: polygon(-20% 0%, 120% 0%, 111% 100%, -29% 100%);
-  }
-}
-
-/* Strelica se povlaci unazad, od natpisa ka pceli — onako kako se i crta. */
-@keyframes hero-arrow {
-  from {
-    clip-path: inset(0 0 0 100%);
-  }
-  to {
-    clip-path: inset(0 0 0 -2%);
-  }
-}
-
-/*
- * Krecu tek kad zavesa ucitavanja padne: klasa se skida sa <html>, pa
- * elementi tek tada dobiju animaciju. Bez JS-a klase nikad nema i natpis
- * stoji ispisan od pocetka.
- */
-html:not(.is-preloading) .hero-land__script {
-  animation: hero-write 1.8s cubic-bezier(0.62, 0.03, 0.4, 1) 0.25s backwards;
-}
-
-html:not(.is-preloading) .hero-land__arrow {
-  animation: hero-arrow 0.75s cubic-bezier(0.33, 0, 0.15, 1) 1.85s backwards;
-}
-
-/* Smireno stanje: natpis i strelica prosto stoje ispisani. */
-@media (prefers-reduced-motion: reduce) {
-  html:not(.is-preloading) .hero-land__script,
-  html:not(.is-preloading) .hero-land__arrow {
-    animation: none;
-    clip-path: none;
-  }
+  max-width: 48rem;
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  padding-top: clamp(5.5rem, 12svh, 9rem);
+  text-align: center;
 }
 
 .hero-land__wordmark {
-  position: absolute;
-  left: 27.96%;
-  /*
-   * `top` je fiksan, pa smanjivanje sirine ne mice gornju ivicu — razmak do
-   * pcele iznad ostaje isti bez obzira koliko se wordmark smanji.
-   *
-   * Ime stoji na praznom papiru iznad crteza, pod pcelom. Spusteno je kad je
-   * natpis narastao: veci natpis znaci i vecu strelicu, a vrh strelice je
-   * time sisao nize — s njim i pcela, taman na prvi red imena.
-   */
-  top: 28%;
-  width: 11.27%;
+  width: clamp(11rem, 21vw, 17.5rem);
   margin: 0;
   line-height: 0;
 }
@@ -1453,18 +1899,129 @@ html:not(.is-preloading) .hero-land__arrow {
   height: auto;
 }
 
+.hero-land__title {
+  margin: clamp(1.4rem, 3.2svh, 2.3rem) 0 0;
+  /*
+   * Mjera je u `ch`, ne u `rem`: prelom onda ide po duzini recenice a ne po
+   * sirini ekrana, pa naslov na svakoj velikoj sirini pada u ista dva reda.
+   */
+  max-width: 17ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.7rem, 3.4vw, 2.85rem);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+  color: var(--brown);
+}
+
+.hero-land__lead {
+  margin: clamp(0.7rem, 1.6svh, 1.1rem) 0 0;
+  max-width: 42ch;
+  font-size: clamp(0.94rem, 1.05vw, 1.06rem);
+  line-height: 1.55;
+  color: var(--brown-soft);
+}
+
+.hero-land__cta {
+  margin-top: clamp(1.2rem, 2.6svh, 1.85rem);
+}
+
 /*
- * On a phone the drawing at full width would be a 260px-tall strip. Widen the
- * plate past the viewport and pull it left: the wordmark and the trees stay in
- * frame, and because the overlays are percentages of the plate they travel with
- * it. The drawing's own paper is the page colour, so the overflow is invisible.
+ * Crtez lezi na dnu heroja i izlazi preko obje ivice ekrana.
+ *
+ * `cover`, ne `contain`: crtez je plosnat (393:163), a pojas pri dnu heroja je
+ * nizi od toga — `contain` bi ga smanjio i vratio bijele rubove lijevo i
+ * desno, sto je tacno onaj osjecaj male slike u velikoj praznini od kojeg se
+ * bjezi. `cover` mu cuva omjer i odsijeca visak, a `object-position: bottom`
+ * bira sta ce otici: nebo, ne brda.
+ *
+ * Mastilo je na 0.4 — crtez je podloga pod slogom, ne slika iza njega. Punom
+ * bojom bi nadjacao naslov koji stoji na njemu.
+ */
+.hero-land__drawing {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 54%;
+  object-fit: cover;
+  object-position: center bottom;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/*
+ * Na telefonu je pojas pri dnu uzi od crteza koliko god ga spustili, pa bi
+ * `cover` odsjekao vise od pola sirine i ostavio dva stabla u krupnom planu.
+ * Zato tu crtez ide u svojoj mjeri, siri od ekrana i povucen na sredinu: vidi
+ * se cio pejzaz, samo mu krajevi izlaze iz kadra.
  */
 @media (max-width: 767px) {
-  .hero-land__plate {
-    width: 215%;
-    margin-left: -42%;
+  .hero-land__drawing {
+    left: 50%;
+    right: auto;
+    width: 185%;
+    height: auto;
+    transform: translateX(-50%);
+    object-fit: contain;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Isto dugme, u uglu.
+ *
+ * Javi se tek kad pravo dugme iz heroja izadje iz kadra, i nestane cim se
+ * vrati — pa dva ista poziva nikad ne stoje na ekranu zajedno.
+ *
+ * `visibility`, a ne samo prozirnost: prozirno dugme se i dalje moze fokusirati
+ * tabulatorom i citac ekrana ga i dalje vidi, pa bi se isti poziv procitao
+ * dvaput. Zato se `visibility` mijenja s odgodom duzine same tranzicije —
+ * gasi se tek kad je vec nevidljivo, a pali odmah.
+ *
+ * z-index 45 je iznad sloja s pcelom (40), a ispod menija (50), korpe (50) i
+ * zaglavlja (60) — pilula ne smije da stoji preko onoga sto se otvori.
+ * ------------------------------------------------------------------------- */
+.hero-cta-dock {
+  position: fixed;
+  z-index: 45;
+  right: clamp(1rem, 2.4vw, 2rem);
+  /* Iznad zone koju telefon rezervise za svoj potez odozdo, pa jos 16px. */
+  bottom: calc(clamp(1rem, 2.4vw, 2rem) + env(safe-area-inset-bottom));
+  min-height: 2.75rem;
+  padding-inline: 1.4rem;
+  font-size: 0.82rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.4rem);
+  box-shadow: 0 12px 32px -20px rgba(136, 91, 39, 0.7);
+  transition:
+    opacity 0.32s var(--ease-out-expo),
+    transform 0.32s var(--ease-out-expo),
+    background-color 0.35s var(--ease-out-expo),
+    color 0.35s var(--ease-out-expo),
+    visibility 0s linear 0.32s;
+}
+
+.hero-cta-dock[data-shown='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-dock {
+    transform: none;
+    transition:
+      opacity 0.01ms,
+      visibility 0s linear 0.01ms;
   }
 
+  .hero-cta-dock[data-shown='true'] {
+    transform: none;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -3529,6 +4086,12 @@ html:not(.is-preloading) .hero-land__arrow {
   font-size: clamp(1.9rem, 5.6vw, 5.2rem);
   line-height: 1.16;
   letter-spacing: -0.015em;
+  /*
+   * Razmak medju rijecima je ranije bio 0.26em `margin`-a na svakoj rijeci.
+   * Sada je to obican razmak u tekstu, koji je u ovom slogu uzi, pa mu se
+   * razlika vraca ovdje — da prelom redova ostane tacno gdje je bio.
+   */
+  word-spacing: 0.02em;
   color: var(--brown);
 }
 
@@ -3552,15 +4115,32 @@ html:not(.is-preloading) .hero-land__arrow {
  * Vrijedi samo uz JavaScript: bez njega nema sta da je popuni, pa recenica
  * stoji ispisana kao i do sada.
  */
+.geslo__w {
+  /*
+   * `inline-block` da bi rijec mogla da ima svoju `opacity` bez prelamanja,
+   * a razmak medju rijecima je pravi razmak u tekstu (vidi `Geslo.tsx`) — ne
+   * `margin`, kako je bilo dosad.
+   *
+   * Sam razmak nema sta da iscrta, pa nema ni stepenice u prelazu; ono sto je
+   * `margin` stvarno kostao jeste recenica bez razmaka u `textContent`-u, koju
+   * je onda takvu kopirao mis i citao citac ekrana.
+   */
+  display: inline-block;
+}
+
 .js-reveal .geslo__w,
 .js-reveal .geslo__sun {
-  --geslo-faint: 0.15;
-  opacity: var(--geslo-faint);
   /*
-   * Omotac je `inline`, ne `inline-block`: red se lomi izmedju rijeci kao da
-   * omotaca nema. `will-change` drzi svaku rijec na svom sloju, da preglednik
-   * ne precrtava cio pojas na svaki pomak skrola.
+   * Koliko se od rijeci vidi dok ceka svoj red.
+   *
+   * Bilo je 0.15 i to je bila greska: na toj vrijednosti se recenica na
+   * medenom pojasu jedva nazire, pa se ne cita da tekst vec stoji — izgleda
+   * kao da se pise iz niceg. Treba da se vidi da je tu, samo tise; otud 0.32,
+   * ista mjera koju za isti posao koriste i drugi.
    */
+  --geslo-faint: 0.32;
+  opacity: var(--geslo-faint);
+  /* Svaka rijec na svom sloju, da preglednik ne precrtava cio pojas po kadru. */
   will-change: opacity;
 }
 

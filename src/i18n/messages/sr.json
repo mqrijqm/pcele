@@ -750,14 +750,6 @@
     "networkError": "Greška mreže",
     "networkErrorMessage": "Provjerite vašu internet konekciju."
   },
-  "cookieConsent": {
-    "ariaLabel": "Obavještenje o kolačićima",
-    "title": "Koristimo kolačiće",
-    "description": "Neophodni kolačići omogućavaju osnovni rad sajta. Uz vašu saglasnost koristimo i dodatne kolačiće za analitiku posjeta.",
-    "learnMore": "Saznaj više",
-    "essentialOnly": "Samo neophodni",
-    "accept": "Prihvatam"
-  },
   "contactForm": {
     "validation": {
       "nameRequired": "Ime je obavezno.",

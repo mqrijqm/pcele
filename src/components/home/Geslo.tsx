@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -12,12 +12,10 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Koliko skrola kroz sekciju traje jedna rijec, kao dio cijelog puta.
  *
- * Vrijednost je namjerno velika: rijeci se preklapaju, pa se ne pale jedna po
- * jedna nego prelaze jedna u drugu. Manje od desetak posto i rec se upali
- * prije nego se prethodna ugasila iz oka — cita se kao niz treptaja, ne kao
- * potez. Ostatak puta (1 - EACH) se dijeli na razmake medju rijecima.
+ * Rijeci se preklapaju, pa se ne pale jedna po jedna nego prelaze jedna u
+ * drugu. Ostatak puta (1 - EACH) se dijeli na razmake medju njima.
  */
-const EACH = 0.2;
+const EACH = 0.16;
 
 /**
  * Geslo: jedan red preko cijelog pojasa.
@@ -81,13 +79,17 @@ export default function Geslo({ locale }: { locale: Locale }) {
           scrollTrigger: {
             trigger: q('.geslo__line')[0],
             /*
-             * Punjenje pocinje kad red udje u donju trecinu kadra i zavrsi se
-             * kad dodje malo iznad sredine. Kraj nije na izlasku iz kadra: da
-             * jeste, zadnja rijec bi se popunila tek kad recenica vec odlazi
-             * gore, i puna boja se ne bi ni vidjela.
+             * Put je dug namjerno: recenica se ispisuje kroz gotovo cio prolaz
+             * kroz kadar, od donje ivice do gornje trecine. Na kracem putu se
+             * ispisivanje ne cita kao ispisivanje nego kao da je tekst prosto
+             * bljesnuo — sto je i bila mana prve verzije.
+             *
+             * Kraj ipak nije na izlasku iz kadra: da jeste, zadnja rijec bi se
+             * popunila tek kad recenica vec odlazi gore, i puna boja se ne bi
+             * ni vidjela.
              */
-            start: 'top 88%',
-            end: 'top 40%',
+            start: 'top 92%',
+            end: 'top 28%',
             scrub: true,
             invalidateOnRefresh: true,
           },
@@ -107,16 +109,31 @@ export default function Geslo({ locale }: { locale: Locale }) {
     return () => ctx.revert();
   }, [locale]);
 
-  /* Rijec u svoj omotac; razmak medju njima ostaje tekst, da se red lomi. */
+  /*
+   * Rijec u svoj omotac, a izmedju omotaca pravi razmak — obican tekstualni
+   * cvor, ne `margin`.
+   *
+   * Ranije je razmak bio `margin-inline-end` na omotacu, uz obrazlozenje da bi
+   * razmak u tekstu bio "dio nicije rijeci" pa bi se u prelazu vidio kao
+   * stepenica. To ne stoji: razmak nema sta da iscrta, pa mu se blijedost i ne
+   * moze vidjeti. Ono sto je `margin` stvarno radio jeste da je recenicu
+   * ostavljao bez ijednog razmaka u samom tekstu — `textContent` je bio
+   * "URepubliciSrpskoj...". Takvu je kopira onaj ko je oznaci misem, takvu je
+   * cita citac ekrana i takvu je vidi pretrazivac.
+   *
+   * Zato razmak sada stoji tamo gdje mu je mjesto — u tekstu — a `margin` je
+   * otisao iz CSS-a. Sirina razmaka se vratila na staru mjeru preko
+   * `word-spacing` na samoj recenici, da se prelom redova ne pomjeri.
+   */
   const words = (text: string) =>
     text.split(' ').map((word, i) => (
-      <span className="geslo__w" key={`${word}-${i}`}>
-        {word}{' '}
-      </span>
+      <Fragment key={`${word}-${i}`}>
+        <span className="geslo__w">{word}</span>{' '}
+      </Fragment>
     ));
 
   return (
-    <section className="geslo" ref={root} aria-label={`${t.lead} ${t.accent}`}>
+    <section className="geslo" ref={root} aria-label={`${t.lead} ${t.accent} ${t.tail}`}>
       <div className="geslo__inner">
         {/* Pecat stoji nad recenicom, na istoj osi s njom. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -7,6 +7,8 @@ import Apiary from '@/components/home/Apiary';
 import Priroda from '@/components/home/Priroda';
 import Drip from '@/components/home/Drip';
 import Geslo from '@/components/home/Geslo';
+import Podjela from '@/components/home/Podjela';
+import Ponuda from '@/components/home/Ponuda';
 import PhotoRail from '@/components/home/PhotoRail';
 import Vitrina from '@/components/home/Vitrina';
 import SorteMeda from '@/components/products/SorteMeda';
@@ -22,7 +24,8 @@ import BeeFlight from '@/components/bee/BeeFlight';
  * Pocetna, jedan tok bez ponavljanja:
  *
  *   crtez livade -> prelaz na smedju i natrag -> tegla -> album ->
- *   porodicna tradicija -> mjesto -> utisci -> pitanja -> sorte -> poziv
+ *   porodicna tradicija -> mjesto -> dvije sorte -> utisci -> pitanja ->
+ *   sorte -> poziv
  *
  * Sorte su sisle s vrha. Odmah iza heroja su tri sorte trazile odluku od
  * citaoca koji jos nije cuo ciji je to med; sada stoje pri dnu, kad je prica
@@ -92,10 +95,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Origin locale={locale} />
 
       {/*
+        Odmah iza karte, a prije crteza pcelinjaka: dvije sorte jedna nasuprot
+        druge. Sekcija se otvara kao jedna fotografija presjecena po sredini,
+        pa je skrol skupi u dvije karte na papiru.
+
+        Stoji tu jer je karta upravo rekla odakle med dolazi — a ovo je prvo
+        mjesto na strani gdje se vidi sta iz toga izlazi.
+      */}
+      <Podjela locale={locale} />
+
+      {/*
         Iza karte, na istom papiru: crtez pcelinjaka preko gotovo cijele
         mjere, recenica pod njim, pa tri snimka u stepenicu.
       */}
       <Livada locale={locale} />
+
+      {/*
+        Ponuda: jedna tegla na medenoj plohi, s izborom mjere i dugmetom.
+        Stoji pred propolisom — prvo ono glavno iz kosnice, pa ostalo.
+      */}
+      <Ponuda locale={locale} />
 
       {/* Propolis: bocica, grancica koja se iscrta oko nje, pa natpisi. */}
       <Propolis locale={locale} />
