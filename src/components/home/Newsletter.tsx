@@ -1,12 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
-import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { home } from '@/content/pages';
-import { localeHref, type Locale } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 
 export default function Newsletter({ locale }: { locale: Locale }) {
   const copy = home.newsletter[locale];
@@ -40,22 +38,6 @@ export default function Newsletter({ locale }: { locale: Locale }) {
               {copy.description}
             </p>
 
-            <div className="reveal stagger-2 mt-9 flex flex-wrap gap-6">
-              <TransitionLink
-                href={localeHref(locale, '/products')}
-                className="inline-flex min-h-12 items-center gap-2 border-b border-[#885B27]/40 pb-1 text-sm font-semibold text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:text-[#885B27]"
-              >
-                {copy.ctaProducts}
-                <ArrowRight className="h-4 w-4" />
-              </TransitionLink>
-              <TransitionLink
-                href={localeHref(locale, '/contact')}
-                className="inline-flex min-h-12 items-center gap-2 border-b border-[#885B27]/25 pb-1 text-sm font-semibold text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:text-[#885B27]"
-              >
-                {copy.ctaContact}
-              </TransitionLink>
-            </div>
-
             <form onSubmit={handleSubmit} noValidate className="reveal stagger-3 mt-12 max-w-2xl">
               <div className="flex flex-col gap-2 rounded-full border border-[#885B27]/20 bg-[var(--paper)] p-2 sm:flex-row sm:items-center">
                 <input
@@ -84,7 +66,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             </form>
           </div>
 
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-[21rem] plate overflow-hidden bg-[#885B27]/[0.06] shadow-[0_20px_55px_rgba(136,91,39,0.13)]">
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-[16.5rem] overflow-hidden bg-[#885B27]/[0.06] shadow-[0_20px_55px_rgba(136,91,39,0.13)]">
             <Image
               src="/images/real/tegle-red.webp"
               alt={copy.jarAlt}

@@ -1,13 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import { home } from '@/content/pages';
-import { localeHref, type Locale } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,44 +61,6 @@ const PLATES = [
   ...RAIL.map((shot) => ({ ...shot, id: shot.key, echo: false })),
   { ...RAIL[0], id: 'edge-end', echo: true },
 ];
-
-/**
- * Pecat: zeleni krug s isprekidanim prstenom.
- *
- * Vrti se prsten, ne cio krug. Puna zelena ploca je simetricna pa se na njoj
- * rotacija ionako ne vidi, a natpis unutra mora ostati citljiv — da se okrece
- * cijeli SVG, tekst bi se vrtio naglavacke. Zato je prsten izvucen iz crteza
- * (`pecat-*.svg` ga vise nemaju) i nacrtan ovdje, kao zaseban sloj koji jedini
- * ima animaciju.
- */
-function Seal({
-  href,
-  src,
-  label,
-  className,
-}: {
-  href: string;
-  src: string;
-  label: string;
-  className: string;
-}) {
-  return (
-    <TransitionLink href={href} className={`rail__seal ${className}`} aria-label={label}>
-      <Image className="rail__sealFace" src={src} alt="" width={127} height={127} />
-      <svg className="rail__sealRing" viewBox="0 0 127 127" aria-hidden="true" focusable="false">
-        <circle
-          cx="63.5"
-          cy="62.5"
-          r="55.1187"
-          fill="none"
-          stroke="var(--paper)"
-          strokeWidth="0.762519"
-          strokeDasharray="7 7"
-        />
-      </svg>
-    </TransitionLink>
-  );
-}
 
 export default function PhotoRail({ locale }: { locale: Locale }) {
   const root = useRef<HTMLElement>(null);
@@ -196,23 +157,6 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
             ))}
           </ul>
 
-          {/*
-            Pecati stoje na bocnim snimcima, uz njihov unutrasnji rub — nikad
-            preko onog u sredini. Zato su vezani za rub prozora a ne za neki
-            odredjeni snimak: snimci ispod njih se smjenjuju, pecat ostaje.
-          */}
-          <Seal
-            href={localeHref(locale, '/process')}
-            src="/images/brand/pecat-proces.svg"
-            label={copy.sealProcess}
-            className="rail__seal--start"
-          />
-          <Seal
-            href={localeHref(locale, '/about')}
-            src="/images/brand/pecat-pcelinjaci.svg"
-            label={copy.sealHives}
-            className="rail__seal--end"
-          />
         </div>
       </div>
     </section>

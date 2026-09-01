@@ -1051,7 +1051,6 @@ p {
 .hero-jar__seal {
   left: 56.5vw;
   top: 30%;
-  width: min(10.5vw, 21svh);
   z-index: 4;
 }
 
@@ -1422,9 +1421,9 @@ p {
  * na svijetlom — cita se tesko i razbija ton.
  * ------------------------------------------------------------------------- */
 .ponuda {
-  --ponuda-med: #E8C46A;   /* ploha sekcije */
-  --ponuda-ime: #885B27;   /* mastilo, isto koje nosi cio sajt */
-  --ponuda-slog: #885B27;  /* isto mastilo kojim je pisan cio sajt */
+  --ponuda-ploha: #E8C46A;  /* ploha sekcije */
+  --ponuda-ime: #885B27;    /* mastilo, isto koje nosi cio sajt */
+  --ponuda-slog: #885B27;   /* isto mastilo kojim je pisan cio sajt */
 
   /*
    * Oznake i poziv na izbor stoje tise od sloga koji nose. Nije nova boja nego
@@ -1433,11 +1432,92 @@ p {
    */
   --ponuda-tise: rgba(136, 91, 39, 0.66);
 
+  /* Mjere: izabrana puna, druga prigusena, treca jacina je pod misem. */
+  --ponuda-mjera: var(--ponuda-slog);
+  --ponuda-mjera-tiha: rgba(136, 91, 39, 0.36);
+  --ponuda-mjera-preko: rgba(136, 91, 39, 0.62);
+
   position: relative;
-  background-color: var(--ponuda-med);
+  background-color: var(--ponuda-ploha);
   color: var(--ponuda-slog);
+}
+
+/*
+ * Bagremov: iste dvije boje, zamijenjene.
+ *
+ * Livadski stoji na medu i nosi krem krug; bagremov stoji na papiru i nosi
+ * medeni krug. Dvije sekcije razmjenjuju plohu, pa se u skrolu kroz niz vidi
+ * gdje jedna prestaje a druga pocinje — bez trece boje.
+ *
+ * Ime i mjere idu u zlatnu (`--amber`), kako je i na predlosku. Sitan slog ne
+ * ide: zlatna na papiru je jedva citljiva na 0.7rem, pa nadnaslov, oznake i
+ * opis ostaju u mastilu. Zlatno je ono sto se gleda, mastilo ono sto se cita.
+ */
+.ponuda--krem {
+  --ponuda-ploha: var(--paper);
+  --ponuda-ime: var(--amber);
+  --ponuda-slog: var(--brown);
+  --ponuda-tise: var(--brown-soft);
+  --ponuda-mjera: var(--amber);
+  --ponuda-mjera-tiha: rgba(195, 156, 74, 0.42);
+  --ponuda-mjera-preko: rgba(195, 156, 74, 0.7);
+}
+
+/*
+ * Pozornica: sve sto se vidi stoji u njoj, a ne u samoj sekciji.
+ *
+ * Na uskom ekranu je obican blok i sekcija je visoka koliko i sadrzaj. Na
+ * sirokom se lijepi za vrh kadra (vidi nize) — a `overflow` mora stajati
+ * ovdje, ne na sekciji: `position: sticky` ne radi ako neki predak izmedju
+ * njega i strane ima `overflow: hidden`.
+ */
+.ponuda__stage {
   padding-block: clamp(3.5rem, 7vw, 7rem);
   overflow: hidden;
+}
+
+/*
+ * Pin: sekcija se zaustavi i ne pusta dalje dok se ne otkrije.
+ *
+ * Sticky stack, isto kao na `podjela` i `hero-jar` — sekcija je visoka
+ * 200svh, u njoj stoji pozornica visine kadra, i visak od 100svh je put kroz
+ * koji skrol otkriva teglu, slog, cvijet i znak. Kad je otkriveno, ostatak
+ * puta sekcija stoji mirno, da se otkriven raspored vidi prije nego strana
+ * krene dalje.
+ *
+ * Samo na sirokom ekranu. Na telefonu sve ide u jednu kolonu i sadrzaj je
+ * visi od kadra — pinovana pozornica bi mu odsjekla dno.
+ *
+ * Uslov nosi i visinu: na niskom prozoru (nizi od 640px) crtez i slog ne
+ * stanu u kadar, pa sekcija tamo ostaje obican blok koji se skrola.
+ *
+ * Ko je iskljucio kretanje takodje ostaje bez pina: kod njega je sekcija ionako
+ * otkrivena od prve, pa bi pin bio samo kadar koji stoji i ne radi nista.
+ */
+@media (min-width: 901px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .ponuda {
+    height: 200svh;
+  }
+
+  .ponuda__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    padding-block: 0;
+  }
+
+  /*
+   * Crtez raste sa sirinom kolone, a u pinu mora stati u visinu kadra — na
+   * ultrasirokom ekranu bi inace prerastao kadar i pozornica bi mu odsjekla
+   * dno. Mjera je zadata po sirini jer omjer sanduka onda sam vodi visinu:
+   * 78svh sirine kroz omjer 72/70 daje oko 76svh visine.
+   */
+  .ponuda__shot {
+    max-width: min(100%, 78svh);
+    margin-inline: auto;
+  }
 }
 
 /*
@@ -1493,8 +1573,18 @@ p {
   left: 1%;
   bottom: 2%;
   width: 47%;
-  /* Visina je mjera vece tegle; manja se u njoj poravna po dnu. */
-  aspect-ratio: 560 / 972;
+  /*
+   * Visina je mjera vece tegle; manja se u njoj poravna po dnu.
+   *
+   * Omjer sanduka mora biti omjer **sire od dvije tegle**, ne bas one prve.
+   * Teglama je zadata visina a sirina se izvodi iz same slike, pa ona koja je
+   * u fajlu sira od ovog omjera prelazi preko obje ivice sanduka. Zato je ovo
+   * promjenljiva: svaka sorta ima svoje snimke i svoj omjer.
+   *
+   * Podrazumijevano je livadski: veca tegla je 560x972, ali manja na 84%
+   * visine ispadne za nijansu sira, pa mjeru daje ona.
+   */
+  aspect-ratio: var(--tegla-ar, 592 / 1000);
 }
 
 /*
@@ -1528,8 +1618,78 @@ p {
   z-index: 3;
   left: 55%;
   bottom: 14%;
-  width: 25%;
-  height: auto;
+}
+
+/* --- bagremov: isti raspored, okrenut ------------------------------------ */
+
+/*
+ * Slog lijevo, vizual desno.
+ *
+ * Mijenja se samo u kojoj koloni sta stoji — u kodu vizual i dalje ide prvi,
+ * jer se na telefonu obje sorte slazu isto: crtez gore, slog pod njim. Da je
+ * zamjena bila u samom HTML-u, bagremov bi na telefonu pocinjao tekstom.
+ */
+@media (min-width: 901px) {
+  .ponuda--obrnuta .ponuda__inner {
+    /*
+     * Vizual dobija vise nego kod livadskog: bagremova grana je siroka i mora
+     * da se protegne preko cijele svoje polovine, kako i stoji na predlosku.
+     * Slog na tome ne gubi — pasus ionako staje u 42 znaka.
+     */
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.22fr);
+  }
+
+  .ponuda--obrnuta .ponuda__copy {
+    grid-area: 1 / 1;
+  }
+
+  .ponuda--obrnuta .ponuda__shot {
+    grid-area: 1 / 2;
+  }
+}
+
+/*
+ * Grana je siroka i niska, ne uspravna kao kamilica — sanduk se pod nju siri.
+ *
+ * Sve troje se pomjera: grana ide uz lijevu ivicu i prelazi preko nje, tegla
+ * pada u desni ugao, a znak stoji izmedju njih, na mjestu gdje bi se inace
+ * vidio prazan krug.
+ */
+.ponuda--obrnuta .ponuda__shot {
+  /* Grupa je na predlosku gotovo kvadratna: grana je siroka koliko i visoka. */
+  aspect-ratio: 83 / 84;
+}
+
+/*
+ * Grana ide malo preko lijeve ivice sanduka: krug mora ostati vidljiv izmedju
+ * cvata i stakla, a tegla je siroka pa bi inace pokrila i lisce nad krugom.
+ */
+.ponuda--obrnuta .ponuda__cvijet {
+  left: -8%;
+  top: -2%;
+  width: 90%;
+}
+
+.ponuda--obrnuta .ponuda__tegla {
+  left: auto;
+  right: 0;
+  bottom: 0;
+  width: 43%;
+  /*
+   * Bagremova tegla je u fajlu znatno sira nego livadska (760x1045 naspram
+   * 560x972). Dok je ovdje stajao livadski omjer, staklo je bilo za petinu
+   * sire od sanduka i vidjelo se kako prelazi preko njegovih ivica.
+   */
+  --tegla-ar: 727 / 1000;
+}
+
+/*
+ * Znak stoji ispod kruga a lijevo od tegle — u onom uglu koji bi inace ostao
+ * prazan izmedju cvata i stakla.
+ */
+.ponuda--obrnuta .ponuda__znak {
+  left: 21%;
+  bottom: 8%;
 }
 
 /* --- desna kolona -------------------------------------------------------- */
@@ -1598,7 +1758,13 @@ p {
   margin: 0;
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1rem, 1.35vw, 1.15rem);
-  font-weight: 700;
+  /*
+   * Obican rez, ne podebljan. Tri vrijednosti stoje jedna uz drugu u redu i u
+   * bold rezu su citale kao naslov — deblje od svega ostalog u koloni, pa je
+   * oko slijetalo na njih prije nego na ime meda. Razliku od oznaka iznad njih
+   * ionako nosi mjera i boja, ne debljina.
+   */
+  font-weight: 400;
   color: var(--ponuda-slog);
 }
 
@@ -1648,21 +1814,21 @@ p {
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1.45rem, 2.3vw, 2.05rem);
   line-height: 1.1;
-  color: rgba(136, 91, 39, 0.36);
+  color: var(--ponuda-mjera-tiha);
   cursor: pointer;
   transition: color 0.35s var(--ease-out-expo);
 }
 
 .ponuda__mjera:hover {
-  color: rgba(136, 91, 39, 0.62);
+  color: var(--ponuda-mjera-preko);
 }
 
 .ponuda__mjera.is-selected {
-  color: var(--ponuda-slog);
+  color: var(--ponuda-mjera);
 }
 
 .ponuda__mjera:focus-visible {
-  outline: 2px solid var(--ponuda-slog);
+  outline: 2px solid var(--ponuda-mjera);
   outline-offset: 4px;
   border-radius: 0.2rem;
 }
@@ -1672,7 +1838,7 @@ p {
   font-family: var(--font-gazpacho), Georgia, serif;
   font-size: clamp(1.45rem, 2.3vw, 2.05rem);
   line-height: 1.1;
-  color: rgba(136, 91, 39, 0.36);
+  color: var(--ponuda-mjera-tiha);
 }
 
 /* --- uzak ekran ---------------------------------------------------------- */
@@ -1702,6 +1868,30 @@ p {
   .ponuda__cvijet {
     left: 44%;
     width: 52%;
+  }
+
+  /*
+   * Bagremova grana na telefonu: sanduk je siri i nizi, pa grana staje uz
+   * lijevu ivicu bez viska koji bi ivica strane odsjekla po cvatu.
+   */
+  .ponuda--obrnuta .ponuda__shot {
+    aspect-ratio: 88 / 70;
+  }
+
+  .ponuda--obrnuta .ponuda__cvijet {
+    left: 0;
+    top: 0;
+    width: 74%;
+  }
+
+  .ponuda--obrnuta .ponuda__tegla {
+    right: 1%;
+    width: 42%;
+  }
+
+  .ponuda--obrnuta .ponuda__znak {
+    left: 8%;
+    bottom: 3%;
   }
 
   .ponuda__ime {
@@ -1897,7 +2087,8 @@ html.is-preloading body {
 .hero-land__wordmark {
   position: absolute;
   z-index: 2;
-  top: clamp(7.5rem, 19vh, 9.5rem);
+  /* Malo vise nego prije (bilo 19vh): ime je sjedalo prenisko uz teglu. */
+  top: clamp(5.75rem, 15vh, 7.75rem);
   left: clamp(50%, 59vw, 62%);
   width: clamp(9.25rem, 11.75vw, 11.75rem);
   margin: 0;
@@ -2482,20 +2673,6 @@ html.is-preloading body {
   right: 7%;
   /* Malo visi ispod crteza, kao pecat udaren preko ruba. */
   bottom: -5%;
-  display: block;
-  width: clamp(5rem, 9vw, 8.5rem);
-  transition: scale 0.5s var(--ease-out-expo);
-}
-
-.livada__seal img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.livada__seal:hover,
-.livada__seal:focus-visible {
-  scale: 1.06;
 }
 
 /* ---------------------------------------------------------------------------
@@ -3801,8 +3978,6 @@ html.is-preloading body {
   left: 57.5%;
   top: 63%;
   z-index: 3;
-  width: 11vw;
-  height: auto;
 }
 
 .propolis__note--benefits {
@@ -3950,6 +4125,17 @@ html.is-preloading body {
   /* Veze vode od natpisa do bocice; uspravno slozeni, nemaju sta da povezu. */
   .propolis__thread {
     display: none;
+  }
+
+  /*
+   * Znak silazi u kolonu, izmedju bocice i natpisa.
+   *
+   * Njegovo mjesto na sirokom ekranu je ugao scene; uspravno slozeno tog ugla
+   * nema, pa bi ostao da lebdi nad natpisima i pokrio bi rijeci. U koloni je i
+   * dalje odmah uz bocicu, a sad je i ocito da je dugme.
+   */
+  .propolis__znak {
+    position: static;
   }
 }
 
@@ -4693,62 +4879,6 @@ html.is-preloading body {
   object-fit: cover;
 }
 
-/*
- * Pecati stoje uz same rubove, na bocnim snimcima. Pozicije su iz crteza:
- * sredine krugova na 13.9% i 84.3% sirine, precnik 8.2% — otud pomak od
- * sredine do lijevog ruba kruga.
- */
-.rail__seal {
-  position: absolute;
-  top: 50%;
-  width: clamp(5rem, 8.2vw, 7.5rem);
-  aspect-ratio: 1;
-  translate: 0 -50%;
-  /*
-   * Sjena, ne obrub. Pecat lezi na fotografiji koja je i sama svijetla i
-   * sarena; bez odvajanja od podloge natpis unutar kruga se izgubi.
-   */
-  filter: drop-shadow(0 1rem 2.25rem rgba(51, 33, 12, 0.35));
-  transition: scale 0.5s var(--ease-out-expo);
-  z-index: 2;
-}
-
-.rail__seal--start {
-  left: 9.8vw;
-}
-
-.rail__seal--end {
-  right: 11.6vw;
-}
-
-.rail__seal:hover,
-.rail__seal:focus-visible {
-  scale: 1.06;
-}
-
-.rail__sealFace,
-.rail__sealRing {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Vrti se samo prsten — natpis ispod njega mora ostati citljiv. */
-.rail__sealRing {
-  animation: seal-spin 26s linear infinite;
-}
-
-.rail__seal--end .rail__sealRing {
-  animation-duration: 34s;
-  animation-direction: reverse;
-}
-
-@keyframes seal-spin {
-  to {
-    rotate: 1turn;
-  }
-}
 
 /*
  * Ko je iskljucio animacije u sistemu ne dobija ni lepljivu scenu ni scrub:
@@ -4788,9 +4918,6 @@ html.is-preloading body {
     padding-inline: var(--container-padding);
   }
 
-  .rail__sealRing {
-    animation: none;
-  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -4845,6 +4972,13 @@ html.is-preloading body {
   z-index: 2;
 }
 
+/* Vrti se samo prsten — natpis ispod njega mora ostati citljiv. */
+@keyframes seal-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
 .rail__badgeRing {
   position: absolute;
   inset: 8%;
@@ -4897,14 +5031,6 @@ html.is-preloading body {
     --rail-step: 32svh;
   }
 
-  /* Na uskom ekranu dva pecata jedan uz drugi pojedu snimak; ostaje prvi. */
-  .rail__seal--end {
-    display: none;
-  }
-
-  .rail__seal--start {
-    left: 5vw;
-  }
 }
 
 /* -------------------------------------------------------------------------
@@ -5287,20 +5413,6 @@ html.is-preloading body {
   left: 90%;
   top: 92%;
   translate: -50% -50%;
-  display: block;
-  width: 36%;
-  transition: scale 0.5s var(--ease-out-expo);
-}
-
-.vitrina__seal img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.vitrina__seal:hover,
-.vitrina__seal:focus-visible {
-  scale: 1.06;
 }
 
 
@@ -5454,5 +5566,267 @@ html.is-preloading body {
 @media (prefers-reduced-motion: reduce) {
   .honey-pour {
     display: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Pecat: okrugli znak sa slogom, isti na cijelom sajtu.
+ *
+ * Stoji na sedam mjesta — u heroju, na crtezu pcelinjaka, na vitrini, na dva
+ * snimka u albumu i na tri sekcije sorti — i svuda je istog reda: isti krug,
+ * isti isprekidan rub, isti slog. Mijenjaju se samo boja i rijec u njemu.
+ *
+ * **Svaki vodi negdje, osim jednog.** Pecat je dugme, ne ukras: klikom se ide
+ * na stranu o kojoj govori. Jedini izuzetak je "100% prirodan" u heroju — on
+ * ne govori ni o kakvoj strani nego o medu, pa nema kuda da vodi.
+ *
+ * **Mjera stoji ovdje, ne uz sekcije.** Ranije je svaki pecat imao svoju
+ * sirinu, zadatu u mjeri svog sanduka — pa su na istoj strani stajali pecati
+ * od 118 do 151 piksela. Sada je mjera jedna; sekcije zadaju jos samo gdje
+ * pecat stoji.
+ *
+ * **Boja je u fajlu, ne u CSS-u.** Crtez nosi i krem slog i isprekidan rub, pa
+ * se ne da prebojiti jednom promjenljivom — umjesto toga svaki pecat postoji u
+ * onoliko jacina koliko ploha ima pod sobom.
+ *
+ * **Zasto prelaz stoji na slici, a ne na vezi.** Otkrivanje sekcija pise
+ * `scale` na sam pecat, iz GSAP-a i u `style`. Da je i prelaz pod misem dirao
+ * `transform` na istom elementu, inline vrijednost iz GSAP-a bi ga potukla —
+ * pa GSAP radi na vezi, a CSS na slici u njoj.
+ * ------------------------------------------------------------------------- */
+.pecat {
+  display: block;
+  /*
+   * Jedna mjera za sve. Na uskom ekranu se ne smanjuje ispod 6rem: ispod toga
+   * se slog u crtezu vise ne cita, a i prst nema sta da pogodi.
+   */
+  width: clamp(6rem, 9.5vw, 9rem);
+  border-radius: 50%;
+}
+
+.pecat img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+/*
+ * Pod misem se pecat malo okrene i naraste — kao da se utisnuo jace. Nema
+ * podvlacenja ni promjene boje: crtez je okrugao i nosi svoj slog u sebi.
+ *
+ * Samo na vezama: pecat u heroju nije dugme i nema na sta da odgovori.
+ */
+a.pecat:hover img,
+a.pecat:focus-visible img {
+  transform: rotate(-5deg) scale(1.06);
+}
+
+.pecat:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pecat img {
+    transition: none;
+  }
+
+  a.pecat:hover img,
+  a.pecat:focus-visible img {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Med koji pamti krajolik.
+ *
+ * Tri kolone: snimci lijevo, naslov u sredini, slog desno. Naslov nije
+ * zaglavlje ni jedne od njih nego os oko koje sekcija stoji — zato je u
+ * sredini, a ne nad tekstom.
+ *
+ * Sekcija nema svoju plohu: stoji na polju cvijeca (`bloomfield`) zajedno sa
+ * sekcijom iznad, pa uzorak tece preko ruba medju njima.
+ * ------------------------------------------------------------------------- */
+.krajolik {
+  position: relative;
+  padding-block: clamp(4rem, 9vw, 8.5rem);
+}
+
+.krajolik__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-inline: var(--container-padding);
+  display: grid;
+  /*
+   * Sredisnja kolona je najsira: naslov je najveci slog na strani i mora da
+   * padne u tri reda bez da se lomi gdje ne treba.
+   */
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr) minmax(0, 0.92fr);
+  /*
+   * Sve tri kolone pocinju na istoj liniji. Centrirano je naslov spustalo na
+   * sredinu najvise kolone — a ta kolona je sanduk sa slikama, koji je visok
+   * zbog kriske sto visi ispod snimka, pa je naslov zavrsavao nize i od slike
+   * i od sloga.
+   */
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+/* --- lijevo: snimak u okviru, kriska preko njegovog ugla ----------------- */
+
+/*
+ * Sanduk drzi omjer, a oba snimka u njemu stoje u postocima tog omjera — tako
+ * se grupa skuplja zajedno i kriska ne odluta s ugla kad se prozor suzi.
+ */
+.krajolik__slike {
+  position: relative;
+  /*
+   * Sanduk je mnogo visi nego sto je snimak: kriska visi znatno ispod njegovog
+   * dna, u prazno, i ta visina mora nekome da pripada. Kad je sanduk bio visok
+   * koliko i snimak, kriska je sjedala pcelaru preko lica.
+   */
+  aspect-ratio: 62 / 118;
+  width: 100%;
+}
+
+/*
+ * Snimak pcelara: uspravan, ostrih ivica, kao slika prikacena na papir. Nema
+ * zaobljenja — sve zaobljeno na ovoj strani je crtez, a ovo je fotografija.
+ */
+.krajolik__okvir {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 78%;
+  aspect-ratio: 320 / 480;
+  overflow: hidden;
+  background-color: rgba(136, 91, 39, 0.06);
+}
+
+.krajolik__okvir img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*
+ * Kriska je izrezana na sam sadrzaj i lezi preko donjeg desnog ugla snimka,
+ * dijelom izvan njega. Ta razlika — jedno u okviru, drugo van njega — je ono
+ * sto kadar drzi da ne bude obicna kartica s tekstom.
+ */
+.krajolik__kriska {
+  position: absolute;
+  z-index: 2;
+  left: 48%;
+  top: 44%;
+  width: 69%;
+  height: auto;
+  filter: drop-shadow(0 1.25rem 2.25rem rgba(51, 33, 12, 0.22));
+}
+
+/* --- sredina: naslov ----------------------------------------------------- */
+
+/*
+ * Verzal, jedan red po rijeci, razmaknuto. Slova su velika pa im treba vise
+ * proreda nego sto serif inace trazi — na `1.1` su se redovi dodirivali
+ * dijakriticima.
+ */
+.krajolik__naslov {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.9rem, 4.1vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.24;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+
+.krajolik__red {
+  display: block;
+}
+
+/* --- desno: sve sto se cita ---------------------------------------------- */
+
+.krajolik__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.krajolik__tekst {
+  margin: 0;
+  max-width: 40ch;
+  /*
+   * Prvi red uvucen, kao u knjizi — sekcija je jedina na strani koja ima dva
+   * pasusa jedan za drugim, pa im pocetak mora nesto da razdvoji osim razmaka.
+   */
+  text-indent: 1.6em;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  line-height: 1.72;
+  color: var(--brown);
+}
+
+.krajolik__tekst + .krajolik__tekst {
+  margin-top: clamp(1.1rem, 2.2vw, 1.75rem);
+}
+
+/*
+ * Veza je podvucena, ne dugme: sve okruglo i puno na ovoj strani je pecat, a
+ * ovo je recenica koja vodi dalje.
+ */
+.krajolik__cta {
+  margin-top: clamp(2rem, 4vw, 3.25rem);
+  display: inline-block;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(136, 91, 39, 0.45);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brown);
+  transition: border-color 0.4s var(--ease-out-expo);
+}
+
+.krajolik__cta:hover,
+.krajolik__cta:focus-visible {
+  border-bottom-color: var(--brown);
+}
+
+/* --- uzak ekran ---------------------------------------------------------- */
+
+/*
+ * Na telefonu tri kolone nemaju gdje. Ide naslov, pa snimci, pa slog — naslov
+ * prvi jer u koloni vise nije os nego zaglavlje, a zaglavlje ide na vrh.
+ */
+@media (max-width: 900px) {
+  .krajolik__inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 3rem);
+  }
+
+  .krajolik__naslov {
+    order: -1;
+  }
+
+  .krajolik__slike {
+    aspect-ratio: 62 / 108;
+    max-width: 19rem;
+    margin-inline: auto;
+  }
+
+  .krajolik__okvir {
+    width: 76%;
+  }
+
+  .krajolik__kriska {
+    left: 44%;
+    top: 46%;
+    width: 66%;
   }
 }

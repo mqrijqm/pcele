@@ -270,7 +270,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
             * Dvije stvari koje dodju na kraju: pecat uz rame tegle i cvijet u
             * donjem desnom uglu.
             */}
-          <span className="hero-jar__seal hero-jar__pop">
+          <span className="hero-jar__seal hero-jar__pop pecat">
             <Image
               src="/images/brand/pecat-prirodan.svg"
               alt={t.sealAlt}

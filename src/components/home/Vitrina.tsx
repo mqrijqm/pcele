@@ -51,7 +51,7 @@ export default function Vitrina({ locale }: { locale: Locale }) {
           </figure>
 
           <TransitionLink
-            className="vitrina__seal reveal-pop stagger-3"
+            className="vitrina__seal pecat reveal-pop stagger-3"
             href={localeHref(locale, '/products')}
             aria-label={t.seal}
           >

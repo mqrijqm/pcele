@@ -74,6 +74,19 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
 // ---------------------------------------------------------------- home -------
 
 export const home = {
+  /*
+   * Znak "Okusi slast" stoji u tri sekcije — livadski, propolis, bagremov — i
+   * u sve tri vodi na isto mjesto. Natpis veze zato stoji jednom, ovdje, a ne
+   * triput uz svaku sekciju: da se tri ista poziva ne mogu razici.
+   *
+   * `znakAlt` uz svaku sekciju i dalje kaze sta na znaku pise; ovo kaze kuda
+   * vodi. Citac ekrana cita oboje, u tom redu.
+   */
+  znakCta: {
+    sr: 'pogledaj proizvode',
+    en: 'see the products',
+  } satisfies L<string>,
+
   hero: {
     sr: {
       badge: 'Porodica Jevtić · pčelari od 1980.',
@@ -190,22 +203,22 @@ export const home = {
    */
   vitrina: {
     sr: {
-      eyebrowLeft: 'Treća generacija, ista livada',
-      headingLeft: 'Med kakav',
+      eyebrowLeft: 'Sirovo vrcano',
+      headingLeft: 'Ništa dodano,',
       body:
-        'Ne kupujemo med da bismo popunili teglu — vrcamo samo ono što naše pčele saberu na livadama oko Mračaja, sezonu po sezonu, otkad je djed počeo 1980.',
+        'Med koji vrcamo ostaje takav kakav izađe iz saća — bez grijanja, bez filtriranja, bez ičega dodanog. Ono što je u tegli, tačno je ono što su pčele donijele sa livade.',
       eyebrowRight: 'Od 1980.',
-      headingRight: 'treba biti.',
+      headingRight: 'ništa oduzeto.',
       seal: 'Proizvodi',
       alt: 'Red tegli livadskog meda na drvenoj ogradi, iza njih zelenilo',
     },
     en: {
-      eyebrowLeft: 'Family tradition',
-      headingLeft: 'Honey as',
+      eyebrowLeft: 'Raw, unfiltered',
+      headingLeft: 'Nothing added,',
       body:
-        'In the countryside, on heady meadows and hillsides, we extract a honey of one place and no additions.',
+        'The honey we extract stays exactly as it comes out of the comb — no heating, no filtering, nothing added. What is in the jar is precisely what the bees brought back from the meadow.',
       eyebrowRight: 'Since 1980',
-      headingRight: 'it should be.',
+      headingRight: 'nothing taken away.',
       seal: 'Products',
       alt: 'A row of jars of meadow honey on a wooden rail, greenery behind them',
     },
@@ -448,6 +461,43 @@ export const home = {
     teglaAlt: string;
   }>,
 
+  /*
+   * Med koji pamti krajolik: naslov u sredini, dvije fotografije lijevo, tekst
+   * desno.
+   *
+   * Stoji iza bagrema, na istom polju cvijeca na kojem stoje i sekcije iznad
+   * — dolazi poslije tri sorte i kaze zasto se razlikuju: ne po receptu nego
+   * po tome sta je te godine cvjetalo.
+   */
+  krajolik: {
+    sr: {
+      heading: 'Med koji pamti krajolik',
+      paragrafi: [
+        'Svaka tegla našeg meda čuva krajolik iz kojeg je potekao. Pčele prelaze livade, šume i voćnjake, a u saće donose miris lipe, bagrema i divljeg cvijeća. Med pamti majsku kišu, sunce koje je u julu grijalo brda i tišinu jutra prije prve paše.',
+        'Ovaj med nije napravljen. Skupljen je, cvijet po cvijet, sa brda iznad našeg sela, gdje bagrem cvjeta prije lipe, a livada miriše najjače poslije kiše. Uzimaju ono što krajolik te godine da. Zato nijedna tegla nije ista.',
+      ],
+      cta: 'Naši pčelinjaci',
+      pcelarAlt: 'Pčelar podiže ram sa pčelama iz žute košnice',
+      kriskaAlt: 'Kriška hljeba s medom i nožem preko nje',
+    },
+    en: {
+      heading: 'Honey that remembers the land',
+      paragrafi: [
+        'Every jar of our honey keeps the landscape it came from. The bees cross meadows, woods and orchards, and carry back into the comb the scent of linden, acacia and wild flowers. The honey remembers the May rain, the July sun on the hills, and the quiet of the morning before the first flow.',
+        'This honey was not made. It was gathered, flower by flower, from the hills above our village, where the acacia blooms before the linden and the meadow smells strongest after rain. They take what the land gives that year. No two jars are ever the same.',
+      ],
+      cta: 'Our apiaries',
+      pcelarAlt: 'A beekeeper lifting a frame of bees from a yellow hive',
+      kriskaAlt: 'A slice of bread with honey and a knife across it',
+    },
+  } satisfies L<{
+    heading: string;
+    paragrafi: ReadonlyArray<string>;
+    cta: string;
+    pcelarAlt: string;
+    kriskaAlt: string;
+  }>,
+
   apiary: {
     sr: {
       heading: 'Mračaj',
@@ -477,8 +527,6 @@ export const home = {
     sr: {
       label: 'Snimci s pčelinjaka',
       eyebrow: 'Iz našeg albuma',
-      sealHives: 'Pogledaj naše pčelinjake',
-      sealProcess: 'Pogledaj proces vrcanja',
       alt: {
         dlan: 'Tegla livadskog meda na otvorenom dlanu, iza nje livada i brda',
         panj: 'Tegle livadskog i bagremovog meda na panju, na platnu, u visokoj travi',
@@ -490,8 +538,6 @@ export const home = {
     en: {
       label: 'Photographs from the apiary',
       eyebrow: 'From our album',
-      sealHives: 'See our apiaries',
-      sealProcess: 'See the extraction process',
       alt: {
         dlan: 'A jar of meadow honey resting on an open palm, meadow and hills behind it',
         panj: 'Jars of meadow and acacia honey on a tree stump, on linen, in tall grass',
@@ -503,8 +549,6 @@ export const home = {
   } satisfies L<{
     label: string;
     eyebrow: string;
-    sealHives: string;
-    sealProcess: string;
     alt: Record<'dlan' | 'panj' | 'korpa' | 'rame' | 'svjetlo', string>;
   }>,
 
@@ -686,8 +730,6 @@ export const home = {
       heading: 'Prva tegla je najbolji način da nas upoznate.',
       description:
         'Pogledajte dostupne vrste meda ili nam pošaljite poruku za količine, poklon pakovanja i sezonske serije.',
-      ctaProducts: 'Pogledaj proizvode',
-      ctaContact: 'Kontakt',
       placeholder: 'Email za sezonske novosti',
       join: 'Prijavi se',
       sending: 'Slanje...',
@@ -700,8 +742,6 @@ export const home = {
       heading: 'The first jar is the best way to know us.',
       description:
         'Browse available honey types or message us for quantities, gift packaging, and seasonal batches.',
-      ctaProducts: 'View products',
-      ctaContact: 'Contact',
       placeholder: 'Email for seasonal news',
       join: 'Join',
       sending: 'Sending...',

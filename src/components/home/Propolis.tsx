@@ -5,8 +5,9 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import TransitionLink from '@/components/ui/TransitionLink';
 import { home } from '@/content/pages';
-import { type Locale } from '@/i18n/config';
+import { localeHref, type Locale } from '@/i18n/config';
 
 import { BRANCH_PATH, BRANCH_VIEWBOX } from './propolisBranch';
 
@@ -215,11 +216,23 @@ export default function Propolis({ locale }: { locale: Locale }) {
           </div>
 
           {/*
-            Pecat na kraju: dolazi kad se scena ispise. Natpis je u samom
-            crtezu, pa mu ime stoji u `alt`-u — sloga preko njega nema.
+            Pecat na kraju: dolazi kad se scena ispise, i vodi na proizvode.
+
+            Natpis je u samom crtezu, pa slika nema `alt` — ime veze nosi
+            `aria-label`, koji kaze i sta na znaku pise i kuda vodi. Da su oba
+            stajala, citac ekrana bi ime procitao dvaput.
+
+            Najtamniji od tri: bocica u sredini je tamna, pa pecat uz nju mora
+            biti istog reda — zlatni se na papiru gubio uz nju.
           */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="propolis__znak" src="/images/brand/propolis-znak.svg" alt={t.znakAlt} />
+          <TransitionLink
+            className="propolis__znak pecat"
+            href={localeHref(locale, '/products')}
+            aria-label={`${t.znakAlt} — ${home.znakCta[locale]}`}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
+          </TransitionLink>
 
           {/*
             Naslov se ne vidi — na crtezu sekcije ga nema, ime proizvoda stoji na

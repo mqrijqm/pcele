@@ -14,6 +14,7 @@ import Vitrina from '@/components/home/Vitrina';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Livada from '@/components/home/Livada';
+import Krajolik from '@/components/home/Krajolik';
 import Propolis from '@/components/home/Propolis';
 import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
@@ -110,13 +111,33 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <Livada locale={locale} />
 
       {/*
-        Ponuda: jedna tegla na medenoj plohi, s izborom mjere i dugmetom.
+        Livadski med: tegla na medenoj plohi, kamilica oko nje, slog desno.
         Stoji pred propolisom — prvo ono glavno iz kosnice, pa ostalo.
       */}
-      <Ponuda locale={locale} />
+      <Ponuda locale={locale} sorta="livadski" />
 
       {/* Propolis: bocica, grancica koja se iscrta oko nje, pa natpisi. */}
       <Propolis locale={locale} />
+
+      {/*
+        Bagremov med: ista sekcija, okrenuta. Slog lijevo, tegla i grana desno,
+        papir umjesto meda, medeni krug umjesto krem — dvije sorte razmjenjuju
+        iste dvije boje i stoje jedna nasuprot druge, da niz ne bude niz istih
+        strana.
+
+        Stoji iza propolisa, ne odmah uz livadski: dvije iste sekcije jedna za
+        drugom se citaju kao jedna duga, ma koliko bile okrenute.
+      */}
+      <Ponuda locale={locale} sorta="bagremov" />
+
+      {/*
+        Med koji pamti krajolik. Dolazi poslije tri sorte i kaze zasto se
+        razlikuju: ne po receptu nego po tome sta je te godine cvjetalo. Zato
+        stoji tek ovdje — prije nego se sorte vide, nema sta da objasni.
+      */}
+      <div className="bloomfield">
+        <Krajolik locale={locale} />
+      </div>
 
       <Testimonials locale={locale} />
 

@@ -71,7 +71,7 @@ export default function Livada({ locale }: { locale: Locale }) {
           * kao pecat na vitrini.
           */}
         <TransitionLink
-          className="livada__seal"
+          className="livada__seal pecat"
           href={localeHref(locale, '/pcelinjak')}
           aria-label={t.sealLabel}
         >
