@@ -43,7 +43,14 @@ export default function LegalPage({
                 id={section.id}
                 className="mb-10 scroll-mt-28 border-b border-[#885B27]/15 pb-10 last:mb-0 last:border-b-0 last:pb-0"
               >
-                <h2 className="text-2xl text-[#885B27]">{section.heading}</h2>
+                {/*
+                  Numerisani naslov ide serifom, a sve pod njim ostaje
+                  grotesknim rezom: pravni tekst se cita u dugim blokovima i
+                  serif ga usporava, dok naslovu daje tezinu koju treba.
+                */}
+                <h2 className="font-display text-2xl font-normal tracking-[0.01em] text-[#885B27]">
+                  {section.heading}
+                </h2>
                 <div className="mt-4 space-y-4 text-base leading-relaxed text-[#885B27]">
                   {section.blocks.map((block, index) =>
                     block.t === 'p' ? (
@@ -63,7 +70,7 @@ export default function LegalPage({
             <p className="mt-12 border-t border-[#885B27]/15 pt-8 text-sm text-[#885B27]">
               {locale === 'sr' ? 'Imate dodatnih pitanja? Posjetite našu ' : 'Have more questions? Visit our '}
               <TransitionLink
-                href={localeHref(locale, '/contact')}
+                href={localeHref(locale, '/products')}
                 className="border-b border-[#EEC660] text-honey-700 transition-colors hover:text-[#885B27]"
               >
                 {locale === 'sr' ? 'kontakt stranicu' : 'contact page'}

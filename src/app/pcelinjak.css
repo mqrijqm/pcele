@@ -268,6 +268,15 @@
   overflow: clip;
 }
 
+/* Kad je u kutiji fotografija, siva ploha ispod nje nema sta da radi. */
+.pcl-ph--slika {
+  background-color: transparent;
+}
+
+.pcl-ph__img {
+  object-fit: cover;
+}
+
 .pcl-ph__label {
   font-size: 11px;
   line-height: 1;
@@ -508,48 +517,48 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  height: 59.1px;
-  align-items: start;
+  align-items: end;
+  justify-items: center;
 }
 
+/*
+ * Dugme je sam crtez sorte — u njemu je i ime, pisano rukom, pa nikakav slog
+ * pod njim ne treba. Neizabrani crtezi su tisi, a izabrani nosi vlas pod
+ * sobom: to je jedini znak koji ne trazi ni boju ni tezinu vise.
+ */
 .pcl-tab {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
   background: none;
   border: 0;
-  padding: 0;
+  padding: 0 0 10px;
   cursor: pointer;
-  font: inherit;
-  font-size: var(--pcl-tab);
-  line-height: var(--pcl-tab-lh);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--pcl-ink);
-  transition: color 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);
-}
-
-.pcl-tab__mark {
-  width: 22px;
-  height: 22px;
-  border: 1px solid currentColor;
-  border-radius: 50% / 40%;
-  opacity: 0.55;
-}
-
-.pcl-tab__label {
   border-bottom: 1px solid transparent;
-  padding-bottom: 3px;
+  opacity: 0.45;
+  transition:
+    opacity 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95),
+    border-color 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95);
 }
 
-.pcl-tab[aria-selected='true'] .pcl-tab__label {
-  border-bottom-color: currentColor;
+.pcl-tab__znak {
+  display: block;
+  width: auto;
+  height: clamp(5.5rem, 9vw, 8.5rem);
 }
 
-.pcl-tab:not([aria-selected='true']) {
-  color: var(--pcl-muted);
+.pcl-tab[aria-selected='true'] {
+  opacity: 1;
+  border-bottom-color: rgba(136, 91, 39, 0.5);
+}
+
+.pcl-tab:hover,
+.pcl-tab:focus-visible {
+  opacity: 0.8;
+}
+
+.pcl-tab[aria-selected='true']:hover {
+  opacity: 1;
 }
 
 .pcl-slides {
@@ -803,4 +812,9 @@
   .pcl-hscroll__track {
     transition: none;
   }
+}
+
+/* Snimak iza kartica: pokriva plohu, karta na njemu ostaje citljiva. */
+.pcl-next__bgImg {
+  object-fit: cover;
 }

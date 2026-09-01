@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import TransitionLink from '@/components/ui/TransitionLink';
@@ -56,7 +57,12 @@ export default async function PcelinjakPage({
       <Motion />
 
       {/* --- heroj ------------------------------------------------------ */}
-      <Hero rijeci={t.hero.title} caption={t.hero.caption} slikaAlt={t.hero.slikaAlt} />
+      <Hero
+        rijeci={t.hero.title}
+        caption={t.hero.caption}
+        slikaAlt={t.hero.slikaAlt}
+        slika={t.hero.slika}
+      />
 
       {/* --- natpis lijevo, naslov desno: sedam pa sedamnaest kolona ---- */}
       <section className="pcl-strip pcl-mb-md">
@@ -116,7 +122,14 @@ export default async function PcelinjakPage({
           </h2>
           <p className="pcl-body pcl-in">{t.parcela.body}</p>
           <div>
-            <ImagePlaceholder ratio={0.667} label="2:3" alt={t.parcela.slikaAlt} zoom />
+            <ImagePlaceholder
+              ratio={0.667}
+              label="2:3"
+              alt={t.parcela.slikaAlt}
+              src={t.parcela.slika}
+              sizes="(max-width: 767px) 90vw, 30vw"
+              zoom
+            />
           </div>
         </div>
       </section>
@@ -138,19 +151,33 @@ export default async function PcelinjakPage({
         lista={t.pase.lista}
         tabelaAria={locale === 'sr' ? 'Podaci o paši' : 'Forage data'}
         kvadratAlt={t.hscroll.kvadratAlt}
+        kvadrat={t.hscroll.kvadrat}
         kolone={t.hscroll.kolone}
       />
 
       {/* --- panorama preko cijele mjere sadrzaja ----------------------- */}
       <section className="pcl-strip pcl-panorama pcl-mb-lg">
-        <ImagePlaceholder ratio={1.841} label="1.84:1" alt={t.panorama.alt} zoom />
+        <ImagePlaceholder
+          ratio={1.841}
+          label="1.84:1"
+          alt={t.panorama.alt}
+          src={t.panorama.src}
+          sizes="(max-width: 767px) 90vw, 80vw"
+          zoom
+        />
       </section>
 
       {/* --- kartice na kraju ------------------------------------------ */}
       <section className="pcl-strip pcl-strip--wide">
         <div className="pcl-next">
-          <div className="pcl-next__bg" aria-hidden="true">
-            <span className="pcl-ph__label">16:9</span>
+          <div className="pcl-next__bg">
+            <Image
+              src={t.pozadina.src}
+              alt={t.pozadina.alt}
+              fill
+              sizes="100vw"
+              className="pcl-next__bgImg"
+            />
           </div>
 
           {/* Prva kartica stoji otvorena; ostale su u redu ispod slike. */}
@@ -161,7 +188,13 @@ export default async function PcelinjakPage({
             </p>
             <h2 className="pcl-next__title">{t.dalje[0].title}</h2>
             <div className="pcl-next__media">
-              <ImagePlaceholder ratio={2} label="2:1" alt={t.dalje[0].alt} />
+              <ImagePlaceholder
+                ratio={2}
+                label="2:1"
+                alt={t.dalje[0].alt}
+                src={t.dalje[0].src}
+                sizes="(max-width: 767px) 80vw, 28rem"
+              />
             </div>
             <p className="pcl-body pcl-next__text">{t.dalje[0].body}</p>
             <TransitionLink

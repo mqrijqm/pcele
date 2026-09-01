@@ -49,12 +49,6 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
               >
                 {t('account.startShopping')}
               </TransitionLink>
-              <TransitionLink
-                href={localeHref(locale, '/contact')}
-                className="inline-flex min-h-12 items-center border-b border-[#885B27]/35 pb-1 text-sm font-semibold text-[#885B27] transition-colors hover:border-[#EEC660] hover:text-[#885B27]"
-              >
-                {t('nav.contact')}
-              </TransitionLink>
             </div>
           </div>
 

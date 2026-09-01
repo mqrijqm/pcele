@@ -25,10 +25,8 @@
   "nav": {
     "home": "Home",
     "shop": "Shop",
-    "about": "About",
     "apiaries": "Our Apiaries",
     "process": "Our Process",
-    "contact": "Contact",
     "cart": "Cart",
     "account": "My Account",
     "login": "Login",
@@ -694,8 +692,14 @@
       "Acacia honey",
       "Meadow honey"
     ],
-    "hours": "Mon - Sat, 08:00 - 20:00",
-    "emailReplyTime": "Reply within 24h"
+    "hours": "Open for questions 8:00–16:00",
+    "emailReplyTime": "Reply within 24h",
+    "registry": "Registry number: RS 0212729",
+    "navLabel": "Pages",
+    "socialLabel": "Social media",
+    "linkProducts": "Products",
+    "linkProcess": "Process",
+    "linkApiary": "Apiary"
   },
   "trustBanner": {
     "items": [
@@ -771,20 +775,6 @@
     "close": "Close search",
     "clear": "Clear search",
     "noResults": "No results for \"{query}\""
-  },
-  "blog": {
-    "navLabel": "Blog",
-    "eyebrow": "Blog",
-    "title": "From our apiary",
-    "subtitle": "Stories about honey, bees, and seasonal work on the Mračaj homestead — written from three generations of beekeeping experience.",
-    "readMore": "Read more",
-    "backToBlog": "Back to blog",
-    "readingTime": "{minutes} min read",
-    "publishedLabel": "Published",
-    "relatedTitle": "You might also like",
-    "noPosts": "No posts have been published yet.",
-    "postNotFound": "Post not found",
-    "hivesImageAlt": "Hives in the apiary"
   },
   "wishlist": {
     "title": "Wishlist",

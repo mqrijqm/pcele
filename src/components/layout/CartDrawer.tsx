@@ -128,7 +128,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 {t('cart.shipping')}: {t('cart.shippingCalculated')}
               </p>
               <TransitionLink
-                href={localeHref(locale, '/contact')}
+                href={localeHref(locale, '/products')}
                 onClick={cart.close}
                 className="btn mt-5 w-full"
               >

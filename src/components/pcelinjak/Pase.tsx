@@ -32,12 +32,14 @@ export default function Pase({
   lista,
   tabelaAria,
   kvadratAlt,
+  kvadrat,
   kolone,
 }: {
   lista: PcelinjakPasa[];
   tabelaAria: string;
   kvadratAlt: string;
-  kolone: { alt: string; body: string }[];
+  kvadrat?: string;
+  kolone: { alt: string; body: string; src?: string }[];
 }) {
   const [aktivna, setAktivna] = useState(0);
   const hscroll = useRef<HTMLDivElement>(null);
@@ -91,9 +93,14 @@ export default function Pase({
                 aria-controls={`pasa-panel-${pasa.key}`}
                 className="pcl-tab"
                 onClick={() => setAktivna(i)}
+                aria-label={pasa.tab}
               >
-                <span className="pcl-tab__mark" aria-hidden="true" />
-                <span className="pcl-tab__label">{pasa.tab}</span>
+                {/*
+                  Natpis je u samom crtezu, pa dugme nema svoj slog — ime sorte
+                  stoji u `aria-label`, da ga citac ekrana ipak procita.
+                */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="pcl-tab__znak" src={pasa.znak} alt="" aria-hidden="true" />
               </button>
             </li>
           ))}
@@ -153,7 +160,13 @@ export default function Pase({
               <div className="pcl-strip pcl-strip--wide">
                 <div className="pcl-cols pcl-cols--9h-14h">
                   <div>
-                    <ImagePlaceholder ratio={1} label="1:1" alt={kvadratAlt} />
+                    <ImagePlaceholder
+                      ratio={1}
+                      label="1:1"
+                      alt={kvadratAlt}
+                      src={kvadrat}
+                      sizes="(max-width: 767px) 90vw, 38vw"
+                    />
                   </div>
                   <div className="pcl-triptych">
                     {kolone.map((k) => (

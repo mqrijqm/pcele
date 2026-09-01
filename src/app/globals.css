@@ -5858,84 +5858,107 @@ a.pecat:focus-visible img {
   }
 }
 
+
 /* ---------------------------------------------------------------------------
  * Podnozje.
  *
- * Ploha ide iz medene u papir: gornja ivica nosi boju koju sekcija nad njom
- * nema, pa se podnozje odvaja bez ijedne linije, a do dna se ugasi u papir —
- * potpis se cita na svijetlom, kao na etiketi.
+ * Tri polja u jednom redu: odredista i podaci lijevo, znak i ime kuce u
+ * sredini, mreze desno. Ploha je papir kao i ostatak strane — uzor koji je
+ * stigao uz zadatak nema ni bijelu plohu ni liniju na vrhu, pa ih nema ni
+ * ovdje; podnozje ne odvaja stranu nego je zavrsava.
  * ------------------------------------------------------------------------- */
 .stopa {
   position: relative;
   width: 100%;
-  min-height: 500px;
-  background: linear-gradient(to bottom, var(--amber) 0%, var(--paper) 62%);
+  background-color: var(--paper);
   color: var(--brown);
 }
 
 .stopa__inner {
   max-width: min(90rem, 100% - 2 * var(--container-padding));
   margin-inline: auto;
-  padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3.5rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  padding-block: clamp(3rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
 }
 
-/* --- znak: krupan, i okrene se za nekoliko stepeni pod misem ------------- */
-.stopa__znak {
-  display: block;
-  width: clamp(6rem, 11vw, 11rem);
-  transition: transform 0.7s var(--ease-out-expo);
+@media (min-width: 900px) {
+  .stopa__inner {
+    /*
+     * Sredina je sira od oba stupca uz nju: u njoj stoji ime kuce, koje je
+     * najkrupnije na plohi. Bocni stupci su jednaki, pa sredina ostaje u
+     * sredini kadra i kad su tekstovi u njima razlicite duzine.
+     */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr) minmax(0, 1fr);
+  }
 }
 
-.stopa__znak img {
-  display: block;
-  width: 100%;
-  height: auto;
+/* --- bocni stupci -------------------------------------------------------- */
+.stopa__stub--desno {
+  text-align: left;
 }
 
-.stopa__znak:hover,
-.stopa__znak:focus-visible {
-  transform: rotate(-6deg);
+@media (min-width: 900px) {
+  .stopa__stub--desno {
+    text-align: right;
+  }
 }
 
 /*
- * Ime kuce ide preko gotovo cijele mjere. Crtez nosi i "Jevtić" i
- * "PČELARSTVO", pa mu ispod ne treba nikakav slog.
+ * Odredista i mreze su jedan slog: serif, verzal, razmaknuto — isti red kao
+ * nadnaslovi drugdje na strani, samo krupniji, jer su ovdje jedina navigacija.
  */
-.stopa__ime {
-  display: block;
-  width: min(56rem, 100%);
-  height: auto;
-  margin-top: clamp(1.25rem, 2.5vw, 2.25rem);
+.stopa__veze {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(0.95rem, 1.15vw, 1.12rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.stopa__krug {
-  display: block;
-  width: clamp(3.25rem, 5vw, 4.5rem);
-  height: auto;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+.stopa__veze a {
+  color: inherit;
+  width: fit-content;
+  text-decoration-color: transparent;
+  text-decoration-line: underline;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.35s ease;
 }
 
-/* --- podaci -------------------------------------------------------------- */
+@media (min-width: 900px) {
+  .stopa__stub--desno .stopa__veze a {
+    margin-left: auto;
+  }
+}
+
+.stopa__veze a:hover,
+.stopa__veze a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+/* --- podaci firme -------------------------------------------------------- */
 .stopa__podaci {
-  margin-top: clamp(1.75rem, 3.5vw, 3rem);
-  font-size: 0.875rem;
-  line-height: 1.8;
+  margin-top: clamp(2rem, 5vw, 4.5rem);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.9rem;
+  line-height: 1.7;
 }
 
-.stopa__red {
+.stopa__podaci p {
   margin: 0;
 }
 
-.stopa__red--tiho {
-  color: var(--brown-soft);
+.stopa__podaci p + p {
+  margin-top: 1.15rem;
 }
 
-.stopa__red--razmak {
-  margin-top: 0.85rem;
+.stopa__oznaka {
+  display: inline-block;
+  min-width: 1.35rem;
 }
 
 .stopa__podaci a,
@@ -5954,14 +5977,43 @@ a.pecat:focus-visible img {
   text-decoration-color: currentColor;
 }
 
-/* Vlas izmedju dvije veze u istom redu. */
-.stopa__crta {
-  display: inline-block;
-  width: 1px;
-  height: 0.72em;
-  margin-inline: 0.85rem;
-  translate: 0 0.05em;
-  background: rgba(136, 91, 39, 0.35);
+/* --- sredina: znak, ime, pecat ------------------------------------------- */
+.stopa__sredina {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stopa__znak {
+  display: block;
+  width: clamp(6.5rem, 11vw, 10rem);
+  transition: transform 0.7s var(--ease-out-expo);
+}
+
+.stopa__znak img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stopa__znak:hover,
+.stopa__znak:focus-visible {
+  transform: rotate(-6deg);
+}
+
+.stopa__ime {
+  display: block;
+  width: min(24rem, 100%);
+  height: auto;
+  margin-top: clamp(1rem, 2vw, 1.75rem);
+}
+
+.stopa__krug {
+  display: block;
+  width: clamp(3.25rem, 4.5vw, 4.25rem);
+  height: auto;
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
 }
 
 /* --- sitno na dnu -------------------------------------------------------- */
@@ -5993,6 +6045,16 @@ a.pecat:focus-visible img {
 .stopa__pravno {
   display: inline-flex;
   align-items: center;
+}
+
+/* Vlas izmedju dvije veze u istom redu. */
+.stopa__crta {
+  display: inline-block;
+  width: 1px;
+  height: 0.72em;
+  margin-inline: 0.85rem;
+  translate: 0 0.05em;
+  background: rgba(136, 91, 39, 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {

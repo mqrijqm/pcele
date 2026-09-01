@@ -27,10 +27,12 @@ export default function Hero({
   rijeci,
   caption,
   slikaAlt,
+  slika,
 }: {
   rijeci: string[];
   caption: string;
   slikaAlt: string;
+  slika?: string;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const media = useRef<HTMLDivElement>(null);
@@ -101,6 +103,9 @@ export default function Hero({
                 ratio={1.261}
                 label="1.26:1"
                 alt={slikaAlt}
+                src={slika}
+                sizes="100vw"
+                priority
                 zoom
               />
             </div>

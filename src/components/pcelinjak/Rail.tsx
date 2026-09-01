@@ -4,9 +4,19 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import ImagePlaceholder from './ImagePlaceholder';
 
-type Slika = { alt: string; omjer: '3:2' | '4:3' };
+type Slika = { alt: string; omjer: '3:2' | '4:3' | '2:3' | '1:1'; src?: string };
 
-const OMJER: Record<Slika['omjer'], number> = { '3:2': 1.499, '4:3': 1.333 };
+/*
+ * Omjeri su omjeri samih fotografija, ne izbor: traka je i na uzoru nosila
+ * razlicite sirine na istoj visini, pa uspravna slika u njoj nije izuzetak
+ * nego ono zbog cega traka i postoji.
+ */
+const OMJER: Record<Slika['omjer'], number> = {
+  '3:2': 1.499,
+  '4:3': 1.333,
+  '2:3': 0.667,
+  '1:1': 1,
+};
 
 /**
  * Traka slika koja se lista u stranu.
@@ -63,7 +73,13 @@ export default function Rail({ slike, aria }: { slike: Slika[]; aria: string }) 
         <div className="pcl-rail__track" ref={track}>
           {slike.map((s, i) => (
             <div className="pcl-rail__item" key={`${s.alt}-${i}`}>
-              <ImagePlaceholder ratio={OMJER[s.omjer]} label={s.omjer} alt={s.alt} />
+              <ImagePlaceholder
+                ratio={OMJER[s.omjer]}
+                label={s.omjer}
+                alt={s.alt}
+                src={s.src}
+                sizes="(max-width: 767px) 70vw, 45vw"
+              />
             </div>
           ))}
         </div>

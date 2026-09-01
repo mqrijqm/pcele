@@ -25,10 +25,8 @@
   "nav": {
     "home": "Početna",
     "shop": "Proizvodi",
-    "about": "O nama",
     "apiaries": "Naši pčelinjaci",
     "process": "Naš proces",
-    "contact": "Kontakt",
     "cart": "Korpa",
     "account": "Moj nalog",
     "login": "Prijava",
@@ -694,8 +692,14 @@
       "Bagremov med",
       "Livadski med"
     ],
-    "hours": "Pon - Sub, 08:00 - 20:00",
-    "emailReplyTime": "Odgovor u roku od 24h"
+    "hours": "Otvoreni za pitanja 8:00–16:00",
+    "emailReplyTime": "Odgovor u roku od 24h",
+    "registry": "Registarski broj: RS 0212729",
+    "navLabel": "Strane",
+    "socialLabel": "Društvene mreže",
+    "linkProducts": "Proizvodi",
+    "linkProcess": "Proces",
+    "linkApiary": "Pčelinjak"
   },
   "trustBanner": {
     "items": [
@@ -771,20 +775,6 @@
     "close": "Zatvori pretragu",
     "clear": "Obriši pretragu",
     "noResults": "Nema rezultata za \"{query}\""
-  },
-  "blog": {
-    "navLabel": "Blog",
-    "eyebrow": "Blog",
-    "title": "Iz našeg pčelinjaka",
-    "subtitle": "Priče o medu, pčelama i sezonskom radu na imanju u Mračaju — pisane iz iskustva tri generacije pčelara.",
-    "readMore": "Pročitaj više",
-    "backToBlog": "Nazad na blog",
-    "readingTime": "{minutes} min čitanja",
-    "publishedLabel": "Objavljeno",
-    "relatedTitle": "Pročitajte i ovo",
-    "noPosts": "Trenutno nema objavljenih tekstova.",
-    "postNotFound": "Tekst nije pronađen",
-    "hivesImageAlt": "Košnice u pčelinjaku"
   },
   "wishlist": {
     "title": "Lista želja",

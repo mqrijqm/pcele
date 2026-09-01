@@ -1,42 +1,53 @@
+import Image from 'next/image';
+
 /**
  * Mjesto slike.
  *
- * Dok fotografije ne stignu, svaka slika na strani je siva ploha koja drzi
- * tacan omjer i tacnu kutiju, s natpisom omjera u sredini. Kad fotografija
- * dodje, mijenja se sadrzaj ove komponente — raspored oko nje se ne pomjera
- * ni za piksel, jer visinu odredjuje `aspect-ratio`, ne slika.
+ * Kutija koja drzi tacan omjer, i u njoj ili fotografija ili siva ploha sa
+ * upisanim omjerom dok fotografije nema. Visinu odredjuje `aspect-ratio`, ne
+ * sadrzaj — zato se raspored ne pomjeri ni za piksel kad slika stigne ili ode.
  *
- * `alt` nije ukras: stoji ovdje da se poslije prepise na pravu sliku, i da se
- * do tada zna sta na to mjesto ide.
+ * `alt` stoji i kad slike nema: dotle govori sta na to mjesto ide.
  */
 export default function ImagePlaceholder({
   ratio,
   label,
   alt,
+  src,
+  sizes = '(max-width: 767px) 90vw, 40vw',
+  priority = false,
   className = '',
   zoom = false,
 }: {
   /** Omjer kutije, sirina/visina. */
   ratio: number;
-  /** Natpis u sredini, npr. "3:2". */
+  /** Natpis u sredini dok slike nema, npr. "3:2". */
   label: string;
-  /** Sta na ovo mjesto ide kad stigne fotografija. */
+  /** Sta se na slici vidi. */
   alt: string;
+  /** Fotografija; bez nje mjesto ostaje sivo. */
+  src?: string;
+  sizes?: string;
+  priority?: boolean;
   className?: string;
   /** Ploha koja pri ulasku sjedne iz uvecanja, kao slike na uzoru. */
   zoom?: boolean;
 }) {
   return (
     <div
-      className={`pcl-ph${zoom ? ' pcl-ph--zoom' : ''}${className ? ` ${className}` : ''}`}
+      className={`pcl-ph${src ? ' pcl-ph--slika' : ''}${zoom ? ' pcl-ph--zoom' : ''}${
+        className ? ` ${className}` : ''
+      }`}
       style={{ ['--ratio' as string]: String(ratio) }}
-      role="img"
-      aria-label={alt}
-      data-alt={alt}
+      {...(src ? {} : { role: 'img', 'aria-label': alt })}
     >
-      <span className="pcl-ph__label" aria-hidden="true">
-        {label}
-      </span>
+      {src ? (
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="pcl-ph__img" />
+      ) : (
+        <span className="pcl-ph__label" aria-hidden="true">
+          {label}
+        </span>
+      )}
     </div>
   );
 }

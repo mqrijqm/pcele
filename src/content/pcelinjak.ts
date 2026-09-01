@@ -16,8 +16,10 @@ export type PcelinjakRed = { label: string; value: string };
 
 export type PcelinjakPasa = {
   key: string;
-  /** Natpis na dugmetu iznad slajda. */
+  /** Ime sorte; stoji kao pristupacan naziv dugmeta, jer je natpis u crtezu. */
   tab: string;
+  /** Crtez sorte — u njemu je i sam natpis, pa dugme nema svoj slog. */
+  znak: string;
   /** Crtez pase — mjesto za sliku, omjer 1.64:1. */
   mapaAlt: string;
   /** Pasus pod crtezom. */
@@ -28,23 +30,37 @@ export type PcelinjakPasa = {
 type Copy = {
   meta: { title: string; description: string };
   /** Heroj: naslov u tri rijeci i jedna recenica uz sliku koja se siri. */
-  hero: { title: string[]; caption: string; slikaAlt: string };
+  hero: { title: string[]; caption: string; slikaAlt: string; slika?: string };
   /** Natpis lijevo, naslov desno, pa uvodni pasus u desnom stupcu. */
   uvod: { pretitle: string; title: string[]; lead: string };
-  /** Traka slika koja se lista u stranu. */
-  galerija: { alt: string; omjer: '3:2' | '4:3' }[];
+  /** Traka slika koja se lista u stranu. Omjer je omjer same fotografije. */
+  galerija: { alt: string; omjer: '3:2' | '4:3' | '2:3' | '1:1'; src?: string }[];
   /** Pasus u dva stupca ispod trake. */
   tlo: string;
   /** Naslov lijevo, dugi pasus u sredini, uspravna slika desno. */
-  parcela: { title: string[]; body: string; slikaAlt: string };
+  parcela: { title: string[]; body: string; slikaAlt: string; slika?: string };
   /** Natpis i naslov iznad izbornika pasa. */
   pase: { pretitle: string; title: string[]; lista: PcelinjakPasa[] };
   /** Dvije ploce koje prolaze vodoravno dok strana stoji. */
-  hscroll: { kvadratAlt: string; kolone: { alt: string; body: string }[] };
+  hscroll: {
+    kvadratAlt: string;
+    kvadrat?: string;
+    kolone: { alt: string; body: string; src?: string }[];
+  };
   /** Panorama preko cijele mjere. */
-  panorama: { alt: string };
+  panorama: { alt: string; src?: string };
   /** Kartice koje vode na ostale strane. */
-  dalje: { key: string; href: string; title: string; body: string; link: string; alt: string }[];
+  dalje: {
+    key: string;
+    href: string;
+    title: string;
+    body: string;
+    link: string;
+    alt: string;
+    src?: string;
+  }[];
+  /** Snimak preko cijele plohe iza kartica. */
+  pozadina: { alt: string; src: string };
 };
 
 const sr: Copy = {
@@ -60,7 +76,8 @@ const sr: Copy = {
     title: ['Kraj', 'koji', 'miriše'],
     // cilj: 48
     caption: 'Gdje se zemlja, sunce i pčela sastaju u kapi.',
-    slikaAlt: 'Pčelinjak iz vazduha',
+    slikaAlt: 'Košnice u nizu na livadi iznad sela',
+    slika: '/images/pcelinjak/heroj.webp',
   },
 
   uvod: {
@@ -76,12 +93,12 @@ const sr: Copy = {
   },
 
   galerija: [
-    { alt: 'Košnice u redu na livadi', omjer: '3:2' },
-    { alt: 'Ram sa poklopljenim medom', omjer: '4:3' },
-    { alt: 'Pogled na selo ispod pčelinjaka', omjer: '4:3' },
-    { alt: 'Bagrem u cvatu nad košnicama', omjer: '3:2' },
-    { alt: 'Pčelar pred otvorenom košnicom', omjer: '3:2' },
-    { alt: 'Livada pred prvo jutarnje vrcanje', omjer: '3:2' },
+    { alt: 'Košnice u nizu, pogled niz red', omjer: '3:2', src: '/images/pcelinjak/traka-kosnice.webp' },
+    { alt: 'Košnice u hladu voćnjaka', omjer: '4:3', src: '/images/pcelinjak/traka-hlad.webp' },
+    { alt: 'Ram sa poklopljenim medom i upisanom godinom berbe', omjer: '4:3', src: '/images/pcelinjak/traka-berba.webp' },
+    { alt: 'Ramovi sa saćem izbliza', omjer: '2:3', src: '/images/pcelinjak/traka-ramovi.webp' },
+    { alt: 'Med teče iz vrcaljke u teglu', omjer: '2:3', src: '/images/pcelinjak/traka-vrcanje.webp' },
+    { alt: 'Kante sa sirovim medom poslije vrcanja', omjer: '1:1', src: '/images/pcelinjak/traka-kante.webp' },
   ],
 
   // cilj: 506, pasus se lomi u dva stupca
@@ -106,7 +123,8 @@ const sr: Copy = {
       'izdvajamo posebno i vrcamo u malim serijama, svake godine drugačiji po boji i gustini, a ' +
       'uvijek isti po tome što se u njemu osjeti čitav obronak: i kamen pod travom, i sjena ' +
       'šume nad njom, i strpljenje koje se u pčelarstvu ne može preskočiti.',
-    slikaAlt: 'Stara košnica na obronku',
+    slikaAlt: 'Pčele na ulazu u staru košnicu',
+    slika: '/images/pcelinjak/parcela.webp',
   },
 
   pase: {
@@ -116,9 +134,9 @@ const sr: Copy = {
     title: ['Zeleno', 'srce', 'našeg', 'kraja'],
     lista: [
       {
-        key: 'stara-livada',
-        // cilj: 12
-        tab: 'Stara livada',
+        key: 'livadski',
+        tab: 'Livadski med',
+        znak: '/images/brand/sorta-livadski.svg',
         mapaAlt: 'Crtež stare livade sa rasporedom košnica',
         // cilj: 202
         uvod:
@@ -137,9 +155,9 @@ const sr: Copy = {
         ],
       },
       {
-        key: 'kestenova',
-        // cilj: 10
-        tab: 'Kestenova',
+        key: 'bagremov',
+        tab: 'Bagremov med',
+        znak: '/images/brand/sorta-bagremov.svg',
         mapaAlt: 'Crtež kestenove paše iznad sela',
         uvod:
           'Kesten cvjeta kratko i visoko nad obronkom, pa se ova paša otvori na svega dvije ' +
@@ -156,9 +174,9 @@ const sr: Copy = {
         ],
       },
       {
-        key: 'lipova-pasa',
-        // cilj: 10
-        tab: 'Lipova paša',
+        key: 'meden',
+        tab: 'Meden',
+        znak: '/images/brand/sorta-meden.svg',
         mapaAlt: 'Crtež lipovog reda uz seoski put',
         uvod:
           'Red lipa uz stari seoski put cvjeta posljednji u godini, kad se livada već smiri, i ' +
@@ -178,10 +196,12 @@ const sr: Copy = {
   },
 
   hscroll: {
-    kvadratAlt: 'Stara košnica izbliza',
+    kvadratAlt: 'Tegle napunjene medom, poredane na stolu',
+    kvadrat: '/images/pcelinjak/hscroll-tegle.webp',
     kolone: [
       {
-        alt: 'Pčele na ramu',
+        alt: 'Tegla livadskog meda u korpi sa poljskim cvijećem',
+        src: '/images/pcelinjak/hscroll-livadski.webp',
         // cilj: 246
         body:
           'Pažljivim radom stari je pčelinjak vraćen u red u kojem je nekad bio, a društva koja ' +
@@ -189,7 +209,8 @@ const sr: Copy = {
           'Njihov se ritam vidi u sitnicama koje se skupe kroz sezonu:',
       },
       {
-        alt: 'Poklopljeni med na ramu',
+        alt: 'Livadski i bagremov med na panju u travi',
+        src: '/images/pcelinjak/hscroll-dvije.webp',
         // cilj: 282
         body:
           'manje ali gušće zajednice, duboko ukorijenjena paša koja izdrži i sušu, i stari ' +
@@ -198,7 +219,8 @@ const sr: Copy = {
           'sasvim prepoznatljivi'
       },
       {
-        alt: 'Vrcaljka u radu',
+        alt: 'Tegla bagremovog meda na panju',
+        src: '/images/pcelinjak/hscroll-bagremov.webp',
         // cilj: 282
         body:
           'mirisi koji dolaze od starosti društava i od toga što s njih uzimamo malo. Zaklonjen ' +
@@ -209,21 +231,12 @@ const sr: Copy = {
     ],
   },
 
-  panorama: { alt: 'Selo i pčelinjak u dolini' },
+  panorama: {
+    alt: 'Livada u cvatu iznad pčelinjaka',
+    src: '/images/pcelinjak/panorama.webp',
+  },
 
   dalje: [
-    {
-      key: 'about',
-      href: '/about',
-      title: 'O nama',
-      // cilj: 263
-      body:
-        'Porodica Jevtić drži pčele od 1980. godine, u istom selu i po istom redu koji se ' +
-        'prenosi s koljena na koljeno. Med vrcamo u malim serijama, bez dodataka i bez žurbe, ' +
-        'onako kako je i počelo — jer se ovdje ništa ne radi brže nego što pčela može.',
-      link: 'Upoznajte nas',
-      alt: 'Porodica pred košnicama',
-    },
     {
       key: 'process',
       href: '/process',
@@ -233,7 +246,8 @@ const sr: Copy = {
         'po redu koji se ne skraćuje ni kad se žuri. Med se ne grije i ne filtrira nasilno, ' +
         'nego se pusti da sam sjedne i odstoji, pa u teglu ide onakav kakav je izašao iz sata.',
       link: 'Pogledajte proces',
-      alt: 'Vrcanje meda u radionici',
+      alt: 'Bagrem u cvatu nad pčelinjakom',
+      src: '/images/pcelinjak/kartica.webp',
     },
     {
       key: 'products',
@@ -246,18 +260,12 @@ const sr: Copy = {
       link: 'Pogledajte ponudu',
       alt: 'Tegle meda u nizu',
     },
-    {
-      key: 'contact',
-      href: '/contact',
-      title: 'Kontakt',
-      body:
-        'Pčelinjak se može i posjetiti: dogovorite dolazak i pokazaćemo vam košnice, livadu i ' +
-        'cio način na koji se med vrca, od rama do tegle. Za narudžbe, veleprodaju ili samo ' +
-        'pitanje o medu, javite se telefonom ili porukom — odgovaramo isti dan.',
-      link: 'Javite nam se',
-      alt: 'Put ka pčelinjaku',
-    },
   ],
+
+  pozadina: {
+    alt: 'Tegla meda na ogradi, brdo iznad sela u pozadini',
+    src: '/images/pcelinjak/pozadina.webp',
+  },
 };
 
 const en: Copy = {
@@ -269,7 +277,8 @@ const en: Copy = {
   hero: {
     title: ['Land', 'that', 'remembers'],
     caption: 'Where soil, sun and bee meet inside a single drop.',
-    slikaAlt: 'The apiary from above',
+    slikaAlt: 'Hives in a row on the meadow above the village',
+    slika: '/images/pcelinjak/heroj.webp',
   },
   uvod: {
     pretitle: 'In a village near Prnjavor, on a hill',
@@ -280,12 +289,12 @@ const en: Copy = {
       'give honey that tastes a little different each year, yet keeps the same clarity and calm.',
   },
   galerija: [
-    { alt: 'Hives in a row on the meadow', omjer: '3:2' },
-    { alt: 'A frame of capped honey', omjer: '4:3' },
-    { alt: 'The village below the apiary', omjer: '4:3' },
-    { alt: 'Acacia in bloom above the hives', omjer: '3:2' },
-    { alt: 'The beekeeper at an open hive', omjer: '3:2' },
-    { alt: 'The meadow before the first extraction', omjer: '3:2' },
+    { alt: 'Hives in a row, seen down the line', omjer: '3:2', src: '/images/pcelinjak/traka-kosnice.webp' },
+    { alt: 'Hives in the shade of the orchard', omjer: '4:3', src: '/images/pcelinjak/traka-hlad.webp' },
+    { alt: 'A frame of capped honey with the harvest year written on it', omjer: '4:3', src: '/images/pcelinjak/traka-berba.webp' },
+    { alt: 'Frames of comb up close', omjer: '2:3', src: '/images/pcelinjak/traka-ramovi.webp' },
+    { alt: 'Honey running from the extractor into a jar', omjer: '2:3', src: '/images/pcelinjak/traka-vrcanje.webp' },
+    { alt: 'Buckets of raw honey after extraction', omjer: '1:1', src: '/images/pcelinjak/traka-kante.webp' },
   ],
   tlo:
     'The soil beneath our apiaries is shallow and stony, a mix of limestone and clay that every ' +
@@ -304,15 +313,17 @@ const en: Copy = {
       'single drop of honey holds linden and clover and a dozen flowers we have no names for. ' +
       'From that corner comes the honey we set aside and extract in small batches, different ' +
       'every year in colour and body, and always the same in that the whole slope is in it.',
-    slikaAlt: 'An old hive on the slope',
+    slikaAlt: 'Bees at the entrance of an old hive',
+    slika: '/images/pcelinjak/parcela.webp',
   },
   pase: {
     pretitle: 'Kinds of our honey',
     title: ['Green', 'heart', 'of', 'the', 'hill'],
     lista: [
       {
-        key: 'stara-livada',
-        tab: 'Old meadow',
+        key: 'livadski',
+        tab: 'Meadow honey',
+        znak: '/images/brand/sorta-livadski.svg',
         mapaAlt: 'Drawing of the old meadow and the hive layout',
         uvod:
           'Careful tending has kept the grasses that grew here long before us, and their deep ' +
@@ -329,8 +340,9 @@ const en: Copy = {
         ],
       },
       {
-        key: 'kestenova',
-        tab: 'Chestnut',
+        key: 'bagremov',
+        tab: 'Acacia honey',
+        znak: '/images/brand/sorta-bagremov.svg',
         mapaAlt: 'Drawing of the chestnut forage above the village',
         uvod:
           'Chestnut flowers briefly and high above the slope, so this forage opens for barely ' +
@@ -347,8 +359,9 @@ const en: Copy = {
         ],
       },
       {
-        key: 'lipova-pasa',
-        tab: 'Linden',
+        key: 'meden',
+        tab: 'Meden',
+        znak: '/images/brand/sorta-meden.svg',
         mapaAlt: 'Drawing of the linden row along the village road',
         uvod:
           'The row of lindens along the old village road flowers last in the year, once the ' +
@@ -367,23 +380,27 @@ const en: Copy = {
     ],
   },
   hscroll: {
-    kvadratAlt: 'An old hive up close',
+    kvadratAlt: 'Jars filled with honey, lined up on a table',
+    kvadrat: '/images/pcelinjak/hscroll-tegle.webp',
     kolone: [
       {
-        alt: 'Bees on a frame',
+        alt: 'A jar of meadow honey in a basket of wild flowers',
+        src: '/images/pcelinjak/hscroll-livadski.webp',
         body:
           'Careful work has brought the old apiary back to the order it once had, and the ' +
           'colonies living on it now follow their yearly course without our interference:',
       },
       {
-        alt: 'Capped honey on a frame',
+        alt: 'Meadow and acacia honey on a stump in the grass',
+        src: '/images/pcelinjak/hscroll-dvije.webp',
         body:
           'smaller but denser colonies, deep-rooted forage that survives a drought, and old ' +
           'combs that serve the colony as a reserve — together they give a resilience you later ' +
           'see in the jar: steady quality year after year, clear body and',
       },
       {
-        alt: 'The extractor at work',
+        alt: 'A jar of acacia honey on a stump',
+        src: '/images/pcelinjak/hscroll-bagremov.webp',
         body:
           'aromas that come from the age of the colonies and from how little we take. Sheltered ' +
           'and quiet, this slope is the true heart of the apiary, where beekeeping knowledge ' +
@@ -391,19 +408,11 @@ const en: Copy = {
       },
     ],
   },
-  panorama: { alt: 'The village and the apiary in the valley' },
+  panorama: {
+    alt: 'The meadow in bloom above the apiary',
+    src: '/images/pcelinjak/panorama.webp',
+  },
   dalje: [
-    {
-      key: 'about',
-      href: '/about',
-      title: 'About us',
-      body:
-        'The Jevtić family has kept bees since 1980, in the same village and by the same order ' +
-        'handed down through generations. We extract in small batches, with nothing added and ' +
-        'no hurry, the way it began — nothing here is done faster than the bee can work.',
-      link: 'Get to know us',
-      alt: 'The family in front of the hives',
-    },
     {
       key: 'process',
       href: '/process',
@@ -413,7 +422,8 @@ const en: Copy = {
         'hand and in an order that is never cut short. The honey is not heated or forced ' +
         'through a filter; it settles on its own and goes into the jar as it left the comb.',
       link: 'See the process',
-      alt: 'Extracting honey in the workshop',
+      alt: 'Acacia in bloom above the apiary',
+      src: '/images/pcelinjak/kartica.webp',
     },
     {
       key: 'products',
@@ -426,18 +436,12 @@ const en: Copy = {
       link: 'See the range',
       alt: 'Jars of honey in a row',
     },
-    {
-      key: 'contact',
-      href: '/contact',
-      title: 'Contact',
-      body:
-        'The apiary can be visited: arrange a time and we will show you the hives, the meadow ' +
-        'and the way the honey is extracted. For orders, wholesale or simply a question about ' +
-        'honey, get in touch — we answer the same day.',
-      link: 'Get in touch',
-      alt: 'The road up to the apiary',
-    },
   ],
+
+  pozadina: {
+    alt: 'A jar of honey on a fence, the hill above the village behind it',
+    src: '/images/pcelinjak/pozadina.webp',
+  },
 };
 
 export const pcelinjak: Record<Locale, Copy> = { sr, en };
