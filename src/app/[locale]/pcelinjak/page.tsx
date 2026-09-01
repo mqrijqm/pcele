@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 
-import Testimonials from '@/components/home/Testimonials';
+import TransitionLink from '@/components/ui/TransitionLink';
 import BeeFlight from '@/components/bee/BeeFlight';
+import Hero from '@/components/pcelinjak/Hero';
+import Rail from '@/components/pcelinjak/Rail';
+import Pase from '@/components/pcelinjak/Pase';
+import Motion from '@/components/pcelinjak/Motion';
+import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
 import { pcelinjak } from '@/content/pcelinjak';
 import { isLocale, localeHref, type Locale } from '@/i18n/config';
 
@@ -21,15 +24,22 @@ export async function generateMetadata({
 /**
  * Nasi pcelinjaci.
  *
- * Raspored je preuzet sa strane o vinogradima na moncalisse.com: niz traka
- * razlicite sirine preko iste mreze od dvadeset i cetiri kolone, uvijek u
- * istom odnosu — sitan natpis, krupan naslov, tekst u uzem stupcu, pa slika
- * koja se prosiri preko svega. Odatle su i mjere: sirinska skala (usko /
- * normalno / siroko), razmaci u odnosu 1:2:4, i tipografska skala 75/60/45.
+ * Raspored je preuzet sa moncalisse.com/en/vineyards i to ne po sjecanju nego
+ * po mjerenju: strana je snimljena Playwrightom na 1440, 1024 i 390 px, pa su
+ * iz izracunatih stilova izvuceni mreza, ritam, tipografska skala i kutije
+ * slika. Sve brojke i snimci stoje u `.ref/moncalisse/`.
  *
- * Preuzet je raspored, ne sadrzaj. Nijedna rijec i nijedna slika nisu odande.
+ * Redoslijed traka je isti kao tamo:
  *
- * Mjesto ilustracije u heroju je namjerno prazno — ceka crtez.
+ *   heroj sa slikom koja se siri -> natpis i naslov -> uvodni pasus ->
+ *   traka slika -> pasus u dva stupca -> stara parcela -> sorte ->
+ *   ploca koja prolazi u stranu -> panorama -> kartice na kraju
+ *
+ * Dvije izmjene, obje trazene: slike su siva mjesta sa upisanim omjerom, i
+ * sav slog ide nasim serifom. Mjere su ostale uzorove.
+ *
+ * Nijedna rijec nije odande — tekst je nas i privremen, pisan da po duzini
+ * odgovara bloku koji zamjenjuje. Vidi TODO copy u `content/pcelinjak.ts`.
  */
 export default async function PcelinjakPage({
   params,
@@ -43,167 +53,137 @@ export default async function PcelinjakPage({
   return (
     <div className="pcl header-offset">
       <BeeFlight />
+      <Motion />
 
-      {/* --- heroj: natpis, naslov, jedna recenica ---------------------- */}
-      <section className="strip strip--normal pcl__hero">
-        <div className="strip__inner">
-          <p className="strip__pretitle">{t.hero.pretitle}</p>
-          <h1 className="strip__title1">{t.hero.title}</h1>
-          <p className="strip__lead">{t.hero.lead}</p>
+      {/* --- heroj ------------------------------------------------------ */}
+      <Hero rijeci={t.hero.title} caption={t.hero.caption} slikaAlt={t.hero.slikaAlt} />
+
+      {/* --- natpis lijevo, naslov desno: sedam pa sedamnaest kolona ---- */}
+      <section className="pcl-strip pcl-mb-md">
+        <div className="pcl-cols pcl-cols--7-17">
+          <p className="pcl-pretitle pcl-in">{t.uvod.pretitle}</p>
+          <h2 className="pcl-display pcl-display--2 pcl-in">
+            {t.uvod.title.map((r) => (
+              <span className="pcl-display__word" key={r}>
+                <span>{r}</span>
+              </span>
+            ))}
+          </h2>
         </div>
-
-        {/*
-          Mjesto crteza pcelinjaka. Stoji prazno dok crtez ne stigne, ali drzi
-          svoju visinu — da se strana ne prelomi kad ga bude.
-        */}
-        <div className="pcl__plate" aria-hidden="true" />
       </section>
 
-      {/* --- uvod: natpis i naslov lijevo, tekst u desnoj polovini ------ */}
-      <section className="strip strip--normal strip--columns mb-xl">
-        <div className="strip__inner strip__cols">
+      {/* --- uvodni pasus u desnom stupcu: osam pa sesnaest ------------- */}
+      <section className="pcl-strip pcl-mb-md">
+        <div className="pcl-cols pcl-cols--8-16">
+          <div aria-hidden="true" />
+          <p className="pcl-body pcl-in">{t.uvod.lead}</p>
+        </div>
+      </section>
+
+      {/*
+        Traka slika. Preko cijele mjere, uvucena s lijeva i prelivena preko
+        desne ivice — kao na uzoru, gdje niz namjerno izlazi iz sadrzaja.
+      */}
+      <section className="pcl-strip pcl-strip--wide pcl-mb-md pcl-in">
+        <Rail
+          slike={t.galerija}
+          aria={locale === 'sr' ? 'Slike sa pčelinjaka' : 'Pictures from the apiary'}
+        />
+      </section>
+
+      {/* --- pasus koji se lomi u dva stupca ---------------------------- */}
+      <section className="pcl-strip pcl-mb-lg">
+        <div className="pcl-cols pcl-cols--8-16">
+          <div aria-hidden="true" />
+          <p className="pcl-body pcl-body--2col pcl-in">{t.tlo}</p>
+        </div>
+      </section>
+
+      {/*
+        Stara parcela: naslov, dugi pasus i uspravna slika u tri stupca
+        (sedam / devet / osam). Slika je uza od svog stupca po mjeri, ali je
+        na uzoru uvecana preko njega — otud `pcl-ph--zoom`, koji je i vraca na
+        svoje kad udje u kadar.
+      */}
+      <section className="pcl-strip pcl-mt-lg pcl-mb-lg">
+        <div className="pcl-cols pcl-cols--7-9-8">
+          <h2 className="pcl-display pcl-display--2 pcl-in">
+            {t.parcela.title.map((r) => (
+              <span className="pcl-display__word" key={r}>
+                <span>{r}</span>
+              </span>
+            ))}
+          </h2>
+          <p className="pcl-body pcl-in">{t.parcela.body}</p>
           <div>
-            <p className="strip__pretitle">{t.uvod.pretitle}</p>
-            <h2 className="strip__title2">{t.uvod.title}</h2>
-          </div>
-          <div className="strip__copy">
-            {t.uvod.body.map((par) => (
-              <p key={par.slice(0, 24)}>{par}</p>
-            ))}
+            <ImagePlaceholder ratio={0.667} label="2:3" alt={t.parcela.slikaAlt} zoom />
           </div>
         </div>
       </section>
 
-      {/* --- siroka traka: tri snimka preko cijele mjere ---------------- */}
-      <section className="strip strip--wide mb-lg">
-        <div className="pcl__band">
-          <figure className="pcl__shot">
-            <Image
-              src="/images/pcelinjak/kosnice-blizu.webp"
-              alt={t.prica.altB}
-              width={1800}
-              height={1200}
-              sizes="(max-width: 900px) 90vw, 46vw"
-            />
-          </figure>
-          <figure className="pcl__shot pcl__shot--tall">
-            <Image
-              src="/images/pcelinjak/tegle-ograda.webp"
-              alt={t.prica.altA}
-              width={1400}
-              height={1749}
-              sizes="(max-width: 900px) 60vw, 26vw"
-            />
-          </figure>
-          <figure className="pcl__shot">
-            <Image
-              src="/images/pcelinjak/kosnice-hlad.webp"
-              alt={t.mjesta.lista[2].alt}
-              width={1800}
-              height={1547}
-              sizes="(max-width: 900px) 90vw, 30vw"
-            />
-          </figure>
-        </div>
-      </section>
-
-      {/* --- istaknuti pcelinjak: tekst lijevo, snimak desno ------------ */}
-      <section className="strip strip--normal mb-xl">
-        <div className="strip__inner">
-          <div className="pcl__feature">
-            <div className="pcl__featureCopy">
-              <p className="strip__pretitle">{t.istaknuti.pretitle}</p>
-              <h2 className="strip__title3">{t.istaknuti.title}</h2>
-              <p>{t.istaknuti.body}</p>
-            </div>
-            <figure className="pcl__featureShot">
-              <Image
-                src="/images/pcelinjak/kosnice-livada.webp"
-                alt={t.istaknuti.alt}
-                width={1800}
-                height={1350}
-                sizes="(max-width: 900px) 90vw, 42vw"
-              />
-            </figure>
-          </div>
-        </div>
-      </section>
-
-      {/* --- tri pcelinjaka -------------------------------------------- */}
-      <section className="strip strip--narrow mb-lg">
-        <div className="strip__inner">
-          <p className="strip__pretitle">{t.mjesta.pretitle}</p>
-          <h2 className="strip__title2">{t.mjesta.title}</h2>
-        </div>
-      </section>
-
-      <section className="strip strip--normal mb-xl">
-        <ul className="pcl__places">
-          {t.mjesta.lista.map((mjesto) => (
-            <li className="pcl__place" key={mjesto.key}>
-              <figure className="pcl__placeShot">
-                <Image
-                  src={mjesto.slika}
-                  alt={mjesto.alt}
-                  width={1800}
-                  height={1350}
-                  sizes="(max-width: 900px) 90vw, 30vw"
-                />
-              </figure>
-              <h3 className="strip__title4">{mjesto.naziv}</h3>
-              <dl className="pcl__rows">
-                {mjesto.redovi.map((red) => (
-                  <div className="pcl__row" key={red.label}>
-                    <dt>{red.label}</dt>
-                    <dd>{red.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </li>
+      {/* --- natpis i naslov iznad izbornika, u uskoj traci ------------- */}
+      <section className="pcl-strip pcl-strip--narrow pcl-mb-md pcl-center">
+        <p className="pcl-pretitle pcl-in">{t.pase.pretitle}</p>
+        <h2 className="pcl-display pcl-display--2 pcl-in">
+          {t.pase.title.map((r) => (
+            <span className="pcl-display__word" key={r}>
+              <span>{r}</span>
+            </span>
           ))}
-        </ul>
+        </h2>
       </section>
 
-      {/* --- prica: naslov lijevo, tekst desno -------------------------- */}
-      <section className="strip strip--normal strip--columns mb-lg">
-        <div className="strip__inner strip__cols">
-          <h2 className="strip__title2">{t.prica.title}</h2>
-          <div className="strip__copy">
-            {t.prica.body.map((par) => (
-              <p key={par.slice(0, 24)}>{par}</p>
-            ))}
+      {/* --- sorte i ploca koja prolazi u stranu ------------------------ */}
+      <Pase
+        lista={t.pase.lista}
+        tabelaAria={locale === 'sr' ? 'Podaci o paši' : 'Forage data'}
+        kvadratAlt={t.hscroll.kvadratAlt}
+        kolone={t.hscroll.kolone}
+      />
+
+      {/* --- panorama preko cijele mjere sadrzaja ----------------------- */}
+      <section className="pcl-strip pcl-panorama pcl-mb-lg">
+        <ImagePlaceholder ratio={1.841} label="1.84:1" alt={t.panorama.alt} zoom />
+      </section>
+
+      {/* --- kartice na kraju ------------------------------------------ */}
+      <section className="pcl-strip pcl-strip--wide">
+        <div className="pcl-next">
+          <div className="pcl-next__bg" aria-hidden="true">
+            <span className="pcl-ph__label">16:9</span>
           </div>
-        </div>
-      </section>
 
-      {/* --- jedan snimak preko mjere ----------------------------------- */}
-      <section className="strip strip--normal strip--image mb-xl">
-        <figure className="pcl__wide">
-          <Image
-            src="/images/pcelinjak/tegla-brdo.webp"
-            alt={t.zavrsna.alt}
-            width={1400}
-            height={1749}
-            sizes="(max-width: 900px) 100vw, 78vw"
-          />
-        </figure>
-      </section>
-
-      <Testimonials locale={locale} />
-
-      {/* --- poziv ------------------------------------------------------ */}
-      <section className="strip strip--narrow pcl__cta">
-        <div className="strip__inner">
-          <p className="strip__pretitle">{t.poziv.pretitle}</p>
-          <h2 className="strip__title3">{t.poziv.title}</h2>
-          <p className="pcl__ctaLinks">
-            <TransitionLink className="pcl__button" href={localeHref(locale, '/contact')}>
-              {t.poziv.cta}
+          {/* Prva kartica stoji otvorena; ostale su u redu ispod slike. */}
+          <div className="pcl-next__card pcl-in">
+            <p className="pcl-next__counter">
+              <span>01</span>
+              <span className="pcl-next__total">0{t.dalje.length}</span>
+            </p>
+            <h2 className="pcl-next__title">{t.dalje[0].title}</h2>
+            <div className="pcl-next__media">
+              <ImagePlaceholder ratio={2} label="2:1" alt={t.dalje[0].alt} />
+            </div>
+            <p className="pcl-body pcl-next__text">{t.dalje[0].body}</p>
+            <TransitionLink
+              className="pcl-next__link"
+              href={localeHref(locale, t.dalje[0].href)}
+            >
+              {t.dalje[0].link}
             </TransitionLink>
-            <TransitionLink className="pcl__button pcl__button--quiet" href={localeHref(locale, '/products')}>
-              {t.poziv.ctaSecondary}
-            </TransitionLink>
-          </p>
+          </div>
+
+          <nav className="pcl-next__rail">
+            {t.dalje.map((d, i) => (
+              <TransitionLink
+                key={d.key}
+                className="pcl-next__railLink"
+                href={localeHref(locale, d.href)}
+                aria-current={i === 0 ? 'true' : undefined}
+              >
+                {d.title}
+              </TransitionLink>
+            ))}
+          </nav>
         </div>
       </section>
     </div>

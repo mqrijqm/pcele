@@ -46,3 +46,4 @@ recon/preloader/
 recon/findings.json
 recon/state-*.png
 recon/cmp-*.png
+.ref/
