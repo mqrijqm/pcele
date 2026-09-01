@@ -113,16 +113,16 @@ const sr: Copy = {
   parcela: {
     // cilj: 16, tri rijeci
     title: ['Košnica', 'na', 'brdu'],
-    // cilj: 657
+    /*
+     * Kraci nego blok na uzoru, i namjerno: zadnje dvije recenice su otisle na
+     * zahtjev. Duzina ovdje vise ne prati uzor.
+     */
     body:
       'U srcu imanja stoji jedan hektar stare livade koju ne kosimo i ne prihranjujemo, nego je ' +
       'puštamo da ide svojim redom. Tu su košnice koje je djed postavio osamdesete godine, na ' +
       'istom onom obronku okrenutom jugu, i tu se i danas vrca prvo. Trave na toj parceli nisu ' +
       'sijane — same su se vratile poslije godina ispaše, pa se u jednoj kapi meda nađe i lipa ' +
-      'i djetelina i desetak cvjetova kojima ni ime ne znamo. Iz tog uglavka dolazi med koji ' +
-      'izdvajamo posebno i vrcamo u malim serijama, svake godine drugačiji po boji i gustini, a ' +
-      'uvijek isti po tome što se u njemu osjeti čitav obronak: i kamen pod travom, i sjena ' +
-      'šume nad njom, i strpljenje koje se u pčelarstvu ne može preskočiti.',
+      'i djetelina i desetak cvjetova kojima ni ime ne znamo.',
     slikaAlt: 'Pčele na ulazu u staru košnicu',
     slika: '/images/pcelinjak/parcela.webp',
   },
@@ -232,8 +232,8 @@ const sr: Copy = {
   },
 
   panorama: {
-    alt: 'Livada u cvatu iznad pčelinjaka',
-    src: '/images/pcelinjak/panorama.webp',
+    alt: 'Korpa sa livadskim i bagremovim medom i propolisom, u livadi',
+    src: '/images/pcelinjak/ploca.webp',
   },
 
   dalje: [
@@ -409,8 +409,8 @@ const en: Copy = {
     ],
   },
   panorama: {
-    alt: 'The meadow in bloom above the apiary',
-    src: '/images/pcelinjak/panorama.webp',
+    alt: 'A basket of meadow and acacia honey and propolis, out in the meadow',
+    src: '/images/pcelinjak/ploca.webp',
   },
   dalje: [
     {

@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import ProductRail from '@/components/products/ProductRail';
-import ProductsGrid from '@/components/products/ProductsGrid';
 import SorteMeda from '@/components/products/SorteMeda';
 import ImageBreak from '@/components/ui/ImageBreak';
 import { meta, photoBreaks, productsPage } from '@/content/pages';
@@ -28,11 +27,13 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
     <div className="bg-ivory header-offset">
       {/* Strana pocinje samom policom; naslov ostaje za citace ekrana. */}
       <h1 className="sr-only">{copy.heading}</h1>
-      <section className="bg-ivory section-padding">
-        <div className="container">
-          <ProductsGrid locale={locale} />
-        </div>
-      </section>
+
+      {/*
+        Ovdje je stajala mreza kartica sa cijenama i srcima — obican webshop
+        raspored, kakav ova strana nece biti. Otisla je cijela; ostaje prazan
+        pojas koji drzi svoju visinu dok ne dodje ono sto ide na njeno mjesto.
+      */}
+      <section className="prazno" aria-hidden="true" />
 
       {/*
         Pojas u boji meda, jos prazan — mjesto je zauzeto, sadrzaj dolazi.

@@ -6066,3 +6066,14 @@ a.pecat:focus-visible img {
     transform: none;
   }
 }
+
+/*
+ * Prazan pojas koji cuva mjesto.
+ *
+ * Sekcija bez sadrzaja nema visinu, pa bi se strana skupila i izgledala kao
+ * da je nesto puklo. Ovim drzi mjeru dok ne dodje ono sto na njega ide; kad
+ * dodje, ovo pravilo ide van.
+ */
+.prazno {
+  min-height: 70svh;
+}

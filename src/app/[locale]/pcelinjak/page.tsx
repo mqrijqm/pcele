@@ -1,16 +1,17 @@
-import type { Metadata } from 'next';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import type { Metadata } from "next";
+import Image from "next/image";
+import { notFound } from "next/navigation";
 
-import TransitionLink from '@/components/ui/TransitionLink';
-import BeeFlight from '@/components/bee/BeeFlight';
-import Hero from '@/components/pcelinjak/Hero';
-import Rail from '@/components/pcelinjak/Rail';
-import Pase from '@/components/pcelinjak/Pase';
-import Motion from '@/components/pcelinjak/Motion';
-import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
-import { pcelinjak } from '@/content/pcelinjak';
-import { isLocale, localeHref, type Locale } from '@/i18n/config';
+import TransitionLink from "@/components/ui/TransitionLink";
+import BeeFlight from "@/components/bee/BeeFlight";
+import Hero from "@/components/pcelinjak/Hero";
+import Rail from "@/components/pcelinjak/Rail";
+import Pase from "@/components/pcelinjak/Pase";
+import Motion from "@/components/pcelinjak/Motion";
+import Kraj from "@/components/pcelinjak/Kraj";
+import ImagePlaceholder from "@/components/pcelinjak/ImagePlaceholder";
+import { pcelinjak } from "@/content/pcelinjak";
+import { isLocale, localeHref, type Locale } from "@/i18n/config";
 
 export async function generateMetadata({
   params,
@@ -18,8 +19,11 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: pcelinjak[l].meta.title, description: pcelinjak[l].meta.description };
+  const l: Locale = isLocale(locale) ? locale : "sr";
+  return {
+    title: pcelinjak[l].meta.title,
+    description: pcelinjak[l].meta.description,
+  };
 }
 
 /**
@@ -93,7 +97,9 @@ export default async function PcelinjakPage({
       <section className="pcl-strip pcl-strip--wide pcl-mb-md pcl-in">
         <Rail
           slike={t.galerija}
-          aria={locale === 'sr' ? 'Slike sa pčelinjaka' : 'Pictures from the apiary'}
+          aria={
+            locale === "sr" ? "Slike sa pčelinjaka" : "Pictures from the apiary"
+          }
         />
       </section>
 
@@ -149,75 +155,93 @@ export default async function PcelinjakPage({
       {/* --- sorte i ploca koja prolazi u stranu ------------------------ */}
       <Pase
         lista={t.pase.lista}
-        tabelaAria={locale === 'sr' ? 'Podaci o paši' : 'Forage data'}
+        tabelaAria={locale === "sr" ? "Podaci o paši" : "Forage data"}
         kvadratAlt={t.hscroll.kvadratAlt}
         kvadrat={t.hscroll.kvadrat}
         kolone={t.hscroll.kolone}
       />
 
-      {/* --- panorama preko cijele mjere sadrzaja ----------------------- */}
+      {/*
+        Ploca pred krajem strane.
+        
+        Bila je siroka traka 1.84:1; snimak koji je dosao na to mjesto je
+        uspravan, i isjecen na tu mjeru ostala bi od njega kriska bez korpe.
+        Zato je kutija uspravna i po sredini — plocica, ne panorama.
+      */}
       <section className="pcl-strip pcl-panorama pcl-mb-lg">
         <ImagePlaceholder
-          ratio={1.841}
-          label="1.84:1"
+          ratio={0.75}
+          label="3:4"
           alt={t.panorama.alt}
           src={t.panorama.src}
-          sizes="(max-width: 767px) 90vw, 80vw"
+          sizes="(max-width: 767px) 90vw, 32rem"
           zoom
         />
       </section>
 
-      {/* --- kartice na kraju ------------------------------------------ */}
+      {/*
+        Kartice na kraju. Strana ovdje stane i karta se ispise dio po dio —
+        brojac, naslov, snimak, tekst, veza, pa red imena — pa tek onda pusta
+        dalje u podnozje.
+      */}
       <section className="pcl-strip pcl-strip--wide">
-        <div className="pcl-next">
-          <div className="pcl-next__bg">
-            <Image
-              src={t.pozadina.src}
-              alt={t.pozadina.alt}
-              fill
-              sizes="100vw"
-              className="pcl-next__bgImg"
-            />
-          </div>
-
-          {/* Prva kartica stoji otvorena; ostale su u redu ispod slike. */}
-          <div className="pcl-next__card pcl-in">
-            <p className="pcl-next__counter">
-              <span>01</span>
-              <span className="pcl-next__total">0{t.dalje.length}</span>
-            </p>
-            <h2 className="pcl-next__title">{t.dalje[0].title}</h2>
-            <div className="pcl-next__media">
-              <ImagePlaceholder
-                ratio={2}
-                label="2:1"
-                alt={t.dalje[0].alt}
-                src={t.dalje[0].src}
-                sizes="(max-width: 767px) 80vw, 28rem"
+        <Kraj>
+          <div className="pcl-next">
+            <div className="pcl-next__bg">
+              <Image
+                src={t.pozadina.src}
+                alt={t.pozadina.alt}
+                fill
+                sizes="100vw"
+                className="pcl-next__bgImg"
               />
             </div>
-            <p className="pcl-body pcl-next__text">{t.dalje[0].body}</p>
-            <TransitionLink
-              className="pcl-next__link"
-              href={localeHref(locale, t.dalje[0].href)}
-            >
-              {t.dalje[0].link}
-            </TransitionLink>
-          </div>
 
-          <nav className="pcl-next__rail">
-            {t.dalje.map((d, i) => (
-              <TransitionLink
-                key={d.key}
-                className="pcl-next__railLink"
-                href={localeHref(locale, d.href)}
-                aria-current={i === 0 ? 'true' : undefined}
-              >
-                {d.title}
-              </TransitionLink>
-            ))}
-          </nav>
-        </div>
+            {/* Prva kartica stoji otvorena; ostale su u redu ispod slike. */}
+            <div className="pcl-next__card">
+              <p className="pcl-next__counter" data-ulaz>
+                <span>01</span>
+                <span className="pcl-next__total">0{t.dalje.length}</span>
+              </p>
+              <h2 className="pcl-next__title" data-ulaz>
+                {t.dalje[0].title}
+              </h2>
+              <div className="pcl-next__media" data-ulaz>
+                <ImagePlaceholder
+                  ratio={2}
+                  label="2:1"
+                  alt={t.dalje[0].alt}
+                  src={t.dalje[0].src}
+                  sizes="(max-width: 767px) 80vw, 28rem"
+                />
+              </div>
+              <p className="pcl-body pcl-next__text" data-ulaz>
+                {t.dalje[0].body}
+              </p>
+              <span data-ulaz>
+                <TransitionLink
+                  className="pcl-next__link"
+                  href={localeHref(locale, t.dalje[0].href)}
+                >
+                  {t.dalje[0].link}
+                </TransitionLink>
+              </span>
+            </div>
+
+            <nav className="pcl-next__rail" data-ulaz>
+              {t.dalje.map((d, i) => (
+                <TransitionLink
+                  key={d.key}
+                  className="pcl-next__railLink"
+                  href={localeHref(locale, d.href)}
+                  aria-current={i === 0 ? "true" : undefined}
+                >
+                  {d.title}
+                </TransitionLink>
+              ))}
+            </nav>
+          </div>
+        </Kraj>
       </section>
     </div>
   );

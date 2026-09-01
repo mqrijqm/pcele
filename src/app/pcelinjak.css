@@ -429,9 +429,16 @@
 /* ---------------------------------------------------------------------------
  * Traka slika koja se lista u stranu.
  * ------------------------------------------------------------------------- */
+/*
+ * Traka se lista skrolom, pa dok je zakacena mora da stane u kadar: visina je
+ * cio kadar, a niz u njoj stoji po sredini.
+ */
 .pcl-rail {
   position: relative;
   padding-left: var(--pcl-rail-pad, 230px);
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
 }
 
 @media (max-width: 1023px) {
@@ -443,13 +450,13 @@
 }
 
 .pcl-rail__viewport {
+  width: 100%;
   overflow: hidden;
 }
 
 .pcl-rail__track {
   display: flex;
   gap: 27.648px;
-  transition: transform 0.7s cubic-bezier(0.645, 0.045, 0.355, 1);
   will-change: transform;
 }
 
@@ -459,7 +466,26 @@
 }
 
 @media (max-width: 767px) {
+  .pcl-rail {
+    min-height: 0;
+  }
+
   .pcl-rail__item { height: 295.4px; }
+
+  /* Bez pinovanja traka se prevlaci prstom. */
+  .pcl-rail__viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pcl-rail__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pcl-rail__track {
+    padding-right: var(--pcl-gutter);
+  }
 }
 
 .pcl-rail__item .pcl-ph {
@@ -468,45 +494,6 @@
   aspect-ratio: var(--ratio);
 }
 
-/*
- * Strelice stoje u lijevoj margini, uz sredinu trake — ne ispod nje. Lijevi
- * odmak je stvarna margina sadrzaja: na 1440 to je 120, na 1024 je 55.3, jer
- * je sadrzaj ogranicen na 1200 pa margina raste sa kadrom.
- */
-.pcl-rail__arrows {
-  position: absolute;
-  z-index: 1;
-  top: calc(50% - 18.2px);
-  left: calc(
-    (100vw - min(var(--pcl-max), 100vw - 2 * var(--pcl-gutter))) / 2 - var(--pcl-rail-pad, 230px)
-  );
-  display: flex;
-  gap: 16px;
-}
-
-@media (max-width: 767px) {
-  .pcl-rail__arrows {
-    position: static;
-    margin-top: var(--pcl-md);
-  }
-}
-
-.pcl-rail__arrow {
-  width: 31.8px;
-  height: 36.4px;
-  display: grid;
-  place-items: center;
-  background: none;
-  border: 0;
-  color: var(--pcl-ink);
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.pcl-rail__arrow:disabled {
-  opacity: 0.28;
-  cursor: default;
-}
 
 /* ---------------------------------------------------------------------------
  * Sorte: dugmad iznad, crtez pase ispod, pa pasus i tabela.
@@ -680,10 +667,15 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Panorama: kutija je 1.84:1, slika u njoj krece uvecana pa sjedne.
+ * Ploca pred krajem strane: uspravna, po sredini, uza od mjere sadrzaja.
  * ------------------------------------------------------------------------- */
+.pcl-panorama {
+  display: flex;
+  justify-content: center;
+}
+
 .pcl-panorama .pcl-ph {
-  --ratio: 1.841;
+  width: min(32rem, 100%);
 }
 
 /* ---------------------------------------------------------------------------
@@ -817,4 +809,22 @@
 /* Snimak iza kartica: pokriva plohu, karta na njemu ostaje citljiva. */
 .pcl-next__bgImg {
   object-fit: cover;
+}
+
+/* Zavrsna sekcija dok je zakacena mora da stane u kadar. */
+.pcl-kraj {
+  min-height: 100svh;
+  display: flex;
+  align-items: stretch;
+}
+
+.pcl-kraj > .pcl-next {
+  flex: 1;
+}
+
+@media (max-width: 767px) {
+  .pcl-kraj {
+    min-height: 0;
+    display: block;
+  }
 }

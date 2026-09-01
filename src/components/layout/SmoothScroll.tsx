@@ -135,7 +135,87 @@ export default function SmoothScroll() {
     window.addEventListener('scroll:unlock', unlock);
     window.addEventListener('keydown', swallow, { passive: false });
 
+    /* ---------------------------------------------------------------------
+     * Stajanje na sekciji.
+     *
+     * Kad se skrol smiri, strana dovuce najblizu sekciju na vrh kadra, da se
+     * cita od pocetka a ne od sredine. Tri stvari drze da to ne smeta:
+     *
+     * 1. Hvata samo blizu. Ako je vrh sekcije dalje od cetvrtine kadra, ne
+     *    dira nista — inace bi strana vukla korisnika natrag svaki put kad
+     *    krene dalje.
+     *
+     * 2. Preskace visoke sekcije. Ono sto je vise od jednog i po kadra ne
+     *    moze se procitati odjednom, pa bi snap tu bio smetnja: povukao bi te
+     *    na vrh onoga sto si upravo poceo da citas nize.
+     *
+     * 3. Preskace pinovane sekcije. One vec drze skrol same (heroj, vodoravna
+     *    ploca) i imaju svoj `pin-spacer`; snap bi im se borio sa scrubom.
+     *
+     * Cijela stvar radi tek kad korisnik pusti — 160ms tisine — i nikad dok
+     * je strana zakljucana ili meni otvoren.
+     */
+    const BLIZINA = 0.25; /* koliko blizu vrh sekcije mora biti, u visinama kadra */
+    const NAJVISA = 1.5; /* preko ovoliko kadra sekcija se ne snapuje */
+
+    let mjesta: number[] = [];
+
+    const izmjeri = () => {
+      const glavni = document.querySelector('main');
+      if (!glavni) return (mjesta = []);
+      const kadar = window.innerHeight;
+      mjesta = Array.from(glavni.children)
+        .filter((el): el is HTMLElement => el instanceof HTMLElement)
+        .filter((el) => {
+          if (el.dataset.snap === 'off') return false;
+          if (el.classList.contains('pin-spacer')) return false;
+          if (el.querySelector('.pin-spacer')) return false;
+          const h = el.offsetHeight;
+          return h > kadar * 0.3 && h < kadar * NAJVISA;
+        })
+        .map((el) => el.getBoundingClientRect().top + window.scrollY)
+        .sort((a, b) => a - b);
+    };
+
+    let mirovanje: number | undefined;
+    const smiri = () => {
+      if (locked) return;
+      if (document.body.style.overflow === 'hidden') return; /* meni je otvoren */
+      if (!mjesta.length) return;
+
+      const sada = window.scrollY;
+      const kraj = document.documentElement.scrollHeight - window.innerHeight;
+      /* Na samom vrhu i dnu se ne dira — tamo je i tako sve na svom mjestu. */
+      if (sada < 4 || sada > kraj - 4) return;
+
+      let najblize = mjesta[0];
+      for (const m of mjesta) if (Math.abs(m - sada) < Math.abs(najblize - sada)) najblize = m;
+
+      if (Math.abs(najblize - sada) > window.innerHeight * BLIZINA) return;
+      if (Math.abs(najblize - sada) < 2) return;
+
+      lenis.scrollTo(najblize, { duration: 0.6, easing: (t) => 1 - Math.pow(1 - t, 3) });
+    };
+
+    const naSkrol = () => {
+      window.clearTimeout(mirovanje);
+      mirovanje = window.setTimeout(smiri, 160);
+    };
+
+    lenis.on('scroll', naSkrol);
+    /*
+     * Mjere se uzimaju poslije `refresh`-a, ne prije: pinovane sekcije tek
+     * tada dobiju svoj `pin-spacer` i konacnu visinu.
+     */
+    ScrollTrigger.addEventListener('refresh', izmjeri);
+    izmjeri();
+    const ponovo = () => window.setTimeout(izmjeri, 200);
+    window.addEventListener('resize', ponovo);
+
     return () => {
+      window.clearTimeout(mirovanje);
+      window.removeEventListener('resize', ponovo);
+      ScrollTrigger.removeEventListener('refresh', izmjeri);
       window.removeEventListener('preloader:done', start);
       window.removeEventListener('scroll:top', toTop);
       window.removeEventListener('scroll:lock', lock);
