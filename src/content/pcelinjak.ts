@@ -49,7 +49,8 @@ type Copy = {
 
 const sr: Copy = {
   meta: {
-    title: 'Naši pčelinjaci | Pčelarstvo Jevtić',
+    // Sufiks "| Pčelarstvo Jevtić" dodaje `template` u layoutu — ne ovdje.
+    title: 'Naši pčelinjaci',
     description:
       'Pčelinjaci u Mračaju, Orašju i Otpočivaljci — livade, bagrem i lipa nadomak Prnjavora.',
   },
@@ -261,7 +262,7 @@ const sr: Copy = {
 
 const en: Copy = {
   meta: {
-    title: 'Our apiaries | Pčelarstvo Jevtić',
+    title: 'Our apiaries',
     description:
       'Apiaries in Mračaj, Orašje and Otpočivaljka — meadows, acacia and linden near Prnjavor.',
   },
