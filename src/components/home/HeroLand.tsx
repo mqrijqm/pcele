@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
 
@@ -22,6 +22,16 @@ const copy = {
     cta: 'See our honeys',
   },
 } as const;
+
+/*
+ * Koliko mastila crtez nosi kad se sve slegne. Ista vrijednost stoji i na
+ * `.hero-land__drawing` u CSS-u — ovdje je da bi animacija znala gdje da
+ * stane; da su dvije, crtez bi na kraju animacije skocio na drugu jacinu.
+ *
+ * Crtez je podloga pod slogom, ne slika iza njega: punom bojom nadjacava
+ * naslov koji stoji na njemu.
+ */
+const DRAWING_INK = 0.7;
 
 /**
  * Pocetni ekran: ime, jedna recenica, jedno dugme, i crtez livade pod njima.
@@ -66,12 +76,22 @@ export default function HeroLand({ locale }: { locale: Locale }) {
       if (!drawing || !wordmark || !lowerContent.length) return;
 
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        gsap.set([drawing, wordmark, ...lowerContent], { opacity: 1, y: 0 });
-        gsap.set(drawing, { filter: 'contrast(1.16) saturate(1.06)' });
+        gsap.set([wordmark, ...lowerContent], { opacity: 1, y: 0 });
+        // Samo prozirnost: `y` bi ovdje upisao transform i obrisao
+        // `translateX(-50%)` kojim crtez stoji na sredini.
+        gsap.set(drawing, { opacity: DRAWING_INK });
         return;
       }
 
-      gsap.set(drawing, { opacity: 0.16, filter: 'contrast(1) saturate(1)' });
+      /*
+       * Crtez krece jedva vidljiv i naraste do pune mjere tek kad slog sjedne.
+       *
+       * Dno je udio krova, ne svoj broj: kad se `DRAWING_INK` pomjeri, cijela
+       * rampa se pomjeri s njim i odnos prvog i zadnjeg kadra ostaje isti.
+       * Raspon je namjerno sirok — na 0.4 gore, blizu dno bi dalo porast koji
+       * se ne vidi.
+       */
+      gsap.set(drawing, { opacity: DRAWING_INK * 0.15 });
       gsap.set(wordmark, { opacity: 0, y: 10 });
       gsap.set(lowerContent, { opacity: 0, y: 12 });
 
@@ -82,12 +102,11 @@ export default function HeroLand({ locale }: { locale: Locale }) {
         started = true;
         timeline = gsap.timeline({ defaults: { ease: 'power2.out' } });
         timeline
-          .to(drawing, { opacity: 0.28, duration: 0.75 })
+          .to(drawing, { opacity: DRAWING_INK * 0.35, duration: 0.75 })
           .to(wordmark, { opacity: 1, y: 0, duration: 0.65 })
           .to(lowerContent, { opacity: 1, y: 0, duration: 0.65, stagger: 0.12 })
           .to(drawing, {
-            opacity: 1,
-            filter: 'contrast(1.16) saturate(1.06)',
+            opacity: DRAWING_INK,
             duration: 1.15,
             ease: 'power1.inOut',
           });
@@ -127,10 +146,10 @@ export default function HeroLand({ locale }: { locale: Locale }) {
 
           <p className="hero-land__lead">{t.lead}</p>
 
-          <Link href={href} className="hero-land__cta" aria-label={t.cta}>
+          <TransitionLink href={href} className="hero-land__cta" aria-label={t.cta}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/hero/okusi-slast.svg" alt="" aria-hidden="true" />
-          </Link>
+          </TransitionLink>
         </div>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}

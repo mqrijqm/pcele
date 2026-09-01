@@ -369,7 +369,8 @@ export const home = {
       ],
       tekst:
         'Ljetna paša sa livada oko Mračaja, vrcano jula 2026. Zlatna boja, pun cvjetni ukus — med za svaki dan: za čaj, kolače i kašiku ujutru. Do zime kristališe, jer ga ne zagrijavamo.',
-      pecat: 'NARUČI',
+      birajTezinu: 'BIRAJ TEŽINU',
+      znakAlt: 'Okusi slast',
       teglaAlt: 'Tegla livadskog meda od 1 kg',
     },
     en: {
@@ -383,7 +384,8 @@ export const home = {
       ],
       tekst:
         'A summer flow from the meadows around Mračaj, extracted in July 2026. Golden in colour, full and floral — a honey for every day: for tea, for baking, for a spoonful in the morning. It sets by winter, because we never heat it.',
-      pecat: 'ORDER',
+      birajTezinu: 'CHOOSE A SIZE',
+      znakAlt: 'Taste the sweetness',
       teglaAlt: 'A 1 kg jar of meadow honey',
     },
   } satisfies L<{
@@ -392,7 +394,57 @@ export const home = {
     podnaslov: string;
     cinjenice: ReadonlyArray<{ oznaka: string; vrijednost: string }>;
     tekst: string;
-    pecat: string;
+    birajTezinu: string;
+    znakAlt: string;
+    teglaAlt: string;
+  }>,
+
+  /*
+   * Bagremov med: druga sorta u istom nizu.
+   *
+   * Ista polja kao livadski — sekcija je jedna komponenta koja se puni dvaput,
+   * pa se sadrzaj mora poklapati po obliku. Razlike su samo u rijecima i u
+   * tome sto ova sekcija stoji obrnuto i na svjetlijoj plohi.
+   */
+  bagremov: {
+    sr: {
+      eyebrow: 'BERBA 2026 · MRAČAJ',
+      ime: 'Bagremov med',
+      podnaslov: 'Blag, svijetao i prve paše',
+      cinjenice: [
+        { oznaka: 'UKUS', vrijednost: 'Blag, cvjetni' },
+        { oznaka: 'BOJA', vrijednost: 'Svijetlozlatna' },
+        { oznaka: 'PAŠA', vrijednost: 'Maj–jun' },
+      ],
+      tekst:
+        'Prva paša u godini, iz kratkog bagremovog cvata nad Mračajem. Svijetao i gotovo proziran, blagog ukusa koji ne pokriva ono uz šta ide — zato stoji uz čaj i palačinke, a ne uz jak sir. Ostaje tečan i preko zime.',
+      birajTezinu: 'BIRAJ TEŽINU',
+      znakAlt: 'Okusi slast',
+      teglaAlt: 'Tegla bagremovog meda od 1 kg',
+    },
+    en: {
+      eyebrow: 'HARVEST 2026 · MRAČAJ',
+      ime: 'Acacia honey',
+      podnaslov: 'Mild, pale, the first flow',
+      cinjenice: [
+        { oznaka: 'TASTE', vrijednost: 'Mild, floral' },
+        { oznaka: 'COLOUR', vrijednost: 'Pale gold' },
+        { oznaka: 'FLOW', vrijednost: 'May–Jun' },
+      ],
+      tekst:
+        'The first flow of the year, from the short acacia bloom above Mračaj. Pale and almost clear, mild enough not to cover what it goes with — which is why it belongs with tea and pancakes, not with a strong cheese. It stays liquid through winter.',
+      birajTezinu: 'CHOOSE A SIZE',
+      znakAlt: 'Taste the sweetness',
+      teglaAlt: 'A 1 kg jar of acacia honey',
+    },
+  } satisfies L<{
+    eyebrow: string;
+    ime: string;
+    podnaslov: string;
+    cinjenice: ReadonlyArray<{ oznaka: string; vrijednost: string }>;
+    tekst: string;
+    birajTezinu: string;
+    znakAlt: string;
     teglaAlt: string;
   }>,
 
@@ -540,6 +592,7 @@ export const home = {
       benefits: ['100% prirodno porijeklo', 'Bez aditiva', 'Organsko pčelarstvo'],
       bottleAlt: 'Braon staklena bočica pčelinjeg propolisa od 20 ml, sa kapaljkom',
       branchAlt: 'Crtež grančice sa cvjetovima i pupoljcima',
+      znakAlt: 'Okusi slast',
     },
     en: {
       heading: 'Bee propolis',
@@ -549,6 +602,7 @@ export const home = {
       benefits: ['100% natural origin', 'No additives', 'Organic beekeeping'],
       bottleAlt: 'A 20 ml amber glass bottle of bee propolis with a dropper',
       branchAlt: 'A drawing of a branch with blossoms and buds',
+      znakAlt: 'Taste the sweetness',
     },
   } satisfies L<{
     heading: string;
@@ -558,6 +612,7 @@ export const home = {
     benefits: readonly string[];
     bottleAlt: string;
     branchAlt: string;
+    znakAlt: string;
   }>,
 
   faq: {

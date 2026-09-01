@@ -11,7 +11,6 @@ import Podjela from '@/components/home/Podjela';
 import Ponuda from '@/components/home/Ponuda';
 import PhotoRail from '@/components/home/PhotoRail';
 import Vitrina from '@/components/home/Vitrina';
-import SorteMeda from '@/components/products/SorteMeda';
 import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Livada from '@/components/home/Livada';
@@ -121,10 +120,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       <Testimonials locale={locale} />
 
-      <Faq locale={locale} />
+      {/*
+        Ovdje dolazi nova sekcija. Do tada stoji sam vazduh i jedna recenica —
+        praznina je namjerna, da se vidi da tu nesto ide, a ne da je strana
+        naglo zavrsila.
+      */}
+      <p className="urazvoju">{locale === 'sr' ? 'Sljedeće sekcije su u razvoju.' : 'The next sections are in progress.'}</p>
 
-      {/* Tri sorte na papiru, tik pred poziv na kraju. */}
-      <SorteMeda locale={locale} />
+      <Faq locale={locale} />
 
       {/* Jedan poziv na kraju, ne tri. */}
       <Newsletter locale={locale} />

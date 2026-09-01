@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
@@ -55,7 +55,7 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
         <div className="container-wide">
           <div className="blog-mosaic">
             {mosaic.map((post, i) => (
-              <Link
+              <TransitionLink
                 key={post.slug}
                 href={localeHref(locale, `/blog/${post.slug}`)}
                 className={`blog-mosaic__tile reveal stagger-${i + 1}`}
@@ -68,15 +68,15 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
                   className="object-cover"
                 />
                 <span className="blog-mosaic__label">{post.title[locale]}</span>
-              </Link>
+              </TransitionLink>
             ))}
           </div>
 
           <div className="mt-6 flex justify-end">
-            <Link href={localeHref(locale, '/blog')} className="btn">
+            <TransitionLink href={localeHref(locale, '/blog')} className="btn">
               {allLabel}
               <ArrowRight className="h-4 w-4" />
-            </Link>
+            </TransitionLink>
           </div>
         </div>
       </section>
@@ -111,13 +111,13 @@ export default async function BlogPage({ params }: { params: Promise<{ locale: s
 
             <div className="blog-feature__aside reveal stagger-3">
               <p>{feature.body[locale].find((b) => b.t === 'p')?.text}</p>
-              <Link
+              <TransitionLink
                 href={localeHref(locale, `/blog/${feature.slug}`)}
                 className="btn btn--ghost mt-8"
               >
                 {readLabel}
                 <ArrowRight className="h-4 w-4" />
-              </Link>
+              </TransitionLink>
             </div>
           </div>
         </div>

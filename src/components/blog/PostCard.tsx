@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { ArrowUpRight, Clock } from 'lucide-react';
 
 import type { Post } from '@/data/posts';
@@ -19,7 +19,7 @@ export default function PostCard({
   const t = createTranslator(locale);
 
   return (
-    <Link href={localeHref(locale, `/blog/${post.slug}`)} className="group block">
+    <TransitionLink href={localeHref(locale, `/blog/${post.slug}`)} className="group block">
       <article className="transition-transform duration-300 group-hover:-translate-y-1">
         <div
           className={`relative plate overflow-hidden bg-linen ${featured ? 'aspect-[16/8]' : 'aspect-[16/10]'}`}
@@ -61,6 +61,6 @@ export default function PostCard({
           </span>
         </div>
       </article>
-    </Link>
+    </TransitionLink>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 
 import Testimonials from '@/components/home/Testimonials';
@@ -197,12 +197,12 @@ export default async function PcelinjakPage({
           <p className="strip__pretitle">{t.poziv.pretitle}</p>
           <h2 className="strip__title3">{t.poziv.title}</h2>
           <p className="pcl__ctaLinks">
-            <Link className="pcl__button" href={localeHref(locale, '/contact')}>
+            <TransitionLink className="pcl__button" href={localeHref(locale, '/contact')}>
               {t.poziv.cta}
-            </Link>
-            <Link className="pcl__button pcl__button--quiet" href={localeHref(locale, '/products')}>
+            </TransitionLink>
+            <TransitionLink className="pcl__button pcl__button--quiet" href={localeHref(locale, '/products')}>
               {t.poziv.ctaSecondary}
-            </Link>
+            </TransitionLink>
           </p>
         </div>
       </section>

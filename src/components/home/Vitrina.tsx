@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 
 import { home } from '@/content/pages';
 import { localeHref, type Locale } from '@/i18n/config';
@@ -50,13 +50,13 @@ export default function Vitrina({ locale }: { locale: Locale }) {
             />
           </figure>
 
-          <Link
+          <TransitionLink
             className="vitrina__seal reveal-pop stagger-3"
             href={localeHref(locale, '/products')}
             aria-label={t.seal}
           >
             <Image src="/images/brand/pecat-proizvodi.svg" alt="" width={423} height={423} />
-          </Link>
+          </TransitionLink>
         </div>
 
         <div className="vitrina__side vitrina__side--right reveal stagger-2">

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -84,7 +84,7 @@ function Seal({
   className: string;
 }) {
   return (
-    <Link href={href} className={`rail__seal ${className}`} aria-label={label}>
+    <TransitionLink href={href} className={`rail__seal ${className}`} aria-label={label}>
       <Image className="rail__sealFace" src={src} alt="" width={127} height={127} />
       <svg className="rail__sealRing" viewBox="0 0 127 127" aria-hidden="true" focusable="false">
         <circle
@@ -97,7 +97,7 @@ function Seal({
           strokeDasharray="7 7"
         />
       </svg>
-    </Link>
+    </TransitionLink>
   );
 }
 

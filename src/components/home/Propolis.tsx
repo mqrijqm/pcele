@@ -58,6 +58,12 @@ const BEAT = {
   useThread: [0.71, 0.76],
   benefits: [0.78, 0.87],
   benefitsThread: [0.87, 0.92],
+  /*
+   * Znak dolazi posljednji, kad je sve ostalo vec ispisano — on je pecat na
+   * gotovu scenu, ne dio nje. Zato mu korak pocinje tek kad zadnja nit sjedne,
+   * i traje do samog kraja puta kroz sekciju.
+   */
+  stamp: [0.93, 1],
 } as const;
 
 /** Puna vidljivost popunjene grancice. Ona je podloga, ne slika. */
@@ -87,6 +93,7 @@ export default function Propolis({ locale }: { locale: Locale }) {
         gsap.set(q('.propolis__trace'), { opacity: 0 });
         gsap.set(q('.propolis__line'), { opacity: 1, y: 0 });
         gsap.set(q('.propolis__thread'), { opacity: 1 });
+        gsap.set(q('.propolis__znak'), { opacity: 1, scale: 1 });
       });
 
       mm.add('(prefers-reduced-motion: no-preference) and (min-width: 901px)', () => {
@@ -158,6 +165,9 @@ export default function Propolis({ locale }: { locale: Locale }) {
         linesIn(BEAT.benefits, 'benefits');
         at(BEAT.benefitsThread, q('.propolis__thread--benefits'), { opacity: 1 });
 
+        gsap.set(q('.propolis__znak'), { opacity: 0, scale: 0.72 });
+        at(BEAT.stamp, q('.propolis__znak'), { opacity: 1, scale: 1, ease: 'back.out(1.5)' });
+
         return () => {
           tl.scrollTrigger?.kill();
           tl.kill();
@@ -203,6 +213,13 @@ export default function Propolis({ locale }: { locale: Locale }) {
               sizes="(max-width: 900px) 46vw, 18vw"
             />
           </div>
+
+          {/*
+            Pecat na kraju: dolazi kad se scena ispise. Natpis je u samom
+            crtezu, pa mu ime stoji u `alt`-u — sloga preko njega nema.
+          */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="propolis__znak" src="/images/brand/propolis-znak.svg" alt={t.znakAlt} />
 
           {/*
             Naslov se ne vidi — na crtezu sekcije ga nema, ime proizvoda stoji na

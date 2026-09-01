@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -24,9 +24,9 @@ gsap.registerPlugin(ScrollTrigger);
  * tada ispisuje bez crteza umjesto da se vidi slomljena slika.
  */
 const IKONE = {
-  livadski: null as string | null,
+  livadski: '/images/sorte/ikona-livada.svg',
   bagremov: '/images/sorte/ikona-bagrem.svg',
-};
+} as const;
 
 /**
  * Dvije sorte, jedna nasuprot druge.
@@ -295,21 +295,28 @@ export default function Podjela({ locale }: { locale: Locale }) {
         })}
 
         {/*
-          * Krug stoji izmedju polovina, a ne u njima: na prelazu preko karte
-          * ostaje netaknut, pa ne smije da naslijedi ni prigusenje ni pomak
+          * Teglica stoji izmedju polovina, a ne u njima: na prelazu preko karte
+          * ostaje netaknuta, pa ne smije da naslijedi ni prigusenje ni pomak
           * bilo koje od dvije.
+          *
+          * Bila je smedji disk s iscrtkanim prstenom, natpisom i strelicom.
+          * Sada je sam crtez teglice — veza je ista, samo se vise ne najavljuje
+          * rijecima nego oblikom. Ime odredista zato nosi `aria-label`: crtez
+          * ga ne izgovara.
           */}
-        <Link
+        <TransitionLink
           className="podjela__circle"
           href={localeHref(locale, '/pcelinjak')}
           aria-label={t.ctaAria}
         >
-          <span className="podjela__ring" aria-hidden="true" />
-          <span className="podjela__cta">{t.cta}</span>
-          <span className="podjela__arrow" aria-hidden="true">
-            ↗
-          </span>
-        </Link>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="podjela__teglica"
+            src="/images/brand/teglica.svg"
+            alt=""
+            aria-hidden="true"
+          />
+        </TransitionLink>
       </div>
     </section>
   );

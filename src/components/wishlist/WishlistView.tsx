@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { Heart, X } from 'lucide-react';
 
 import { formatPrice, getProduct, lowestPrice } from '@/data/products';
@@ -29,12 +29,12 @@ export default function WishlistView({ locale }: { locale: Locale }) {
               <Heart className="h-14 w-14 text-[#885B27]/25" />
               <p className="mt-5 text-2xl text-[#885B27]">{t('wishlist.empty')}</p>
               <p className="mt-2 max-w-sm text-sm text-[#885B27]">{t('wishlist.emptyMessage')}</p>
-              <Link
+              <TransitionLink
                 href={localeHref(locale, '/products')}
                 className="btn mt-7"
               >
                 {t('wishlist.continueShopping')}
-              </Link>
+              </TransitionLink>
             </div>
           ) : (
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
@@ -48,7 +48,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                   >
                     <X className="h-4 w-4" />
                   </button>
-                  <Link
+                  <TransitionLink
                     href={localeHref(locale, `/products/${product.slug}`)}
                     className="group block"
                   >
@@ -75,7 +75,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                       </div>
                       <p className="mt-2 text-sm text-[#885B27]">{product.tagline[locale]}</p>
                     </div>
-                  </Link>
+                  </TransitionLink>
                 </div>
               ))}
             </div>

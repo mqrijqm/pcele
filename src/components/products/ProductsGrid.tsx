@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { ArrowUpRight, Heart } from 'lucide-react';
 
 import { formatPrice, lowestPrice, products } from '@/data/products';
@@ -30,7 +30,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
         const saved = wishlist.has(product.slug);
         return (
           <div key={product.slug} className={`reveal stagger-${Math.min(index + 1, 6)}`}>
-            <Link href={localeHref(locale, `/products/${product.slug}`)} className="group block">
+            <TransitionLink href={localeHref(locale, `/products/${product.slug}`)} className="group block">
               <article className="relative transition-transform duration-300 group-hover:-translate-y-1">
                 <span className="absolute left-5 top-5 z-10 text-[10px] font-bold tracking-[0.18em] text-[#885B27]">
                   {String(product.order).padStart(2, '0')}
@@ -82,7 +82,7 @@ export default function ProductsGrid({ locale }: { locale: Locale }) {
                   </div>
                 </div>
               </article>
-            </Link>
+            </TransitionLink>
           </div>
         );
       })}

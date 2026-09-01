@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
@@ -49,13 +49,13 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                 <ShoppingBag className="h-16 w-16 text-[#885B27]/25" />
                 <p className="mt-4 text-xl text-[#885B27]">{t('cart.empty')}</p>
                 <p className="mt-2 text-sm text-[#885B27]">{t('cart.emptyMessage')}</p>
-                <Link
+                <TransitionLink
                   href={localeHref(locale, '/products')}
                   onClick={cart.close}
                   className="btn mt-6"
                 >
                   {t('cart.continueShopping')}
-                </Link>
+                </TransitionLink>
               </div>
             ) : (
               <ul className="divide-y divide-[#885B27]/15">
@@ -127,13 +127,13 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <p className="mt-1 text-xs text-[#885B27]">
                 {t('cart.shipping')}: {t('cart.shippingCalculated')}
               </p>
-              <Link
+              <TransitionLink
                 href={localeHref(locale, '/contact')}
                 onClick={cart.close}
                 className="btn mt-5 w-full"
               >
                 {t('cart.checkout')}
-              </Link>
+              </TransitionLink>
               <button
                 type="button"
                 onClick={cart.close}

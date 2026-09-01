@@ -6,11 +6,17 @@ import gsap from 'gsap';
 import BeeSvg from '@/components/bee/BeeSvg';
 
 /**
- * Koliko punjenje smije da traje. Snimak je 5.88 s — toliko niko ne ceka da
- * se tegla napuni. Ne sijecemo ga i ne preskacemo kraj, nego mu dizemo brzinu
- * tako da cijelo punjenje stane u ovo vrijeme: med i dalje tece do vrha, samo
- * brze. Brzina se racuna iz stvarnog trajanja snimka, pa ako se klip jednom
- * zamijeni kracim, ovdje se nista ne mijenja.
+ * Koliko punjenje smije da traje.
+ *
+ * Skracivanje je sada u samom fajlu, ne ovdje: klip je prekodiran tako da
+ * punjenje traje 2.47 s na svojoj brzini, na 60 sl/s. Ranije je stizao dug
+ * 5.88 s na 25 sl/s pa se ovdje gurao na 3x — a 25 sl/s na trostrukoj brzini
+ * je osam stvarnih slicica u sekundi, sto oko cita kao trzanje. Sada svaka
+ * slicica iz snimka dobije svoj kadar na ekranu i pokret je gladak.
+ *
+ * Racun ostaje kao osigurac: brzina se izvodi iz stvarnog trajanja, pa je za
+ * ovaj klip 1 (nikad ispod), a ako neko sutra vrati dug snimak, ubrzace ga
+ * umjesto da pusti stranu da ceka.
  */
 const CLIP_TARGET_MS = 2600;
 const MAX_RATE = 3;

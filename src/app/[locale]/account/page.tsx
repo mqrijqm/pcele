@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 import { Package, Settings, User } from 'lucide-react';
 
@@ -43,18 +43,18 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
             <p className="text-2xl text-[#885B27]">{t('account.signInPrompt')}</p>
             <p className="mt-3 text-sm text-[#885B27]">{t('account.guestCheckoutNote')}</p>
             <div className="mt-7 flex flex-wrap gap-4">
-              <Link
+              <TransitionLink
                 href={localeHref(locale, '/products')}
                 className="btn"
               >
                 {t('account.startShopping')}
-              </Link>
-              <Link
+              </TransitionLink>
+              <TransitionLink
                 href={localeHref(locale, '/contact')}
                 className="inline-flex min-h-12 items-center border-b border-[#885B27]/35 pb-1 text-sm font-semibold text-[#885B27] transition-colors hover:border-[#EEC660] hover:text-[#885B27]"
               >
                 {t('nav.contact')}
-              </Link>
+              </TransitionLink>
             </div>
           </div>
 

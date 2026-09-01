@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
@@ -77,7 +77,7 @@ export default function ProductRail({ locale }: { locale: Locale }) {
           <ul className="rail__track">
             {SHELF.map((product, i) => (
               <li className="rail__item plate rail__item--square" key={`${product.slug}-${i}`}>
-                <Link href={localeHref(locale, `/products/${product.slug}`)} tabIndex={i === centre ? 0 : -1}>
+                <TransitionLink href={localeHref(locale, `/products/${product.slug}`)} tabIndex={i === centre ? 0 : -1}>
                   <Image
                     className="rail__img rail__img--fit"
                     src={product.image}
@@ -85,7 +85,7 @@ export default function ProductRail({ locale }: { locale: Locale }) {
                     fill
                     sizes="(max-width: 900px) 80vw, 40vw"
                   />
-                </Link>
+                </TransitionLink>
               </li>
             ))}
           </ul>

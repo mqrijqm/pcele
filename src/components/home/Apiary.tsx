@@ -9,8 +9,22 @@ import type { Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/** Koliko je snimak ubrzan. Sedam sekundi prodje za nesto preko tri. */
-const SPEED = 2.2;
+/**
+ * Koliko se snimak jos ubrzava pri pustanju. Jedan — dakle nimalo.
+ *
+ * Ubrzanje je u samom fajlu: snimak je snimljen na 4.53 s i prekodiran na
+ * 1.33x, pa traje 3.4 s na svojoj brzini, na 40 sl/s. Svaka slicica iz izvora
+ * dobije svoj kadar.
+ *
+ * Ranije je ovdje stajalo 2.2 i klip se gurao `playbackRate`-om. To je na
+ * 30 sl/s davalo trinaest stvarnih slicica u sekundi — pcele u letu su na
+ * toj mjeri poskakivale umjesto da lete.
+ *
+ * Broj ostaje kao poluga: sve mjere ispod se racunaju iz njega i iz stvarnog
+ * trajanja snimka, pa se zadrzavanje strane samo prilagodi ako se klip
+ * jednom zamijeni.
+ */
+const SPEED = 1;
 
 
 
@@ -196,7 +210,8 @@ export default function Apiary({ locale }: { locale: Locale }) {
      * tu mjeru; razvlaci se nikad — ispod pune brzine ispis ne ide.
      */
     const WRITE = 2.6;
-    let runs = 6.9 / SPEED;
+    /* Prva procjena dok se ne procita trajanje; poslije se mjeri sa snimka. */
+    let runs = 3.4 / SPEED;
 
     let wrote = false;
     const write = () => {
@@ -304,6 +319,17 @@ export default function Apiary({ locale }: { locale: Locale }) {
             <source src="/images/real/pcelinjak-mracaj.webm" type="video/webm" />
             <source src="/images/real/pcelinjak-mracaj.mp4" type="video/mp4" />
           </video>
+
+          {/*
+            * Meka podloga u donjem lijevom uglu.
+            *
+            * Recenica je u boji papira i dosad joj je podloga bio sam kadar.
+            * Novi snimak zavrsava na krupnom planu rama, a lijevi dio tog
+            * kadra je prebijeljen — svijetlo na svijetlom, slog se gubi.
+            * Sjena pod tekstom to rjesava bez diranja boje sloga: gasi se u
+            * nista prije nego stigne do ivice, pa se ne cita kao ploca.
+            */}
+          <div className="apiary__scrim" aria-hidden="true" />
 
           {/*
             * `display: contents` na natpisu: sve troje su i dalje jedan potpis

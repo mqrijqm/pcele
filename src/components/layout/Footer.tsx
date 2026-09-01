@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
 
@@ -43,12 +43,12 @@ export default function Footer({ locale }: { locale: Locale }) {
             <ul className="space-y-2.5">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <TransitionLink
                     href={localeHref(locale, link.href)}
                     className="text-sm text-[#FCF0DC]/90 transition-colors hover:text-[#FCF0DC]"
                   >
                     {t(link.key)}
-                  </Link>
+                  </TransitionLink>
                 </li>
               ))}
             </ul>
@@ -91,18 +91,18 @@ export default function Footer({ locale }: { locale: Locale }) {
         <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-[#FCF0DC]/15 pt-5 text-xs text-[#FCF0DC]/90 md:flex-row md:items-center">
           <p>{t('footer.copyright', { year })}</p>
           <div className="flex items-center gap-5">
-            <Link
+            <TransitionLink
               href={localeHref(locale, '/privacy')}
               className="transition-colors hover:text-[#FCF0DC]"
             >
               {t('footer.privacy')}
-            </Link>
-            <Link
+            </TransitionLink>
+            <TransitionLink
               href={localeHref(locale, '/terms')}
               className="transition-colors hover:text-[#FCF0DC]"
             >
               {t('footer.terms')}
-            </Link>
+            </TransitionLink>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { ArrowUpRight } from 'lucide-react';
 
 import InkRule from '@/components/ui/InkRule';
@@ -101,7 +101,7 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
                 </span>
 
                 <h3 className="sorta__naziv">
-                  <Link href={localeHref(locale, `/products/${s.slug}`)}>{s.naziv}</Link>
+                  <TransitionLink href={localeHref(locale, `/products/${s.slug}`)}>{s.naziv}</TransitionLink>
                 </h3>
 
                 <p className="sorta__nota">{s.nota}</p>
@@ -121,14 +121,14 @@ export default function SorteMeda({ locale }: { locale: Locale }) {
 
         <InkRule className="reveal-draw" style={drawDelay(KORAK.donjaLinija)} />
 
-        <Link
+        <TransitionLink
           href={localeHref(locale, '/products')}
           className="link-quiet sorte__cta reveal"
           style={delay(KORAK.dugme)}
         >
           {t.cta}
           <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        </TransitionLink>
       </div>
     </section>
   );

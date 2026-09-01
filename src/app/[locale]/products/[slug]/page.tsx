@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
@@ -81,16 +81,16 @@ export default async function ProductPage({
       <div className="border-b border-[#885B27]/15">
         <div className="container py-4">
           <nav className="flex items-center gap-2 text-xs text-[#885B27]">
-            <Link href={localeHref(locale, '/')} className="transition-colors hover:text-[#885B27]">
+            <TransitionLink href={localeHref(locale, '/')} className="transition-colors hover:text-[#885B27]">
               {t('nav.home')}
-            </Link>
+            </TransitionLink>
             <ChevronRight className="h-3 w-3" />
-            <Link
+            <TransitionLink
               href={localeHref(locale, '/products')}
               className="transition-colors hover:text-[#885B27]"
             >
               {t('products.breadcrumb')}
-            </Link>
+            </TransitionLink>
             <ChevronRight className="h-3 w-3" />
             <span className="text-[#885B27]">{product.name[locale]}</span>
           </nav>
@@ -120,7 +120,7 @@ export default async function ProductPage({
 
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             {related.map((item, index) => (
-              <Link
+              <TransitionLink
                 key={item.slug}
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
@@ -149,7 +149,7 @@ export default async function ProductPage({
                     </p>
                   </div>
                 </div>
-              </Link>
+              </TransitionLink>
             ))}
           </div>
         </div>

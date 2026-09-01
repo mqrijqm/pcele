@@ -119,12 +119,25 @@ export default function SmoothScroll() {
       lenis.start();
     };
 
+    /*
+     * Skok na vrh, bez putovanja.
+     *
+     * Medena zavjesa mijenja stranu dok je sve pokriveno i tada trazi vrh nove
+     * strane. `window.scrollTo` tu ne pomaze: polozaj drzi Lenis i vratio bi
+     * stranu tamo gdje je mislio da jeste. `immediate` znaci bez animacije —
+     * ispod zavjese se nema sta gledati, a i ne smije: kad bi se putovalo,
+     * zavjesa bi se digla dok strana jos klizi.
+     */
+    const toTop = () => lenis.scrollTo(0, { immediate: true, force: true });
+    window.addEventListener('scroll:top', toTop);
+
     window.addEventListener('scroll:lock', lock);
     window.addEventListener('scroll:unlock', unlock);
     window.addEventListener('keydown', swallow, { passive: false });
 
     return () => {
       window.removeEventListener('preloader:done', start);
+      window.removeEventListener('scroll:top', toTop);
       window.removeEventListener('scroll:lock', lock);
       window.removeEventListener('scroll:unlock', unlock);
       window.removeEventListener('keydown', swallow);

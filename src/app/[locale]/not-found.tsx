@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 
 export default function NotFound() {
   return (
@@ -11,12 +11,12 @@ export default function NotFound() {
         <p className="mt-4 text-base text-[#885B27]">
           Stranica koju tražite ne postoji. / The page you are looking for does not exist.
         </p>
-        <Link
+        <TransitionLink
           href="/sr"
           className="btn mt-8"
         >
           Početna / Home
-        </Link>
+        </TransitionLink>
       </div>
     </div>
   );

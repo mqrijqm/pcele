@@ -34,6 +34,41 @@ export const TAIL_DRIP =
 export const TAIL_FLAT =
   'M0 0.218C7.364 0.218 18.62 0.218 32.292 0.218C77.929 0.218 141.785 0.218 185.048 0.218C209.08 0.218 217.793 0.218 227.33 0.218C242.648 0.218 242.163 0.218 240 0.218C235.432 0.218 246.087 0.218 263.103 0.218C274.159 0.218 289.287 0.218 298.876 0.218C317.56 0.218 300.881 0.218 302.126 0.218C302.833 0.218 303.55 0.218 324.891 0.218C350.252 0.218 392.155 0.218 402.947 0.218C483.386 0.218 512.039 0.218 600.169 0.218C659.91 0.218 652.357 0.218 715.485 0.218C808.826 0.218 845.053 0.218 913.54 0.218C952.13 0.218 947.931 0.218 992.229 0.218C1039.66 0.218 1103.22 0.218 1117.51 0.218C1126.07 0.218 1117.43 0.218 1129.98 0.218C1136.78 0.218 1150.96 0.218 1157.78 0.218C1166.82 0.218 1155.61 0.218 1167.27 0.218C1180.74 0.218 1220.76 0.218 1247.86 0.218C1256.41 0.218 1266.87 0.218 1278.27 0.218C1300.75 0.218 1316.54 0.218 1346.82 0.218C1372.98 0.218 1398.7 0.218 1440 0.218L1440 691L0 691L0 0.218Z';
 
+/* ---------------------------------------------------------------------------
+ * Ista ivica, okrenuta u zavjesu za prelaz medju stranama.
+ *
+ * Na pojasu se donja ivica crta obrnuto: putanja je u boji papira i lezi
+ * preko meda, pa kapi jesu ono sto putanja ne pokrije. Zavjesi to ne
+ * odgovara — ona mora biti sam med, a oko meda providno, da se ispod nje
+ * vidi strana koja se mijenja.
+ *
+ * Zato se crtez ne prepisuje nego mu se mijenja samo zatvaranje. Rub ostaje
+ * isti do posljednje kontrolne tacke; umjesto da se zatvori nadolje, do dna
+ * svog okvira, zatvara se navise, po y=0. Ono sto je na pojasu bila praznina
+ * izmedju kapi, ovdje je sama kap.
+ *
+ * Kad se TAIL_DRIP jednom precrta, ovo ide za njim — nema druge kopije
+ * crteza koja bi se s vremenom razisla s prvom.
+ * ------------------------------------------------------------------------- */
+
+/** Rep kojim se TAIL_DRIP zatvara nadolje, do dna svog okvira. */
+const TAIL_CLOSE = 'L1440 691L0 691L0 0.218Z';
+
+/** Kapi sezu do y=311.45; okvir je odsjecen tik ispod najduze. */
+export const POUR_VIEWBOX = '0 0 1440 312';
+
+/** Dubina kapi kao udio sirine. Zavjesa po ovome zna gdje joj je rub. */
+export const POUR_DEPTH_RATIO = 312 / 1440;
+
+/*
+ * Ako se rep ne nadje — a nadje se dok je TAIL_DRIP zatvoren kako jeste —
+ * uzima se putanja kakva jeste. Bolje kap koja gleda naopako nego prazna
+ * zavjesa kroz koju se vidi kako se strana ispod mijenja.
+ */
+export const POUR_DRIP = TAIL_DRIP.endsWith(TAIL_CLOSE)
+  ? TAIL_DRIP.slice(0, -TAIL_CLOSE.length) + 'L1440 0L0 0Z'
+  : TAIL_DRIP;
+
 const NUM = /[-+]?(?:\d*\.\d+|\d+\.?)(?:[eE][-+]?\d+)?/g;
 const CMD = /[MLCZ]/g;
 

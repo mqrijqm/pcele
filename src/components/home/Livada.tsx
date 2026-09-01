@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 
 import { home } from '@/content/pages';
 import { localeHref, type Locale } from '@/i18n/config';
@@ -70,13 +70,13 @@ export default function Livada({ locale }: { locale: Locale }) {
           * procitati, pa ista ta rijec stoji kao `aria-label` na vezi — isto
           * kao pecat na vitrini.
           */}
-        <Link
+        <TransitionLink
           className="livada__seal"
           href={localeHref(locale, '/pcelinjak')}
           aria-label={t.sealLabel}
         >
           <Image src="/images/brand/pecat-pcelinjak.svg" alt="" width={423} height={423} />
-        </Link>
+        </TransitionLink>
       </div>
 
       {/* eslint-disable-next-line @next/next/no-img-element */}

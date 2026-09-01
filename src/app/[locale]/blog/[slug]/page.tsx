@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Calendar, Clock } from 'lucide-react';
 
@@ -52,13 +52,13 @@ export default async function BlogPostPage({
     <div className="header-offset">
       <section className="relative overflow-hidden border-b border-[#885B27]/15 bg-linen section-padding-sm">
         <div className="container relative z-10">
-          <Link
+          <TransitionLink
             href={localeHref(locale, '/blog')}
             className="reveal inline-flex items-center gap-2 text-sm font-semibold text-[#885B27] transition-colors hover:text-[#885B27]"
           >
             <ArrowLeft className="h-4 w-4" />
             {t('blog.backToBlog')}
-          </Link>
+          </TransitionLink>
 
           <div className="mt-10 max-w-4xl">
             <span className="reveal stagger-1 eyebrow">{t('blog.eyebrow')}</span>

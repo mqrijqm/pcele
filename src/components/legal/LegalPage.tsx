@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 
 import type { LegalDoc } from '@/data/legal';
 import { localeHref, type Locale } from '@/i18n/config';
@@ -62,12 +62,12 @@ export default function LegalPage({
 
             <p className="mt-12 border-t border-[#885B27]/15 pt-8 text-sm text-[#885B27]">
               {locale === 'sr' ? 'Imate dodatnih pitanja? Posjetite našu ' : 'Have more questions? Visit our '}
-              <Link
+              <TransitionLink
                 href={localeHref(locale, '/contact')}
                 className="border-b border-[#EEC660] text-honey-700 transition-colors hover:text-[#885B27]"
               >
                 {locale === 'sr' ? 'kontakt stranicu' : 'contact page'}
-              </Link>
+              </TransitionLink>
               {locale === 'sr' ? ' ili nam pišite na ' : ' or write to us at '}
               <a
                 href="mailto:info@pcelarstvo-jevtic.ba"

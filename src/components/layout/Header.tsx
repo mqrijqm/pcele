@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -71,7 +71,7 @@ export default function Header({ locale }: { locale: Locale }) {
         {/* Znak stoji sam iznad heroja — bez trake, bez linije. Na pocetnoj ga
             nema: tamo su vec i natpis i wordmark preko crteza. */}
         {!isHome && (
-        <Link
+        <TransitionLink
           href={localeHref(locale, '/')}
           aria-label="Pčelarstvo Jevtić"
           className="header-crest flex flex-col items-center leading-none transition-opacity hover:opacity-70"
@@ -91,12 +91,12 @@ export default function Header({ locale }: { locale: Locale }) {
           <span className="mt-1.5 font-display text-[1.4rem] font-medium leading-none tracking-[0.005em] text-[#885B27] sm:text-[1.7rem]">
             Jevtić
           </span>
-        </Link>
+        </TransitionLink>
         )}
 
         {/* Pilula: gore desno na vrhu, u sredini kad se skroluje. */}
         <div className="header-pill p-[0.28rem] text-[#885B27]">
-          <Link
+          <TransitionLink
             href={localeHref(locale, '/')}
             aria-label="Pčelarstvo Jevtić"
             tabIndex={docked ? 0 : -1}
@@ -115,7 +115,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 Jevtić
               </span>
             </span>
-          </Link>
+          </TransitionLink>
 
           <button
             type="button"
@@ -174,7 +174,7 @@ export default function Header({ locale }: { locale: Locale }) {
 
           <nav className="flex flex-col py-6">
             {navItems.map((item, index) => (
-              <Link
+              <TransitionLink
                 key={item.href}
                 href={localeHref(locale, item.href)}
                 style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
@@ -183,7 +183,7 @@ export default function Header({ locale }: { locale: Locale }) {
                 }`}
               >
                 {t(item.key)}
-              </Link>
+              </TransitionLink>
             ))}
           </nav>
 
@@ -191,7 +191,7 @@ export default function Header({ locale }: { locale: Locale }) {
             <div className="flex items-center justify-center gap-1">
               {locales.map((code, index) => (
                 <span key={code} className="flex items-center">
-                  <Link
+                  <TransitionLink
                     href={`/${code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`}
                     aria-label={`Switch to ${code.toUpperCase()}`}
                     className={`text-xs font-medium uppercase tracking-wider transition-colors ${
@@ -201,7 +201,7 @@ export default function Header({ locale }: { locale: Locale }) {
                     }`}
                   >
                     {code}
-                  </Link>
+                  </TransitionLink>
                   {index === 0 && (
                     <span aria-hidden="true" className="mx-1.5 text-[#885B27]/40">
                       /

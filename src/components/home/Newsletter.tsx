@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 
@@ -41,19 +41,19 @@ export default function Newsletter({ locale }: { locale: Locale }) {
             </p>
 
             <div className="reveal stagger-2 mt-9 flex flex-wrap gap-6">
-              <Link
+              <TransitionLink
                 href={localeHref(locale, '/products')}
                 className="inline-flex min-h-12 items-center gap-2 border-b border-[#885B27]/40 pb-1 text-sm font-semibold text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:text-[#885B27]"
               >
                 {copy.ctaProducts}
                 <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
+              </TransitionLink>
+              <TransitionLink
                 href={localeHref(locale, '/contact')}
                 className="inline-flex min-h-12 items-center gap-2 border-b border-[#885B27]/25 pb-1 text-sm font-semibold text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:text-[#885B27]"
               >
                 {copy.ctaContact}
-              </Link>
+              </TransitionLink>
             </div>
 
             <form onSubmit={handleSubmit} noValidate className="reveal stagger-3 mt-12 max-w-2xl">

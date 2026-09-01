@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import Link from 'next/link';
+import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 
@@ -155,13 +155,13 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
               {copy.outroHeading}
             </h2>
           </div>
-          <Link
+          <TransitionLink
             href={localeHref(locale, '/products')}
             className="group inline-flex w-fit items-center gap-3 border-b border-[#885B27]/35 pb-2 text-sm font-semibold text-[#885B27]"
           >
             {copy.outroCta}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          </TransitionLink>
         </div>
       </section>
     </div>
