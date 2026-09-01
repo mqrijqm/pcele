@@ -751,8 +751,8 @@ p {
 .header-pill-split {
   width: 1px;
   align-self: stretch;
-  margin-inline: 0.15rem;
-  margin-block: 0.4rem;
+  margin-inline: 0.2rem;
+  margin-block: 0.5rem;
   background: rgba(136, 91, 39, 0.16);
 }
 
@@ -777,8 +777,8 @@ p {
 
 .site-header[data-docked='true'] .header-pill-logo {
   grid-template-columns: 1fr;
-  margin-left: 0.8rem;
-  margin-right: 1.05rem;
+  margin-left: 1rem;
+  margin-right: 1.3rem;
   opacity: 1;
 }
 
@@ -787,13 +787,13 @@ p {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 2px;
-  width: 1.15rem;
+  gap: 3px;
+  width: 1.45rem;
 }
 
 .menu-glyph span {
   display: block;
-  height: 0.32rem;
+  height: 0.4rem;
   border: 1px solid currentColor;
   border-radius: 999px;
   transition: transform 0.4s var(--ease-out-expo), opacity 0.25s ease;
@@ -801,7 +801,7 @@ p {
 
 /* Pomak je zbir visine prstena i razmaka — mijenja se s njima. */
 .menu-glyph[data-open='true'] span:nth-child(1) {
-  transform: translateY(0.44rem) rotate(45deg);
+  transform: translateY(0.58rem) rotate(45deg);
 }
 
 .menu-glyph[data-open='true'] span:nth-child(2) {
@@ -809,7 +809,7 @@ p {
 }
 
 .menu-glyph[data-open='true'] span:nth-child(3) {
-  transform: translateY(-0.44rem) rotate(-45deg);
+  transform: translateY(-0.58rem) rotate(-45deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -837,8 +837,8 @@ p {
 
   .header-pill-logo {
     grid-template-columns: 1fr;
-    margin-left: 0.65rem;
-    margin-right: 0.85rem;
+    margin-left: 0.8rem;
+    margin-right: 1.05rem;
     opacity: 1;
   }
 }
@@ -882,21 +882,22 @@ p {
   position: absolute;
   left: 50%;
   /*
-   * Tegla je krupnija za desetinu, ali joj je sredina ostala gdje je bila.
+   * Tegla je jos jednom krupnija — sada za osminu preko onoga sto je vec
+   * porasla — ali joj je sredina i dalje ostala gdje je bila.
    *
    * Sidro je `top`, pa bi sama veca visina teglu spustila — narasla bi samo
    * nadolje, prema natpisu i cvijetu. Zato `top` ide gore za pola prirasta
-   * (2.85% od 5.7%): staklo se siri na obje strane oko iste ose, a sve sto je
+   * (3.75% od 7.5%): staklo se siri na obje strane oko iste ose, a sve sto je
    * oko njega — kruna, naslov, natpisi — stoji netaknuto.
    */
-  top: 13.67%;
+  top: 9.92%;
   /*
    * Novi snimak tegle nema praznine oko stakla koliko je imao stari crtez, pa
    * na istoj visini kutije staklo izgleda krupnije. Otud znatno manji
    * postotak nego sto ga je crtez imao — na ekranu tegla zauzima onoliko
    * koliko je i prije zauzimala, i sekcija oko nje dise.
    */
-  height: 62.7%;
+  height: 70.2%;
   /* Visina ostaje ista, sirinu racuna omjer — inace bi se staklo razvuklo. */
   aspect-ratio: 853 / 1285;
   transform: translateX(-50%);
@@ -1129,8 +1130,8 @@ p {
 
   /* Isti prirast i ista racunica kao u pejzazu: pola prirasta ide u `top`. */
   .hero-jar__jar {
-    top: 21.15%;
-    height: 57.2%;
+    top: 17.7%;
+    height: 64.1%;
   }
 
   /*
@@ -1909,25 +1910,6 @@ p {
   }
 }
 
-
-/* ---------------------------------------------------------------------------
- * Mjesto za sekciju koja jos ne postoji.
- *
- * Poslije propolisa strana namjerno diše: prazan papir, pa jedna tiha
- * recenica, pa tek onda pitanja. Praznina nije previd — ona drzi mjesto, i
- * kad nova sekcija dodje, ovo ide van.
- * ------------------------------------------------------------------------- */
-.urazvoju {
-  margin: 0;
-  padding-block: clamp(9rem, 22vh, 18rem) clamp(5rem, 11vh, 9rem);
-  background-color: var(--paper);
-  text-align: center;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--brown-soft);
-}
 
 /* ---------------------------------------------------------------------------
  * Loading curtain. Geometry copied from their #preloader: fixed, full-bleed,

@@ -23,7 +23,7 @@ export default function Newsletter({ locale }: { locale: Locale }) {
     status === 'sending' ? copy.sending : status === 'done' ? copy.joined : copy.join;
 
   return (
-    <section className="relative overflow-hidden bg-[var(--paper)] section-padding text-[#885B27]">
+    <section className="relative overflow-hidden section-padding text-[#885B27]">
       <div className="container">
         <div className="grid items-center gap-16 lg:grid-cols-[0.64fr_0.36fr] lg:gap-20">
           <div>

@@ -95,7 +95,7 @@ export default function Header({ locale }: { locale: Locale }) {
         )}
 
         {/* Pilula: gore desno na vrhu, u sredini kad se skroluje. */}
-        <div className="header-pill p-[0.28rem] text-[#885B27]">
+        <div className="header-pill p-[0.4rem] text-[#885B27]">
           <TransitionLink
             href={localeHref(locale, '/')}
             aria-label="Pčelarstvo Jevtić"
@@ -109,9 +109,9 @@ export default function Header({ locale }: { locale: Locale }) {
                 aria-hidden="true"
                 width={45}
                 height={95}
-                className="h-6 w-auto"
+                className="h-8 w-auto"
               />
-              <span className="font-display text-[0.95rem] font-medium leading-none tracking-[0.01em]">
+              <span className="font-display text-[1.2rem] font-medium leading-none tracking-[0.01em]">
                 Jevtić
               </span>
             </span>
@@ -130,9 +130,9 @@ export default function Header({ locale }: { locale: Locale }) {
                   : 'Menu'
             }
             aria-expanded={menuOpen}
-            className="flex min-h-9 items-center gap-1.5 rounded-full px-2 transition-colors hover:text-[#EEC660] sm:gap-2.5 sm:px-3"
+            className="flex min-h-11 items-center gap-2 rounded-full px-3 transition-colors hover:text-[#EEC660] sm:gap-3 sm:px-4"
           >
-            <span className="font-display text-[0.95rem] font-medium leading-none tracking-[0.01em]">
+            <span className="font-display text-[1.2rem] font-medium leading-none tracking-[0.01em]">
               {locale === 'sr' ? 'Meni' : 'Menu'}
             </span>
             <span className="menu-glyph" data-open={menuOpen} aria-hidden="true">
@@ -149,11 +149,11 @@ export default function Header({ locale }: { locale: Locale }) {
             type="button"
             onClick={cart.open}
             aria-label={t('nav.cart')}
-            className="relative flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:text-[#EEC660]"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:text-[#EEC660]"
           >
-            <ShoppingBag className="h-4 w-4" strokeWidth={1.7} />
+            <ShoppingBag className="h-5 w-5" strokeWidth={1.7} />
             {cart.count > 0 && (
-              <span className="absolute right-0 top-0.5 flex h-[15px] min-w-[15px] items-center justify-center rounded-full bg-[#885B27] px-1 text-[9px] font-bold tabular-nums text-[#FCF0DC]">
+              <span className="absolute right-0.5 top-1 flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-[#885B27] px-1 text-[10px] font-bold tabular-nums text-[#FCF0DC]">
                 {cart.count}
               </span>
             )}

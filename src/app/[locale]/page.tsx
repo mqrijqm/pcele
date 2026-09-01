@@ -11,12 +11,10 @@ import Podjela from '@/components/home/Podjela';
 import Ponuda from '@/components/home/Ponuda';
 import PhotoRail from '@/components/home/PhotoRail';
 import Vitrina from '@/components/home/Vitrina';
-import Testimonials from '@/components/home/Testimonials';
 import Origin from '@/components/home/Origin';
 import Livada from '@/components/home/Livada';
 import Krajolik from '@/components/home/Krajolik';
 import Propolis from '@/components/home/Propolis';
-import Faq from '@/components/home/Faq';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
 
@@ -24,8 +22,8 @@ import BeeFlight from '@/components/bee/BeeFlight';
  * Pocetna, jedan tok bez ponavljanja:
  *
  *   crtez livade -> prelaz na smedju i natrag -> tegla -> album ->
- *   porodicna tradicija -> mjesto -> dvije sorte -> utisci -> pitanja ->
- *   sorte -> poziv
+ *   porodicna tradicija -> mjesto -> dvije sorte -> sorte -> krajolik ->
+ *   poziv
  *
  * Sorte su sisle s vrha. Odmah iza heroja su tri sorte trazile odluku od
  * citaoca koji jos nije cuo ciji je to med; sada stoje pri dnu, kad je prica
@@ -41,6 +39,10 @@ import BeeFlight from '@/components/bee/BeeFlight';
  * snimka vec stoje tamo gdje im je mjesto, na strani o procesu i u blogu, pa
  * su ovdje samo usporavala tok. Ostala je jedna pauza, sam pcelinjak, prije
  * price o mjestu.
+ *
+ * Iza krajolika strana sada ide pravo u poziv. Utisci, prazan pojas s
+ * najavom sekcije u razvoju i pitanja su otisli — praznina koja cuva mjesto
+ * ne treba da stoji pred citaocem.
  */
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -135,23 +137,18 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         razlikuju: ne po receptu nego po tome sta je te godine cvjetalo. Zato
         stoji tek ovdje — prije nego se sorte vide, nema sta da objasni.
       */}
+      {/*
+        Krajolik i poziv dijele jedno polje cvijeca: uzorak tece preko ruba
+        medju njima i gasi se tek na dnu strane, pa se ne vidi gdje jedna
+        sekcija prestaje a druga pocinje. Poziv je zato ostao bez svoje
+        plohe — papir mu dolazi odavde.
+      */}
       <div className="bloomfield">
         <Krajolik locale={locale} />
+
+        {/* Jedan poziv na kraju, ne tri. */}
+        <Newsletter locale={locale} />
       </div>
-
-      <Testimonials locale={locale} />
-
-      {/*
-        Ovdje dolazi nova sekcija. Do tada stoji sam vazduh i jedna recenica —
-        praznina je namjerna, da se vidi da tu nesto ide, a ne da je strana
-        naglo zavrsila.
-      */}
-      <p className="urazvoju">{locale === 'sr' ? 'Sljedeće sekcije su u razvoju.' : 'The next sections are in progress.'}</p>
-
-      <Faq locale={locale} />
-
-      {/* Jedan poziv na kraju, ne tri. */}
-      <Newsletter locale={locale} />
     </>
   );
 }
