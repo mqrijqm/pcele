@@ -1,80 +1,63 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
 
+import TransitionLink from '@/components/ui/TransitionLink';
 import { home } from '@/content/pages';
-import { type Locale } from '@/i18n/config';
+import { localeHref, type Locale } from '@/i18n/config';
 
+/**
+ * Poziv na kraju strane.
+ *
+ * Sirok je preko mjere ostatka strane: slog ide ulijevo, snimak udesno, i
+ * izmedju njih ostaje vazduh koji sekcija na kraju moze sebi da priusti.
+ *
+ * **Nema vise polja za email.** Stajalo je tu kao poziv na prijavu, a iza
+ * njega nije bilo nikakvog spiska — dugme je samo cekalo pola sekunde i reklo
+ * hvala. Umjesto obecanja koje se ne odrzava, sekcija sada vodi na ponudu:
+ * pecat na uglu snimka je isti onaj koji stoji uz propolis, pa se prepozna.
+ */
 export default function Newsletter({ locale }: { locale: Locale }) {
   const copy = home.newsletter[locale];
-  const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (!email.trim() || status !== 'idle') return;
-    setStatus('sending');
-    // No mailing backend is wired up — acknowledge locally, as the original does.
-    window.setTimeout(() => setStatus('done'), 600);
-  }
-
-  const buttonLabel =
-    status === 'sending' ? copy.sending : status === 'done' ? copy.joined : copy.join;
 
   return (
-    <section className="relative overflow-hidden section-padding text-[#885B27]">
-      <div className="container">
-        <div className="grid items-center gap-16 lg:grid-cols-[0.64fr_0.36fr] lg:gap-20">
-          <div>
-            <span className="reveal mb-5 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
-              <span className="h-px w-9 bg-[#EEC660]" aria-hidden="true" />
-              {copy.eyebrow}
-            </span>
-            <h2 className="reveal max-w-[18ch] font-display text-display-md font-normal text-[#885B27]">
-              {copy.heading}
-            </h2>
-            <p className="reveal stagger-1 mt-6 max-w-xl text-base leading-7 text-[#885B27]">
-              {copy.description}
-            </p>
+    <section className="poziv section-padding text-[#885B27]">
+      <div className="poziv__inner">
+        <div className="poziv__copy">
+          <span className="reveal mb-5 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
+            <span className="h-px w-9 bg-[#EEC660]" aria-hidden="true" />
+            {copy.eyebrow}
+          </span>
+          <h2 className="reveal max-w-[18ch] font-display text-display-md font-normal text-[#885B27]">
+            {copy.heading}
+          </h2>
+          <p className="reveal stagger-1 mt-6 max-w-xl text-base leading-7 text-[#885B27]">
+            {copy.description}
+          </p>
+        </div>
 
-            <form onSubmit={handleSubmit} noValidate className="reveal stagger-3 mt-12 max-w-2xl">
-              <div className="flex flex-col gap-2 rounded-full border border-[#885B27]/20 bg-[var(--paper)] p-2 sm:flex-row sm:items-center">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(event) => setEmail(event.target.value)}
-                  disabled={status !== 'idle'}
-                  placeholder={copy.placeholder}
-                  aria-label={copy.placeholder}
-                  className="min-h-12 flex-1 rounded-full border-0 bg-transparent px-5 py-3 text-[#885B27] placeholder:text-[#885B27] focus:outline-none disabled:opacity-60"
-                />
-                <button
-                  type="submit"
-                  disabled={status !== 'idle'}
-                  className="btn"
-                >
-                  {buttonLabel}
-                </button>
-              </div>
-              {status === 'done' && (
-                <p className="mt-3 text-sm text-[#885B27]" role="status">
-                  {copy.success}
-                </p>
-              )}
-            </form>
-          </div>
-
-          <div className="relative mx-auto aspect-[3/4] w-full max-w-[16.5rem] overflow-hidden bg-[#885B27]/[0.06] shadow-[0_20px_55px_rgba(136,91,39,0.13)]">
+        {/*
+          Snimak i pecat u istom omotacu: pecat sjedi na donjem lijevom uglu
+          snimka i dijelom izlazi iz njega, pa mu mjesto racuna snimak a ne
+          sekcija — isto kao znak uz bocicu propolisa.
+        */}
+        <div className="poziv__slika reveal stagger-2">
+          <div className="poziv__okvir">
             <Image
               src="/images/real/tegle-red.webp"
               alt={copy.jarAlt}
               fill
-              sizes="(max-width: 1024px) 80vw, 21rem"
+              sizes="(max-width: 1024px) 80vw, 26rem"
               className="object-cover"
             />
           </div>
+
+          <TransitionLink
+            className="poziv__znak pecat"
+            href={localeHref(locale, '/products')}
+            aria-label={home.znakCta[locale]}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
+          </TransitionLink>
         </div>
       </div>
     </section>

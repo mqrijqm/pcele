@@ -1,9 +1,8 @@
 import type { CSSProperties } from 'react';
 import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
 
 import { home } from '@/content/pages';
-import { localeHref, type Locale } from '@/i18n/config';
+import { type Locale } from '@/i18n/config';
 
 /*
  * Tri stupca, pet snimaka.
@@ -30,58 +29,25 @@ const COLUMNS = [
 ] as const;
 
 /**
- * Livada: crtez pcelinjaka, recenica pod njim, pa pet snimaka u stepenicu.
+ * Livada: recenica, pa pet snimaka u stepenicu.
  *
- * Sekcija stoji na istom papiru kao karta prije nje, bez svog pojasa i bez
- * okvira — crtez je taj koji je drzi. Ide preko gotovo cijele mjere strane,
- * jer je crtan kao pogled a ne kao ilustracija uz tekst.
+ * Crtez pcelinjaka je odavde otisao — zauzimao je gotovo cio kadar i drzao
+ * stranu na mjestu na kojem se nista nije desavalo. S njim je otisao i pecat
+ * koji je vodio na pcelinjake; ta veza sada stoji u sekciji o krajoliku, gdje
+ * je i tekst koji je uvodi.
  *
- * Crtez i recenica su vektori, oba kao `<img>` a ne umetnuta u stranu. Crtez
- * ima cetiri puta koji zajedno nose deset hiljada poteza; umetnut, to bi bilo
- * deset hiljada cvorova u DOM-u koje preglednik racuna pri svakom skrolu.
- * Ovako ih rasterizuje jednom i dalje se ponasa kao slika.
- *
- * Recenica je slog pretvoren u krivulje, pa je za pretragu i citac ekrana
- * nema — zato ista ta recenica stoji u `alt`-u.
+ * Recenica je vektor, i to kao `<img>` a ne umetnuta u stranu: slog je
+ * pretvoren u krivulje, pa je za pretragu i citac ekrana nema — zato ista ta
+ * recenica stoji u `alt`-u.
  */
 export default function Livada({ locale }: { locale: Locale }) {
   const t = home.livada[locale];
 
   return (
     <section className="livada section-padding">
-      {/*
-        * Crtez i pecat u istom omotacu: pecat sjedi na donjem desnom uglu
-        * crteza, pa mu mjesto racuna crtez a ne sekcija.
-        */}
-      <div className="livada__scene reveal">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="livada__pejzaz"
-          src="/images/brand/pejzaz-kosnice.svg"
-          alt={t.pejzazAlt}
-          width={393}
-          height={187}
-          loading="lazy"
-          decoding="async"
-        />
-
-        {/*
-          * Pecat je crtez: rijec u njemu je savijena u luk i niko je ne moze
-          * procitati, pa ista ta rijec stoji kao `aria-label` na vezi — isto
-          * kao pecat na vitrini.
-          */}
-        <TransitionLink
-          className="livada__seal pecat"
-          href={localeHref(locale, '/pcelinjak')}
-          aria-label={t.sealLabel}
-        >
-          <Image src="/images/brand/pecat-pcelinjak.svg" alt="" width={423} height={423} />
-        </TransitionLink>
-      </div>
-
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        className="livada__recenica reveal stagger-1"
+        className="livada__recenica reveal"
         src="/images/brand/recenica-vrcamo.svg"
         alt={t.recenica}
         width={2600}

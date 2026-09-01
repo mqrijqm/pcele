@@ -1,10 +1,8 @@
-import Image from 'next/image';
 import TransitionLink from '@/components/ui/TransitionLink';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
 
 const navLinks = [
-  { href: '/products', key: 'nav.shop' },
   { href: '/about', key: 'nav.about' },
   { href: '/pcelinjak', key: 'nav.apiaries' },
   { href: '/process', key: 'nav.process' },
@@ -16,113 +14,103 @@ const socials = [
   { href: 'https://facebook.com', label: 'Facebook' },
 ];
 
+/**
+ * Podnozje.
+ *
+ * Cita se odozgo nadolje kao potpis: znak, pa ime kuce preko cijele mjere, pa
+ * pecat, pa ono cime se kuca javlja — broj, adresa, mreze, strane. Na dnu
+ * sitno, godina i dvije pravne veze.
+ *
+ * **Ploha ide iz medene u papir.** Gornja ivica je ista boja koju sekcija nad
+ * njom nema, pa se podnozje odvaja bez linije; do dna se ugasi u papir, pa se
+ * potpis cita na svijetlom, kao na etiketi.
+ *
+ * **Ime je crtez, ne slog.** `wordmark-jevtic.svg` nosi i "Jevtić" i
+ * "PČELARSTVO" u jednom potezu, sa razmacima kakvi su nacrtani — slozeno iz
+ * fonta to nikad ne sjedne isto. Zato u `alt`-u stoji ono sto crtez govori.
+ *
+ * Ulazak je jedan i tih: sve se podigne za nesto malo kad podnozje udje u
+ * kadar. Znak se na prelazu misem okrene za nekoliko stepeni i vrati.
+ */
 export default function Footer({ locale }: { locale: Locale }) {
   const t = createTranslator(locale);
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#C39C4A] text-[#FCF0DC]">
-      <div className="container pt-28 lg:pt-40">
-        {/* Only what someone actually needs: where we are, how to reach us, where to go next. */}
-        <div className="reveal grid gap-14 sm:grid-cols-2 lg:grid-cols-[1fr_auto]">
-          <div className="max-w-sm">
-            {/* The seal off the jar label, on its own cream disc so it reads on the dark ground. */}
-            <span className="inline-flex h-24 w-24 items-center justify-center rounded-full bg-[var(--paper)] p-3">
-              <Image
-                src="/images/brand/seal.svg"
-                alt="Pčelarstvo Jevtić — tradicija od 1980."
-                width={96}
-                height={96}
-                className="h-full w-full"
-              />
-            </span>
-            <p className="mt-6 text-base leading-7 text-[#FCF0DC]/90">{t('footer.tagline')}</p>
-          </div>
+    <footer className="stopa">
+      <div className="stopa__inner">
+        {/* --- znak, ime, pecat -------------------------------------------- */}
+        <TransitionLink
+          href={localeHref(locale, '/')}
+          className="stopa__znak reveal"
+          aria-label="Pčelarstvo Jevtić"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/brand/mark-footer.svg" alt="" aria-hidden="true" />
+        </TransitionLink>
 
-          <div className="flex flex-col gap-8 sm:flex-row sm:gap-14 lg:gap-20">
-            <ul className="space-y-2.5">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <TransitionLink
-                    href={localeHref(locale, link.href)}
-                    className="text-sm text-[#FCF0DC]/90 transition-colors hover:text-[#FCF0DC]"
-                  >
-                    {t(link.key)}
-                  </TransitionLink>
-                </li>
-              ))}
-            </ul>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="stopa__ime reveal stagger-1"
+          src="/images/brand/wordmark-jevtic.svg"
+          alt="Jevtić — Pčelarstvo"
+          width={694}
+          height={279}
+          loading="lazy"
+          decoding="async"
+        />
 
-            <div className="space-y-2.5 text-sm">
-              <p className="text-[#FCF0DC]/90">{t('contact.info.address')}</p>
-              <p>
-                <a
-                  href="tel:+38766030550"
-                  className="text-[#FCF0DC] transition-colors hover:underline hover:decoration-[#EEC660] hover:decoration-2 hover:underline-offset-4"
-                >
-                  {t('contact.info.phone')}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          className="stopa__krug reveal stagger-2"
+          src="/images/brand/znak-krug.svg"
+          alt=""
+          aria-hidden="true"
+          width={178}
+          height={178}
+          loading="lazy"
+          decoding="async"
+        />
+
+        {/* --- kako se kuca javlja ----------------------------------------- */}
+        <div className="stopa__podaci reveal stagger-3">
+          <p className="stopa__red">
+            <a href="tel:+38766030550">{t('contact.info.phone')}</a>
+          </p>
+          <p className="stopa__red">
+            <a href="mailto:info@pcelarstvo-jevtic.ba">{t('contact.info.email')}</a>
+          </p>
+          <p className="stopa__red stopa__red--tiho">{t('contact.info.address')}</p>
+
+          <p className="stopa__red stopa__red--razmak">
+            {socials.map(({ href, label }, i) => (
+              <span key={label}>
+                {i > 0 && <span className="stopa__crta" aria-hidden="true" />}
+                <a href={href} target="_blank" rel="noopener noreferrer">
+                  {label}
                 </a>
-              </p>
-              <p>
-                <a
-                  href="mailto:info@pcelarstvo-jevtic.ba"
-                  className="text-[#FCF0DC] transition-colors hover:underline hover:decoration-[#EEC660] hover:decoration-2 hover:underline-offset-4"
-                >
-                  {t('contact.info.email')}
-                </a>
-              </p>
-              <div className="flex gap-5 pt-1.5">
-                {socials.map(({ href, label }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-[#FCF0DC]/90 underline-offset-4 transition-colors hover:underline hover:decoration-[#EEC660] hover:decoration-2 hover:underline-offset-4 hover:underline"
-                  >
-                    {label}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+              </span>
+            ))}
+          </p>
 
-        <div className="mt-14 flex flex-col items-start justify-between gap-3 border-t border-[#FCF0DC]/15 pt-5 text-xs text-[#FCF0DC]/90 md:flex-row md:items-center">
-          <p>{t('footer.copyright', { year })}</p>
-          <div className="flex items-center gap-5">
-            <TransitionLink
-              href={localeHref(locale, '/privacy')}
-              className="transition-colors hover:text-[#FCF0DC]"
-            >
-              {t('footer.privacy')}
-            </TransitionLink>
-            <TransitionLink
-              href={localeHref(locale, '/terms')}
-              className="transition-colors hover:text-[#FCF0DC]"
-            >
-              {t('footer.terms')}
-            </TransitionLink>
-          </div>
+          <p className="stopa__red">
+            {navLinks.map((link, i) => (
+              <span key={link.href}>
+                {i > 0 && <span className="stopa__crta" aria-hidden="true" />}
+                <TransitionLink href={localeHref(locale, link.href)}>{t(link.key)}</TransitionLink>
+              </span>
+            ))}
+          </p>
         </div>
       </div>
 
-      {/*
-       * Potpis na dnu strane, preko cele sirine.
-       *
-       * Slozen je iz Gazpacha, a ne iz FOOT.svg: u tom fajlu su donji delovi
-       * slova odsečeni pri izvozu (cetiri putanje se zavrsavaju ravnim rezom
-       * na donjoj ivici), pa se "Jevtić" nikako ne bi video ceo. Font daje
-       * isto pismo, celo slovo i bilo koju velicinu.
-       *
-       * `pb` cuva kvacicu na Ć i rep slova J od donje ivice stranice.
-       */}
-      <div className="mt-16 w-full px-4 pb-6 sm:px-6 lg:px-8">
-        <p className="text-center text-[clamp(0.58rem,1.15vw,1rem)] font-semibold uppercase tracking-[0.4em] text-[#FCF0DC]">
-          Pčelarstvo
-        </p>
-        <p className="-mt-[0.22em] select-none text-center font-display text-[clamp(4rem,33.5vw,30rem)] font-normal leading-[1.22] tracking-[-0.02em] text-[#FCF0DC]">
-          Jevtić
+      {/* --- sitno na dnu -------------------------------------------------- */}
+      <div className="stopa__dno">
+        <p>{t('footer.copyright', { year })}</p>
+        <p className="stopa__pravno">
+          <TransitionLink href={localeHref(locale, '/privacy')}>{t('footer.privacy')}</TransitionLink>
+          <span className="stopa__crta" aria-hidden="true" />
+          <TransitionLink href={localeHref(locale, '/terms')}>{t('footer.terms')}</TransitionLink>
         </p>
       </div>
     </footer>

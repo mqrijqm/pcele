@@ -2614,23 +2614,6 @@ html.is-preloading body {
   overflow: hidden;
 }
 
-.livada__scene {
-  position: relative;
-  width: min(86%, 1240px);
-  margin: 0 auto;
-}
-
-.livada__pejzaz {
-  display: block;
-  width: 100%;
-  height: auto;
-  /*
-   * Crtez je podloga, ne slika: punim mastilom je tezi od svega oko sebe i
-   * povlaci pogled sa recenice pod njim. Utisan je da stoji kao vodeni znak.
-   */
-  opacity: 0.4;
-}
-
 /*
  * Recenica je uz crtez u sirini, ali joj treba vazduh iznad: crtez se pri dnu
  * rasplinjava u travu, pa bi slog prislonjen uz njega izgledao kao potpis.
@@ -2645,16 +2628,6 @@ html.is-preloading body {
    * Mjera je u `vw` da razmak raste zajedno s crtezom nad njim.
    */
   margin: clamp(4.5rem, 14vw, 15rem) auto 0;
-}
-
-/* ---------------------------------------------------------------------------
- * Pecat na uglu crteza. Crtez je, kao i ostali pecati na strani.
- * ------------------------------------------------------------------------- */
-.livada__seal {
-  position: absolute;
-  right: 7%;
-  /* Malo visi ispod crteza, kao pecat udaren preko ruba. */
-  bottom: -5%;
 }
 
 /* ---------------------------------------------------------------------------
@@ -2773,7 +2746,6 @@ html.is-preloading body {
 }
 
 @media (max-width: 899px) {
-  .livada__scene,
   .livada__recenica {
     width: 92%;
   }
@@ -2820,10 +2792,7 @@ html.is-preloading body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .livada__sealRing {
-    animation: none;
   }
-}
 
 /* ---------------------------------------------------------------------------
  * Heroj koji zumira: tri kadra istog snimka, od najsireg do najblizeg.
@@ -5644,7 +5613,7 @@ a.pecat:focus-visible img {
    * Sredisnja kolona je najsira: naslov je najveci slog na strani i mora da
    * padne u tri reda bez da se lomi gdje ne treba.
    */
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr) minmax(0, 0.92fr);
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1fr) minmax(0, 0.92fr);
   /*
    * Sve tri kolone pocinju na istoj liniji. Centrirano je naslov spustalo na
    * sredinu najvise kolone — a ta kolona je sanduk sa slikama, koji je visok
@@ -5680,7 +5649,7 @@ a.pecat:focus-visible img {
   position: absolute;
   left: 0;
   top: 0;
-  width: 78%;
+  width: 84%;
   aspect-ratio: 320 / 480;
   overflow: hidden;
   background-color: rgba(136, 91, 39, 0.06);
@@ -5725,7 +5694,11 @@ a.pecat:focus-visible img {
   line-height: 1.24;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--amber);
+  /*
+   * Mastilo, ne med. Medena je bila svjetlija od svega oko sebe pa je naslov
+   * — najkrupniji slog na strani — izgledao blijedje od pasusa uz njega.
+   */
+  color: var(--brown);
 }
 
 .krajolik__red {
@@ -5810,5 +5783,224 @@ a.pecat:focus-visible img {
     left: 44%;
     top: 46%;
     width: 66%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Poziv na kraju strane.
+ *
+ * Sekcija je sira od ostatka strane: slog krece lijevo od mjere sadrzaja, a
+ * snimak zavrsava desno od nje. Do sada je stajala u istoj mjeri kao i sve
+ * ostalo, pa je izmedju naslova i snimka bila samo praznina — a praznina koja
+ * nista ne radi izgleda kao greska, ne kao vazduh.
+ * ------------------------------------------------------------------------- */
+.poziv__inner {
+  max-width: min(96rem, 100% - 2 * var(--container-padding));
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .poziv__inner {
+    /* Slog uzi nego prije, snimak siri — otud pomak s 0.64/0.36 na 0.56/0.44. */
+    grid-template-columns: minmax(0, 0.56fr) minmax(0, 0.44fr);
+    gap: clamp(3rem, 7vw, 7rem);
+  }
+}
+
+/*
+ * Sanduk je visi od samog snimka: pecat visi ispod njegovog donjeg lijevog
+ * ugla, u prazno, i ta visina mora nekome da pripada — inace pecat sjeda na
+ * tegle u snimku.
+ */
+.poziv__slika {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  margin-inline: auto;
+  aspect-ratio: 62 / 92;
+}
+
+.poziv__okvir {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: rgba(136, 91, 39, 0.06);
+  box-shadow: 0 20px 55px rgba(136, 91, 39, 0.13);
+}
+
+/* Pecat je isti onaj koji stoji uz propolis — tamni, jer je snimak taman. */
+.poziv__znak {
+  position: absolute;
+  z-index: 2;
+  left: -8%;
+  top: 68%;
+  width: 34%;
+}
+
+.poziv__znak img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1023px) {
+  .poziv__znak {
+    left: auto;
+    right: -4%;
+    top: 72%;
+    width: 30%;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Podnozje.
+ *
+ * Ploha ide iz medene u papir: gornja ivica nosi boju koju sekcija nad njom
+ * nema, pa se podnozje odvaja bez ijedne linije, a do dna se ugasi u papir —
+ * potpis se cita na svijetlom, kao na etiketi.
+ * ------------------------------------------------------------------------- */
+.stopa {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  background: linear-gradient(to bottom, var(--amber) 0%, var(--paper) 62%);
+  color: var(--brown);
+}
+
+.stopa__inner {
+  max-width: min(90rem, 100% - 2 * var(--container-padding));
+  margin-inline: auto;
+  padding-block: clamp(3.5rem, 7vw, 6rem) clamp(2rem, 4vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* --- znak: krupan, i okrene se za nekoliko stepeni pod misem ------------- */
+.stopa__znak {
+  display: block;
+  width: clamp(6rem, 11vw, 11rem);
+  transition: transform 0.7s var(--ease-out-expo);
+}
+
+.stopa__znak img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stopa__znak:hover,
+.stopa__znak:focus-visible {
+  transform: rotate(-6deg);
+}
+
+/*
+ * Ime kuce ide preko gotovo cijele mjere. Crtez nosi i "Jevtić" i
+ * "PČELARSTVO", pa mu ispod ne treba nikakav slog.
+ */
+.stopa__ime {
+  display: block;
+  width: min(56rem, 100%);
+  height: auto;
+  margin-top: clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+.stopa__krug {
+  display: block;
+  width: clamp(3.25rem, 5vw, 4.5rem);
+  height: auto;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* --- podaci -------------------------------------------------------------- */
+.stopa__podaci {
+  margin-top: clamp(1.75rem, 3.5vw, 3rem);
+  font-size: 0.875rem;
+  line-height: 1.8;
+}
+
+.stopa__red {
+  margin: 0;
+}
+
+.stopa__red--tiho {
+  color: var(--brown-soft);
+}
+
+.stopa__red--razmak {
+  margin-top: 0.85rem;
+}
+
+.stopa__podaci a,
+.stopa__dno a {
+  color: inherit;
+  text-decoration-color: transparent;
+  text-decoration-line: underline;
+  text-underline-offset: 0.28em;
+  transition: text-decoration-color 0.35s ease;
+}
+
+.stopa__podaci a:hover,
+.stopa__podaci a:focus-visible,
+.stopa__dno a:hover,
+.stopa__dno a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+/* Vlas izmedju dvije veze u istom redu. */
+.stopa__crta {
+  display: inline-block;
+  width: 1px;
+  height: 0.72em;
+  margin-inline: 0.85rem;
+  translate: 0 0.05em;
+  background: rgba(136, 91, 39, 0.35);
+}
+
+/* --- sitno na dnu -------------------------------------------------------- */
+.stopa__dno {
+  max-width: min(90rem, 100% - 2 * var(--container-padding));
+  margin-inline: auto;
+  padding-block: clamp(1.25rem, 2.5vw, 2rem);
+  border-top: 1px solid rgba(136, 91, 39, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--brown-soft);
+  text-align: center;
+}
+
+.stopa__dno p {
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .stopa__dno {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.stopa__pravno {
+  display: inline-flex;
+  align-items: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stopa__znak {
+    transition: none;
+  }
+  .stopa__znak:hover,
+  .stopa__znak:focus-visible {
+    transform: none;
   }
 }
