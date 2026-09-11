@@ -7,33 +7,36 @@ import gsap from 'gsap';
 import BeeSvg from './BeeSvg';
 
 /**
- * Pcela koju vodi skrol.
+ * Pcela koja stoji nad imenom, pa krene za misem.
  *
- * Ne leti sama. Kadar joj je fiksan sloj preko strane, a gdje ce u njemu
- * stajati racuna se iz toga koliko je strana odskrolana: krece slijeva
- * nadesno, vrati se, pa opet — jedan zamah na svakih nekoliko ekrana skrola.
- * Ko stane, stane i ona; ko se vrati gore, vrati se i ona istim putem.
+ * Kadar joj je fiksan sloj preko strane, a u njemu ima dva ponasanja:
  *
- * Prije ovoga je birala slobodne tacke u kadru i sama letjela od jedne do
- * druge, na tajmer. To je izgledalo zivo dok strana miruje, ali je bilo
- * nevezano za ono sto citalac radi — skrolas nadolje, a pcela ide nagore, jer
- * je krenula prije nego sto si ti. Sada je pokret njen odgovor na skrol.
+ * Dok se ime u heroju jos vidi, sjedi uz njegov gornji desni ugao i samo
+ * lebdi — tu je skrol i mis ne diraju. Ime je razlog zbog kojeg je pcela na
+ * toj strani, pa dok se ono cita ona stoji nad njim.
  *
- * Dva mjesta gdje ipak sjedi — vrh strelice u heroju i kamilica uz teglu —
- * ostaju: tamo je crtez zove poimence i tu je skrol ne dira.
+ * Cim ime ode iznad ruba, preuzima je pokazivac: leti za njim sa zaostatkom i
+ * ne slijece na njega nego kruzi malo iznad, da ne pokrije ono na sta citalac
+ * pokazuje. Kome misa nema — telefon, tablet, ili je do sada skrolao samo
+ * kotacicem — vodi je skrol, istim zamahom slijeva nadesno kao prije.
+ *
+ * Prije ovoga ju je svuda vodio skrol, a usput je sjedala i na kamilicu uz
+ * teglu. Sjedenje na cvijetu je uklonjeno: kad pokret vodi ruka citaoca,
+ * pcela koja usred toga prestane da slusa mis ne cita se kao odluka nego kao
+ * kvar.
  */
 
 /**
  * Koliko skrola stane u jedan puni zamah, u pikselima.
  *
- * Mjereno je sa strane koja je posluzila kao uzor: pcela stigne do desnog ruba
- * poslije oko hiljadu i sedamsto piksela skrola, a nazad do lijevog poslije
- * jos toliko.
+ * Vazi samo tamo gdje misa nema, pa pcelu i dalje vodi skrol. Mjereno je sa
+ * strane koja je posluzila kao uzor: pcela stigne do desnog ruba poslije oko
+ * hiljadu i sedamsto piksela skrola, a nazad do lijevog poslije jos toliko.
  */
 const WAVE = 3800;
 
 /**
- * Pojas kroz koji se pcela krece, u dijelovima kadra.
+ * Pojas kroz koji je vodi skrol, u dijelovima kadra.
  *
  * Vodoravno ide gotovo cijelom sirinom, uspravno ostaje u gornjoj trecini —
  * nize bi presijecala slog koji se u tom trenutku cita.
@@ -44,13 +47,17 @@ const BAND = {
 };
 
 /**
- * Koliko pcela zaostaje za skrolom.
+ * Koliko pcela zaostaje za mjestom na koje ide, po kadru.
  *
- * Nula bi je zalijepila za kotacic — svaki trzaj skrola bio bi i njen. Ovako
- * pristize u svoje mjesto za oko trecinu sekunde, pa se pokret cita kao let, a
- * ne kao pomjeranje.
+ * Nula bi je zalijepila za kotacic ili za vrh strelice — svaki trzaj ruke bio
+ * bi i njen. Ovako pristize sa zakasnjenjem, pa se pokret cita kao let, a ne
+ * kao pomjeranje.
+ *
+ * Za misem ide brze nego za skrolom: pokazivac se mice naglo i daleko, i ako
+ * pcela zaostaje kao za skrolom, izgleda kao da ga je izgubila. Za skrolom i
+ * dok lebdi nad imenom ostaje sporija — tamo se nema za cim juriti.
  */
-const LAG = 0.045;
+const LAG = { scroll: 0.045, cursor: 0.085 };
 
 /** Ispod ovoliko piksela po kadru se smjer ne mijenja — inace pcela treperi. */
 const TURN = 0.35;
@@ -96,16 +103,15 @@ const IDLE = { x: 4, y: 3 };
 const HERO_HOLD = 0.12;
 
 /**
- * Drugo mjesto na kojem pcela sjedi: kamilica uz teglu.
+ * Kako pcela stoji prema pokazivacu.
  *
- * Sekcija ispod nje je snimak pcelinjaka preko cijelog ekrana, a tamo pcele
- * nema — snimak je njeno mjesto, ne njena pozadina. Zato se prije njega
- * spusti na cvijet i tu ostane dok sekcija sa snimkom ne prodje.
- *
- * Mjere su razlomci samog cvijeta: gore lijevo od njegove sredine, na
- * laticama, ne na srcu.
+ * Ne slijece na njega. `lift` je koliko je iznad njega — tacno na vrhu
+ * strelice bi pokrila ono na sta citalac pokazuje, i klik bi izgledao kao da
+ * ide kroz nju. `radius` je krug koji opisuje oko te tacke dok ruka miruje,
+ * `speed` koliko mu treba za jedan obilazak; sporo, da to bude obilijetanje a
+ * ne vrtnja.
  */
-const BLOOM = { x: 0.36, y: 0.22, tilt: 12 };
+const ORBIT = { lift: 26, radius: 30, speed: 0.55 };
 
 /**
  * Sekcije preko kojih pcele nema.
@@ -146,29 +152,8 @@ export default function BeeFlight() {
       return { x: r.left + r.width * START.x, y: r.top + r.height * START.y, tilt: START.tilt };
     };
 
-    /**
-     * Mjesto na kamilici, dok se ona vidi. Trazi se da cvijet bude stvarno u
-     * kadru — ne tek zavirio odozdo — inace bi pcela sjela na njega jos dok je
-     * sekcija ispod pregiba.
-     */
-    const bloomSpot = () => {
-      const bloom = document.querySelector('.hero-jar__bloom');
-      const petals = document.querySelector('.hero-jar__petals');
-      if (!bloom || !petals) return null;
-      /*
-       * Cvijet se ne iscrta odmah — latice se rasire tek pri kraju sekcije s
-       * teglom. Dok ih nema, pcela nema na sta da sjedne: sjedila bi na
-       * praznom uglu i to se vidi.
-       */
-      if (Number(getComputedStyle(petals).opacity) < 0.9) return null;
-      const r = bloom.getBoundingClientRect();
-      const h = window.innerHeight;
-      if (r.bottom < h * 0.15 || r.top > h * 0.85) return null;
-      return { x: r.left + r.width * BLOOM.x, y: r.top + r.height * BLOOM.y, tilt: BLOOM.tilt };
-    };
-
     /** Mjesto na kojem pcela sjedi, ako ga trenutno ima. */
-    const parkSpot = () => heroSpot() ?? bloomSpot();
+    const parkSpot = () => heroSpot();
 
     /**
      * Mjesto koje joj daje skrol.
@@ -184,6 +169,52 @@ export default function BeeFlight() {
       return {
         x: w * (BAND.x.mid + BAND.x.amp * Math.sin(u)),
         y: h * (BAND.y.mid + BAND.y.amp * Math.sin(u * 0.5 + 1.1)),
+        tilt: 0,
+      };
+    };
+
+    /*
+     * Gdje je pokazivac.
+     *
+     * Cuva se posljednje mjesto, ne samo ono iz tekuceg kadra: ruka koja
+     * stane ne salje vise dogadjaja, a pcela i dalje treba da zna gdje da
+     * kruzi. Dok mis nije ni maknut, `known` je netacno i vodi je skrol — inace
+     * bi na ucitavanju odletjela u gornji lijevi ugao, na tacku nula.
+     *
+     * Mjere su prema kadru (`clientX`), ne prema dokumentu, jer je i sloj
+     * pcele zakovan za kadar.
+     */
+    const mouse = { x: 0, y: 0, known: false };
+
+    /*
+     * Mis se prati samo tamo gdje je pokazivac tacan. Prst na ekranu javlja
+     * iste dogadjaje, ali on nije pokazivac nego dodir: pcela bi skakala na
+     * mjesto svakog prevlacenja i stajala tamo dok se ne dodirne ponovo. Na
+     * dodiru ostaje skrol.
+     *
+     * Ko je iskljucio animacije nema ni ovo: tamo pcela stoji, pa nema koga da
+     * slusa.
+     */
+    const fine = !still && window.matchMedia('(pointer: fine)').matches;
+
+    const onMove = (e: PointerEvent) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+      mouse.known = true;
+    };
+
+    if (fine) window.addEventListener('pointermove', onMove, { passive: true });
+
+    /**
+     * Mjesto koje joj daje mis: malo iznad pokazivaca, u laganom krugu oko te
+     * tacke. `null` ako misa nema — tada je vodi skrol.
+     */
+    const cursorSpot = () => {
+      if (!fine || !mouse.known) return null;
+      const a = performance.now() / 1000 * ORBIT.speed;
+      return {
+        x: mouse.x + Math.cos(a) * ORBIT.radius,
+        y: mouse.y - ORBIT.lift + Math.sin(a) * ORBIT.radius * 0.6,
         tilt: 0,
       };
     };
@@ -229,20 +260,21 @@ export default function BeeFlight() {
          * zatvara u krug koji bi oko prepoznalo.
          */
         const parked = parkSpot();
+        const chased = parked ? null : cursorSpot();
         const to = parked
           ? {
               x: parked.x + Math.sin(time * 1.1) * IDLE.x,
               y: parked.y + Math.sin(time * 0.7) * IDLE.y,
               tilt: parked.tilt,
             }
-          : scrollSpot();
+          : chased ?? scrollSpot();
 
         /*
          * Zaostajanje se racuna po proteklom vremenu, ne po kadru: na ekranu
          * sa sto dvadeset osvjezenja u sekundi bi inace pcela stizala dvaput
          * brze nego na onom sa sezdeset.
          */
-        const k = 1 - Math.pow(1 - LAG, delta / 16.667);
+        const k = 1 - Math.pow(1 - (chased ? LAG.cursor : LAG.scroll), delta / 16.667);
         const dx = (to.x - at.x) * k;
         at.x += dx;
         at.y += (to.y - at.y) * k;
@@ -279,7 +311,10 @@ export default function BeeFlight() {
       return () => gsap.ticker.remove(update);
     }, layer);
 
-    return () => ctx.revert();
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      ctx.revert();
+    };
   }, [mounted]);
 
   if (!mounted) return null;
