@@ -114,6 +114,199 @@ export const home = {
     },
   } satisfies L<Record<string, string>>,
 
+  /*
+   * Izdvojeni proizvodi: tri reda u kojima je tegla (bocica) glavna, pa mreza
+   * svojstava pod njima.
+   *
+   * Sekcija stoji odmah iza heroja, prije price — prvo se vidi sta se nudi, pa
+   * odakle dolazi. Ime, mjere i cinjenice se ne prepisuju iz `data/products.ts`
+   * nego se odatle citaju; ovdje stoje samo rijeci koje taj katalog nema.
+   */
+  izdvojeno: {
+    sr: {
+      eyebrow: 'Izdvojeno iz pčelinjaka',
+      heading: 'Ono što izlazi iz naših košnica.',
+      intro:
+        'Dvije sorte meda iz berbe 2026. i propolis iz istih košnica — sve što vrcamo i cijedimo, na jednom mjestu.',
+      svi: 'Svi proizvodi',
+      cta: 'Pogledaj proizvod',
+      mreza: {
+        heading: 'Zašto ovaj med',
+        fotoNatpis: 'Naš pčelinjak u Mračaju · od 1980.',
+        fotoAlt: 'Tegla bagremovog meda na košnici, iza nje livada i brda',
+        plocice: [
+          {
+            naslov: '100% prirodno',
+            tekst: 'Bez dodataka, boja i konzervansa — u tegli je samo ono što su pčele donijele.',
+          },
+          {
+            naslov: 'Sirovo vrcano',
+            tekst: 'Med ne grijemo i ne filtriramo; teče iz saća pravo u teglu.',
+          },
+          {
+            naslov: 'Bez dodanog šećera',
+            tekst: 'Ni sirup, ni aroma, ni konzervans.',
+          },
+          {
+            naslov: 'Bagrem — paša maj–jun',
+            tekst: 'Svijetlozlatna, blaga i gotovo prozirna; ostaje tečna i preko zime.',
+          },
+          {
+            naslov: 'Livada — paša jun–jul',
+            tekst: 'Cvjetna i puna, iz mnogo različitih cvjetova; do zime kristališe.',
+          },
+        ],
+      },
+      proizvod: {
+        bagremov: {
+          eyebrow: 'Prva paša · maj–jun',
+          ime: 'Bagremov med',
+          podnaslov: 'Blag, svijetao i prve paše.',
+          tekst:
+            'Prva berba u godini, sa kratkog bagremovog cvata. Gotovo proziran i blagog ukusa, pa ne pokriva ono uz šta ide — zato stoji uz čaj i palačinke. Ostaje tečan i preko zime.',
+          cinjenice: [
+            { oznaka: 'UKUS', vrijednost: 'Blag, cvjetni' },
+            { oznaka: 'BOJA', vrijednost: 'Svijetlozlatna' },
+            { oznaka: 'PAŠA', vrijednost: 'Maj–jun' },
+          ],
+          etiketa: 'Berba 2026',
+          slikaAlt: 'Tegla bagremovog meda u ruci, iznad košnica u sumrak',
+        },
+        livadski: {
+          eyebrow: 'Ljetna paša · jun–jul',
+          ime: 'Livadski med',
+          podnaslov: 'Cvjetan, pun i svakodnevan.',
+          tekst:
+            'Ljetna berba sa livada oko Mračaja — mnogo cvjetova u jednoj tegli. Zaokružen i pun, dovoljno blag za svaki dan, a dovoljno izražen da se osjeti krajolik iz kojeg dolazi. Vremenom kristališe, jer ga ne zagrijavamo.',
+          cinjenice: [
+            { oznaka: 'UKUS', vrijednost: 'Cvjetan' },
+            { oznaka: 'BOJA', vrijednost: 'Zlatna' },
+            { oznaka: 'PAŠA', vrijednost: 'Jun–jul' },
+          ],
+          etiketa: 'Berba 2026',
+          slikaAlt: 'Red tegli livadskog meda na drvenoj ogradi, ispred šume',
+        },
+        propolis: {
+          eyebrow: 'Iz košnice · cijelo ljeto',
+          ime: 'Pčelinji propolis',
+          podnaslov: 'Smolast, gorak i koncentrisan.',
+          tekst:
+            'Smola sa pupoljaka i kore drveta, kojom pčele brane košnicu. Cijedimo je u tamnu bočicu sa kapaljkom, bez razblaživanja — nekoliko kapi je dovoljno.',
+          cinjenice: [
+            { oznaka: 'VOLUMEN', vrijednost: '20 ml' },
+            { oznaka: 'OBLIK', vrijednost: 'Kapi' },
+            { oznaka: 'PORIJEKLO', vrijednost: 'Smola sa pupoljaka' },
+          ],
+          etiketa: 'Bez razblaživanja',
+          slikaAlt: 'Bočica pčelinjeg propolisa u ruci, iza nje košnica i cvijeće',
+        },
+      },
+    },
+    en: {
+      eyebrow: 'Picked from the apiary',
+      heading: 'What comes out of our hives.',
+      intro:
+        'Two kinds of honey from the 2026 harvest and propolis from the same hives — everything we extract and draw off, in one place.',
+      svi: 'All products',
+      cta: 'View product',
+      mreza: {
+        heading: 'Why this honey',
+        fotoNatpis: 'Our apiary in Mračaj · since 1980',
+        fotoAlt: 'A jar of acacia honey on a hive, meadow and hills behind it',
+        plocice: [
+          {
+            naslov: '100% natural',
+            tekst: 'No additives, colours or preservatives — the jar holds only what the bees brought in.',
+          },
+          {
+            naslov: 'Raw, unfiltered',
+            tekst: 'We never heat or filter it; it runs from the comb straight into the jar.',
+          },
+          {
+            naslov: 'No added sugar',
+            tekst: 'No syrup, no aromas, no preservatives.',
+          },
+          {
+            naslov: 'Acacia — May–June flow',
+            tekst: 'Pale gold, mild and almost clear; it stays liquid through winter.',
+          },
+          {
+            naslov: 'Meadow — June–July flow',
+            tekst: 'Floral and full, drawn from many different flowers; it sets by winter.',
+          },
+        ],
+      },
+      proizvod: {
+        bagremov: {
+          eyebrow: 'First flow · May–June',
+          ime: 'Acacia honey',
+          podnaslov: 'Mild, pale, the first flow.',
+          tekst:
+            'The first harvest of the year, from the short acacia bloom. Almost clear and mild, so it does not cover what it goes with — which is why it belongs with tea and pancakes. It stays liquid through winter.',
+          cinjenice: [
+            { oznaka: 'TASTE', vrijednost: 'Mild, floral' },
+            { oznaka: 'COLOUR', vrijednost: 'Pale gold' },
+            { oznaka: 'FLOW', vrijednost: 'May–Jun' },
+          ],
+          etiketa: '2026 harvest',
+          slikaAlt: 'A jar of acacia honey held in hand above the hives at dusk',
+        },
+        livadski: {
+          eyebrow: 'Summer flow · June–July',
+          ime: 'Meadow honey',
+          podnaslov: 'Floral, full and everyday.',
+          tekst:
+            'A summer harvest from the meadows around Mračaj — many flowers in one jar. Rounded and full, mild enough for every day, distinct enough to taste the landscape it came from. It sets over time, because we never heat it.',
+          cinjenice: [
+            { oznaka: 'TASTE', vrijednost: 'Floral' },
+            { oznaka: 'COLOUR', vrijednost: 'Golden' },
+            { oznaka: 'FLOW', vrijednost: 'Jun–Jul' },
+          ],
+          etiketa: '2026 harvest',
+          slikaAlt: 'A jar of meadow honey on an open palm above the meadow',
+        },
+        propolis: {
+          eyebrow: 'From the hive · all summer',
+          ime: 'Bee propolis',
+          podnaslov: 'Resinous, bitter and concentrated.',
+          tekst:
+            'A resin from tree buds and bark, which the bees use to guard the hive. We draw it into a dark dropper bottle, undiluted — a few drops are enough.',
+          cinjenice: [
+            { oznaka: 'VOLUME', vrijednost: '20 ml' },
+            { oznaka: 'FORM', vrijednost: 'Drops' },
+            { oznaka: 'ORIGIN', vrijednost: 'Resin from buds' },
+          ],
+          etiketa: 'Undiluted',
+          slikaAlt: 'A bottle of bee propolis held in hand, a hive and flowers behind',
+        },
+      },
+    },
+  } satisfies L<{
+    eyebrow: string;
+    heading: string;
+    intro: string;
+    svi: string;
+    cta: string;
+    mreza: {
+      heading: string;
+      fotoNatpis: string;
+      fotoAlt: string;
+      plocice: ReadonlyArray<{ naslov: string; tekst: string }>;
+    };
+    proizvod: Record<
+      'bagremov' | 'livadski' | 'propolis',
+      {
+        eyebrow: string;
+        ime: string;
+        podnaslov: string;
+        tekst: string;
+        cinjenice: ReadonlyArray<{ oznaka: string; vrijednost: string }>;
+        etiketa: string;
+        slikaAlt: string;
+      }
+    >;
+  }>,
+
   aboutPreview: {
     sr: {
       imageAlt: 'Saće u rukama, iznad košnice',

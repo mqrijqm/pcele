@@ -6068,6 +6068,431 @@ a.pecat:focus-visible img {
 }
 
 /*
+ * Potpis autora ostaje u kadru na svakoj stranici. Sloj 45 ga drži iznad
+ * sadržaja i pčele, ali ispod menija/korpe (50), zaglavlja (60), prelaza (90)
+ * i uvodne zavjese (100). Ne hvata klikove nad sadržajem ispod sebe.
+ */
+.portfolio-watermark {
+  position: fixed;
+  right: max(0.75rem, env(safe-area-inset-right));
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  z-index: 45;
+  display: grid;
+  justify-items: end;
+  width: max-content;
+  max-width: calc(100vw - 1.5rem);
+  padding: 0.9rem 1.1rem 0.84rem;
+  border: 1px solid rgba(136, 91, 39, 0.2);
+  border-radius: 0.35rem 1.15rem 0.35rem 0.35rem;
+  background: rgba(252, 240, 220, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0.35rem 1.4rem rgba(136, 91, 39, 0.12);
+  color: var(--brown);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: right;
+  pointer-events: none;
+}
+
+.portfolio-watermark strong {
+  margin-bottom: 0.08rem;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.98rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 480px) {
+  .portfolio-watermark {
+    right: max(0.5rem, env(safe-area-inset-right));
+    bottom: max(0.5rem, env(safe-area-inset-bottom));
+    max-width: calc(100vw - 1rem);
+    padding: 0.68rem 0.78rem 0.64rem;
+    font-size: 0.66rem;
+  }
+
+  .portfolio-watermark strong {
+    font-size: 0.82rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Izdvojeni proizvodi.
+ *
+ * Sekcija stoji odmah ispod heroja: prvo se vidi sta se nudi, pa odakle
+ * dolazi. Tri reda se smjenjuju — slika lijevo, pa desno, pa opet lijevo — da
+ * niz ne bude niz istih redova; na telefonu se svaki red slaze u jednu kolonu,
+ * slika pa slog.
+ *
+ * Fotografija nosi isti potez kao i ostale slike kroz sajt: jedan ugao je
+ * otvoren vise od ostalih. Prelaz pod misem dira cijeli red, a ne samo slika —
+ * oko je nad slogom, a tegla je ta koja odgovara. Samo na uredjajima s misem i
+ * samo dok kretanje nije iskljuceno.
+ *
+ * Mreza svojstava je bento: cetiri kolone na sirokom ekranu, dvije na
+ * telefonu. Sirine plocica su zakucane u komponenti; ovdje su samo plohe.
+ * ------------------------------------------------------------------------- */
+
+.izdvojeno {
+  padding-block: var(--section-padding-sm) var(--section-padding);
+}
+
+.izdvojeno__inner {
+  max-width: min(96rem, 100% - 2 * var(--container-padding));
+  margin-inline: auto;
+}
+
+/* --- uvod ----------------------------------------------------------------- */
+
+.izdvojeno__uvod {
+  display: grid;
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+}
+
+.izdvojeno__uvod-red {
+  display: grid;
+  gap: clamp(1.2rem, 2.6vw, 2rem);
+}
+
+.izdvojeno__naslov {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: 3rem;
+  line-height: 1.04;
+  letter-spacing: 0;
+  color: var(--brown);
+  max-width: 24ch;
+}
+
+.izdvojeno__intro {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--brown-soft);
+}
+
+.izdvojeno__uvod-desno {
+  display: grid;
+  gap: clamp(1.2rem, 2.4vw, 1.8rem);
+  justify-items: start;
+}
+
+.izdvojeno__svi {
+  justify-self: start;
+}
+
+@media (min-width: 1024px) {
+  .izdvojeno__uvod-red {
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 0.5fr);
+    align-items: end;
+    column-gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .izdvojeno__naslov {
+    font-size: 4.5rem;
+  }
+
+  .izdvojeno__intro {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .izdvojeno__naslov {
+    font-size: 3.75rem;
+  }
+}
+
+/* --- tri reda -------------------------------------------------------------- */
+
+.izdvojeno__redovi {
+  display: grid;
+  gap: clamp(4rem, 9vw, 9rem);
+  margin-top: clamp(3.5rem, 8vw, 7rem);
+}
+
+.izdvojeno__red {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+@media (min-width: 900px) {
+  .izdvojeno__red {
+    grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 6.5rem);
+  }
+
+  /* Obrnuti red: tegla ide desno, slog lijevo. */
+  .izdvojeno__red--obrnuto .izdvojeno__slika {
+    order: 2;
+  }
+}
+
+/* --- fotografija ---------------------------------------------------------- */
+
+.izdvojeno__slika {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-sweep);
+  background: var(--surface);
+  box-shadow: 0 1.5rem 3.5rem rgba(136, 91, 39, 0.14);
+}
+
+.izdvojeno__red--obrnuto .izdvojeno__slika {
+  border-top-right-radius: var(--radius-lg);
+  border-top-left-radius: var(--radius-sweep);
+}
+
+.izdvojeno__foto {
+  object-fit: cover;
+  transition: transform 1.1s var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .izdvojeno__red:hover .izdvojeno__foto,
+  .izdvojeno__slika:focus-within .izdvojeno__foto {
+    transform: scale(1.045);
+  }
+}
+
+/* Etiketa stoji na slici: kaze iz koje je berbe, ne sta je u tegli. */
+.izdvojeno__etiketa {
+  position: absolute;
+  left: clamp(0.85rem, 1.6vw, 1.3rem);
+  bottom: clamp(0.85rem, 1.6vw, 1.3rem);
+  padding: 0.45rem 0.9rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: rgba(252, 240, 220, 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--brown);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* --- slog uz fotografiju --------------------------------------------------- */
+
+.izdvojeno__slog {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.izdvojeno__eyebrow {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+.izdvojeno__ime {
+  margin: clamp(0.7rem, 1.4vw, 1.1rem) 0 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1.02;
+  letter-spacing: 0;
+  color: var(--brown);
+}
+
+.izdvojeno__podnaslov {
+  margin: clamp(0.6rem, 1.2vw, 0.9rem) 0 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1.125rem;
+  font-style: italic;
+  color: var(--brown-soft);
+}
+
+.izdvojeno__cinjenice {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, auto));
+  gap: clamp(1.4rem, 3.4vw, 3rem);
+  margin: clamp(1.4rem, 2.8vw, 2.2rem) 0 0;
+}
+
+.izdvojeno__cinjenice div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.izdvojeno__cinjenice dt {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+.izdvojeno__cinjenice dd {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--brown);
+}
+
+.izdvojeno__tekst {
+  margin: clamp(1.3rem, 2.4vw, 1.9rem) 0 0;
+  max-width: 44ch;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1rem;
+  line-height: 1.62;
+  color: var(--brown);
+}
+
+.izdvojeno__dugme {
+  margin-top: clamp(1.6rem, 3vw, 2.4rem);
+}
+
+/* --- mreza svojstava ------------------------------------------------------- */
+
+.izdvojeno__mreza {
+  margin-top: clamp(4.5rem, 10vw, 10rem);
+}
+
+.izdvojeno__mreza-naslov {
+  margin: 0 0 clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.izdvojeno__ploce {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.7rem, 1.8vw, 1.1rem);
+}
+
+/*
+ * Fotografija u mrezi je jedno polje koje drzi ugao: na telefonu preko cijele
+ * sirine, na sirokom ekranu 2x2. Isti prelaz pod misem kao i na redovima.
+ */
+.izdvojeno__plocica--foto {
+  position: relative;
+  grid-column: span 2;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-sweep);
+  background: var(--surface);
+}
+
+.izdvojeno__plocica-natpis {
+  position: absolute;
+  left: clamp(0.85rem, 1.6vw, 1.3rem);
+  bottom: clamp(0.85rem, 1.6vw, 1.3rem);
+  padding: 0.45rem 0.9rem 0.4rem;
+  border-radius: var(--radius-pill);
+  background: rgba(252, 240, 220, 0.88);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--brown);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.izdvojeno__plocica {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.4vw, 1rem);
+  padding: clamp(1.1rem, 2.2vw, 1.9rem);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+}
+
+/* Zlatna plocica: jedina puna ploha u mrezi, pa nosi glavnu tvrdnju. */
+.izdvojeno__plocica--zlato {
+  background: var(--gold);
+  border-color: transparent;
+  justify-content: center;
+}
+
+.izdvojeno__plocica-naslov {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--brown);
+}
+
+.izdvojeno__plocica--zlato .izdvojeno__plocica-naslov {
+  font-size: 1.75rem;
+}
+
+.izdvojeno__plocica-tekst {
+  margin: 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--brown-soft);
+}
+
+.izdvojeno__plocica--zlato .izdvojeno__plocica-tekst {
+  color: rgba(136, 91, 39, 0.85);
+}
+
+@media (min-width: 1024px) {
+  .izdvojeno__ploce {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .izdvojeno__plocica--foto {
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  .izdvojeno__ime {
+    font-size: 3.5rem;
+  }
+
+  .izdvojeno__podnaslov,
+  .izdvojeno__cinjenice dd {
+    font-size: 1.25rem;
+  }
+
+  .izdvojeno__plocica-naslov {
+    font-size: 1.25rem;
+  }
+
+  .izdvojeno__plocica--zlato .izdvojeno__plocica-naslov {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .izdvojeno__ime {
+    font-size: 3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .izdvojeno__foto {
+    transition: none;
+  }
+
+  .izdvojeno__red:hover .izdvojeno__foto,
+  .izdvojeno__slika:focus-within .izdvojeno__foto {
+    transform: none;
+  }
+}
+
+/*
  * Prazan pojas koji cuva mjesto.
  *
  * Sekcija bez sadrzaja nema visinu, pa bi se strana skupila i izgledala kao
