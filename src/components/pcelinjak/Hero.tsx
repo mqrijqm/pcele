@@ -31,7 +31,7 @@ export default function Hero({
   svijetla = false,
 }: {
   rijeci: string[];
-  caption: string;
+  caption?: string;
   slikaAlt: string;
   slika?: string;
   /** Svijetla slika: natpisi ostaju tamni i kad ih slika prekrije. */
@@ -112,7 +112,7 @@ export default function Hero({
                 zoom
               />
             </div>
-            <p className="pcl-body pcl-hero__caption pcl-in">{caption}</p>
+            {caption && <p className="pcl-body pcl-hero__caption pcl-in">{caption}</p>}
           </div>
         </div>
       </div>

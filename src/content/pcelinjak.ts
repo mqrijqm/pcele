@@ -30,7 +30,7 @@ export type PcelinjakPasa = {
 type Copy = {
   meta: { title: string; description: string };
   /** Heroj: naslov u tri rijeci i jedna recenica uz sliku koja se siri. */
-  hero: { title: string[]; caption: string; slikaAlt: string; slika?: string };
+  hero: { title: string[]; caption?: string; slikaAlt: string; slika?: string };
   /** Natpis lijevo, naslov desno, pa uvodni pasus u desnom stupcu. */
   uvod: { pretitle: string; title: string[]; lead: string };
   /** Traka slika koja se lista u stranu. Omjer je omjer same fotografije. */
@@ -74,8 +74,6 @@ const sr: Copy = {
   hero: {
     // cilj: 16 znakova, tri rijeci
     title: ['Kraj', 'koji', 'miriše'],
-    // cilj: 48
-    caption: 'Gdje se zemlja, sunce i pčela sastaju u kapi.',
     slikaAlt: 'Košnice na otvorenoj livadi pod vedrim nebom',
     slika: '/images/real/pcelinjak-4.webp',
   },
@@ -276,7 +274,6 @@ const en: Copy = {
   },
   hero: {
     title: ['Land', 'that', 'remembers'],
-    caption: 'Where soil, sun and bee meet inside a single drop.',
     slikaAlt: 'Hives on an open meadow under a clear sky',
     slika: '/images/real/pcelinjak-4.webp',
   },
