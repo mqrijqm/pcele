@@ -849,12 +849,6 @@
   align-items: center;
   min-height: 100svh;
   /* Lijeva ivica je ivica sadrzaja; desna ide do ruba kadra. */
-  padding-left: var(--pad);
-}
-
-/* Prvi korak drzi lijevu polovinu; traka pocinje tacno na sredini kadra. */
-.pcl-koraci__prvi {
-  flex: 0 0 calc(50% - var(--pad));
 }
 
 .pcl-koraci__viewport {
@@ -870,6 +864,8 @@
   display: flex;
   flex: none;
   gap: var(--pcl-md);
+  /* Prvi korak sjedi na lijevoj ivici sadrzaja; traka ide do desnog ruba kadra. */
+  padding-left: var(--pad);
   will-change: transform;
 }
 
@@ -915,11 +911,11 @@
   .pcl-koraci__viewport {
     display: block;
     overflow: visible;
-    margin-top: var(--pcl-lg);
   }
 
   .pcl-koraci__track {
     display: block;
+    padding-left: 0;
     transform: none !important;
   }
 

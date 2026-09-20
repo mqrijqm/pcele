@@ -53,9 +53,10 @@ function Kartica({ k, priority = false }: { k: Korak; priority?: boolean }) {
 /**
  * Pet koraka u jednom kadru.
  *
- * Prvi korak stoji lijevo i ne mice se. Ostala cetiri ulaze sdesna, jedan za
- * drugim, dok se strana skrola — sekcija se zakaci za vrh kadra i traka putuje
- * u stranu tacno onoliko koliko treba da stigne posljednji korak. Koliko se
+ * Svih pet koraka su u jednoj traci: prvi stoji na lijevoj ivici sadrzaja,
+ * ostali ulaze sdesna, a dok se strana skrola cijela traka putuje ulijevo —
+ * prvi korak odlazi prvi, ne ostaje zalijepljen. Sekcija se zakaci za vrh
+ * kadra tacno onoliko koliko treba da stigne posljednji korak. Koliko se
  * prstom pomjeri, toliko traka predje (`scrub`), pa se moze stati na sredini
  * i vratiti natrag.
  *
@@ -66,7 +67,6 @@ export default function Koraci({ koraci }: { koraci: Korak[] }) {
   const wrap = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const [prvi, ...ostali] = koraci;
 
   useEffect(() => {
     const w = wrap.current;
@@ -99,13 +99,10 @@ export default function Koraci({ koraci }: { koraci: Korak[] }) {
   return (
     <div className="pcl-koraci" ref={wrap}>
       <div className="pcl-koraci__stage">
-        <div className="pcl-koraci__prvi">
-          <Kartica k={prvi} priority />
-        </div>
         <div className="pcl-koraci__viewport" ref={viewport}>
           <div className="pcl-koraci__track" ref={track}>
-            {ostali.map((k) => (
-              <Kartica k={k} key={k.broj} />
+            {koraci.map((k, i) => (
+              <Kartica k={k} key={k.broj} priority={i === 0} />
             ))}
           </div>
         </div>
