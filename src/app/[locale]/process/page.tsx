@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
-import { ArrowRight } from 'lucide-react';
 
-import PageHero from '@/components/ui/PageHero';
-import ImageBreak from '@/components/ui/ImageBreak';
-import PageOpener from '@/components/ui/PageOpener';
+import TransitionLink from '@/components/ui/TransitionLink';
 import BeeFlight from '@/components/bee/BeeFlight';
-import { meta, photoBreaks, processFrames, processPage, processStepImages } from '@/content/pages';
+import Hero from '@/components/pcelinjak/Hero';
+import Rail from '@/components/pcelinjak/Rail';
+import Motion from '@/components/pcelinjak/Motion';
+import Kraj from '@/components/pcelinjak/Kraj';
+import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
+import { meta } from '@/content/pages';
+import { processView } from '@/content/process';
 import { isLocale, localeHref, type Locale } from '@/i18n/config';
 
 export async function generateMetadata({
@@ -21,148 +23,190 @@ export async function generateMetadata({
   return { title: meta[l].process.title, description: meta[l].process.description };
 }
 
+/**
+ * Nas proces.
+ *
+ * Isti raspored kao strana o pcelinjacima (vidi `pcelinjak/page.tsx`): heroj
+ * sa slikom koja se skrolom siri, natpis lijevo i naslov desno, mreza od 24
+ * kolona, traka slika koja se lista u stranu i zavrsna kartica koja se ispise
+ * dok strana stoji. Mjere i animacije dolaze iz `pcelinjak.css`.
+ *
+ *   heroj -> uvod -> pet koraka (slika i tekst naizmjenicno) ->
+ *   umetak o ramovima -> traka slika -> zavrsna kartica
+ *
+ * Svaki korak je svoje poglavlje: broj i naslov u velikim verzalima, ispod
+ * njih tekst i fotografija. Oblik okvira prati fotografiju — vidi
+ * `STEP_LAYOUT` u `content/process.ts`.
+ */
 export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const copy = processPage[locale];
-  const shot = photoBreaks[locale];
-  const frames = processFrames[locale];
+  const t = processView[locale];
 
   return (
-    <div className="bg-[var(--paper)] header-offset">
-      {/* Heroj je skinut; naslov strane ostaje za citace ekrana. */}
-      <h1 className="sr-only">{copy.heading}</h1>
-
-      {/* Pcela leti i ovom stranom, svojom rutom kroz korake. */}
+    <div className="pcl header-offset">
       <BeeFlight />
-      <PageOpener eyebrow={copy.sectionEyebrow} heading={copy.sectionHeading} />
+      <Motion />
 
-      <section className="pb-[var(--section-padding)]">
-        <div className="container">
-          <div className="border-t border-[#885B27]/15">
-            {copy.steps.map((step, index) => {
-              const flipped = index % 2 === 1;
-              return (
-                <article
-                  key={step.title}
-                  className="grid items-center gap-10 border-b border-[#885B27]/15 py-14 lg:py-20 lg:grid-cols-12 lg:gap-16 lg:py-14"
+      {/* --- heroj ------------------------------------------------------ */}
+      <Hero
+        rijeci={t.hero.title}
+        caption={t.hero.caption}
+        slikaAlt={t.hero.slikaAlt}
+        slika={t.hero.slika}
+      />
+
+      {/* --- natpis lijevo, naslov desno, pa uvodni pasus --------------- */}
+      <section className="pcl-strip pcl-mb-md">
+        <div className="pcl-cols pcl-cols--7-17">
+          <p className="pcl-pretitle pcl-in">{t.uvod.pretitle}</p>
+          <h2 className="pcl-display pcl-display--2 pcl-in">
+            {t.uvod.title.map((r, i) => (
+              <span className="pcl-display__word" key={`${r}-${i}`}>
+                <span>{r}</span>
+              </span>
+            ))}
+          </h2>
+        </div>
+      </section>
+
+      <section className="pcl-strip pcl-mb-lg">
+        <div className="pcl-cols pcl-cols--8-16">
+          <div aria-hidden="true" />
+          <p className="pcl-body pcl-in">{t.uvod.lead}</p>
+        </div>
+      </section>
+
+      {/*
+        Pet koraka. Svaki je poglavlje: gore broj i naslov (sedam pa
+        sedamnaest kolona, kao uvod), ispod tekst i slika. U kodu je uvijek
+        prvo tekst pa slika — na telefonu tako i idu; `--flip` na sirokom
+        kadru samo zamijeni strane.
+      */}
+      {t.koraci.map((k) => {
+        const tall = k.form === 'tall';
+        const sizes = tall
+          ? '(max-width: 767px) 90vw, 40vw'
+          : '(max-width: 767px) 90vw, 55vw';
+        const kolone = tall ? 'pcl-cols--12-12' : k.flip ? 'pcl-cols--16-8' : 'pcl-cols--8-16';
+
+        return (
+          <section className="pcl-strip pcl-step" key={k.broj}>
+            <div className="pcl-cols pcl-cols--7-17 pcl-step__head">
+              <p className="pcl-pretitle pcl-in">
+                {k.broj} / {k.ukupno}
+              </p>
+              <h2 className="pcl-display pcl-display--2 pcl-in">
+                {k.title.map((r, i) => (
+                  <span className="pcl-display__word" key={`${r}-${i}`}>
+                    <span>{r}</span>
+                  </span>
+                ))}
+              </h2>
+            </div>
+
+            <div
+              className={`pcl-cols ${kolone} pcl-cols--end${k.flip ? ' pcl-cols--flip' : ''}`}
+            >
+              <p className="pcl-body pcl-step__text pcl-in">{k.desc}</p>
+              <div>
+                <ImagePlaceholder
+                  ratio={tall ? 0.8 : 1.333}
+                  label={tall ? '4:5' : '4:3'}
+                  alt={k.alt}
+                  src={k.src}
+                  sizes={sizes}
+                  zoom
+                />
+              </div>
+            </div>
+          </section>
+        );
+      })}
+
+      {/* --- umetak: ramove pravimo sami, pa traka iz radionice ---------- */}
+      <section className="pcl-strip pcl-mt-lg pcl-mb-md">
+        <div className="pcl-cols pcl-cols--7-17">
+          <p className="pcl-pretitle pcl-in">{t.ramovi.pretitle}</p>
+          <h2 className="pcl-display pcl-display--2 pcl-in">
+            {t.ramovi.title.map((r, i) => (
+              <span className="pcl-display__word" key={`${r}-${i}`}>
+                <span>{r}</span>
+              </span>
+            ))}
+          </h2>
+        </div>
+      </section>
+
+      <section className="pcl-strip pcl-mb-md">
+        <div className="pcl-cols pcl-cols--8-16">
+          <div aria-hidden="true" />
+          <p className="pcl-body pcl-in">{t.ramovi.body}</p>
+        </div>
+      </section>
+
+      <section className="pcl-strip pcl-strip--wide pcl-mb-lg pcl-in">
+        <Rail
+          slike={t.galerija}
+          aria={locale === 'sr' ? 'Slike iz radionice' : 'Pictures from the workshop'}
+        />
+      </section>
+
+      {/* --- zavrsna kartica: strana stane dok se ne ispise ------------- */}
+      <section className="pcl-strip pcl-strip--wide">
+        <Kraj>
+          <div className="pcl-next pcl-next--dark">
+            <div className="pcl-next__bg">
+              <Image
+                src={t.kraj.pozadina.src}
+                alt={t.kraj.pozadina.alt}
+                fill
+                sizes="100vw"
+                className="pcl-next__bgImg"
+              />
+            </div>
+
+            <div className="pcl-next__card">
+              <p className="pcl-next__counter" data-ulaz>
+                <span>01</span>
+                <span className="pcl-next__total">0{t.kraj.dalje.length}</span>
+              </p>
+              <h2 className="pcl-next__title" data-ulaz>
+                {t.kraj.title}
+              </h2>
+              <div className="pcl-next__media" data-ulaz>
+                <ImagePlaceholder
+                  ratio={2}
+                  label="2:1"
+                  alt={t.kraj.slika.alt}
+                  src={t.kraj.slika.src}
+                  sizes="(max-width: 767px) 80vw, 28rem"
+                />
+              </div>
+              <span data-ulaz>
+                <TransitionLink
+                  className="pcl-next__link"
+                  href={localeHref(locale, t.kraj.dalje[0].href)}
                 >
-                  <div
-                    className={`relative aspect-[4/3] overflow-hidden lg:col-span-6 ${
-                      flipped ? 'lg:order-2' : ''
-                    } rounded-[0.6rem]`}
-                  >
-                    <Image
-                      src={processStepImages[index]}
-                      alt={step.title}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div
-                    className={
-                      flipped ? 'lg:col-span-5 lg:col-start-1 lg:row-start-1' : 'lg:col-span-5 lg:col-start-8'
-                    }
-                  >
-                    <p className="text-[10px] font-bold tracking-[0.18em] text-[#885B27]">
-                      {String(index + 1).padStart(2, '0')}
-                    </p>
-                    <h3 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
-                      {step.title}
-                    </h3>
-                    <p className="mt-5 max-w-lg text-base leading-7 text-[#885B27]">{step.desc}</p>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Odakle sve krece — pcelinjak na livadi. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/pcelinjak-4.webp', alt: shot.processHives.altA },
-          { src: '/images/real/pcelinjak-5.webp', alt: shot.processHives.altB },
-        ]}
-        caption={shot.processHives.caption}
-        meta={shot.processHives.meta}
-        emblem
-      />
-
-      {/* Umetak izmedju pcelinjaka i vrcanja — ramove pravimo sami. */}
-      <section className="frames section-padding-sm">
-        <div className="container frames__grid">
-          <div className="frames__copy">
-            <p className="frames__eyebrow">{frames.eyebrow}</p>
-            <h2 className="frames__heading">{frames.heading}</h2>
-            <p className="frames__body">{frames.body}</p>
-          </div>
-
-          <div className="frames__shots">
-            <div className="frames__shot">
-              <Image
-                src="/images/real/ram-2025.webp"
-                alt={frames.altA}
-                fill
-                sizes="(max-width: 1024px) 46vw, 24vw"
-                className="object-cover"
-              />
+                  {t.kraj.link}
+                </TransitionLink>
+              </span>
             </div>
-            <div className="frames__shot frames__shot--low">
-              <Image
-                src="/images/real/otklapanje-rama.webp"
-                alt={frames.altB}
-                fill
-                sizes="(max-width: 1024px) 46vw, 24vw"
-                className="object-cover"
-              />
-            </div>
+
+            <nav className="pcl-next__rail" data-ulaz>
+              {t.kraj.dalje.map((d, i) => (
+                <TransitionLink
+                  key={d.key}
+                  className="pcl-next__railLink"
+                  href={localeHref(locale, d.href)}
+                  aria-current={i === 0 ? 'true' : undefined}
+                >
+                  {d.title}
+                </TransitionLink>
+              ))}
+            </nav>
           </div>
-        </div>
-      </section>
-
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/vrcaljka-kanta.webp', alt: shot.processJar.altTap },
-          { src: '/images/real/tegle-stol.webp', alt: shot.processJar.altJars },
-        ]}
-        aspect="aspect-[3/4] sm:aspect-[16/9]"
-        focus="object-[50%_40%]"
-        caption={shot.processJar.caption}
-        meta={shot.processJar.meta}
-        frame="narrow"
-      />
-
-      {/* Posljednji korak: kad je tegla puna, etiketa ide rukom. */}
-      <ImageBreak
-        images={[{ src: '/images/mockups/label-in-hands.webp', alt: shot.processLabel.alt }]}
-        caption={shot.processLabel.caption}
-        meta={shot.processLabel.meta}
-        frame="narrow"
-      />
-
-      <section className="bg-[var(--paper)] section-padding">
-        <div className="container flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
-              {copy.outroEyebrow}
-            </p>
-            <h2 className="mt-8 font-display text-display-md font-normal text-[#885B27]">
-              {copy.outroHeading}
-            </h2>
-          </div>
-          <TransitionLink
-            href={localeHref(locale, '/products')}
-            className="group inline-flex w-fit items-center gap-3 border-b border-[#885B27]/35 pb-2 text-sm font-semibold text-[#885B27]"
-          >
-            {copy.outroCta}
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </TransitionLink>
-        </div>
+        </Kraj>
       </section>
     </div>
   );

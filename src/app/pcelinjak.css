@@ -828,3 +828,60 @@
     display: block;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Nas proces: koraci kao poglavlja.
+ *
+ * Isti stupci kao na pcelinjacima, uz jedan novi omjer (16-8, ogledalo od
+ * 8-16) i dva pomocna svojstva: `--end` spusta tekst na donju ivicu slike, a
+ * `--flip` mijenja strane a da redoslijed u kodu — tekst pa slika, kako i
+ * ide na telefonu — ostane isti.
+ * ------------------------------------------------------------------------- */
+.pcl-step + .pcl-step {
+  margin-top: var(--pcl-lg);
+}
+
+.pcl-step__head {
+  margin-bottom: var(--pcl-md);
+}
+
+@media (min-width: 768px) {
+  .pcl-cols--16-8 {
+    grid-template-columns: calc(66.6667% - var(--pcl-gap) / 2) calc(33.3333% - var(--pcl-gap) / 2);
+  }
+
+  .pcl-cols--end {
+    align-items: end;
+  }
+
+  .pcl-cols--flip > :first-child {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .pcl-cols--flip > :last-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Tekst uz uspravnu sliku ne smije da se razvuce preko pola kadra. */
+  .pcl-cols--12-12 .pcl-step__text {
+    max-width: 26rem;
+  }
+}
+
+/*
+ * Tamna pozadina iza kartice (proces): smedja imena na zelenilu se ne citaju,
+ * pa red imena ovdje ide papirnom bojom. Pcelinjaci imaju svjetliju pozadinu i
+ * ostaju kako jesu.
+ */
+.pcl-next--dark .pcl-next__railLink {
+  color: var(--pcl-paper);
+  opacity: 0.85;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+}
+
+.pcl-next--dark .pcl-next__railLink:hover,
+.pcl-next--dark .pcl-next__railLink[aria-current='true'] {
+  opacity: 1;
+}
