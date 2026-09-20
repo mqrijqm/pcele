@@ -835,7 +835,7 @@
  * Prvi korak stoji lijevo, ostali kliznu sdesna. Sve mjere idu iz `--kw`,
  * sirine jedne kartice: slika je kvadrat te sirine, pa cio korak (broj,
  * naslov, slika, tekst) stane u kadar i na laptopu, ne samo na velikom
- * monitoru — `40svh` je ono sto slici brani da naraste preko visine kadra.
+ * monitoru — `46svh` je ono sto slici brani da naraste preko visine kadra.
  * ------------------------------------------------------------------------- */
 .pcl-display--3 {
   font-size: clamp(1.9rem, 2.8vw, 2.6rem);
@@ -843,17 +843,18 @@
 }
 
 .pcl-koraci__stage {
-  --kw: clamp(13rem, min(24vw, 40svh), 22rem);
+  --kw: clamp(14rem, min(30vw, 46svh), 28rem);
+  --pad: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
   display: flex;
   align-items: center;
-  gap: var(--pcl-lg);
   min-height: 100svh;
   /* Lijeva ivica je ivica sadrzaja; desna ide do ruba kadra. */
-  padding-left: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
+  padding-left: var(--pad);
 }
 
+/* Prvi korak drzi lijevu polovinu; traka pocinje tacno na sredini kadra. */
 .pcl-koraci__prvi {
-  flex: 0 0 var(--kw);
+  flex: 0 0 calc(50% - var(--pad));
 }
 
 .pcl-koraci__viewport {
@@ -885,6 +886,13 @@
 
 .pcl-korak .pcl-display {
   margin-top: 12px;
+}
+
+/* Naslov od jednog i od dva reda zauzima isto, pa se slike poravnaju. */
+@media (min-width: 768px) {
+  .pcl-korak .pcl-display {
+    min-height: 2.1em;
+  }
 }
 
 .pcl-korak__slika {
