@@ -6128,13 +6128,8 @@ a.pecat:focus-visible img {
  * niz ne bude niz istih redova; na telefonu se svaki red slaze u jednu kolonu,
  * slika pa slog.
  *
- * Fotografija nosi isti potez kao i ostale slike kroz sajt: jedan ugao je
- * otvoren vise od ostalih. Prelaz pod misem dira cijeli red, a ne samo slika —
- * oko je nad slogom, a tegla je ta koja odgovara. Samo na uredjajima s misem i
- * samo dok kretanje nije iskljuceno.
- *
- * Mreza svojstava je bento: cetiri kolone na sirokom ekranu, dvije na
- * telefonu. Sirine plocica su zakucane u komponenti; ovdje su samo plohe.
+ * Fotografije su manje i imaju ostre uglove. Prelaz pod misem dira cijeli
+ * red, a ne samo sliku: oko je nad slogom, a tegla je ta koja odgovara.
  * ------------------------------------------------------------------------- */
 
 .izdvojeno {
@@ -6224,14 +6219,19 @@ a.pecat:focus-visible img {
 
 @media (min-width: 900px) {
   .izdvojeno__red {
-    grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
+    grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
     align-items: center;
     gap: clamp(2.5rem, 6vw, 6.5rem);
+  }
+
+  .izdvojeno__red--obrnuto {
+    grid-template-columns: minmax(0, 0.54fr) minmax(0, 0.46fr);
   }
 
   /* Obrnuti red: tegla ide desno, slog lijevo. */
   .izdvojeno__red--obrnuto .izdvojeno__slika {
     order: 2;
+    justify-self: end;
   }
 }
 
@@ -6239,18 +6239,21 @@ a.pecat:focus-visible img {
 
 .izdvojeno__slika {
   position: relative;
-  margin: 0;
+  width: min(86vw, 34rem);
+  max-width: 100%;
+  margin-inline: auto;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-sweep);
+  border-radius: 0;
   background: var(--surface);
   box-shadow: 0 1.5rem 3.5rem rgba(136, 91, 39, 0.14);
 }
 
-.izdvojeno__red--obrnuto .izdvojeno__slika {
-  border-top-right-radius: var(--radius-lg);
-  border-top-left-radius: var(--radius-sweep);
+@media (min-width: 900px) {
+  .izdvojeno__slika {
+    justify-self: start;
+    margin-inline: 0;
+  }
 }
 
 .izdvojeno__foto {
@@ -6271,7 +6274,7 @@ a.pecat:focus-visible img {
   left: clamp(0.85rem, 1.6vw, 1.3rem);
   bottom: clamp(0.85rem, 1.6vw, 1.3rem);
   padding: 0.45rem 0.9rem 0.4rem;
-  border-radius: var(--radius-pill);
+  border-radius: 0;
   background: rgba(252, 240, 220, 0.88);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -6359,106 +6362,7 @@ a.pecat:focus-visible img {
   margin-top: clamp(1.6rem, 3vw, 2.4rem);
 }
 
-/* --- mreza svojstava ------------------------------------------------------- */
-
-.izdvojeno__mreza {
-  margin-top: clamp(4.5rem, 10vw, 10rem);
-}
-
-.izdvojeno__mreza-naslov {
-  margin: 0 0 clamp(1.5rem, 3vw, 2.4rem);
-}
-
-.izdvojeno__ploce {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(0.7rem, 1.8vw, 1.1rem);
-}
-
-/*
- * Fotografija u mrezi je jedno polje koje drzi ugao: na telefonu preko cijele
- * sirine, na sirokom ekranu 2x2. Isti prelaz pod misem kao i na redovima.
- */
-.izdvojeno__plocica--foto {
-  position: relative;
-  grid-column: span 2;
-  margin: 0;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  border-top-right-radius: var(--radius-sweep);
-  background: var(--surface);
-}
-
-.izdvojeno__plocica-natpis {
-  position: absolute;
-  left: clamp(0.85rem, 1.6vw, 1.3rem);
-  bottom: clamp(0.85rem, 1.6vw, 1.3rem);
-  padding: 0.45rem 0.9rem 0.4rem;
-  border-radius: var(--radius-pill);
-  background: rgba(252, 240, 220, 0.88);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  color: var(--brown);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.izdvojeno__plocica {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(0.6rem, 1.4vw, 1rem);
-  padding: clamp(1.1rem, 2.2vw, 1.9rem);
-  border: 1px solid var(--hairline);
-  border-radius: var(--radius-lg);
-  background: var(--paper);
-}
-
-/* Zlatna plocica: jedina puna ploha u mrezi, pa nosi glavnu tvrdnju. */
-.izdvojeno__plocica--zlato {
-  background: var(--gold);
-  border-color: transparent;
-  justify-content: center;
-}
-
-.izdvojeno__plocica-naslov {
-  margin: 0;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-weight: 400;
-  font-size: 1.125rem;
-  line-height: 1.15;
-  letter-spacing: 0;
-  color: var(--brown);
-}
-
-.izdvojeno__plocica--zlato .izdvojeno__plocica-naslov {
-  font-size: 1.75rem;
-}
-
-.izdvojeno__plocica-tekst {
-  margin: 0;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--brown-soft);
-}
-
-.izdvojeno__plocica--zlato .izdvojeno__plocica-tekst {
-  color: rgba(136, 91, 39, 0.85);
-}
-
 @media (min-width: 1024px) {
-  .izdvojeno__ploce {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-
-  .izdvojeno__plocica--foto {
-    grid-row: span 2;
-    aspect-ratio: auto;
-  }
-
   .izdvojeno__ime {
     font-size: 3.5rem;
   }
@@ -6466,14 +6370,6 @@ a.pecat:focus-visible img {
   .izdvojeno__podnaslov,
   .izdvojeno__cinjenice dd {
     font-size: 1.25rem;
-  }
-
-  .izdvojeno__plocica-naslov {
-    font-size: 1.25rem;
-  }
-
-  .izdvojeno__plocica--zlato .izdvojeno__plocica-naslov {
-    font-size: 2.25rem;
   }
 }
 

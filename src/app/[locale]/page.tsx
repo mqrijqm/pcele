@@ -11,6 +11,8 @@ import Geslo from '@/components/home/Geslo';
 import PhotoRail from '@/components/home/PhotoRail';
 import Origin from '@/components/home/Origin';
 import Livada from '@/components/home/Livada';
+import Ponuda from '@/components/home/Ponuda';
+import Propolis from '@/components/home/Propolis';
 import Krajolik from '@/components/home/Krajolik';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
@@ -61,6 +63,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
       {/* Mjesto i porijeklo. */}
       <Origin locale={locale} />
+
+      {/* Tri ilustrativne produktne scene, poslije odakle med dolazi. */}
+      <Ponuda locale={locale} sorta="livadski" />
+      <Propolis locale={locale} />
+      <Ponuda locale={locale} sorta="bagremov" />
 
       {/*
         Iza karte, na istom papiru: crtez pcelinjaka preko gotovo cijele
