@@ -189,7 +189,7 @@ export default function HoneyTransitionProvider({ children }: { children: ReactN
    * Nova strana pocinje od vrha, uvijek.
    *
    * Skrol drzi Lenis, a on ne cita `window.scrollTo` — zato dogadjaj, isto
-   * kako `SmoothScroll` vec prima `scroll:lock`. Poziv ostaje uz njega, za
+   * kako `SmoothScroll` vec prima `scroll:top`. Poziv ostaje uz njega, za
    * slucaj da Lenisa nema (smireno kretanje ga ne pravi).
    */
   const jumpToTop = useCallback(() => {

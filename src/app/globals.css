@@ -4407,19 +4407,17 @@ html.is-preloading body {
 /* ---------------------------------------------------------------------------
  * Pcelinjak: snimak koji se odmakne, pa progovori.
  *
- * Sekcija je visoka dva ekrana i po; scena unutra je lijepljena, pa snimak
- * stoji dok sekcija prolazi ispod njega. Taj visak visine je jedini razlog
- * zasto se odmicanje ima po cemu odvijati.
+ * Scroll samo pokrece kratku, vremenski vodjenu scenu. Dalji pomak stranice
+ * vise ne odredjuje napredak natpisa ni okvira.
  * ------------------------------------------------------------------------- */
 .apiary {
   position: relative;
-  height: 250svh;
+  height: 100svh;
   background: var(--paper);
 }
 
 .apiary__stage {
-  position: sticky;
-  top: 0;
+  position: relative;
   height: 100svh;
   overflow: hidden;
 }
@@ -4442,6 +4440,9 @@ html.is-preloading body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0.55;
+  transform: scale(1.012);
+  transform-origin: center;
 }
 
 /*
@@ -4634,6 +4635,11 @@ html.is-preloading body {
     height: 80svh;
   }
 
+  .apiary__img {
+    opacity: 1;
+    transform: none;
+  }
+
   .apiary__shot {
     inset: 3% 2%;
     border-radius: 8px;
@@ -4655,10 +4661,6 @@ html.is-preloading body {
 }
 
 @media (max-width: 700px) {
-  .apiary {
-    height: 200svh;
-  }
-
   .apiary__where {
     width: 76%;
     top: 30%;

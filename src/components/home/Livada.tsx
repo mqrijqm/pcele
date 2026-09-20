@@ -44,7 +44,7 @@ export default function Livada({ locale }: { locale: Locale }) {
   const t = home.livada[locale];
 
   return (
-    <section className="livada section-padding">
+    <section className="livada section-padding" data-snap="off">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="livada__recenica reveal"
