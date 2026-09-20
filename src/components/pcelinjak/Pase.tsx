@@ -117,11 +117,14 @@ export default function Pase({
               className={`pcl-slide${i === aktivna ? " is-active" : ""}`}
             >
               <div className="pcl-slide__map">
-                {/* Crtez pase — omjer 1.64:1, kao karta imanja na uzoru. */}
+                {/* Fotografija sorte, uspravna — cijela tegla mora da se vidi. */}
                 <ImagePlaceholder
-                  ratio={1.639}
-                  label="1.64:1"
+                  ratio={0.8}
+                  label="4:5"
                   alt={pasa.mapaAlt}
+                  src={pasa.slika}
+                  sizes="(max-width: 767px) 90vw, 28rem"
+                  priority={i === 0}
                 />
               </div>
             </div>

@@ -143,7 +143,7 @@ export default async function PcelinjakPage({
       {/* --- natpis i naslov iznad izbornika, u uskoj traci ------------- */}
       <section className="pcl-strip pcl-strip--narrow pcl-mb-md pcl-center">
         <p className="pcl-pretitle pcl-in">{t.pase.pretitle}</p>
-        <h2 className="pcl-display pcl-display--2 pcl-in">
+        <h2 className="pcl-display pcl-display--3 pcl-in">
           {t.pase.title.map((r) => (
             <span className="pcl-display__word" key={r}>
               <span>{r}</span>

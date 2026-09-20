@@ -20,7 +20,9 @@ export type PcelinjakPasa = {
   tab: string;
   /** Crtez sorte — u njemu je i sam natpis, pa dugme nema svoj slog. */
   znak: string;
-  /** Crtez pase — mjesto za sliku, omjer 1.64:1. */
+  /** Fotografija sorte — uspravan okvir 4:5. */
+  slika: string;
+  /** Sta se na fotografiji vidi. */
   mapaAlt: string;
   /** Pasus pod crtezom. */
   uvod: string;
@@ -135,7 +137,8 @@ const sr: Copy = {
         key: 'livadski',
         tab: 'Livadski med',
         znak: '/images/brand/sorta-livadski.svg',
-        mapaAlt: 'Crtež stare livade sa rasporedom košnica',
+        slika: '/images/pcelinjak/sorta-livadski.webp',
+        mapaAlt: 'Tegla livadskog meda na otvorenom dlanu, iza nje brdo i zelena livada',
         // cilj: 202
         uvod:
           'Pažljivim održavanjem ova je livada zadržala trave koje su na njoj rasle i prije nas, ' +
@@ -156,7 +159,8 @@ const sr: Copy = {
         key: 'bagremov',
         tab: 'Bagremov med',
         znak: '/images/brand/sorta-bagremov.svg',
-        mapaAlt: 'Crtež kestenove paše iznad sela',
+        slika: '/images/pcelinjak/sorta-bagremov.webp',
+        mapaAlt: 'Ruka drži teglu bagremovog meda, iza nje košnice u zalazak sunca',
         uvod:
           'Kesten cvjeta kratko i visoko nad obronkom, pa se ova paša otvori na svega dvije ' +
           'sedmice i za to vrijeme dâ med tamniji i oštriji nego onaj koji dolazi sa livade.',
@@ -175,7 +179,8 @@ const sr: Copy = {
         key: 'meden',
         tab: 'Meden',
         znak: '/images/brand/sorta-meden.svg',
-        mapaAlt: 'Crtež lipovog reda uz seoski put',
+        slika: '/images/pcelinjak/sorta-meden.webp',
+        mapaAlt: 'Tegle bagremovog i livadskog meda na drvenom stolu, uz dimilicu i košnice',
         uvod:
           'Red lipa uz stari seoski put cvjeta posljednji u godini, kad se livada već smiri, i ' +
           'zato ova paša zatvara sezonu medom svijetlim, mekim i izrazito mirisnim.',
@@ -321,7 +326,8 @@ const en: Copy = {
         key: 'livadski',
         tab: 'Meadow honey',
         znak: '/images/brand/sorta-livadski.svg',
-        mapaAlt: 'Drawing of the old meadow and the hive layout',
+        slika: '/images/pcelinjak/sorta-livadski.webp',
+        mapaAlt: 'A jar of meadow honey on an open palm, hills and green meadow behind it',
         uvod:
           'Careful tending has kept the grasses that grew here long before us, and their deep ' +
           'roots give the honey the body and calm you can taste in every harvest.',
@@ -340,7 +346,8 @@ const en: Copy = {
         key: 'bagremov',
         tab: 'Acacia honey',
         znak: '/images/brand/sorta-bagremov.svg',
-        mapaAlt: 'Drawing of the chestnut forage above the village',
+        slika: '/images/pcelinjak/sorta-bagremov.webp',
+        mapaAlt: 'A hand holding a jar of acacia honey, hives behind it at sunset',
         uvod:
           'Chestnut flowers briefly and high above the slope, so this forage opens for barely ' +
           'two weeks and in that time gives a honey darker and sharper than the meadow one.',
@@ -359,7 +366,8 @@ const en: Copy = {
         key: 'meden',
         tab: 'Meden',
         znak: '/images/brand/sorta-meden.svg',
-        mapaAlt: 'Drawing of the linden row along the village road',
+        slika: '/images/pcelinjak/sorta-meden.webp',
+        mapaAlt: 'Jars of acacia and meadow honey on a wooden table, beside a smoker and hives',
         uvod:
           'The row of lindens along the old village road flowers last in the year, once the ' +
           'meadow has settled, and so it closes the season with a pale, soft, fragrant honey.',
