@@ -1,0 +1,49 @@
+.section {
+  padding: clamp(5rem, 10vw, 11rem) clamp(0.75rem, 2.1vw, 2.5rem);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.4rem, 1.05vw, 1.25rem);
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.image {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 4 / 5;
+  margin: 0;
+  overflow: hidden;
+  background: #d9d9d4;
+}
+
+.image img {
+  object-fit: cover;
+  transition: transform 700ms var(--ease-out-expo);
+}
+
+.image:hover img {
+  transform: scale(1.025);
+}
+
+@media (max-width: 767px) {
+  .section {
+    padding: 5rem 0.4rem 6.5rem;
+  }
+
+  .grid {
+    gap: 0.28rem;
+  }
+
+  .image {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image img {
+    transition: none;
+  }
+}

@@ -1,11 +1,31 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import ProductRail from '@/components/products/ProductRail';
-import SorteMeda from '@/components/products/SorteMeda';
-import ImageBreak from '@/components/ui/ImageBreak';
-import { meta, photoBreaks, productsPage } from '@/content/pages';
-import { isLocale, type Locale } from '@/i18n/config';
+import CtaMovingImage from '@/components/products/CtaMovingImage';
+import FullBleed from '@/components/products/FullBleed';
+import HeroMarquee from '@/components/products/HeroMarquee';
+import MovingTitles from '@/components/products/MovingTitles';
+import ProductBand from '@/components/products/ProductBand';
+import ScatterGallery from '@/components/products/ScatterGallery';
+import SeasonTimeline from '@/components/products/SeasonTimeline';
+import StoryBlock from '@/components/products/StoryBlock';
+import WhyBlock from '@/components/products/WhyBlock';
+import { meta } from '@/content/pages';
+import { imageSlots, productsEditorial } from '@/content/productsEditorial';
+import { isLocale, localeHref, type Locale } from '@/i18n/config';
+
+/**
+ * Strana proizvoda.
+ *
+ * Nije webshop spisak nego tekst o medu: uvodni red koji se krece, snimak
+ * preko cijelog ekrana, pa red sekcija koje naizmjenicno nose tipografiju i
+ * fotografiju. Bagremov med dobija najvise prostora — dvije sekcije i pojas
+ * u boji — a livadski, propolis i imuno mix ulaze kroz rasutu plohu i pojas,
+ * bez ijedne kartice sa cijenom.
+ *
+ * Fotografije su zasad sivi blokovi; svaki nosi `data-image-slot` po kojem
+ * se nalazi u kodu.
+ */
 
 export async function generateMetadata({
   params,
@@ -20,94 +40,92 @@ export async function generateMetadata({
 export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  const copy = productsPage[locale];
-  const shot = photoBreaks[locale];
+
+  const copy = productsEditorial[locale];
 
   return (
-    <div className="bg-ivory header-offset">
-      {/* Strana pocinje samom policom; naslov ostaje za citace ekrana. */}
-      <h1 className="sr-only">{copy.heading}</h1>
+    <div className="pe bg-ivory header-offset">
+      {/* 01 — naslov koji se krece preko cijele sirine */}
+      <HeroMarquee title={copy.heroTitle} note={copy.heroNote} />
 
-      {/*
-        Ovdje je stajala mreza kartica sa cijenama i srcima — obican webshop
-        raspored, kakav ova strana nece biti. Otisla je cijela; ostaje prazan
-        pojas koji drzi svoju visinu dok ne dodje ono sto ide na njeno mjesto.
-      */}
-      <section className="prazno" aria-hidden="true" />
-
-      {/*
-        Pojas u boji meda, jos prazan — mjesto je zauzeto, sadrzaj dolazi.
-        Visinu mu dok je prazan daje CSS; kad dobije sadrzaj, ta mjera ide van.
-      */}
-      <section className="honey-band" aria-hidden="true" />
-
-      {/* Polica: tegle se listaju skrolom, a krug uz njih mijenja boju i naziv. */}
-      <ProductRail locale={locale} />
-
-      {/* Poslije prodavnice — od sanduka do police. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          { src: '/images/real/bagrem-tegle-panj.webp', alt: shot.productsHarvest.altStump },
-          { src: '/images/real/bagrem-sanduk.webp', alt: shot.productsHarvest.altCrate },
-        ]}
-        caption={shot.productsHarvest.caption}
-        meta={shot.productsHarvest.meta}
-        emblem
+      {/* 02 — snimak preko cijelog ekrana, sa krugom koji vodi na proizvode */}
+      <FullBleed
+        slot={imageSlots.banner}
+        label={copy.bannerAlt}
+        cta={copy.bannerCta}
+        href="#proizvodi"
       />
 
-      <SorteMeda locale={locale} />
-
-      <section className="border-b border-[#885B27]/15 bg-[#885B27] py-12">
-        <div className="container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4">
-            {copy.trustFeatures.map((feature, index) => (
-              <div
-                key={feature.title}
-                className={`reveal stagger-${index + 1} border-b border-[#FCF0DC]/20 py-6 md:px-7 lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0`}
-              >
-                <span className="text-[10px] font-bold tracking-[0.18em] text-[#EEC660]">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <p className="mt-3 font-display text-2xl leading-tight text-[#FCF0DC]">
-                  {feature.title}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#FCF0DC]/75">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Dva artikla koja nisu med, prije zavrsne fotografije. */}
-      <ImageBreak
-        variant="pair"
-        images={[
-          {
-            src: '/images/real/imuno-studio.webp',
-            alt: shot.productsOther.altMix,
-            // Tegla stoji lijevo od sredine; centriran rez joj odsijeca ivicu.
-            focus: 'object-[42%_50%]',
-          },
-          {
-            src: '/images/real/propolis-kadar.webp',
-            alt: shot.productsOther.altPropolis,
-            focus: 'object-[74%_50%]',
-          },
-        ]}
-        frame="narrow"
-        caption={shot.productsOther.caption}
-        meta={shot.productsOther.meta}
+      {/* 03 — bagremov med: natpis, krupna recenica, podaci */}
+      <StoryBlock
+        label={copy.bagrem.label}
+        lede={copy.bagrem.lede}
+        facts={copy.bagrem.facts}
+        art={{ src: '/images/brand/bagremov-grana.svg', width: 1271, height: 1213 }}
+        artAlt="Grana bagrema u cvatu"
       />
 
-      <ImageBreak
-        variant="framed"
-        side="right"
-        images={[{ src: '/images/mockups/jars-pair-studio.webp', alt: shot.productsCare.alt }]}
-        caption={shot.productsCare.caption}
-        heading={shot.productsCare.heading}
-        body={shot.productsCare.body}
-        meta={shot.productsCare.meta}
+      {/* 04 — zasto nas bagrem */}
+      <WhyBlock
+        title={copy.why.title}
+        slot={imageSlots.why}
+        slotLabel={copy.why.imageAlt}
+        intro={copy.why.intro}
+        list={copy.why.list}
+        outro={copy.why.outro}
+      />
+
+      {/* 05 — dva krupna naslova koja ulaze sa strane */}
+      <MovingTitles
+        items={[
+          { ...copy.features[0], icon: '/images/brand/sorta-bagremov.svg' },
+          { ...copy.features[1], icon: '/images/brand/teglica.svg' },
+        ]}
+      />
+
+      {/* 06 — livadski med, u pojasu u boji */}
+      <ProductBand
+        locale={locale}
+        label={copy.meadow.label}
+        heading={copy.meadow.heading}
+        body={copy.meadow.body}
+        cta={copy.meadow.cta}
+        href="/products/livadski-med-500g"
+        slot={imageSlots.meadow}
+        slotLabel={copy.meadow.imageAlt}
+      />
+
+      {/* 07 — ostali proizvodi, rasuti preko pune plohe */}
+      <ScatterGallery
+        id="proizvodi"
+        title={copy.others.title}
+        lede={copy.others.lede}
+        slots={imageSlots.others.map((slot) => ({ slot, label: copy.others.alt }))}
+      />
+
+      {/* 08 — sezona u pcelinjaku */}
+      <SeasonTimeline
+        label={copy.season.label}
+        heading={copy.season.heading}
+        steps={copy.season.steps}
+        slots={[...imageSlots.season]}
+      />
+
+      {/* 09 — cuvanje i kristalizacija */}
+      <StoryBlock
+        label={copy.storage.label}
+        lede={copy.storage.heading}
+        body={copy.storage.body}
+        facts={copy.storage.facts}
+      />
+
+      {/* 10 — zavrsni poziv */}
+      <CtaMovingImage
+        title={copy.cta.title}
+        button={copy.cta.button}
+        href="#proizvodi"
+        left={{ slot: imageSlots.ctaLeft, label: copy.cta.alt }}
+        right={{ slot: imageSlots.ctaRight, label: copy.cta.alt }}
       />
     </div>
   );

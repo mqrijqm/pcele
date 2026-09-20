@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import { isLocale } from '@/i18n/config';
 import HeroLand from '@/components/home/HeroLand';
 import HeroJar from '@/components/home/HeroJar';
-import Izdvojeno from '@/components/home/Izdvojeno';
 import Apiary from '@/components/home/Apiary';
 import Priroda from '@/components/home/Priroda';
 import Drip from '@/components/home/Drip';
@@ -14,6 +13,7 @@ import Livada from '@/components/home/Livada';
 import Ponuda from '@/components/home/Ponuda';
 import Propolis from '@/components/home/Propolis';
 import Krajolik from '@/components/home/Krajolik';
+import ProductTriptych from '@/components/home/ProductTriptych';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
 
@@ -42,9 +42,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </Drip>
 
       <HeroJar locale={locale} />
-
-      {/* Proizvodi dolaze odmah poslije uvoda, dok je tegla jos u fokusu. */}
-      <Izdvojeno locale={locale} />
 
       {/* Pcelinjak: snimak preko cijelog kadra koji se odmakne i progovori. */}
       <Apiary locale={locale} />
@@ -87,6 +84,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       */}
       <div className="bloomfield">
         <Krajolik locale={locale} />
+
+        {/* Tri proizvoda, bez teksta, kao čista fotografska traka. */}
+        <ProductTriptych />
 
         {/* Jedan poziv na kraju, ne tri. */}
         <Newsletter locale={locale} />
