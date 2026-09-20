@@ -28,8 +28,12 @@ const build = (l: Locale) => {
     hero: {
       title: rijeci(c.eyebrow),
       caption: s.processHives.caption,
-      slikaAlt: s.processHives.altA,
-      slika: '/images/real/pcelinjak-4.webp',
+      // Slika koja je bila na pcelinjacima; tamo su sada tegle.
+      slikaAlt:
+        l === 'sr'
+          ? 'Košnice u nizu na livadi iznad sela'
+          : 'Hives in a row on the meadow above the village',
+      slika: '/images/pcelinjak/heroj.webp',
     },
 
     uvod: {

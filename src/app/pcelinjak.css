@@ -421,6 +421,12 @@
   color: var(--pcl-paper);
 }
 
+/* Svijetla slika: papirni natpis bi se na njoj izgubio, pa ostaje tamni. */
+.pcl-hero--light.is-covered .pcl-hero__title,
+.pcl-hero--light.is-covered .pcl-hero__caption {
+  color: var(--pcl-ink);
+}
+
 .pcl-hero__title,
 .pcl-hero__caption {
   transition: color 0.35s ease;

@@ -28,11 +28,14 @@ export default function Hero({
   caption,
   slikaAlt,
   slika,
+  svijetla = false,
 }: {
   rijeci: string[];
   caption: string;
   slikaAlt: string;
   slika?: string;
+  /** Svijetla slika: natpisi ostaju tamni i kad ih slika prekrije. */
+  svijetla?: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const media = useRef<HTMLDivElement>(null);
@@ -77,7 +80,7 @@ export default function Hero({
   }, []);
 
   return (
-    <div className="pcl-hero pcl-mb-lg" ref={root}>
+    <div className={`pcl-hero pcl-mb-lg${svijetla ? " pcl-hero--light" : ""}`} ref={root}>
       <div className="pcl-hero__stage">
         {/* naslov: dvanaest i dvanaest kolona, rijec po rijec u svom redu */}
         <div className="pcl-strip pcl-mb-sm pcl-hero__title">
