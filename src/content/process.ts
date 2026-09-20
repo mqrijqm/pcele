@@ -13,24 +13,6 @@ import { home, photoBreaks, processFrames, processPage, processStepImages } from
 
 const rijeci = (s: string) => s.split(' ');
 
-/**
- * Kako koji korak stoji na mrezi.
- *
- * `wide`  — tekst 8 kolona, slika 16 (ili obrnuto), slika 4:3.
- * `tall`  — tekst 12 kolona, slika 12, slika uspravna.
- *
- * Oblik prati fotografiju, ne obrnuto: vrcanje i punjenje su snimljeni
- * uspravno, pa bi ih sirok okvir presjekao na pola. `flip` mijenja strane, da
- * slika ne stoji dvaput zaredom na istoj.
- */
-const STEP_LAYOUT = [
-  { form: 'wide', flip: false },
-  { form: 'wide', flip: true },
-  { form: 'tall', flip: true },
-  { form: 'wide', flip: false },
-  { form: 'tall', flip: false },
-] as const;
-
 export type ProcessTrakaSlika = {
   alt: string;
   omjer: '3:2' | '4:3' | '2:3' | '1:1';
@@ -63,7 +45,6 @@ const build = (l: Locale) => {
       alt: step.title,
       desc: step.desc,
       src: processStepImages[i],
-      ...STEP_LAYOUT[i],
     })),
 
     /* Umetak prije trake: ramove pravimo sami. */

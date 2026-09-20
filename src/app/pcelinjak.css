@@ -830,43 +830,104 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Nas proces: koraci kao poglavlja.
+ * Nas proces: pet koraka u jednom kadru.
  *
- * Isti stupci kao na pcelinjacima, uz jedan novi omjer (16-8, ogledalo od
- * 8-16) i dva pomocna svojstva: `--end` spusta tekst na donju ivicu slike, a
- * `--flip` mijenja strane a da redoslijed u kodu — tekst pa slika, kako i
- * ide na telefonu — ostane isti.
+ * Prvi korak stoji lijevo, ostali kliznu sdesna. Sve mjere idu iz `--kw`,
+ * sirine jedne kartice: slika je kvadrat te sirine, pa cio korak (broj,
+ * naslov, slika, tekst) stane u kadar i na laptopu, ne samo na velikom
+ * monitoru — `40svh` je ono sto slici brani da naraste preko visine kadra.
  * ------------------------------------------------------------------------- */
-.pcl-step + .pcl-step {
-  margin-top: var(--pcl-lg);
+.pcl-display--3 {
+  font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+  line-height: 1.05;
 }
 
-.pcl-step__head {
-  margin-bottom: var(--pcl-md);
+.pcl-koraci__stage {
+  --kw: clamp(13rem, min(24vw, 40svh), 22rem);
+  display: flex;
+  align-items: center;
+  gap: var(--pcl-lg);
+  min-height: 100svh;
+  /* Lijeva ivica je ivica sadrzaja; desna ide do ruba kadra. */
+  padding-left: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
 }
 
-@media (min-width: 768px) {
-  .pcl-cols--16-8 {
-    grid-template-columns: calc(66.6667% - var(--pcl-gap) / 2) calc(33.3333% - var(--pcl-gap) / 2);
+.pcl-koraci__prvi {
+  flex: 0 0 var(--kw);
+}
+
+.pcl-koraci__viewport {
+  flex: 1;
+  min-width: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.pcl-koraci__track {
+  display: flex;
+  flex: none;
+  gap: var(--pcl-md);
+  will-change: transform;
+}
+
+/* Zrak iza posljednjeg koraka, da ne zavrsi zalijepljen za rub kadra. */
+.pcl-koraci__track::after {
+  content: '';
+  flex: 0 0 var(--pcl-gutter);
+}
+
+.pcl-korak {
+  flex: 0 0 var(--kw);
+  width: var(--kw);
+}
+
+.pcl-korak .pcl-display {
+  margin-top: 12px;
+}
+
+.pcl-korak__slika {
+  margin-top: 24px;
+}
+
+.pcl-korak .pcl-body {
+  margin-top: 20px;
+}
+
+/* Bez pinovanja (telefon) koraci idu jedan pod drugim. */
+@media (max-width: 767px) {
+  .pcl-koraci__stage {
+    --kw: min(100%, 26rem);
+    display: block;
+    min-height: 0;
+    padding-inline: var(--pcl-gutter);
   }
 
-  .pcl-cols--end {
-    align-items: end;
+  .pcl-koraci__viewport {
+    display: block;
+    overflow: visible;
+    margin-top: var(--pcl-lg);
   }
 
-  .pcl-cols--flip > :first-child {
-    grid-column: 2;
-    grid-row: 1;
+  .pcl-koraci__track {
+    display: block;
+    transform: none !important;
   }
 
-  .pcl-cols--flip > :last-child {
-    grid-column: 1;
-    grid-row: 1;
+  .pcl-koraci__track::after {
+    display: none;
   }
 
-  /* Tekst uz uspravnu sliku ne smije da se razvuce preko pola kadra. */
-  .pcl-cols--12-12 .pcl-step__text {
-    max-width: 26rem;
+  .pcl-korak + .pcl-korak {
+    margin-top: var(--pcl-lg);
+  }
+}
+
+/* Ko je iskljucio kretanje, traku prevlaci prstom ili strelicama. */
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .pcl-koraci__viewport {
+    overflow-x: auto;
   }
 }
 

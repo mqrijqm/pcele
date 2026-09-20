@@ -8,6 +8,7 @@ import Hero from '@/components/pcelinjak/Hero';
 import Rail from '@/components/pcelinjak/Rail';
 import Motion from '@/components/pcelinjak/Motion';
 import Kraj from '@/components/pcelinjak/Kraj';
+import Koraci from '@/components/pcelinjak/Koraci';
 import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
 import { meta } from '@/content/pages';
 import { processView } from '@/content/process';
@@ -31,12 +32,8 @@ export async function generateMetadata({
  * kolona, traka slika koja se lista u stranu i zavrsna kartica koja se ispise
  * dok strana stoji. Mjere i animacije dolaze iz `pcelinjak.css`.
  *
- *   heroj -> uvod -> pet koraka (slika i tekst naizmjenicno) ->
+ *   heroj -> uvod -> pet koraka (prvi stoji, ostali kliznu udesno) ->
  *   umetak o ramovima -> traka slika -> zavrsna kartica
- *
- * Svaki korak je svoje poglavlje: broj i naslov u velikim verzalima, ispod
- * njih tekst i fotografija. Oblik okvira prati fotografiju — vidi
- * `STEP_LAYOUT` u `content/process.ts`.
  */
 export default async function ProcessPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -78,51 +75,12 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
       </section>
 
       {/*
-        Pet koraka. Svaki je poglavlje: gore broj i naslov (sedam pa
-        sedamnaest kolona, kao uvod), ispod tekst i slika. U kodu je uvijek
-        prvo tekst pa slika — na telefonu tako i idu; `--flip` na sirokom
-        kadru samo zamijeni strane.
+        Pet koraka u jednom kadru: prvi stoji, ostali kliznu sdesna dok se
+        strana skrola. Cio korak stane u ekran — vidi `Koraci.tsx`.
       */}
-      {t.koraci.map((k) => {
-        const tall = k.form === 'tall';
-        const sizes = tall
-          ? '(max-width: 767px) 90vw, 40vw'
-          : '(max-width: 767px) 90vw, 55vw';
-        const kolone = tall ? 'pcl-cols--12-12' : k.flip ? 'pcl-cols--16-8' : 'pcl-cols--8-16';
-
-        return (
-          <section className="pcl-strip pcl-step" key={k.broj}>
-            <div className="pcl-cols pcl-cols--7-17 pcl-step__head">
-              <p className="pcl-pretitle pcl-in">
-                {k.broj} / {k.ukupno}
-              </p>
-              <h2 className="pcl-display pcl-display--2 pcl-in">
-                {k.title.map((r, i) => (
-                  <span className="pcl-display__word" key={`${r}-${i}`}>
-                    <span>{r}</span>
-                  </span>
-                ))}
-              </h2>
-            </div>
-
-            <div
-              className={`pcl-cols ${kolone} pcl-cols--end${k.flip ? ' pcl-cols--flip' : ''}`}
-            >
-              <p className="pcl-body pcl-step__text pcl-in">{k.desc}</p>
-              <div>
-                <ImagePlaceholder
-                  ratio={tall ? 0.8 : 1.333}
-                  label={tall ? '4:5' : '4:3'}
-                  alt={k.alt}
-                  src={k.src}
-                  sizes={sizes}
-                  zoom
-                />
-              </div>
-            </div>
-          </section>
-        );
-      })}
+      <section className="pcl-mb-lg">
+        <Koraci koraci={t.koraci} />
+      </section>
 
       {/* --- umetak: ramove pravimo sami, pa traka iz radionice ---------- */}
       <section className="pcl-strip pcl-mt-lg pcl-mb-md">
