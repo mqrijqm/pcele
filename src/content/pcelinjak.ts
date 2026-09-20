@@ -76,9 +76,8 @@ const sr: Copy = {
     title: ['Kraj', 'koji', 'miriše'],
     // cilj: 48
     caption: 'Gdje se zemlja, sunce i pčela sastaju u kapi.',
-    // Tegle u dijagonalnom nizu; ranija slika (heroj.webp) je presla na stranu o procesu.
-    slikaAlt: 'Tegle livadskog meda poredane dijagonalno na krem podlozi',
-    slika: '/images/mockups/jars-pattern-studio.webp',
+    slikaAlt: 'Košnice na otvorenoj livadi pod vedrim nebom',
+    slika: '/images/real/pcelinjak-4.webp',
   },
 
   uvod: {
@@ -278,8 +277,8 @@ const en: Copy = {
   hero: {
     title: ['Land', 'that', 'remembers'],
     caption: 'Where soil, sun and bee meet inside a single drop.',
-    slikaAlt: 'Jars of meadow honey lined up diagonally on a cream background',
-    slika: '/images/mockups/jars-pattern-studio.webp',
+    slikaAlt: 'Hives on an open meadow under a clear sky',
+    slika: '/images/real/pcelinjak-4.webp',
   },
   uvod: {
     pretitle: 'In a village near Prnjavor, on a hill',

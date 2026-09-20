@@ -66,7 +66,6 @@ export default async function PcelinjakPage({
         caption={t.hero.caption}
         slikaAlt={t.hero.slikaAlt}
         slika={t.hero.slika}
-        svijetla
       />
 
       {/* --- natpis lijevo, naslov desno: sedam pa sedamnaest kolona ---- */}

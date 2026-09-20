@@ -27,19 +27,18 @@ const build = (l: Locale) => {
   return {
     hero: {
       title: rijeci(c.eyebrow),
-      caption: s.processHives.caption,
-      // Slika koja je bila na pcelinjacima; tamo su sada tegle.
+      caption: c.note,
       slikaAlt:
         l === 'sr'
-          ? 'Košnice u nizu na livadi iznad sela'
-          : 'Hives in a row on the meadow above the village',
-      slika: '/images/pcelinjak/heroj.webp',
+          ? 'Tegle livadskog meda poredane dijagonalno na krem podlozi'
+          : 'Jars of meadow honey lined up diagonally on a cream background',
+      slika: '/images/mockups/jars-pattern-studio.webp',
     },
 
     uvod: {
       pretitle: c.sectionEyebrow,
       title: rijeci(c.sectionHeading),
-      lead: `${c.description.replace(' - ', ' — ')}. ${c.note}`,
+      lead: `${c.description.replace(' - ', ' — ')}.`,
     },
 
     koraci: c.steps.map((step, i) => ({

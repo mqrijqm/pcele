@@ -51,6 +51,7 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         caption={t.hero.caption}
         slikaAlt={t.hero.slikaAlt}
         slika={t.hero.slika}
+        svijetla
       />
 
       {/* --- natpis lijevo, naslov desno, pa uvodni pasus --------------- */}
