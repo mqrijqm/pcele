@@ -20,6 +20,27 @@ type Copy = {
   bannerAlt: string;
   bannerCta: string;
 
+  /* 02b — e-commerce showcase (novi blok poslije heroja) */
+  shop: {
+    intro: string;
+    oval: string;
+    headline: string;
+    strip: string[];
+    products: { slug: string | null; name: string; unit: string }[];
+    editorial: { title: string; list: string[] }[];
+    final: {
+      note: string;
+      oval: string;
+      title: string;
+      cta: string;
+    };
+    alt: {
+      hero: string;
+      editorial: string;
+      final: string;
+    };
+  };
+
   /* 03 — bagremov med */
   bagrem: {
     label: string;
@@ -84,6 +105,48 @@ const sr: Copy = {
 
   bannerAlt: 'Pčelinjak u bagremovoj šumi, rano ljeto',
   bannerCta: 'Pogledaj tegle',
+
+  shop: {
+    intro:
+      'Pažljivo birani pčelinji proizvodi, nastali u skladu s prirodom. Od čistog livadskog i bagremovog meda do propolisa, perge i pažljivo odabranih proizvoda iz košnice.',
+    oval: 'Svi proizvodi',
+    headline: 'Više od meda.\nDar prirode\nu svakoj kašici.',
+    strip: ['Sirovo vrcano', 'Bez dodataka', 'Direktno iz košnice', 'Mračaj · Prnjavor'],
+    products: [
+      { slug: 'livadski-med-1kg', name: 'Livadski med', unit: '1 kg' },
+      { slug: 'livadski-med-500g', name: 'Livadski med', unit: '500 g' },
+      { slug: 'bagremov-med-1kg', name: 'Bagremov med', unit: '1 kg' },
+      { slug: 'bagremov-med-500g', name: 'Bagremov med', unit: '500 g' },
+      { slug: 'pcelinji-propolis-20ml', name: 'Propolis', unit: 'Pčelinji proizvod' },
+      { slug: 'imuno-mix-450g', name: 'Imuno mix', unit: '450 g' },
+      // TODO: perga i med u sacu cekaju prave fotografije; dok ne stignu,
+      // stoje najblize postojece snimke i vode na spisak proizvoda.
+      { slug: null, name: 'Perga', unit: '10 g' },
+      { slug: null, name: 'Med u saću', unit: '' },
+    ],
+    editorial: [
+      {
+        title: 'Iz košnice,\ndirektno u vaš dom.',
+        list: ['Livadski med', 'Bagremov med'],
+      },
+      {
+        title: 'Priroda koju\nmožete okusiti.',
+        list: ['Propolis', 'Imuno mix'],
+      },
+    ],
+    final: {
+      note:
+        'Tegle pakujemo ručno i vozimo sami — dostavu dogovaramo direktno s vama, za veće količine i poklon pakovanja.',
+      oval: 'Naruči',
+      title: 'Odaberite svoj\nomiljeni proizvod\niz košnice.',
+      cta: 'Istražite ponudu',
+    },
+    alt: {
+      hero: 'Red tegli livadskog meda na drvenoj ogradi, u zelenilu',
+      editorial: 'Bagremov i livadski med, 1 kg, na drvenom stolu u pčelinjaku',
+      final: 'Tegla meda na stolu uz hljeb i sir',
+    },
+  },
 
   bagrem: {
     label: 'Bagremov med',
@@ -214,6 +277,47 @@ const en: Copy = {
 
   bannerAlt: 'An apiary in an acacia forest, early summer',
   bannerCta: 'See the jars',
+
+  shop: {
+    intro:
+      'Carefully chosen bee products, made in step with nature. From pure meadow and acacia honey to propolis, bee bread and picks straight from the hive.',
+    oval: 'All products',
+    headline: 'More than honey.\nA gift of nature\nin every spoonful.',
+    strip: ['Raw, unfiltered', 'No additives', 'Straight from the hive', 'Mracaj · Prnjavor'],
+    products: [
+      { slug: 'livadski-med-1kg', name: 'Meadow honey', unit: '1 kg' },
+      { slug: 'livadski-med-500g', name: 'Meadow honey', unit: '500 g' },
+      { slug: 'bagremov-med-1kg', name: 'Acacia honey', unit: '1 kg' },
+      { slug: 'bagremov-med-500g', name: 'Acacia honey', unit: '500 g' },
+      { slug: 'pcelinji-propolis-20ml', name: 'Propolis', unit: 'Bee product' },
+      { slug: 'imuno-mix-450g', name: 'Imuno mix', unit: '450 g' },
+      // TODO: waiting for real product shots of bee bread and comb honey.
+      { slug: null, name: 'Bee bread', unit: '10 g' },
+      { slug: null, name: 'Comb honey', unit: '' },
+    ],
+    editorial: [
+      {
+        title: 'From the hive,\nstraight to your home.',
+        list: ['Meadow honey', 'Acacia honey'],
+      },
+      {
+        title: 'Nature you\ncan taste.',
+        list: ['Propolis', 'Imuno mix'],
+      },
+    ],
+    final: {
+      note:
+        'We pack every jar by hand and deliver it ourselves — delivery is arranged directly with you, for larger quantities and gift packaging.',
+      oval: 'Order',
+      title: 'Choose your\nfavourite product\nfrom the hive.',
+      cta: 'Explore the offer',
+    },
+    alt: {
+      hero: 'A row of meadow honey jars on a wooden railing, in greenery',
+      editorial: 'Acacia and meadow honey, 1 kg, on a wooden table in the apiary',
+      final: 'A jar of honey on a table with bread and cheese',
+    },
+  },
 
   bagrem: {
     label: 'Acacia honey',

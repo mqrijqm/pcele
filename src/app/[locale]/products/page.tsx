@@ -12,6 +12,7 @@ import FullBleed from '@/components/products/FullBleed';
 import HeroMarquee from '@/components/products/HeroMarquee';
 import MovingTitles from '@/components/products/MovingTitles';
 import ProductBand from '@/components/products/ProductBand';
+import ProductShowcase from '@/components/products/ProductShowcase';
 import ScatterGallery from '@/components/products/ScatterGallery';
 import SeasonTimeline from '@/components/products/SeasonTimeline';
 import StoryBlock from '@/components/products/StoryBlock';
@@ -61,6 +62,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         cta={copy.bannerCta}
         href="#proizvodi"
       />
+
+      {/* 02b — e-commerce showcase: editorial katalog svih artikala */}
+      <ProductShowcase locale={locale} copy={copy.shop} />
 
       {/* 03 — bagremov med: natpis, krupna recenica, podaci */}
       <StoryBlock
