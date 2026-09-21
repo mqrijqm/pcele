@@ -342,8 +342,8 @@ export const productsEditorial: Record<Locale, Copy> = { sr, en };
 
 /** Imena polja za `data-image-slot`, na jednom mjestu. */
 export const imageSlots = {
+  /* Snimak preko cijelog ekrana — ujedno i glavna fotografija bagrema. */
   banner: 'pcelinjak-hero',
-  bagrem: 'bagrem-glava',
   why: 'bagrem-detalj',
   meadow: 'livadski-tegla',
   others: ['propolis', 'imuno-mix', 'livadski-cvijet', 'pcelinjak-let', 'tegle-red'],
