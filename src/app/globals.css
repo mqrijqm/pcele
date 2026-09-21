@@ -6571,6 +6571,15 @@ a.pecat:focus-visible img {
   align-items: center;
 }
 
+/* Copyright i potpis studija u istom redu. Na uskom ekranu se prelama i
+   centrira, pa vlas izmedju njih ostane na kraju gornjeg reda. */
+.stopa__autor {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 /* Vlas izmedju dvije veze u istom redu. */
 .stopa__crta {
   display: inline-block;
