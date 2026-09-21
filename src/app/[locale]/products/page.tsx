@@ -78,7 +78,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
       {/* 05 — dva krupna naslova koja ulaze sa strane */}
       <MovingTitles
         items={[
-          { ...copy.features[0], icon: '/images/brand/sorta-bagremov.svg' },
+          { ...copy.features[0], icon: '/images/brand/bagremov-grana.svg' },
           { ...copy.features[1], icon: '/images/brand/teglica.svg' },
         ]}
       />

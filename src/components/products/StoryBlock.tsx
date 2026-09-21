@@ -3,7 +3,7 @@
 import ImageSlot from '@/components/products/ImageSlot';
 
 /**
- * Miran blok: sitan natpis, krupna recenica, i â€” kad ih ima â€” podaci u redu
+ * Miran blok: sitan natpis, krupna recenica, i — kad ih ima — podaci u redu
  * ispod. Crtez u donjem lijevom uglu je nas, iz brenda, i sluzi samo da
  * prekine prazninu; zato je `aria-hidden`.
  *

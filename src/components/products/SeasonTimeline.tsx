@@ -11,7 +11,7 @@ type Step = { when: string; title: string; body: string };
  * Sezona u pcelinjaku, korak po korak.
  *
  * Na sirokom ekranu: traka s naljepnicama gore (jedna po koraku) i red
- * kartica ispod, u kojem je otvoren samo jedan korak â€” njegov naslov je
+ * kartica ispod, u kojem je otvoren samo jedan korak — njegov naslov je
  * krupniji, a snimak se otvori uz njega. Prelazak na drugi korak pomjeri
  * traku tako da otvoreni korak stane uz lijevu ivicu, a bjelina ispod
  * naljepnice klizne na novo mjesto.
@@ -38,8 +38,35 @@ export default function SeasonTimeline({
   const nav = useRef<HTMLDivElement>(null);
   const indicator = useRef<HTMLSpanElement>(null);
   const [active, setActive] = useState(0);
-  /* Prvo postavljanje ide bez animacije â€” inace naljepnica "dodje" na klik. */
+  /* Prvo postavljanje ide bez animacije — inace naljepnica "dodje" na klik. */
   const placed = useRef(false);
+  /*
+   * Sirina jednog zatvorenog koraka plus razmak medju koracima. Mjeri se
+   * jednom i stoji, jer je stalna: stubac teksta ima fiksnu sirinu, a snimak
+   * je sirine nula dok je korak zatvoren.
+   *
+   * Od nje se racuna pomak trake. `offsetLeft` otvorenog koraka se NE smije
+   * mjeriti neposredno poslije klika — sirina stubca je tada jos u tranziciji,
+   * pa traka stane na pogresno mjesto i otvoreni korak ostane van kadra.
+   */
+  const step = useRef(0);
+
+  useEffect(() => {
+    const track = slider.current;
+    if (!track) return;
+
+    const measure = () => {
+      const items = track.querySelectorAll<HTMLElement>('.pe-season__item');
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const closed = [...items].find((item) => item.dataset.active !== 'true');
+      if (!closed) return;
+      step.current = closed.offsetWidth + gap;
+    };
+
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
   const place = useCallback((index: number, animate: boolean) => {
     const track = slider.current;
@@ -48,20 +75,17 @@ export default function SeasonTimeline({
     if (!track || !navEl || !mark) return;
 
     const tabs = navEl.querySelectorAll<HTMLElement>('.pe-season__tab');
-    const items = track.querySelectorAll<HTMLElement>('.pe-season__item');
     const tab = tabs[index];
-    const item = items[index];
-    if (!tab || !item) return;
+    if (!tab) return;
 
     const to = animate ? gsap.to : gsap.set;
-    const speed = animate ? 0.55 : 0;
 
     to(mark, {
       width: tab.offsetWidth,
       height: tab.offsetHeight,
       left: tab.offsetLeft,
       top: tab.offsetTop,
-      duration: speed,
+      duration: animate ? 0.55 : 0,
       ease: 'power2.out',
       overwrite: 'auto',
     });
@@ -70,9 +94,9 @@ export default function SeasonTimeline({
     navEl.dataset.ready = 'true';
 
     /* Traka se pomjera samo na sirokom ekranu; na telefonu je lista prstom. */
-    if (window.matchMedia('(orientation: landscape)').matches) {
+    if (window.matchMedia('(orientation: landscape)').matches && step.current) {
       to(track, {
-        x: -item.offsetLeft,
+        x: -index * step.current,
         duration: animate ? 0.6 : 0,
         ease: 'power2.out',
         overwrite: 'auto',
@@ -87,7 +111,7 @@ export default function SeasonTimeline({
     placed.current = true;
   }, [active, place]);
 
-  /* Pri promjeni sirine mjere se mijenjaju â€” naljepnica ide na novo mjesto. */
+  /* Pri promjeni sirine mjere se mijenjaju — naljepnica ide na novo mjesto. */
   useEffect(() => {
     const onResize = () => place(active, false);
     window.addEventListener('resize', onResize);
@@ -172,7 +196,7 @@ export default function SeasonTimeline({
                   </div>
 
                   <div className="pe-season__media">
-                    <ImageSlot slot={slots[i]} label={`${step.title} â€” fotografija`} />
+                    <ImageSlot slot={slots[i]} label={`${step.title} — fotografija`} />
                   </div>
                 </div>
               </article>

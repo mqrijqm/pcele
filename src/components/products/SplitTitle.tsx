@@ -21,7 +21,17 @@ export default function SplitTitle({
   const words = text.split(' ');
 
   return (
-    <Tag className={`pe-split reveal ${className}`.trim()} aria-label={text}>
+    <Tag
+      /*
+       * `data-no-type` je kocnica koju `HeadingTypewriter` sa ostatka sajta
+       * postuje. Bez nje on preuzme naslov, skine `reveal` i ispise slova
+       * jedno po jedno — a rijeci ostaju skrivene u maski, jer okidac za
+       * njihovo podizanje (`in-view`) nikad ne dodje.
+       */
+      data-no-type=""
+      className={`pe-split reveal ${className}`.trim()}
+      aria-label={text}
+    >
       <span aria-hidden="true">
         {words.map((word, i) => (
           <span className="pe-split__line" key={`${word}-${i}`}>

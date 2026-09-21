@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
  *
  * Dva pokreta, namjerno razdvojena na dva elementa: petlja je CSS animacija
  * (ne trosi niti jedan kadar JavaScripta), a pomak vezan za skrol radi GSAP
- * na vanjskom omotacu. Zajedno se citaju kao da red usporava dok skrolujete â€”
+ * na vanjskom omotacu. Zajedno se citaju kao da red usporava dok skrolujete —
  * isti efekat koji nosi i referentna strana.
  *
  * Isti naslov se ponavlja cetiri puta i traka se pomjera za tacno pola svoje

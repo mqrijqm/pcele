@@ -2,14 +2,14 @@
 import SplitTitle from '@/components/products/SplitTitle';
 
 /**
- * "Zasto nas bagrem" â€” krupna naslov preko cijele sirine, pa ispod njega
+ * "Zasto nas bagrem" — krupna naslov preko cijele sirine, pa ispod njega
  * snimak i stubac teksta odvojen tankom crtom.
  *
  * Crta nije ukras: ona drzi lijevu ivicu teksta i na sirokom ekranu spaja
  * naslov sa onim sto ga objasnjava. Zato je `border-left` na stubcu, a ne
  * okvir oko svega.
  *
- * Na telefonu se redoslijed obrce â€” tekst ide prije snimka (vidi products.css).
+ * Na telefonu se redoslijed obrce — tekst ide prije snimka (vidi products.css).
  */
 export default function WhyBlock({
   title,

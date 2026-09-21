@@ -63,6 +63,11 @@
 
 /* --- tipografija -------------------------------------------------------- */
 
+/*
+ * Boja se ne postavlja ovdje nego se naslijedjuje: sekcija je ta koja zna na
+ * kojoj podlozi stoji. Tako je isti naslov mastilo na papiru, a boja papira
+ * na zlatnoj plohi — bez ijednog izuzetka po sekciji.
+ */
 .pe-display,
 .pe-mid,
 .pe-title,
@@ -72,6 +77,7 @@
   letter-spacing: -0.02em;
   line-height: 1;
   text-wrap: balance;
+  color: inherit;
 }
 
 .pe-display {
@@ -165,7 +171,12 @@
  * Skriveno stanje je vezano za `.js-reveal`, koje skripta u layoutu dodaje
  * prije hidratacije. Bez JS-a naslov ostaje vidljiv — nikad prazna strana.
  */
-.js-reveal .pe-split .pe-split__word {
+/*
+ * Skriveno stanje je vezano i za `.reveal`, a ne samo za `.pe-split`: ako
+ * neko klasi oduzme `reveal` (npr. `HeadingTypewriter` sa ostatka sajta),
+ * rijeci ostaju vidljive umjesto da zauvijek stoje u maski.
+ */
+.js-reveal .pe-split.reveal .pe-split__word {
   transform: translateY(105%);
 }
 
@@ -179,7 +190,7 @@
   transform: none;
 }
 
-.js-reveal .pe-split.in-view .pe-split__word {
+.js-reveal .pe-split.reveal.in-view .pe-split__word {
   transform: translateY(0);
   transition: transform 0.95s var(--ease-out-expo);
   transition-delay: calc(var(--word) * 42ms);
@@ -412,8 +423,9 @@
 .pe-facts dd {
   margin-top: 0.55em;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--pe-sub);
+  font-size: clamp(1rem, 1.6svw, 2.1rem);
   line-height: 1.1;
+  overflow-wrap: break-word;
 }
 
 /* =======================================================================
@@ -507,6 +519,16 @@
 
 .pe-movers__row:last-child {
   flex-direction: row-reverse;
+}
+
+/*
+ * Red je sirine cijelog omotaca, pa je mjera naslova malo niza od najkrupnije
+ * na strani: "Od košnice do tegle" mora stati u jedan red pored ikone. Na
+ * telefonu se vraca na punu mjeru — tamo se naslovi lome u tri reda i to je
+ * namjerno.
+ */
+.pe-movers__title {
+  font-size: clamp(2.1rem, 7.2svw, 10.2rem);
 }
 
 .pe-movers__icon {
@@ -774,11 +796,21 @@
   height: 100%;
 }
 
+/*
+ * Otvoreni korak nosi krupniji naslov — to je glavni znak gdje ste u
+ * sezoni. Kolona se uz njega siri, jer rijec krupna 108 px ne staje u
+ * stubac od 26svw; bez toga bi naslov pukao nasred rijeci.
+ */
 .pe-season__content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 26.0417svw;
+  transition: width 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.pe-season__item[data-active='true'] .pe-season__content {
+  width: 42svw;
 }
 
 .pe-season__when {
@@ -794,7 +826,12 @@
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
+  overflow-wrap: break-word;
   transition: font-size 0.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.pe-season__item[data-active='true'] .pe-season__name {
+  font-size: clamp(2rem, 7.5svw, 9.5rem);
 }
 
 .pe-season__text {
@@ -885,12 +922,21 @@
     padding: clamp(1.25rem, 3svh, 2rem) 5.3333svw 0;
   }
 
+  /* Isti razlog kao za sirinu: otvoreni korak se na telefonu ne siri. */
+  .pe-season__item[data-active='true'] .pe-season__content {
+    width: auto;
+  }
+
   .pe-season__when {
     margin-bottom: 0.35em;
   }
 
   .pe-season__name {
     margin-bottom: clamp(1rem, 2.5svh, 1.75rem);
+    font-size: clamp(1.7rem, 8.5333svw, 4.6rem);
+  }
+
+  .pe-season__item[data-active='true'] .pe-season__name {
     font-size: clamp(1.7rem, 8.5333svw, 4.6rem);
   }
 
@@ -965,6 +1011,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 var(--pe-pad);
   text-align: center;
 }
 
@@ -1084,6 +1131,11 @@
     max-width: 100%;
   }
 
+  /* Kao i uvodna recenica: na uskom ekranu stubac ide skoro do ivica. */
+  .pe-story__body {
+    max-width: 80svw;
+  }
+
   .pe-facts {
     max-width: 100%;
   }
@@ -1177,6 +1229,7 @@
 
   .pe-movers__title {
     order: 2;
+    font-size: var(--pe-display);
   }
 
   .pe-band {
@@ -1261,22 +1314,27 @@
     margin-bottom: clamp(1.5rem, 4.4978svh, 3rem);
   }
 
+  /*
+   * Snimci se na telefonu sklanjaju iza teksta, ne ispod njega: naslov i
+   * dugme ostaju na cistom papiru, a plohe ulaze iz desne ivice. Kad dodju
+   * prave fotografije, preko njih nece ici ni slovo.
+   */
   .pe-cta__image {
-    width: 48svw;
-    height: 29.985svh;
+    width: 40svw;
+    height: 26svh;
   }
 
   .pe-cta__image--left {
     left: auto;
-    right: 6%;
+    right: 2%;
     top: auto;
-    bottom: 6%;
+    bottom: 2%;
     transform: none;
   }
 
   .pe-cta__image--right {
     top: 4%;
-    right: -15%;
+    right: -18%;
     transform: none;
   }
 }

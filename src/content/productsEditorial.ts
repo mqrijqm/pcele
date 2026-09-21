@@ -196,7 +196,7 @@ const sr: Copy = {
       'Sirov med vremenom stvrdne. Šećeri se vežu u sitne kristale, med posvijetli i postane gušći — to je znak da u njemu nije bilo ni zagrijavanja ni filtriranja pod pritiskom. Teglu držite na sobnoj temperaturi, dalje od sunca i pare. Ako je tvrda, stavi je u mlaku vodu do 40 stepeni i ostavi da se polako vrati.',
     facts: [
       { label: 'Temperatura', value: '15–25 °C' },
-      { label: 'Rok', value: 'Bez roka, ako je zatvorena' },
+      { label: 'Rok', value: 'Bez roka' },
       { label: 'Zagrijavanje', value: 'Ne preko 40 °C' },
     ],
   },
@@ -326,7 +326,7 @@ const en: Copy = {
       'Raw honey sets in time. The sugars bind into fine crystals, the honey lightens and thickens — a sign that it was neither heated nor pressure filtered. Keep the jar at room temperature, away from sun and steam. If it has gone hard, stand it in warm water up to 40 °C and let it come back slowly.',
     facts: [
       { label: 'Temperature', value: '15–25 °C' },
-      { label: 'Shelf life', value: 'No expiry while sealed' },
+      { label: 'Shelf life', value: 'No expiry' },
       { label: 'Heating', value: 'Never above 40 °C' },
     ],
   },

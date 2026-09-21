@@ -6,7 +6,7 @@ import { localeHref, type Locale } from '@/i18n/config';
 /**
  * Pojas u boji: jedan proizvod, tegla i nekoliko recenica.
  *
- * Pojas je tu da razbije dugaÄak niz sekcija na papiru â€” isti posao koji na
+ * Pojas je tu da razbije dugačak niz sekcija na papiru — isti posao koji na
  * referentnoj strani nosi rozi pojas sa dokumentacijom. Boja je iz nase
  * palete, izvedena iz zlatne, pa ne uvodi nista novo.
  */

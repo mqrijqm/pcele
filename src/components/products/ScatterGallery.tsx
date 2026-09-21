@@ -14,11 +14,11 @@ gsap.registerPlugin(ScrollTrigger);
  *
  * Dvije stvari se desavaju, i obje su iz referentne strane:
  *
- * 1. Snimci se skupljaju u kadar kad sekcija dodje na pola ekrana â€” bez toga
+ * 1. Snimci se skupljaju u kadar kad sekcija dodje na pola ekrana — bez toga
  *    bi ploha izgledala kao da je nesto ostalo nedovrseno.
  * 2. Kad prelazite misem, snimci se pomjeraju, svaki svojom brzinom
  *    (`data-delta`). Pomak je mali namjerno: ploha treba da dise, ne da se
- *    raspe. Na telefonu se ovo ne ukljucuje â€” tamo nema misa, a i snimci su
+ *    raspe. Na telefonu se ovo ne ukljucuje — tamo nema misa, a i snimci su
  *    poredani drugacije.
  *
  * `quickTo` se koristi umjesto `gsap.to` u petlji: on drzi jedan tween po

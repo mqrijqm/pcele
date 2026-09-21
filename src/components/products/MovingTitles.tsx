@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
  *
  * Redovi su sirine cijelog omotaca, pa pomak od pola njihove sirine znaci da
  * su van kadra prije nego sto se pocnu priblizavati. Pomak je vezan za skrol
- * (scrub), pa ga citate kao da ga skrol vuche â€” a ne kao animaciju koja se
+ * (scrub), pa ga citate kao da ga skrol vuche — a ne kao animaciju koja se
  * jednom odigrala.
  *
  * Ikonica je nas crtez iz brenda i stoji uz naslov, kao sto na referentnoj
@@ -64,7 +64,10 @@ export default function MovingTitles({
       <div className="pe-wrap--small">
         {items.map((item) => (
           <div className="pe-movers__row" key={item.title}>
-            <h2 className="pe-display pe-movers__title">{item.title}</h2>
+            {/* Naslov ulazi kliznocom koju vozi skrol — kucanje bi islo preko nje. */}
+            <h2 className="pe-display pe-movers__title" data-no-type="">
+              {item.title}
+            </h2>
             <span className="pe-movers__icon" aria-hidden="true">
               <Image src={item.icon} alt={item.iconAlt} width={213} height={313} />
             </span>

@@ -11,7 +11,7 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Snimak preko cijelog ekrana, sa malim krugom u sredini.
  *
- * Krug stoji u sredini sekcije i vodi na ono sto je ispod â€” isti posao koji
+ * Krug stoji u sredini sekcije i vodi na ono sto je ispod — isti posao koji
  * nosi i referentna strana. Snimak se ne pomjera, samo se lagano umanji dok
  * sekcija ulazi, pa se dobija dubina bez ijednog dodatnog sloja.
  */
