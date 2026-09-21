@@ -38,6 +38,8 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     },
     wishlist: { title: 'Lista želja', description: 'Sačuvani proizvodi' },
     account: { title: 'Moj nalog', description: 'Upravljajte svojim nalogom i pregledajte narudžbe.' },
+    cart: { title: 'Korpa', description: 'Artikali spremni za narudžbu' },
+    uzorak: { title: 'Probaj uzorak', description: 'Zatražite uzorak meda prije prve tegle' },
   },
   en: {
     home: {
@@ -68,7 +70,61 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     },
     wishlist: { title: 'Wishlist', description: 'Saved products' },
     account: { title: 'My account', description: 'Manage your account and review your orders.' },
+    cart: { title: 'Cart', description: 'Items ready for checkout' },
+    uzorak: { title: 'Try a sample', description: 'Request a sample before your first jar' },
   },
+};
+
+/*
+ * Kontakt i uzorak su za sada male, mirne plohe — isto vizuelno pismo kao
+ * korpa: krupan naslov u medenoj boji, zlatna linija, pa tekst. Kad stranice
+ * narastu, svaka dobija svoju sekciju ispod ovog bloka.
+ */
+export const simplePages = {
+  kontakt: {
+    sr: {
+      heading: 'Kontakt',
+      intro: 'Rado ćemo odgovoriti na sva vaša pitanja — o medu, količinama i dostavi.',
+      items: [
+        { label: 'Email', value: 'pcelarstvojevtic@gmail.com', href: 'mailto:pcelarstvojevtic@gmail.com' },
+        { label: 'Telefon', value: '+387 66 030 550', href: 'tel:+38766030550' },
+        { label: 'Adresa', value: 'Mračaj bb, Prnjavor · Republika Srpska', href: null },
+      ],
+      note: 'Pčelarstvo Jevtić · Mračaj · od 1980.',
+    },
+    en: {
+      heading: 'Contact',
+      intro: "We're happy to answer all your questions — about honey, quantities and delivery.",
+      items: [
+        { label: 'Email', value: 'pcelarstvojevtic@gmail.com', href: 'mailto:pcelarstvojevtic@gmail.com' },
+        { label: 'Phone', value: '+387 66 030 550', href: 'tel:+38766030550' },
+        { label: 'Address', value: 'Mračaj bb, Prnjavor · Republika Srpska', href: null },
+      ],
+      note: 'Pčelarstvo Jevtić · Mračaj · since 1980.',
+    },
+  } satisfies L<{
+    heading: string;
+    intro: string;
+    items: { label: string; value: string; href: string | null }[];
+    note: string;
+  }>,
+
+  uzorak: {
+    sr: {
+      heading: 'Probaj uzorak',
+      intro:
+        'Prije prve pune tegle, pošaljimo vam mali uzorak našeg meda. Javite se mejlom ili telefonom i dogovorimo šta vas zanima — bagrem, livada ili propolis.',
+      cta: 'Pošalji upit',
+      note: 'Mračaj · Prnjavor · od 1980.',
+    },
+    en: {
+      heading: 'Try a sample',
+      intro:
+        'Before your first full jar, we can send you a small sample of our honey. Reach out by email or phone and tell us what you would like to try — acacia, meadow or propolis.',
+      cta: 'Send an inquiry',
+      note: 'Mračaj · Prnjavor · since 1980.',
+    },
+  } satisfies L<{ heading: string; intro: string; cta: string; note: string }>,
 };
 
 // ---------------------------------------------------------------- home -------

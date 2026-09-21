@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import TransitionLink from '@/components/ui/TransitionLink';
+import MenuSun from '@/components/layout/MenuSun';
 import { usePathname } from 'next/navigation';
 import { ShoppingBag } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -9,10 +10,40 @@ import { useEffect, useState } from 'react';
 import { createTranslator, locales, localeHref, type Locale } from '@/i18n/config';
 import { useCart } from '@/lib/cart';
 
+/*
+ * Tri glavne stavke menija. Uz svaku ide crtez koji se pojavi sa desne
+ * strane panela dok je stavka pod misem — svi crtezi vec postoje u
+ * `public/images/brand/`, pa se mijenjaju samo ovdje, u ovom nizu.
+ */
 const navItems = [
-  { href: '/products', key: 'nav.shop' },
-  { href: '/pcelinjak', key: 'nav.apiaries' },
-  { href: '/process', key: 'nav.process' },
+  {
+    href: '/products',
+    key: 'nav.shop',
+    illustration: '/images/brand/teglica.svg',
+    width: 213,
+    height: 313,
+  },
+  {
+    href: '/pcelinjak',
+    key: 'nav.apiaries',
+    illustration: '/images/brand/pejzaz-kosnice.svg',
+    width: 393,
+    height: 187,
+  },
+  {
+    href: '/process',
+    key: 'nav.process',
+    illustration: '/images/brand/pcelar.svg',
+    width: 214,
+    height: 333,
+  },
+];
+
+/** Sekundarne stavke ispod glavne liste — manje, tise, bez crteza. */
+const secondaryLinks = [
+  { href: '/uzorak', key: 'nav.sample' },
+  { href: '/products', key: 'nav.buy' },
+  { href: '/kontakt', key: 'nav.contact' },
 ];
 
 export default function Header({ locale }: { locale: Locale }) {
@@ -21,6 +52,8 @@ export default function Header({ locale }: { locale: Locale }) {
   const cart = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  // Koja je glavna stavka pod misem / u fokusu — drzi crtez sa desna zivim.
+  const [activeItem, setActiveItem] = useState<number | null>(null);
 
   useEffect(() => setMenuOpen(false), [pathname]);
 
@@ -29,6 +62,16 @@ export default function Header({ locale }: { locale: Locale }) {
     return () => {
       document.body.style.overflow = '';
     };
+  }, [menuOpen]);
+
+  // Escape zatvara meni — mala stvar, ali tastatura to ocekuje.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
   /*
@@ -139,12 +182,11 @@ export default function Header({ locale }: { locale: Locale }) {
             </span>
           </button>
 
-          {/* Korpa je svoja radnja, pa je od menija dijeli vlas smedje. */}
+          {/* Korpa vodi na svoju stranicu; brojac ostaje preko ikonice. */}
           <span className="header-pill-split" aria-hidden="true" />
 
-          <button
-            type="button"
-            onClick={cart.open}
+          <TransitionLink
+            href={localeHref(locale, '/cart')}
             aria-label={t('nav.cart')}
             className="relative flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:text-[#EEC660]"
           >
@@ -154,37 +196,120 @@ export default function Header({ locale }: { locale: Locale }) {
                 {cart.count}
               </span>
             )}
-          </button>
+          </TransitionLink>
         </div>
       </header>
 
-      {/* Meni preko celog ekrana — sad je jedina navigacija, na svim sirinama. */}
+      {/*
+       * Meni preko celog ekrana — editorial panel. Lijeva kolona drzi
+       * navigaciju, desna (samo na velikom ekranu) crtez aktivne stavke.
+       */}
       <div
-        className={`fixed inset-0 z-50 bg-[var(--white-soft)] px-6 pt-[9rem] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 overflow-y-auto bg-[var(--white-soft)] transition-opacity duration-300 ${
           menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
+        aria-hidden={!menuOpen}
       >
-        <div className="mx-auto flex h-full max-w-3xl flex-col">
+        <div className="mx-auto flex min-h-full max-w-6xl flex-col px-6 pb-8 pt-[8.5rem] sm:px-10">
           <p className="border-b border-[#885B27]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
             {locale === 'sr' ? 'Mračaj · Prnjavor · od 1980.' : 'Mračaj · Prnjavor · since 1980'}
           </p>
 
-          <nav className="flex flex-col py-6">
-            {navItems.map((item, index) => (
-              <TransitionLink
-                key={item.href}
-                href={localeHref(locale, item.href)}
-                style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
-                className={`border-b border-[#885B27]/15 py-4 font-display text-3xl text-[#885B27] transition-all duration-500 hover:text-[#EEC660] sm:text-4xl ${
+          <div className="flex flex-1 items-start gap-12 py-8 lg:gap-20">
+            {/* --- lijevo: navigacija ------------------------------------ */}
+            <div className="flex w-full flex-col lg:w-auto lg:flex-1">
+              <nav className="flex flex-col" aria-label={locale === 'sr' ? 'Glavna navigacija' : 'Main navigation'}>
+                {navItems.map((item, index) => {
+                  const active = activeItem === index;
+                  return (
+                    <TransitionLink
+                      key={item.href}
+                      href={localeHref(locale, item.href)}
+                      style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
+                      onPointerEnter={() => setActiveItem(index)}
+                      onPointerLeave={() => setActiveItem(null)}
+                      onFocus={() => setActiveItem(index)}
+                      onBlur={() => setActiveItem(null)}
+                      className={`menu-item group border-b border-[#885B27]/15 transition-all duration-500 ${
+                        menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
+                      }`}
+                    >
+                      <span className="flex items-center py-4 sm:py-5">
+                        <span
+                          className={`font-display text-[2.6rem] leading-[1.05] tracking-[-0.02em] text-[#885B27] transition-colors duration-300 group-hover:text-[#885B27]/85 group-focus-visible:text-[#885B27]/85 sm:text-6xl lg:text-[4.2rem] ${
+                            active ? 'italic' : ''
+                          }`}
+                        >
+                          {t(item.key)}
+                        </span>
+                        {/*
+                         * Sunce stoji u svom slotu cak i kad je nevidljivo —
+                         * polje je rezervisano unaprijed, pa se red ne pomjera
+                         * kad se pojavi. Pojava je kratka i meka: fade + mali
+                         * pomak i skaliranje.
+                         */}
+                        <span
+                          aria-hidden="true"
+                          className={`ml-4 inline-flex w-10 shrink-0 items-center justify-center transition-all duration-300 ease-out sm:w-12 ${
+                            active
+                              ? 'translate-x-0 scale-100 opacity-100'
+                              : '-translate-x-1.5 scale-75 opacity-0'
+                          }`}
+                        >
+                          <MenuSun className="h-9 w-auto sm:h-10" />
+                        </span>
+                      </span>
+                    </TransitionLink>
+                  );
+                })}
+              </nav>
+
+              <div
+                style={{ transitionDelay: menuOpen ? '240ms' : '0ms' }}
+                className={`mt-10 flex flex-col gap-1 transition-all duration-500 sm:mt-12 ${
                   menuOpen ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0'
                 }`}
               >
-                {t(item.key)}
-              </TransitionLink>
-            ))}
-          </nav>
+                {secondaryLinks.map((link) => (
+                  <TransitionLink
+                    key={link.href}
+                    href={localeHref(locale, link.href)}
+                    className="inline-block w-fit font-display text-xl text-[#885B27]/75 transition-all duration-300 hover:translate-x-1 hover:text-[#885B27] hover:underline hover:decoration-[#EEC660] hover:decoration-2 hover:underline-offset-8 sm:text-2xl"
+                  >
+                    {t(link.key)}
+                  </TransitionLink>
+                ))}
+              </div>
+            </div>
 
-          <div className="mt-auto pb-10">
+            {/* --- desno: crtez aktivne stavke --------------------------- */}
+            {/*
+             * Tri crteza stoje jedan preko drugog u istom slotu, pa se
+             * prelazak sa stavke na stavku svodi na presluh izmedju njih —
+             * nijedan ne utice na raspored liste.
+             */}
+            <div
+              aria-hidden="true"
+              className="relative hidden w-[38%] self-stretch lg:block"
+            >
+              {navItems.map((item, index) => (
+                <Image
+                  key={item.href}
+                  src={item.illustration}
+                  alt=""
+                  width={item.width}
+                  height={item.height}
+                  className={`absolute left-1/2 top-1/2 w-auto max-w-[16rem] -translate-x-1/2 transition-all duration-500 ease-out xl:max-w-[18rem] ${
+                    activeItem === index
+                      ? 'translate-y-[-50%] opacity-100'
+                      : 'translate-y-[calc(-50%+1.25rem)] opacity-0'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-auto">
             <div className="flex items-center justify-center gap-1">
               {locales.map((code, index) => (
                 <span key={code} className="flex items-center">
