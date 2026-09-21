@@ -68,25 +68,26 @@ export default async function PcelinjakPage({
         slika={t.hero.slika}
       />
 
-      {/* --- natpis lijevo, naslov desno: sedam pa sedamnaest kolona ---- */}
+      {/* --- znak pcele lijevo, naslov i uvod desno: sedam pa sedamnaest - */}
       <section className="pcl-strip pcl-mb-md">
         <div className="pcl-cols pcl-cols--7-17">
-          <p className="pcl-pretitle pcl-in">{t.uvod.pretitle}</p>
-          <h2 className="pcl-display pcl-display--2 pcl-in">
-            {t.uvod.title.map((r) => (
-              <span className="pcl-display__word" key={r}>
-                <span>{r}</span>
-              </span>
-            ))}
-          </h2>
-        </div>
-      </section>
-
-      {/* --- uvodni pasus u desnom stupcu: osam pa sesnaest ------------- */}
-      <section className="pcl-strip pcl-mb-md">
-        <div className="pcl-cols pcl-cols--8-16">
-          <div aria-hidden="true" />
-          <p className="pcl-body pcl-in">{t.uvod.lead}</p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="pcl-uvod-znak pcl-in"
+            src="/images/brand/pcela-crtez.svg"
+            alt=""
+            aria-hidden="true"
+          />
+          <div>
+            <h2 className="pcl-display pcl-display--2 pcl-in">
+              {t.uvod.title.map((r) => (
+                <span className="pcl-display__word" key={r}>
+                  <span>{r}</span>
+                </span>
+              ))}
+            </h2>
+            <p className="pcl-body pcl-in pcl-uvod-lead">{t.uvod.lead}</p>
+          </div>
         </div>
       </section>
 
@@ -103,13 +104,7 @@ export default async function PcelinjakPage({
         />
       </section>
 
-      {/* --- pasus koji se lomi u dva stupca ---------------------------- */}
-      <section className="pcl-strip pcl-mb-lg">
-        <div className="pcl-cols pcl-cols--8-16">
-          <div aria-hidden="true" />
-          <p className="pcl-body pcl-body--2col pcl-in">{t.tlo}</p>
-        </div>
-      </section>
+      {/* --- pasus o tlu je uklonjen po zahtjevu ------------------------ */}
 
       {/*
         Stara parcela: naslov, dugi pasus i uspravna slika u tri stupca
@@ -117,7 +112,7 @@ export default async function PcelinjakPage({
         na uzoru uvecana preko njega — otud `pcl-ph--zoom`, koji je i vraca na
         svoje kad udje u kadar.
       */}
-      <section className="pcl-strip pcl-mt-lg pcl-mb-lg">
+      <section className="pcl-strip pcl-mt-lg pcl-mb-lg pcl-parcela">
         <div className="pcl-cols pcl-cols--7-9-8">
           <h2 className="pcl-display pcl-display--2 pcl-in">
             {t.parcela.title.map((r) => (

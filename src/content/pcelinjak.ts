@@ -34,11 +34,9 @@ type Copy = {
   /** Heroj: naslov u tri rijeci i jedna recenica uz sliku koja se siri. */
   hero: { title: string[]; caption?: string; slikaAlt: string; slika?: string };
   /** Natpis lijevo, naslov desno, pa uvodni pasus u desnom stupcu. */
-  uvod: { pretitle: string; title: string[]; lead: string };
+  uvod: { title: string[]; lead: string };
   /** Traka slika koja se lista u stranu. Omjer je omjer same fotografije. */
   galerija: { alt: string; omjer: '3:2' | '4:3' | '2:3' | '1:1'; src?: string }[];
-  /** Pasus u dva stupca ispod trake. */
-  tlo: string;
   /** Naslov lijevo, dugi pasus u sredini, uspravna slika desno. */
   parcela: { title: string[]; body: string; slikaAlt: string; slika?: string };
   /** Natpis i naslov iznad izbornika pasa. */
@@ -47,7 +45,7 @@ type Copy = {
   hscroll: {
     kvadratAlt: string;
     kvadrat?: string;
-    kolone: { alt: string; body: string; src?: string }[];
+    kolone: { heading: string; alt: string; body: string; src?: string }[];
   };
   /** Panorama preko cijele mjere. */
   panorama: { alt: string; src?: string };
@@ -81,8 +79,6 @@ const sr: Copy = {
   },
 
   uvod: {
-    // cilj: 33
-    pretitle: 'U selu nadomak Prnjavora, na brdu',
     // cilj: 28, cetiri rijeci
     title: ['Visina,', 'tišina,', 'i', 'svjetlost'],
     // cilj: 279
@@ -100,15 +96,6 @@ const sr: Copy = {
     { alt: 'Med teče iz vrcaljke u teglu', omjer: '2:3', src: '/images/pcelinjak/traka-vrcanje.webp' },
     { alt: 'Kante sa sirovim medom poslije vrcanja', omjer: '1:1', src: '/images/pcelinjak/traka-kante.webp' },
   ],
-
-  // cilj: 506, pasus se lomi u dva stupca
-  tlo:
-    'Tlo ispod naših pčelinjaka je plitko i kamenito, sastavljeno od krečnjaka i ilovače koju ' +
-    'kiša svake jeseni iznova premijesi, pa livada nad njim nikad ne izraste bujna nego sitna, ' +
-    'gusta i puna trava koje cvjetaju u razmacima od proljeća do kasnog ljeta. Vazduh se ovdje ' +
-    'mijenja dva puta dnevno: ujutru se sa doline diže vlaga, a predveče niz obronak siđe ' +
-    'hladan dah sa šume, i ta razlika između dana i noći drži pašu duže otvorenom nego što bi ' +
-    'bila u ravnici, pa pčela ima vremena da radi bez žurbe.',
 
   parcela: {
     // cilj: 16, tri rijeci
@@ -203,28 +190,28 @@ const sr: Copy = {
     kvadrat: '/images/pcelinjak/hscroll-tegle.webp',
     kolone: [
       {
-        alt: 'Tegla livadskog meda u korpi sa poljskim cvijećem',
-        src: '/images/pcelinjak/hscroll-livadski.webp',
-        // cilj: 246
+        heading: 'Ritam',
+        alt: 'Pčela na otvorenom dlanu',
+        src: '/images/priroda/pcela-na-dlanu.webp',
         body:
           'Pažljivim radom stari je pčelinjak vraćen u red u kojem je nekad bio, a društva koja ' +
           'na njemu žive danas idu svojim godišnjim tokom bez našeg upletanja u pravo vrijeme. ' +
           'Njihov se ritam vidi u sitnicama koje se skupe kroz sezonu:',
       },
       {
-        alt: 'Livadski i bagremov med na panju u travi',
-        src: '/images/pcelinjak/hscroll-dvije.webp',
-        // cilj: 282
+        heading: 'Otpornost',
+        alt: 'Med teče iz vrcaljke u staklenu teglu',
+        src: '/images/real/vrcaljka-tegla.webp',
         body:
           'manje ali gušće zajednice, duboko ukorijenjena paša koja izdrži i sušu, i stari ' +
           'satovi koji društvu služe kao zaliha kroz zimu — sve to zajedno daje otpornost koja ' +
           'se poslije vidi u tegli: ujednačen kvalitet iz godine u godinu, jasna gustina i ' +
-          'sasvim prepoznatljivi'
+          'sasvim prepoznatljivi',
       },
       {
-        alt: 'Tegla bagremovog meda na panju',
-        src: '/images/pcelinjak/hscroll-bagremov.webp',
-        // cilj: 282
+        heading: 'Karakter',
+        alt: 'Tegla livadskog meda na ogradnom stubu, iza nje pokošena livada i brdo',
+        src: '/images/real/tegla-stub-livada.webp',
         body:
           'mirisi koji dolaze od starosti društava i od toga što s njih uzimamo malo. Zaklonjen ' +
           'od vjetra i tih veći dio dana, ovaj je obronak zapravo srce pčelinjaka, mjesto gdje ' +
@@ -283,7 +270,6 @@ const en: Copy = {
     slika: '/images/real/pcelinjak-4.webp',
   },
   uvod: {
-    pretitle: 'In a village near Prnjavor, on a hill',
     title: ['Height,', 'silence,', 'and', 'light'],
     lead:
       'Our apiaries stand on twelve hectares of meadow above the village of Mračaj, near ' +
@@ -298,13 +284,6 @@ const en: Copy = {
     { alt: 'Honey running from the extractor into a jar', omjer: '2:3', src: '/images/pcelinjak/traka-vrcanje.webp' },
     { alt: 'Buckets of raw honey after extraction', omjer: '1:1', src: '/images/pcelinjak/traka-kante.webp' },
   ],
-  tlo:
-    'The soil beneath our apiaries is shallow and stony, a mix of limestone and clay that every ' +
-    'autumn rain turns over again, so the meadow above it never grows lush but stays fine, ' +
-    'dense and full of grasses that flower in turns from spring to late summer. The air changes ' +
-    'twice a day: damp rises from the valley in the morning and a cool breath comes down off ' +
-    'the forest at dusk, and that difference between day and night keeps the forage open longer ' +
-    'than it would ever be on flat ground.',
   parcela: {
     title: ['A', 'hive', 'uphill'],
     body:
@@ -389,23 +368,26 @@ const en: Copy = {
     kvadrat: '/images/pcelinjak/hscroll-tegle.webp',
     kolone: [
       {
-        alt: 'A jar of meadow honey in a basket of wild flowers',
-        src: '/images/pcelinjak/hscroll-livadski.webp',
+        heading: 'Rhythm',
+        alt: 'A bee on an open palm',
+        src: '/images/priroda/pcela-na-dlanu.webp',
         body:
           'Careful work has brought the old apiary back to the order it once had, and the ' +
           'colonies living on it now follow their yearly course without our interference:',
       },
       {
-        alt: 'Meadow and acacia honey on a stump in the grass',
-        src: '/images/pcelinjak/hscroll-dvije.webp',
+        heading: 'Resilience',
+        alt: 'Honey running from the extractor into a glass jar',
+        src: '/images/real/vrcaljka-tegla.webp',
         body:
           'smaller but denser colonies, deep-rooted forage that survives a drought, and old ' +
           'combs that serve the colony as a reserve — together they give a resilience you later ' +
           'see in the jar: steady quality year after year, clear body and',
       },
       {
-        alt: 'A jar of acacia honey on a stump',
-        src: '/images/pcelinjak/hscroll-bagremov.webp',
+        heading: 'Character',
+        alt: 'A jar of meadow honey on a fence post, a mown meadow and a hill behind it',
+        src: '/images/real/tegla-stub-livada.webp',
         body:
           'aromas that come from the age of the colonies and from how little we take. Sheltered ' +
           'and quiet, this slope is the true heart of the apiary, where beekeeping knowledge ' +

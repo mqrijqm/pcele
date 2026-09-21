@@ -65,7 +65,7 @@ export default function ContactView({ locale }: { locale: Locale }) {
             <span key={grupa} className="inline-flex w-max shrink-0 items-center">
               {Array.from({ length: 4 }).map((_, i) => (
                 <span key={i} className="inline-flex shrink-0 items-center">
-                  <span className="font-display text-[5rem] font-medium leading-none tracking-[-0.02em] text-[#C39C4A] sm:text-[7.5rem] lg:text-[9.5rem]">
+                  <span className="font-display text-[5rem] font-medium leading-none tracking-[-0.02em] text-[#885B27] sm:text-[7.5rem] lg:text-[9.5rem]">
                     {copy.heading}
                   </span>
                   <MenuSun className="mx-8 h-10 w-auto shrink-0 sm:mx-12 sm:h-14" />
@@ -81,7 +81,7 @@ export default function ContactView({ locale }: { locale: Locale }) {
       <div className="mx-auto mt-16 grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:mt-28 lg:grid-cols-2 lg:gap-20 lg:px-12">
         {/* --- lijevo: uvod + kontakt pillovi -------------------------- */}
         <div>
-          <p className="max-w-lg font-display text-3xl leading-[1.15] tracking-[-0.02em] text-[#C39C4A] sm:text-4xl">
+          <p className="max-w-lg font-display text-3xl leading-[1.15] tracking-[-0.02em] text-[#885B27] sm:text-4xl">
             {copy.intro[0]}
             <br />
             {copy.intro[1]}
@@ -156,7 +156,7 @@ export default function ContactView({ locale }: { locale: Locale }) {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#C39C4A]">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#885B27]">
               {copy.form.interest} *
             </span>
             <label className="relative min-w-0 flex-1">
