@@ -524,6 +524,30 @@ p {
   }
 }
 
+/*
+ * Marquee naslov na kontakt stranici — beskonacna traka "Kontakt ✦".
+ * Puna petlja je dva identicna reda, pa se -50% vidi kao neprekidno tece.
+ */
+@keyframes kontakt-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.kontakt-marquee {
+  animation: kontakt-marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kontakt-marquee {
+    animation: none;
+  }
+}
+
+
 .stagger-1 {
   transition-delay: 0.05s;
 }

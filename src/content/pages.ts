@@ -39,7 +39,6 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     wishlist: { title: 'Lista želja', description: 'Sačuvani proizvodi' },
     account: { title: 'Moj nalog', description: 'Upravljajte svojim nalogom i pregledajte narudžbe.' },
     cart: { title: 'Korpa', description: 'Artikali spremni za narudžbu' },
-    uzorak: { title: 'Probaj uzorak', description: 'Zatražite uzorak meda prije prve tegle' },
   },
   en: {
     home: {
@@ -71,60 +70,87 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
     wishlist: { title: 'Wishlist', description: 'Saved products' },
     account: { title: 'My account', description: 'Manage your account and review your orders.' },
     cart: { title: 'Cart', description: 'Items ready for checkout' },
-    uzorak: { title: 'Try a sample', description: 'Request a sample before your first jar' },
   },
 };
 
 /*
- * Kontakt i uzorak su za sada male, mirne plohe — isto vizuelno pismo kao
- * korpa: krupan naslov u medenoj boji, zlatna linija, pa tekst. Kad stranice
- * narastu, svaka dobija svoju sekciju ispod ovog bloka.
+ * Kontakt: ploha u medenom tonu po uzoru na meracinque contact — marquee
+ * naslov, uvod i kontakt pillovi lijevo, forma desno. Forma nema backend:
+ * slanje ide kroz mailto, pa su ovdje i tekstovi koji ga pune.
  */
 export const simplePages = {
   kontakt: {
     sr: {
       heading: 'Kontakt',
-      intro: 'Rado ćemo odgovoriti na sva vaša pitanja — o medu, količinama i dostavi.',
-      items: [
-        { label: 'Email', value: 'pcelarstvojevtic@gmail.com', href: 'mailto:pcelarstvojevtic@gmail.com' },
-        { label: 'Telefon', value: '+387 66 030 550', href: 'tel:+38766030550' },
-        { label: 'Adresa', value: 'Mračaj bb, Prnjavor · Republika Srpska', href: null },
+      intro: [
+        'Prodajemo direktno iz pčelinjaka — male serije, tegla po tegla.',
+        'Javite se za količine, poklon pakovanja',
+        'i sezonske serije. Rado ćemo vas čuti!',
       ],
-      note: 'Pčelarstvo Jevtić · Mračaj · od 1980.',
+      email: 'pcelarstvojevtic@gmail.com',
+      phone: '+387 66 030 550',
+      form: {
+        firstName: 'Ime',
+        lastName: 'Prezime',
+        email: 'Email',
+        phone: 'Telefon',
+        interest: 'Šta vas zanima?',
+        interests: ['Kupovina meda', 'Poklon pakovanje', 'Saradnja i veleprodaja', 'Posjeta pčelinjaku', 'Nešto drugo'],
+        selectPlaceholder: 'Izaberite…',
+        message: 'Poruka',
+        privacy: 'Izjavljujem da sam pročitao/la i prihvatam',
+        privacyLink: 'Politiku privatnosti',
+        submit: 'Pošalji upit',
+        success: 'Hvala! Upit je poslan — javljamo se uskoro.',
+        subject: 'Upit sa sajta — Pčelarstvo Jevtić',
+      },
     },
     en: {
       heading: 'Contact',
-      intro: "We're happy to answer all your questions — about honey, quantities and delivery.",
-      items: [
-        { label: 'Email', value: 'pcelarstvojevtic@gmail.com', href: 'mailto:pcelarstvojevtic@gmail.com' },
-        { label: 'Phone', value: '+387 66 030 550', href: 'tel:+38766030550' },
-        { label: 'Address', value: 'Mračaj bb, Prnjavor · Republika Srpska', href: null },
+      intro: [
+        'We sell straight from the apiary — small batches, jar by jar.',
+        'Reach out for quantities, gift packaging',
+        'and seasonal batches. We would love to hear from you!',
       ],
-      note: 'Pčelarstvo Jevtić · Mračaj · since 1980.',
+      email: 'pcelarstvojevtic@gmail.com',
+      phone: '+387 66 030 550',
+      form: {
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        email: 'Email',
+        phone: 'Phone',
+        interest: "What's your interest?",
+        interests: ['Buying honey', 'Gift packaging', 'Partnership & wholesale', 'Visiting the apiary', 'Something else'],
+        selectPlaceholder: 'Select…',
+        message: 'Message',
+        privacy: 'I declare that I have read and accept the',
+        privacyLink: 'Privacy Policy',
+        submit: 'Send request',
+        success: 'Thank you! Your inquiry is on its way — we will get back to you soon.',
+        subject: 'Website inquiry — Pčelarstvo Jevtić',
+      },
     },
   } satisfies L<{
     heading: string;
-    intro: string;
-    items: { label: string; value: string; href: string | null }[];
-    note: string;
+    intro: readonly string[];
+    email: string;
+    phone: string;
+    form: {
+      firstName: string;
+      lastName: string;
+      email: string;
+      phone: string;
+      interest: string;
+      interests: readonly string[];
+      selectPlaceholder: string;
+      message: string;
+      privacy: string;
+      privacyLink: string;
+      submit: string;
+      success: string;
+      subject: string;
+    };
   }>,
-
-  uzorak: {
-    sr: {
-      heading: 'Probaj uzorak',
-      intro:
-        'Prije prve pune tegle, pošaljimo vam mali uzorak našeg meda. Javite se mejlom ili telefonom i dogovorimo šta vas zanima — bagrem, livada ili propolis.',
-      cta: 'Pošalji upit',
-      note: 'Mračaj · Prnjavor · od 1980.',
-    },
-    en: {
-      heading: 'Try a sample',
-      intro:
-        'Before your first full jar, we can send you a small sample of our honey. Reach out by email or phone and tell us what you would like to try — acacia, meadow or propolis.',
-      cta: 'Send an inquiry',
-      note: 'Mračaj · Prnjavor · since 1980.',
-    },
-  } satisfies L<{ heading: string; intro: string; cta: string; note: string }>,
 };
 
 // ---------------------------------------------------------------- home -------

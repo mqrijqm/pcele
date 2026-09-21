@@ -41,7 +41,6 @@ const navItems = [
 
 /** Sekundarne stavke ispod glavne liste — manje, tise, bez crteza. */
 const secondaryLinks = [
-  { href: '/uzorak', key: 'nav.sample' },
   { href: '/products', key: 'nav.buy' },
   { href: '/kontakt', key: 'nav.contact' },
 ];
