@@ -1,6 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+/*
+ * Editorial raspored ove strane. Uvozi se ovdje, a ne u `globals.css`, da ga
+ * ne nosi svaka strana na sajtu — vazi samo za `/products`.
+ */
+import '@/app/products.css';
+
 import CtaMovingImage from '@/components/products/CtaMovingImage';
 import FullBleed from '@/components/products/FullBleed';
 import HeroMarquee from '@/components/products/HeroMarquee';

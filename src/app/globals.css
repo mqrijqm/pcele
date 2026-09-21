@@ -5,9 +5,6 @@
  */
 @import './pcelinjak.css';
 
-/* Strana proizvoda ima svoj editorial raspored — vidi products.css. */
-@import './products.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
