@@ -16,21 +16,31 @@
  *      dijeljenje ne treba vezivati za nesto sto sutra ima drugo ime.
  *   3. VERCEL_URL — preview build tako dijeli sopstvenu sliku, a ne onu
  *      sa produkcije.
- *   4. Produkcijski vercel.app — sigurna mreza za lokalni build.
+ *   4. Pravi domen — sigurna mreza za lokalni build, od 21.09.2026.
  */
-const FALLBACK = 'https://pcelarstvo-jevtic-2026.vercel.app';
+const FALLBACK = 'https://pcelarstvojevtic.com';
+
+/*
+ * Ociscuje vrijednost iz okruzenja. `trim()` nije sitnica: `echo` u shell-u
+ * dopisuje novi red, pa vrijednost stigne kao "https://sajt.com\n" i onda se
+ * u robots.txt i sitemap.xml URL prelomi na dva reda — pretrazivaci takav
+ * zapis odbace. Skidamo i visak kosih crta na kraju.
+ */
+function clean(value: string): string {
+  return value.trim().replace(/\/+$/, '');
+}
 
 function resolve(): string {
   const explicit = process.env.NEXT_PUBLIC_SITE_URL;
-  if (explicit) return explicit.replace(/\/$/, '');
+  if (explicit?.trim()) return clean(explicit);
 
   if (process.env.VERCEL_ENV === 'production') {
     const prod = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-    if (prod) return `https://${prod.replace(/\/$/, '')}`;
+    if (prod?.trim()) return `https://${clean(prod)}`;
   }
 
   const vercel = process.env.VERCEL_URL;
-  if (vercel) return `https://${vercel.replace(/\/$/, '')}`;
+  if (vercel?.trim()) return `https://${clean(vercel)}`;
 
   return FALLBACK;
 }
