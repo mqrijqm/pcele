@@ -1,11 +1,12 @@
 ﻿'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /**
  * Dva krupna naslova koja ulaze jedan s lijeve, drugi s desne strane.
@@ -21,11 +22,15 @@ gsap.registerPlugin(ScrollTrigger);
 export default function MovingTitles({
   items,
 }: {
-  items: { title: string; icon: string; iconAlt: string }[];
+  /**
+   * `tint`: crtež je jednobojan (bijel) pa se boji bojom naslova uz koji stoji,
+   * umjesto da ostane svoje boje. Vidi `.pe-movers__icon--tint`.
+   */
+  items: { title: string; icon: string; iconAlt: string; tint?: boolean }[];
 }) {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const el = root.current;
     if (!el) return;
 
@@ -57,7 +62,7 @@ export default function MovingTitles({
     });
 
     return () => mm.revert();
-  }, []);
+  }, { scope: root });
 
   return (
     <section data-snap="off" className="pe-movers" ref={root}>
@@ -68,9 +73,17 @@ export default function MovingTitles({
             <h2 className="pe-display pe-movers__title" data-no-type="">
               {item.title}
             </h2>
-            <span className="pe-movers__icon" aria-hidden="true">
-              <Image src={item.icon} alt={item.iconAlt} width={213} height={313} />
-            </span>
+            {item.tint ? (
+              <span
+                className="pe-movers__icon pe-movers__icon--tint"
+                aria-hidden="true"
+                style={{ '--icon': `url(${item.icon})` } as React.CSSProperties}
+              />
+            ) : (
+              <span className="pe-movers__icon" aria-hidden="true">
+                <Image src={item.icon} alt={item.iconAlt} width={213} height={313} />
+              </span>
+            )}
           </div>
         ))}
       </div>

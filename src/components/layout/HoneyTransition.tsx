@@ -136,13 +136,18 @@ export default function HoneyTransitionProvider({ children }: { children: ReactN
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarse = window.matchMedia('(pointer: coarse)');
     const apply = () => {
-      flight.motionOk = !mq.matches;
+      flight.motionOk = !mq.matches && !coarse.matches;
       setEnabled(flight.motionOk);
     };
     apply();
     mq.addEventListener('change', apply);
-    return () => mq.removeEventListener('change', apply);
+    coarse.addEventListener('change', apply);
+    return () => {
+      mq.removeEventListener('change', apply);
+      coarse.removeEventListener('change', apply);
+    };
   }, []);
 
   /*

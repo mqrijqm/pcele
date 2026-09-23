@@ -10,7 +10,7 @@ import { useCart } from '@/lib/cart';
 
 /**
  * Stranica korpe — jedna editorialna ploha, po uzoru na meracinque cart:
- * krupan naslov u medenoj boji, zlatna linija, a ispod prazna korpa u jednoj
+ * krupan smeđi naslov i linija, a ispod prazna korpa u jednoj
  * mirnoj traci. Kad korpa ima artikal, ispod se nizu redovi.
  */
 export default function CartView({ locale }: { locale: Locale }) {
@@ -18,14 +18,14 @@ export default function CartView({ locale }: { locale: Locale }) {
   const cart = useCart();
 
   return (
-    <section className="header-offset min-h-[80vh] pb-24">
+    <section className="cart-page header-offset min-h-[80vh] pb-24">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-8">
-        <h1 className="pt-6 font-display text-7xl font-medium leading-none tracking-[-0.03em] text-[#EEC660] sm:text-8xl lg:text-[9rem]">
+        <h1 className="pt-6 font-display text-7xl font-medium leading-none tracking-[-0.03em] text-[#885B27] sm:text-8xl lg:text-[9rem]">
           {t('nav.cart')}
         </h1>
 
         {/* Zlatna linija ispod naslova — ista mera kao na referenci. */}
-        <div className="mt-8 h-[3px] w-full bg-[#EEC660]" aria-hidden="true" />
+        <div className="mt-8 h-[3px] w-full bg-[#885B27]" aria-hidden="true" />
 
         {cart.items.length === 0 ? (
           <>
@@ -39,7 +39,7 @@ export default function CartView({ locale }: { locale: Locale }) {
 
             <TransitionLink
               href={localeHref(locale, '/products')}
-              className="group mt-24 inline-flex items-center gap-3 rounded-full border border-[#885B27]/50 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#885B27] transition-colors duration-300 hover:bg-[#EEC660] hover:border-[#EEC660]"
+              className="group mt-24 inline-flex items-center gap-3 rounded-full border border-[#885B27]/50 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:bg-[#885B27] hover:text-[#FCF0DC]"
             >
               <ArrowLeft
                 className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1"
@@ -53,7 +53,7 @@ export default function CartView({ locale }: { locale: Locale }) {
             <ul className="divide-y divide-[#885B27]/10">
               {cart.items.map((item) => (
                 <li key={item.variantId} className="flex gap-4 py-6 sm:gap-6">
-                  <div className="relative h-28 w-24 shrink-0 overflow-hidden rounded-[0.4rem] bg-[#885B27]/[0.05]">
+                  <div className="relative h-28 w-24 shrink-0 overflow-hidden border border-[#885B27]/25 bg-transparent">
                     <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                   </div>
                   <div className="flex flex-1 flex-col">
@@ -112,10 +112,10 @@ export default function CartView({ locale }: { locale: Locale }) {
             </div>
 
             <div className="mt-12 flex flex-wrap items-center gap-4">
-              <span className="btn">{t('cart.checkout')}</span>
+              <span className="btn cart-page__checkout">{t('cart.checkout')}</span>
               <TransitionLink
                 href={localeHref(locale, '/products')}
-                className="group inline-flex items-center gap-3 rounded-full border border-[#885B27]/50 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#885B27] transition-colors duration-300 hover:bg-[#EEC660] hover:border-[#EEC660]"
+                className="group inline-flex items-center gap-3 rounded-full border border-[#885B27]/50 px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-[#885B27] transition-colors duration-300 hover:border-[#885B27] hover:bg-[#885B27] hover:text-[#FCF0DC]"
               >
                 <ArrowLeft
                   className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-x-1"

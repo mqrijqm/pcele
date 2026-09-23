@@ -100,17 +100,23 @@ export default function Footer({ locale }: { locale: Locale }) {
             decoding="async"
           />
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="stopa__krug"
-            src="/images/brand/znak-krug.svg"
-            alt=""
-            aria-hidden="true"
-            width={178}
-            height={178}
-            loading="lazy"
-            decoding="async"
-          />
+          <TransitionLink
+            href={localeHref(locale, '/products')}
+            className="stopa__krug-link"
+            aria-label={t('footer.linkProducts')}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="stopa__krug"
+              src="/images/brand/znak-krug.svg"
+              alt=""
+              aria-hidden="true"
+              width={178}
+              height={178}
+              loading="lazy"
+              decoding="async"
+            />
+          </TransitionLink>
         </div>
 
         {/* --- desno: mreze -------------------------------------------------- */}

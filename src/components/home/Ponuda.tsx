@@ -21,6 +21,7 @@ type Mjera = {
    */
   slug: string;
   slika: string;
+  dimenzije: { sirina: number; visina: number };
   /** Visina tegle u postotku sanduka; manja mjera je i na slici manja. */
   visina: number;
 };
@@ -63,8 +64,18 @@ export const SORTE = {
   livadski: {
     copy: 'ponuda',
     mjere: [
-      { slug: 'livadski-med-1kg', slika: '/images/proizvodi/tegla-1kg.webp', visina: 100 },
-      { slug: 'livadski-med-500g', slika: '/images/proizvodi/tegla-500g.webp', visina: 84 },
+      {
+        slug: 'livadski-med-1kg',
+        slika: '/images/proizvodi/livadski-1kg-new.png',
+        dimenzije: { sirina: 404, visina: 698 },
+        visina: 100,
+      },
+      {
+        slug: 'livadski-med-500g',
+        slika: '/images/proizvodi/livadski-500g-new.png',
+        dimenzije: { sirina: 589, visina: 589 },
+        visina: 84,
+      },
     ],
     crtez: '/images/brand/livadski-cvijet.svg',
     /* Srednji od tri: medena ploha trazi jaci ton od zlatnog, ali ne najtamniji. */
@@ -75,8 +86,18 @@ export const SORTE = {
   bagremov: {
     copy: 'bagremov',
     mjere: [
-      { slug: 'bagremov-med-1kg', slika: '/images/proizvodi/tegla-bagrem-1kg.webp', visina: 100 },
-      { slug: 'bagremov-med-500g', slika: '/images/proizvodi/tegla-bagrem-500g.webp', visina: 84 },
+      {
+        slug: 'bagremov-med-1kg',
+        slika: '/images/proizvodi/bagremov-1kg-new.png',
+        dimenzije: { sirina: 486, visina: 629 },
+        visina: 100,
+      },
+      {
+        slug: 'bagremov-med-500g',
+        slika: '/images/proizvodi/bagremov-500g-new.png',
+        dimenzije: { sirina: 450, visina: 597 },
+        visina: 84,
+      },
     ],
     crtez: '/images/brand/bagremov-grana.svg',
     /*
@@ -322,8 +343,8 @@ export default function Ponuda({
                   style={{ height: `${s.visina}%` }}
                   src={s.slika}
                   alt={i === izabrana ? t.teglaAlt : ''}
-                  width={560}
-                  height={972}
+                  width={s.dimenzije.sirina}
+                  height={s.dimenzije.visina}
                   sizes="(max-width: 900px) 54vw, 22vw"
                   priority={i === 0}
                 />
@@ -336,12 +357,12 @@ export default function Ponuda({
               i kuda vodi. Da su oba stajala, citac ekrana bi ga cuo dvaput.
             */}
             <TransitionLink
-              className="ponuda__znak pecat"
+              className="brand-cta brand-cta--seal ponuda__znak pecat"
               href={localeHref(locale, '/products')}
               aria-label={`${t.znakAlt} — ${home.znakCta[locale]}`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={znak} alt="" aria-hidden="true" />
+              <img className="brand-cta__art" src={znak} alt="" aria-hidden="true" />
             </TransitionLink>
           </div>
 

@@ -98,6 +98,10 @@ export default async function PcelinjakPage({
       <section className="pcl-strip pcl-strip--wide pcl-mb-md pcl-in">
         <Rail
           slike={t.galerija}
+          productsHref={localeHref(locale, "/products")}
+          productsLabel={
+            locale === "sr" ? "Pogledajte proizvode" : "View products"
+          }
           aria={
             locale === "sr" ? "Slike sa pčelinjaka" : "Pictures from the apiary"
           }
@@ -136,7 +140,7 @@ export default async function PcelinjakPage({
       </section>
 
       {/* --- natpis i naslov iznad izbornika, u uskoj traci ------------- */}
-      <section className="pcl-strip pcl-strip--narrow pcl-mb-md pcl-center">
+      <section className="pcl-strip pcl-strip--narrow pcl-mb-md pcl-center pcl-pase-intro">
         <p className="pcl-pretitle pcl-in">{t.pase.pretitle}</p>
         <h2 className="pcl-display pcl-display--4 pcl-in">
           {t.pase.title.map((r) => (

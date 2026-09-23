@@ -26,16 +26,18 @@ const navItems = [
   {
     href: '/pcelinjak',
     key: 'nav.apiaries',
-    illustration: '/images/brand/pejzaz-kosnice.svg',
-    width: 393,
-    height: 187,
+    illustration: '/images/brand/pcelinjaci.svg',
+    width: 213,
+    height: 316,
+    renderAsMask: true,
   },
   {
     href: '/process',
     key: 'nav.process',
     illustration: '/images/brand/pcelar.svg',
-    width: 214,
-    height: 333,
+    width: 260,
+    height: 405,
+    emphasize: true,
   },
 ];
 
@@ -208,6 +210,7 @@ export default function Header({ locale }: { locale: Locale }) {
           menuOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
         }`}
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         <div className="mx-auto flex min-h-full max-w-6xl flex-col px-6 pb-8 pt-[8.5rem] sm:px-10">
           <p className="border-b border-[#885B27]/15 pb-4 text-[10px] font-bold uppercase tracking-[0.18em] text-[#885B27]">
@@ -249,13 +252,13 @@ export default function Header({ locale }: { locale: Locale }) {
                          */}
                         <span
                           aria-hidden="true"
-                          className={`ml-4 inline-flex w-10 shrink-0 items-center justify-center transition-all duration-300 ease-out sm:w-12 ${
+                          className={`ml-4 inline-flex w-16 shrink-0 items-center justify-center transition-all duration-300 ease-out sm:w-20 ${
                             active
                               ? 'translate-x-0 scale-100 opacity-100'
                               : '-translate-x-1.5 scale-75 opacity-0'
                           }`}
                         >
-                          <MenuSun className="h-9 w-auto sm:h-10" />
+                          <MenuSun className="h-14 w-auto sm:h-16" />
                         </span>
                       </span>
                     </TransitionLink>
@@ -291,20 +294,54 @@ export default function Header({ locale }: { locale: Locale }) {
               aria-hidden="true"
               className="relative hidden w-[38%] self-stretch lg:block"
             >
-              {navItems.map((item, index) => (
-                <Image
-                  key={item.href}
-                  src={item.illustration}
-                  alt=""
-                  width={item.width}
-                  height={item.height}
-                  className={`absolute left-1/2 top-1/2 w-auto max-w-[16rem] -translate-x-1/2 transition-all duration-500 ease-out xl:max-w-[18rem] ${
-                    activeItem === index
-                      ? 'translate-y-[-50%] opacity-100'
-                      : 'translate-y-[calc(-50%+1.25rem)] opacity-0'
-                  }`}
-                />
-              ))}
+              {navItems.map((item, index) => {
+                const illustrationClass = `absolute left-1/2 top-1/2 max-w-[16rem] -translate-x-1/2 transition-all duration-500 ease-out xl:max-w-[18rem] ${
+                  activeItem === index
+                    ? 'translate-y-[-50%] opacity-100'
+                    : 'translate-y-[calc(-50%+1.25rem)] opacity-0'
+                }`;
+
+                if ('renderAsMask' in item && item.renderAsMask) {
+                  return (
+                    <span
+                      key={item.href}
+                      className={illustrationClass}
+                      style={{
+                        width: item.width,
+                        height: item.height,
+                        backgroundColor: '#A96F36',
+                        WebkitMaskImage: `url(${item.illustration})`,
+                        maskImage: `url(${item.illustration})`,
+                        WebkitMaskPosition: 'center',
+                        maskPosition: 'center',
+                        WebkitMaskRepeat: 'no-repeat',
+                        maskRepeat: 'no-repeat',
+                        WebkitMaskSize: 'contain',
+                        maskSize: 'contain',
+                      }}
+                    />
+                  );
+                }
+
+                return (
+                  <Image
+                    key={item.href}
+                    src={item.illustration}
+                    alt=""
+                    width={item.width}
+                    height={item.height}
+                    className={`${illustrationClass} w-auto`}
+                    style={
+                      'emphasize' in item && item.emphasize
+                        ? {
+                            filter:
+                              'drop-shadow(0.8px 0 #775A2B) drop-shadow(-0.8px 0 #775A2B) drop-shadow(0 0.8px #775A2B) drop-shadow(0 -0.8px #775A2B)',
+                          }
+                        : undefined
+                    }
+                  />
+                );
+              })}
             </div>
           </div>
 

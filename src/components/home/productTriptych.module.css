@@ -19,13 +19,28 @@
   background: #d9d9d4;
 }
 
-.image img {
+.photo {
   object-fit: cover;
   transition: transform 700ms var(--ease-out-expo);
 }
 
-.image:hover img {
+.image:hover .photo {
   transform: scale(1.025);
+}
+
+.badge {
+  position: absolute;
+  z-index: 2;
+  right: clamp(0.65rem, 1.6vw, 1.75rem);
+  bottom: clamp(0.65rem, 1.6vw, 1.75rem);
+  width: clamp(4.25rem, 9vw, 8.75rem);
+  height: auto;
+  filter: drop-shadow(0 0.65rem 1.15rem rgb(48 30 12 / 0.16));
+  transition: transform 500ms var(--ease-out-expo);
+}
+
+.image:hover .badge {
+  transform: rotate(-4deg) scale(1.045);
 }
 
 @media (max-width: 767px) {
@@ -40,10 +55,21 @@
   .image {
     aspect-ratio: 3 / 4;
   }
+
+  .badge {
+    right: 0.4rem;
+    bottom: 0.4rem;
+    width: min(42%, 5.25rem);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .image img {
+  .photo,
+  .badge {
     transition: none;
+  }
+
+  .image:hover .badge {
+    transform: none;
   }
 }

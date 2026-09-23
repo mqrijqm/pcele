@@ -16,6 +16,7 @@ import Krajolik from '@/components/home/Krajolik';
 import ProductTriptych from '@/components/home/ProductTriptych';
 import Newsletter from '@/components/home/Newsletter';
 import BeeFlight from '@/components/bee/BeeFlight';
+import LandingImagePreloads from '@/components/home/LandingImagePreloads';
 
 /**
  * Pocetna vodi od identiteta kuce pravo ka proizvodima, pa tek onda pokazuje
@@ -27,6 +28,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <>
+      <LandingImagePreloads />
+
       {/* Pcela leti preko cele strane; sloj se portalom kaci na <body>. */}
       <BeeFlight />
 
@@ -76,21 +79,16 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         Med koji pamti krajolik. Poslije proizvoda i mjesta porijekla objasnjava
         zasto se svaka berba razlikuje: po onome sto je te godine cvjetalo.
       */}
-      {/*
-        Krajolik i poziv dijele jedno polje cvijeca: uzorak tece preko ruba
-        medju njima i gasi se tek na dnu strane, pa se ne vidi gdje jedna
-        sekcija prestaje a druga pocinje. Poziv je zato ostao bez svoje
-        plohe — papir mu dolazi odavde.
-      */}
+      {/* Krajolik i fotografska traka dijele polje cvijeca. */}
       <div className="bloomfield">
         <Krajolik locale={locale} />
 
         {/* Tri proizvoda, bez teksta, kao čista fotografska traka. */}
         <ProductTriptych />
-
-        {/* Jedan poziv na kraju, ne tri. */}
-        <Newsletter locale={locale} />
       </div>
+
+      {/* Završni poziv stoji na čistom papiru, bez cvjetnog uzorka. */}
+      <Newsletter locale={locale} />
     </>
   );
 }

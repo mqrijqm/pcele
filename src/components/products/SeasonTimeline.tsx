@@ -1,20 +1,23 @@
 ﻿'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 
 import ImageSlot from '@/components/products/ImageSlot';
+import SeasonVideo from '@/components/products/SeasonVideo';
+import type { SeasonMedia } from '@/content/productsEditorial';
 
 type Step = { when: string; title: string; body: string };
 
 /**
  * Sezona u pcelinjaku, korak po korak.
  *
- * Na sirokom ekranu: traka s naljepnicama gore (jedna po koraku) i red
- * kartica ispod, u kojem je otvoren samo jedan korak — njegov naslov je
- * krupniji, a snimak se otvori uz njega. Prelazak na drugi korak pomjeri
- * traku tako da otvoreni korak stane uz lijevu ivicu, a bjelina ispod
- * naljepnice klizne na novo mjesto.
+ * Na sirokom ekranu: traka mjeseci gore, od ivice do ivice, omedjena dvjema
+ * ravnim linijama (jedan mjesec po koraku), i red kartica ispod, u kojem je
+ * otvoren samo jedan korak — njegov naslov je krupniji, a snimak se otvori
+ * uz njega. Prelazak na drugi korak pomjeri traku tako da otvoreni korak stane
+ * uz lijevu ivicu, a malo sunce uz otvoreni mjesec se okrene na novo mjesto.
  *
  * Na telefonu isti red postaje lista koju prevlacite prstom; `scroll-snap`
  * zaustavlja po jedan korak, a tacke ispod pokazuju gdje ste.
@@ -27,18 +30,22 @@ export default function SeasonTimeline({
   heading,
   steps,
   slots,
+  media,
+  videoLabels,
 }: {
   label: string;
   heading: string;
   steps: Step[];
+  /** Prazan sivi blok za korake koji još nemaju snimak. */
   slots: string[];
+  media: (SeasonMedia | null)[];
+  videoLabels: { play: string; pause: string };
 }) {
   const root = useRef<HTMLElement>(null);
   const slider = useRef<HTMLDivElement>(null);
   const nav = useRef<HTMLDivElement>(null);
-  const indicator = useRef<HTMLSpanElement>(null);
   const [active, setActive] = useState(0);
-  /* Prvo postavljanje ide bez animacije — inace naljepnica "dodje" na klik. */
+  /* Prvo postavljanje ide bez animacije — inace bi se traka pomjerila na ucitavanju. */
   const placed = useRef(false);
   /*
    * Sirina jednog zatvorenog koraka plus razmak medju koracima. Mjeri se
@@ -71,27 +78,22 @@ export default function SeasonTimeline({
   const place = useCallback((index: number, animate: boolean) => {
     const track = slider.current;
     const navEl = nav.current;
-    const mark = indicator.current;
-    if (!track || !navEl || !mark) return;
-
-    const tabs = navEl.querySelectorAll<HTMLElement>('.pe-season__tab');
-    const tab = tabs[index];
-    if (!tab) return;
+    if (!track || !navEl) return;
 
     const to = animate ? gsap.to : gsap.set;
 
-    to(mark, {
-      width: tab.offsetWidth,
-      height: tab.offsetHeight,
-      left: tab.offsetLeft,
-      top: tab.offsetTop,
-      duration: animate ? 0.55 : 0,
-      ease: 'power2.out',
-      overwrite: 'auto',
-    });
-
-    /* Otvoreni korak predje u boju papira tek kad naljepnica stane pod njega. */
-    navEl.dataset.ready = 'true';
+    /*
+     * Na uskom (ali još širokom) ekranu svi mjeseci ne stanu u traku i ona se
+     * lista. Tad se otvoreni mjesec dovede na sredinu, da se sunce uz njega vidi.
+     * Miče se samo traka, ne cijela strana (`scrollIntoView` bi i nju).
+     */
+    const tab = navEl.querySelectorAll<HTMLElement>('.pe-season__tab')[index];
+    if (tab && navEl.scrollWidth > navEl.clientWidth) {
+      navEl.scrollTo({
+        left: tab.offsetLeft - (navEl.clientWidth - tab.offsetWidth) / 2,
+        behavior: animate ? 'smooth' : 'instant',
+      });
+    }
 
     /* Traka se pomjera samo na sirokom ekranu; na telefonu je lista prstom. */
     if (window.matchMedia('(orientation: landscape)').matches && step.current) {
@@ -111,7 +113,7 @@ export default function SeasonTimeline({
     placed.current = true;
   }, [active, place]);
 
-  /* Pri promjeni sirine mjere se mijenjaju — naljepnica ide na novo mjesto. */
+  /* Pri promjeni sirine mjere se mijenjaju — traka ide na novo mjesto. */
   useEffect(() => {
     const onResize = () => place(active, false);
     window.addEventListener('resize', onResize);
@@ -146,6 +148,26 @@ export default function SeasonTimeline({
     track.scrollTo({ left: item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2, behavior: 'smooth' });
   }, []);
 
+  const renderMedia = (step: Step, i: number) => {
+    const item = media[i];
+
+    if (item?.type === 'image') {
+      return <Image src={item.src} alt={step.title} fill sizes="(orientation: portrait) 78vw, 24vw" />;
+    }
+    if (item?.type === 'video') {
+      return (
+        <SeasonVideo
+          src={item.src}
+          poster={item.poster}
+          label={step.title}
+          labels={videoLabels}
+          active={i === active}
+        />
+      );
+    }
+    return <ImageSlot slot={slots[i]} label={`${step.title} — fotografija`} />;
+  };
+
   return (
     <section data-snap="off" className="pe-season" ref={root}>
       <div className="pe-wrap--small pe-season__head">
@@ -153,9 +175,9 @@ export default function SeasonTimeline({
         <h2 className="pe-title reveal stagger-1">{heading}</h2>
       </div>
 
-      <div className="pe-wrap--small pe-season__navwrap">
+      {/* Traka mjeseci ide od ivice do ivice ekrana — zato nije u omotaču sa uvlačenjem. */}
+      <div className="pe-season__navwrap">
         <div className="pe-season__nav reveal" role="tablist" aria-label={label} ref={nav}>
-          <span className="pe-season__indicator" ref={indicator} aria-hidden="true" />
           {steps.map((step, i) => (
             <button
               className="pe-season__tab"
@@ -168,7 +190,8 @@ export default function SeasonTimeline({
               tabIndex={i === active ? 0 : -1}
               onClick={() => setActive(i)}
             >
-              {step.when}
+              {/* Sunce uz otvoreni mjesec je pseudo-element ove oznake, vidi CSS. */}
+              <span className="pe-season__tab-label">{step.when}</span>
             </button>
           ))}
         </div>
@@ -195,9 +218,7 @@ export default function SeasonTimeline({
                     <p className="pe-body pe-season__text">{step.body}</p>
                   </div>
 
-                  <div className="pe-season__media">
-                    <ImageSlot slot={slots[i]} label={`${step.title} — fotografija`} />
-                  </div>
+                  <div className="pe-season__media">{renderMedia(step, i)}</div>
                 </div>
               </article>
             ))}

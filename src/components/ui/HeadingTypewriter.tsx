@@ -33,6 +33,21 @@ const REVEAL = /^(reveal|reveal-[a-z]+|stagger-\d)$/;
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 /**
+ * Slog naslova za `aria-label`.
+ *
+ * Naslovi sa maskiranim rijecima (`.pcl-display__word`) nemaju razmake u
+ * markupu — razmak medju njima je samo `padding-right`. `textContent` bi ih zato
+ * slijepio ("Odkošnicedotegle") i citac ekrana bi procitao jednu rijec.
+ */
+function labelOf(heading: HTMLElement): string {
+  const words = heading.querySelectorAll('.pcl-display__word');
+  const raw = words.length
+    ? Array.from(words, (word) => word.textContent ?? '').join(' ')
+    : (heading.textContent ?? '');
+  return raw.replace(/\s+/g, ' ').trim();
+}
+
+/**
  * Razlomi naslov na rijeci i slova i vrati koliko je slova ispalo.
  *
  * Slog se vadi iz tekstualnih cvorova, ne iz `innerHTML`: naslov koji u sebi
@@ -116,7 +131,7 @@ export default function HeadingTypewriter() {
     const ready: HTMLElement[] = [];
 
     headings.forEach((heading) => {
-      const text = heading.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+      const text = labelOf(heading);
       if (!text || text.length > MAX_CHARS) return;
 
       // Slog ide u jedan omotac da bi se sav odjednom mogao sakriti od citaca.

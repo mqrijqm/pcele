@@ -78,14 +78,16 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
 
       const mm = gsap.matchMedia();
 
-      mm.add('(prefers-reduced-motion: no-preference)', () => {
+      mm.add(
+        '(prefers-reduced-motion: no-preference) and (min-width: 769px) and (pointer: fine)',
+        () => {
         /*
          * Sredina okvira mjeri se iz `offsetLeft`, ne iz `getBoundingClientRect`
          * — pravougaonik na ekranu vec sadrzi i pomak trake, pa bi mjera
          * zavisila od trenutka u kojem je uzeta. `offsetLeft` je mirna
          * vrijednost iz layouta.
          */
-        const centreOf = (plate: HTMLElement) => plate.offsetLeft + plate.offsetWidth / 2;
+          const centreOf = (plate: HTMLElement) => plate.offsetLeft + plate.offsetWidth / 2;
 
         /*
          * Album se ne otvara na prvom snimku nego na drugom, i ne zavrsava na
@@ -93,31 +95,32 @@ export default function PhotoRail({ locale }: { locale: Locale }) {
          * vire iza rubova — bez njih bi na pocetku lijeva strana ekrana bila
          * prazan papir, a na kraju desna.
          */
-        const first = plates[1];
-        const last = plates[plates.length - 2];
+          const first = plates[1];
+          const last = plates[plates.length - 2];
 
-        const home0 = () => track.parentElement!.clientWidth / 2 - centreOf(first);
-        const travel = () => centreOf(last) - centreOf(first);
+          const home0 = () => track.parentElement!.clientWidth / 2 - centreOf(first);
+          const travel = () => centreOf(last) - centreOf(first);
 
-        gsap.set(track, { x: home0 });
+          gsap.set(track, { x: home0 });
 
-        const tween = gsap.to(track, {
-          x: () => home0() - travel(),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: el,
-            start: 'top top',
-            end: 'bottom bottom',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
+          const tween = gsap.to(track, {
+            x: () => home0() - travel(),
+            ease: 'none',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top top',
+              end: 'bottom bottom',
+              scrub: true,
+              invalidateOnRefresh: true,
+            },
+          });
 
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-        };
-      });
+          return () => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+          };
+        },
+      );
 
       return () => mm.revert();
     }, el);

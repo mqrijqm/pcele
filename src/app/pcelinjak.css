@@ -252,6 +252,19 @@
 
 .pcl-center { text-align: center; }
 
+.pcl-pase-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pcl-pase-intro .pcl-display {
+  width: 100%;
+  max-width: 18ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
 /* ---------------------------------------------------------------------------
  * Mjesto slike.
  *
@@ -471,9 +484,55 @@
   height: 450px;
 }
 
+/*
+ * Pečat je izvan trake koju GSAP pomjera, pa ostaje pričvršćen za donji
+ * ugao kadra dok fotografije prolaze ispod njega.
+ */
+.pcl-rail__products-badge {
+  position: absolute;
+  z-index: 4;
+  top: calc(50% + 225px);
+  right: clamp(1.25rem, 4vw, 4.5rem);
+  width: clamp(7.5rem, 10vw, 9.75rem);
+  aspect-ratio: 1;
+  transform: translateY(-62%);
+  border-radius: 50%;
+  filter: drop-shadow(0 0.75rem 1.5rem rgb(78 48 19 / 0.14));
+  transition: transform 220ms ease, filter 220ms ease;
+}
+
+.pcl-rail__products-badge img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pcl-rail__products-badge:hover,
+.pcl-rail__products-badge:focus-visible {
+  transform: translateY(-62%) scale(1.045);
+  filter: drop-shadow(0 0.9rem 1.75rem rgb(78 48 19 / 0.2));
+}
+
+.pcl-rail__products-badge:focus-visible {
+  outline: 2px solid #a96f36;
+  outline-offset: 5px;
+}
+
 @media (max-width: 767px) {
   .pcl-rail {
     min-height: 0;
+  }
+
+  .pcl-rail__products-badge {
+    top: 50%;
+    right: calc(var(--pcl-gutter) * 0.55);
+    width: clamp(5.75rem, 26vw, 7rem);
+    transform: translateY(-50%);
+  }
+
+  .pcl-rail__products-badge:hover,
+  .pcl-rail__products-badge:focus-visible {
+    transform: translateY(-50%) scale(1.045);
   }
 
   .pcl-rail__item { height: 295.4px; }
@@ -562,7 +621,7 @@
 .pcl-tab__znak {
   display: block;
   width: auto;
-  height: clamp(2.1rem, 3vw, 2.8rem);
+  height: clamp(3.6rem, 12vw, 5.5rem);
 }
 
 @media (min-width: 768px) {
@@ -574,7 +633,7 @@
 
   /* Uz fotografiju crtezi su krupniji, da nose svoj red u nizu. */
   .pcl-tab__znak {
-    height: clamp(3rem, 4.2vw, 4.4rem);
+    height: clamp(5.5rem, 7vw, 7.5rem);
   }
 }
 
@@ -692,6 +751,7 @@
 .pcl-hscroll__panel--text {
   flex: 0 0 auto;
   width: min(30rem, 44%);
+  padding-left: var(--pcl-gutter);
   padding-right: clamp(2rem, 4vw, 4.5rem);
 }
 
@@ -720,6 +780,7 @@
   .pcl-hscroll__panel--text {
     width: calc(100% - 2 * var(--pcl-gutter));
     margin-inline: auto;
+    padding-left: 0;
     padding-right: 0;
   }
 
@@ -784,22 +845,26 @@
 .pcl-parcela::before {
   content: "";
   position: absolute;
-  inset: calc(-1 * var(--pcl-md)) calc(-1 * var(--pcl-gutter));
-  background: url("/images/priroda/cvijece-uzorak.webp") repeat left top;
-  background-size: 420px auto;
-  opacity: 0.55;
+  top: calc(-1 * var(--pcl-md));
+  bottom: calc(-1 * var(--pcl-md));
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: url("/images/priroda/cvijece-uzorak.webp") repeat top center;
+  background-size: 100% auto;
+  opacity: 0.9;
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent,
-    #000 24%,
-    #000 76%,
+    #000 8%,
+    #000 92%,
     transparent
   );
   mask-image: linear-gradient(
     to bottom,
     transparent,
-    #000 24%,
-    #000 76%,
+    #000 8%,
+    #000 92%,
     transparent
   );
   pointer-events: none;
@@ -811,7 +876,7 @@
 
 /* Crtez pcele stoje na mjestu starog natpisa, uz naslov. */
 .pcl-uvod-znak {
-  width: clamp(2.4rem, 3.4vw, 3.6rem);
+  width: clamp(7rem, 9vw, 10rem);
   height: auto;
   justify-self: start;
 }

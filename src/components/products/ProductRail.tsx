@@ -76,7 +76,7 @@ export default function ProductRail({ locale }: { locale: Locale }) {
         <div className="rail__viewport">
           <ul className="rail__track">
             {SHELF.map((product, i) => (
-              <li className="rail__item plate rail__item--square" key={`${product.slug}-${i}`}>
+              <li className="rail__item rail__item--square" key={`${product.slug}-${i}`}>
                 <TransitionLink href={localeHref(locale, `/products/${product.slug}`)} tabIndex={i === centre ? 0 : -1}>
                   <Image
                     className="rail__img rail__img--fit"

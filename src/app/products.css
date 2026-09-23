@@ -61,6 +61,15 @@
   padding: 0 var(--pe-pad-medium);
 }
 
+/* Topla, gotovo papirna podloga iz referentnog editorial rasporeda. */
+.pe-editorial {
+  background-color: #f9f6e8;
+}
+
+.pe-editorial .pe-why {
+  background-color: transparent;
+}
+
 /* --- tipografija -------------------------------------------------------- */
 
 /*
@@ -203,7 +212,7 @@
 .pe-hero {
   position: relative;
   padding-top: clamp(3.5rem, 11svh, 9rem);
-  padding-bottom: clamp(1.5rem, 4svh, 3.5rem);
+  padding-bottom: clamp(0.5rem, 1.5svh, 1rem);
 }
 
 .pe-hero__marquee {
@@ -233,7 +242,12 @@
   display: flex;
   flex-shrink: 0;
   align-items: center;
-  padding-right: 2.0833svw;
+}
+
+.pe-hero__phrase {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
 .pe-hero__unit span {
@@ -242,13 +256,13 @@
 
 .pe-hero__unit i {
   display: block;
-  padding-left: 2.0833svw;
+  padding: 0 2.0833svw;
 }
 
 .pe-hero__unit svg,
 .pe-hero__unit img {
   display: block;
-  width: 2.3438svw;
+  width: clamp(4.5rem, 6.5svw, 7rem);
   height: auto;
 }
 
@@ -259,16 +273,6 @@
   to {
     transform: translate3d(-50%, 0, 0);
   }
-}
-
-.pe-hero__foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 1rem;
-  margin-top: clamp(1.5rem, 4svh, 3rem);
-  padding-top: clamp(0.9rem, 2svh, 1.6rem);
-  border-top: 1px solid var(--pe-rule);
 }
 
 /* =======================================================================
@@ -293,35 +297,33 @@
   will-change: transform;
 }
 
+.pe-banner__image {
+  object-fit: cover;
+  object-position: center;
+}
+
 .pe-banner__cta {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: clamp(1.25rem, 3.5vw, 4rem);
+  bottom: clamp(1.25rem, 3.5vw, 4rem);
   z-index: 5;
+  display: block;
+  width: clamp(7.25rem, 12.5vw, 11.25rem);
+  aspect-ratio: 421 / 414;
 }
 
-.pe-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-  padding: 0.95em 1.6em;
-  border: 1px solid var(--pe-ink);
-  border-radius: var(--radius-pill);
-  background-color: var(--pe-paper);
-  color: var(--pe-ink);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: var(--pe-caption);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  transition: background-color 0.35s var(--ease-out-expo), color 0.35s var(--ease-out-expo);
+.pe-banner__cta.is-sticky {
+  position: fixed;
+  top: auto;
+  right: clamp(1.25rem, 3.5vw, 4rem);
+  bottom: clamp(1.25rem, 3.5vw, 4rem);
+  z-index: 70;
 }
 
-.pe-pill:hover,
-.pe-pill:focus-visible {
-  background-color: var(--pe-ink);
-  color: var(--pe-paper);
+.pe-banner__cta-art {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* =======================================================================
@@ -339,6 +341,36 @@
   align-items: center;
   padding-top: clamp(4rem, 13.8889svh, 11rem);
   padding-bottom: clamp(4rem, 13.8889svh, 11rem);
+}
+
+.pe-story--scroll {
+  min-height: 100svh;
+}
+
+.pe-story--scroll .pe-story__inner {
+  min-height: 100svh;
+  justify-content: center;
+  padding-top: clamp(5rem, 11svh, 8rem);
+  padding-bottom: clamp(5rem, 11svh, 8rem);
+}
+
+.pe-story--scroll .pe-story__lede {
+  max-width: 48rem;
+  font-size: clamp(1.65rem, 2.7svw, 3.45rem);
+  line-height: 1.08;
+}
+
+.pe-story__lede--words {
+  text-wrap: balance;
+}
+
+.pe-story__word {
+  display: inline;
+  will-change: opacity;
+}
+
+.pe-story__word--gold {
+  color: var(--pe-accent);
 }
 
 .pe-story__lede {
@@ -375,6 +407,16 @@
 .pe-story__art img {
   width: 17.7083svw;
   height: auto;
+}
+
+.pe-story--scroll .pe-story__art {
+  left: clamp(1rem, 4vw, 4.5rem);
+  bottom: clamp(1rem, 4svh, 3rem);
+  transform-origin: 50% 50%;
+}
+
+.pe-story--scroll .pe-story__art img {
+  width: clamp(8.5rem, 14svw, 16rem);
 }
 
 /* --- spisak podataka (PAŠA / UKUS / BOJA) ------------------------------- */
@@ -437,27 +479,40 @@
   background-color: var(--pe-paper);
 }
 
+/*
+ * Sekcija se zaustavlja na skrolu (vidi `WhyBlock`), a kad je viša od ekrana
+ * poravnava se donjom ivicom — gornji dio se malo odsijeca. Zato je gornji
+ * razmak veći od donjeg: naslov tad ostaje slobodan od plutajućeg menija.
+ */
 .pe-why__inner {
-  padding-top: clamp(4rem, 13.8889svh, 11rem);
-  padding-bottom: clamp(4rem, 17.5926svh, 13rem);
+  padding-top: clamp(4.5rem, 13svh, 9rem);
+  padding-bottom: clamp(3rem, 8svh, 6rem);
 }
 
 .pe-why__title {
   text-align: center;
+  font-size: clamp(3.6rem, 7.2svw, 9rem);
 }
 
 .pe-why__content {
   display: flex;
-  margin-top: clamp(3rem, 12.5svh, 9rem);
+  align-items: stretch;
+  margin-top: clamp(2.5rem, 7svh, 5rem);
 }
 
 .pe-why__image {
   flex: 0 0 auto;
-  flex-basis: 27.3438svw;
-  height: 64.8148svh;
+  position: relative;
+  flex-basis: 30svw;
+  height: 62svh;
   min-height: 22rem;
   border-radius: var(--pe-radius);
   overflow: hidden;
+}
+
+.pe-why__photo {
+  object-fit: cover;
+  object-position: center;
 }
 
 .pe-why__text {
@@ -465,31 +520,47 @@
   flex-grow: 1;
   flex-direction: column;
   justify-content: space-between;
-  margin-left: 2.6042svw;
-  padding-left: 1.0417svw;
+  margin-left: 2.1svw;
+  padding-left: 1.3svw;
   border-left: 1px solid var(--pe-ink);
 }
 
+.pe-why__text .pe-title {
+  max-width: 23ch;
+  font-size: clamp(1.6rem, 2.55svw, 3.25rem);
+  line-height: 1.04;
+}
+
 .pe-why__list {
-  margin-top: clamp(1.5rem, 4.6296svh, 3.4rem);
+  display: grid;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.35rem, 0.8svh, 0.7rem);
+  margin-top: clamp(1.25rem, 3.2svh, 2.4rem);
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.05rem, 1.45svw, 1.75rem);
+  line-height: 1.08;
 }
 
 .pe-why__list li {
   position: relative;
-  padding-left: 2.8646svw;
+  display: flex;
+  min-height: clamp(2.8rem, 5.4svh, 4.2rem);
+  align-items: center;
+  padding-left: clamp(2.4rem, 3.4svw, 4rem);
 }
 
 .pe-why__list li + li {
-  margin-top: 0.35em;
+  margin-top: 0;
 }
 
 .pe-why__list li::before {
   content: '';
   position: absolute;
-  top: 0.42em;
+  top: 50%;
   left: 0;
-  width: 1.9svw;
-  height: 1.9svw;
+  width: clamp(1.6rem, 2.4svw, 2.8rem);
+  height: clamp(1.6rem, 2.4svw, 2.8rem);
+  transform: translateY(-50%);
   background-image: url('/images/brand/sunce.svg');
   background-repeat: no-repeat;
   background-position: center;
@@ -497,7 +568,13 @@
 }
 
 .pe-why__outro {
-  margin-top: clamp(2rem, 6svh, 4.5rem);
+  max-width: 58ch;
+  margin-top: clamp(1.5rem, 3.5svh, 2.8rem);
+  font-size: clamp(0.82rem, 0.92svw, 1.08rem);
+}
+
+.pe-why__outro-word {
+  will-change: opacity;
 }
 
 /* =======================================================================
@@ -515,6 +592,15 @@
   display: flex;
   align-items: flex-end;
   gap: 0 2.0833svw;
+}
+
+.pe-movers__row:first-child {
+  gap: 0 1svw;
+}
+
+.pe-movers__row:first-child .pe-movers__icon {
+  height: 11svh;
+  transform: translateY(-0.6svh);
 }
 
 .pe-movers__row:last-child {
@@ -542,6 +628,19 @@
   display: block;
   width: auto;
   height: 100%;
+}
+
+/*
+ * Crtez koji se boji bojom naslova (braon): SVG je samo oblik, a boja je
+ * `currentColor` — ista kao i tekst uz koji stoji. Odnos stranica je odnos
+ * ikonice (213 x 313), da maska ima istu mjeru kao slika.
+ */
+.pe-movers__icon--tint {
+  display: block;
+  aspect-ratio: 213 / 313;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
 }
 
 /* =======================================================================
@@ -627,8 +726,12 @@
 
 .pe-scatter__image {
   position: absolute;
-  border-radius: var(--pe-radius);
+  border-radius: 0;
   overflow: hidden;
+}
+
+.pe-scatter__image > img {
+  object-fit: cover;
 }
 
 .pe-scatter__image .pe-slot {
@@ -644,38 +747,38 @@
  * isti na svakoj sirini, samo se ploha mijenja.
  */
 .pe-scatter__image--0 {
-  top: 12%;
+  top: 10%;
   left: 9%;
-  width: 22.3958svw;
-  height: 59.2593svh;
+  width: 22svw;
+  height: 68svh;
 }
 
 .pe-scatter__image--1 {
-  top: 9%;
-  left: 45%;
-  width: 23.4375svw;
-  height: 29.6296svh;
+  top: 6%;
+  left: 46%;
+  width: 24svw;
+  height: 32svh;
 }
 
 .pe-scatter__image--2 {
-  top: -3%;
-  left: 76%;
-  width: 20.8333svw;
-  height: 54.6296svh;
+  top: -1%;
+  left: 78%;
+  width: 21svw;
+  height: 55svh;
 }
 
 .pe-scatter__image--3 {
-  bottom: -5%;
-  left: 36%;
-  width: 20.0521svw;
-  height: 47.6852svh;
+  bottom: -7%;
+  left: 37%;
+  width: 20svw;
+  height: 45svh;
 }
 
 .pe-scatter__image--4 {
-  bottom: -1%;
-  left: 72%;
-  width: 15.625svw;
-  height: 41.6667svh;
+  bottom: -4%;
+  left: 74%;
+  width: 16svw;
+  height: 42svh;
 }
 
 .pe-scatter__content {
@@ -686,10 +789,59 @@
   align-items: center;
 }
 
+.pe-scatter__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.8rem, 1.8vw, 2rem);
+}
+
+.pe-scatter__title {
+  max-width: none;
+  font-size: clamp(3rem, 5.8svw, 7.6rem);
+  line-height: 0.92;
+  text-align: center;
+}
+
+/*
+ * Crtez tegle je jednobojan, pa se boji kao maska: oblik dolazi iz SVG-a, a
+ * boja je ista kao i boja naslova uz koji stoji (`currentColor` = papir).
+ */
+.pe-scatter__title-icon {
+  flex: 0 0 auto;
+  width: clamp(3.25rem, 5.6vw, 6rem);
+  aspect-ratio: 213 / 313;
+  background-color: currentColor;
+  -webkit-mask: url('/images/brand/teglica.svg') center / contain no-repeat;
+  mask: url('/images/brand/teglica.svg') center / contain no-repeat;
+}
+
 .pe-scatter__lede {
   max-width: 62.5svw;
   margin-top: clamp(1rem, 2.7778svh, 2.2rem);
   text-align: center;
+}
+
+/* =======================================================================
+ * Katalog proizvoda — isti serifni glas i standardna dugmad cijelog sajta
+ * ==================================================================== */
+
+.pe-shop,
+.pe-shop h1,
+.pe-shop h2,
+.pe-shop h3,
+.pe-shop p,
+.pe-shop li,
+.pe-shop a,
+.pe-shop span,
+.pe-shop button {
+  font-family: var(--font-gazpacho), Georgia, serif;
+}
+
+.pe-shop__button {
+  min-width: 9.5rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
 
 /* =======================================================================
@@ -710,6 +862,14 @@
   padding-bottom: clamp(1.5rem, 4svh, 3rem);
 }
 
+.pe-season__head .pe-label {
+  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
+}
+
+.pe-season__head .pe-title {
+  font-size: clamp(1.8rem, 2.45svw, 3.2rem);
+}
+
 .pe-season__navwrap {
   position: relative;
 }
@@ -723,57 +883,91 @@
   overflow: hidden;
 }
 
+/*
+ * Traka mjeseci: od ivice do ivice ekrana, samo dvije ravne linije — gore i
+ * dolje — bez okvira i zaobljenja. Mjeseci se dijele sirinu prema duzini
+ * natpisa. Ako ih ima vise nego sto stane (usko, a ipak siroko), traka se lista.
+ */
 .pe-season__nav {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0 0.7813svw;
-  padding: 0.5556svh 0.5208svw;
-  border: 1px solid var(--pe-ink);
-  border-radius: var(--pe-radius);
+  width: 100%;
+  padding-inline: clamp(1rem, 1.6vw, 2rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-top: 1px solid var(--pe-ink);
+  border-bottom: 1px solid var(--pe-ink);
 }
 
-/*
- * Naljepnica je prazna dok je JavaScript ne postavi — tako nema treperenja
- * na pogresnom mjestu pri ucitavanju. Dok se to ne desi, otvoreni korak je
- * oznacen samo mastilom (vidi `[data-ready]` nize), pa je i bez JavaScripta
- * jasno koji je otvoren.
- */
-.pe-season__indicator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  background-color: var(--pe-ink);
-  border-radius: var(--pe-radius);
-  z-index: 1;
-  pointer-events: none;
+.pe-season__nav::-webkit-scrollbar {
+  display: none;
 }
 
+/* Mjeseci su u Gazpacho serifu, kao i naslovi — ne u sitnom Interu kao prije. */
 .pe-season__tab {
   position: relative;
   z-index: 5;
-  padding: 0.8333svh 0.8854svw;
+  flex: 1 0 auto;
+  padding: clamp(1rem, 2.6svh, 1.7rem) clamp(1rem, 1.5vw, 2rem);
   border: 0;
   background: none;
   color: inherit;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: var(--pe-caption);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.05rem, 1.35vw, 1.6rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  text-align: center;
   white-space: nowrap;
-  transition: color 0.35s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.35s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.pe-season__tab:hover,
+.pe-season__tab:focus-visible,
+.pe-season__tab[aria-selected='true'] {
+  opacity: 1;
 }
 
 .pe-season__tab[aria-selected='true'] {
   cursor: default;
 }
 
-/* Tek kad naljepnica stane, otvoreni korak predje u boju papira. */
-.pe-season__nav[data-ready='true'] .pe-season__tab[aria-selected='true'] {
-  color: var(--pe-paper);
+.pe-season__tab:focus-visible {
+  outline: 2px solid var(--pe-ink);
+  outline-offset: -6px;
+}
+
+/*
+ * Otvoreni mjesec ne dobija podvlaku nego malo sunce lijevo od natpisa. Sunce
+ * je pseudo-element natpisa i stoji IZVAN njegove sirine (`right: 100%`), pa se
+ * natpis ne pomjera kad se sunce pojavi. Ulazi okrenuto i umanjeno.
+ */
+.pe-season__tab-label {
+  position: relative;
+  display: inline-block;
+}
+
+.pe-season__tab-label::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 0.95em;
+  aspect-ratio: 200 / 219;
+  margin-right: 0.5em;
+  background: url('/images/brand/sunce.svg') center / contain no-repeat;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.3) rotate(-120deg);
+  transition:
+    opacity 0.3s ease,
+    transform 0.6s var(--ease-out-expo);
+}
+
+.pe-season__tab[aria-selected='true'] .pe-season__tab-label::before {
+  opacity: 1;
+  transform: translateY(-50%) scale(1) rotate(0deg);
 }
 
 .pe-season__slider {
@@ -814,15 +1008,16 @@
 }
 
 .pe-season__when {
-  font-size: var(--pe-title);
+  font-size: clamp(1.05rem, 1.55svw, 1.9rem);
   line-height: 1.05;
+  letter-spacing: 0.02em;
 }
 
 .pe-season__name {
   display: inline-block;
   margin-top: 0.15em;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--pe-mid);
+  font-size: clamp(1.55rem, 2.5svw, 3.3rem);
   font-weight: 400;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -831,12 +1026,13 @@
 }
 
 .pe-season__item[data-active='true'] .pe-season__name {
-  font-size: clamp(2rem, 7.5svw, 9.5rem);
+  font-size: clamp(2.5rem, 4.75svw, 6.2rem);
 }
 
 .pe-season__text {
   max-width: 26.0417svw;
-  margin-top: clamp(2rem, 8svh, 5rem);
+  margin-top: clamp(1.75rem, 5svh, 3.5rem);
+  font-size: clamp(0.9rem, 1vw, 1.1rem);
 }
 
 /*
@@ -857,6 +1053,73 @@
 
 .pe-season__item[data-active='true'] .pe-season__media {
   width: 24svw;
+  opacity: 1;
+}
+
+.pe-season__media > img {
+  object-fit: cover;
+}
+
+/*
+ * Video sa krugom preko sredine. Krug je boje papira, trougao mastilo; dok
+ * video svira krug se gasi, a vraca se kad se zaustavi (ili kad ga tastatura
+ * fokusira, da se uvijek zna gdje je dugme).
+ */
+.pe-video {
+  position: absolute;
+  inset: 0;
+}
+
+.pe-video__el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.pe-video__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(3.75rem, 4.6svw, 5.5rem);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--pe-paper);
+  color: var(--pe-ink);
+  box-shadow: 0 0.6rem 1.8rem rgba(60, 35, 10, 0.22);
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s var(--ease-out-expo), opacity 0.3s ease;
+}
+
+.pe-video__play svg {
+  width: 38%;
+  height: 38%;
+  /* Trougao je optički lakši ulijevo, pa ga treba malo pomjeriti udesno. */
+  margin-left: 6%;
+  fill: currentColor;
+}
+
+.pe-video__play:hover {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.pe-video__play:focus-visible {
+  outline: 2px solid var(--pe-paper);
+  outline-offset: 4px;
+}
+
+.pe-video[data-playing='true'] .pe-video__play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pe-video[data-playing='true'] .pe-video__play:focus-visible {
   opacity: 1;
 }
 
@@ -919,7 +1182,7 @@
 
   .pe-season__content {
     width: auto;
-    padding: clamp(1.25rem, 3svh, 2rem) 5.3333svw 0;
+    padding: clamp(1.25rem, 3svh, 2rem) 5.3333svw clamp(1.25rem, 3svh, 2rem);
   }
 
   /* Isti razlog kao za sirinu: otvoreni korak se na telefonu ne siri. */
@@ -933,11 +1196,11 @@
 
   .pe-season__name {
     margin-bottom: clamp(1rem, 2.5svh, 1.75rem);
-    font-size: clamp(1.7rem, 8.5333svw, 4.6rem);
+    font-size: clamp(1.55rem, 7.2svw, 2.5rem);
   }
 
   .pe-season__item[data-active='true'] .pe-season__name {
-    font-size: clamp(1.7rem, 8.5333svw, 4.6rem);
+    font-size: clamp(1.55rem, 7.2svw, 2.5rem);
   }
 
   .pe-season__text {
@@ -1043,6 +1306,9 @@
 }
 
 .pe-cta__button {
+  display: block;
+  width: clamp(9.5rem, 15.5vw, 13rem);
+  aspect-ratio: 367 / 136;
   margin-top: clamp(2rem, 5svh, 4rem);
 }
 
@@ -1077,27 +1343,27 @@
     animation-duration: 26s;
   }
 
-  .pe-hero__unit {
-    padding-right: 4svw;
-  }
-
   .pe-hero__unit i {
-    padding-left: 4svw;
+    padding: 0 4svw;
   }
 
   .pe-hero__unit svg,
   .pe-hero__unit img {
-    width: 4.8svw;
-  }
-
-  .pe-hero__foot {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    width: clamp(3.5rem, 16svw, 5.5rem);
   }
 
   .pe-banner {
     height: 80.9595svh;
+  }
+
+  .pe-banner__image {
+    object-position: 58% center;
+  }
+
+  .pe-banner__cta {
+    right: 1rem;
+    bottom: 1rem;
+    width: clamp(6.25rem, 27vw, 8.5rem);
   }
 
   .pe-story__inner {
@@ -1134,6 +1400,20 @@
   /* Kao i uvodna recenica: na uskom ekranu stubac ide skoro do ivica. */
   .pe-story__body {
     max-width: 80svw;
+  }
+
+  .pe-story--scroll .pe-story__lede {
+    max-width: 86svw;
+    font-size: clamp(1.7rem, 7.5svw, 2.65rem);
+  }
+
+  .pe-story--scroll .pe-story__art {
+    left: -1rem;
+    bottom: 1.25rem;
+  }
+
+  .pe-story--scroll .pe-story__art img {
+    width: clamp(6.5rem, 30svw, 9rem);
   }
 
   .pe-facts {
@@ -1174,7 +1454,7 @@
   .pe-why__image {
     order: 2;
     flex-basis: auto;
-    width: 62.6667svw;
+    width: 78svw;
     height: auto;
     min-height: 0;
     aspect-ratio: 4 / 5;
@@ -1189,18 +1469,23 @@
     padding-right: 5.3333svw;
   }
 
+  .pe-why__text .pe-title {
+    font-size: clamp(1.55rem, 7svw, 2.35rem);
+  }
+
   .pe-why__list li {
-    padding-left: 8svw;
+    min-height: 3.5rem;
+    padding-left: 11svw;
   }
 
   .pe-why__list li + li {
-    margin-top: 0.75em;
+    margin-top: 0;
   }
 
   .pe-why__list li::before {
-    top: 0.2em;
-    width: 5.5svw;
-    height: 5.5svw;
+    top: 50%;
+    width: 8svw;
+    height: 8svw;
   }
 
   .pe-movers {
@@ -1218,6 +1503,22 @@
     flex-direction: column;
     align-items: flex-end;
     text-align: right;
+  }
+
+  .pe-movers__row:first-child {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0 2svw;
+  }
+
+  .pe-movers__row:first-child .pe-movers__icon {
+    order: 2;
+    height: 6rem;
+    transform: translateY(-0.2rem);
+  }
+
+  .pe-movers__row:first-child .pe-movers__title {
+    order: 1;
   }
 
   .pe-movers__icon {
@@ -1253,43 +1554,57 @@
   }
 
   .pe-scatter {
-    min-height: 100svh;
+    min-height: 92svh;
   }
 
   .pe-scatter__image--0 {
-    display: none;
+    top: 9%;
+    left: 5%;
+    width: 29svw;
+    height: 27svh;
   }
 
   .pe-scatter__image--1 {
     top: 4%;
-    left: -4%;
-    width: 48svw;
-    height: 19.4903svh;
+    right: 6%;
+    left: auto;
+    width: 25svw;
+    height: 21svh;
   }
 
   .pe-scatter__image--2 {
-    top: 14%;
-    left: 58%;
-    width: 36svw;
-    height: 29.985svh;
+    top: 26%;
+    right: -3%;
+    left: auto;
+    width: 24svw;
+    height: 27svh;
   }
 
   .pe-scatter__image--3 {
-    bottom: 19%;
-    left: -4%;
-    width: 40svw;
-    height: 29.985svh;
+    bottom: 6%;
+    left: 5%;
+    width: 28svw;
+    height: 27svh;
   }
 
   .pe-scatter__image--4 {
-    bottom: 5%;
-    left: 75%;
-    width: 36svw;
-    height: 29.985svh;
+    right: 8%;
+    bottom: 4%;
+    left: auto;
+    width: 25svw;
+    height: 25svh;
   }
 
-  .pe-scatter__lede {
-    max-width: 80svw;
+  .pe-scatter__title {
+    font-size: clamp(2.4rem, 11svw, 3.4rem);
+  }
+
+  .pe-scatter__title-row {
+    gap: 0.7rem;
+  }
+
+  .pe-scatter__title-icon {
+    width: clamp(2.4rem, 12vw, 3.6rem);
   }
 
   .pe-season__head {
@@ -1355,7 +1670,7 @@
   .pe-season__name,
   .pe-season__media,
   .pe-season__tab,
-  .pe-season__indicator,
+  .pe-season__tab-label::before,
   .pe-cta__image {
     transition: none;
   }

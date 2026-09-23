@@ -1,12 +1,12 @@
 ﻿'use client';
 
-import { useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
-import ImageSlot from '@/components/products/ImageSlot';
-
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /**
  * Snimak preko cijelog ekrana, sa malim krugom u sredini.
@@ -16,22 +16,21 @@ gsap.registerPlugin(ScrollTrigger);
  * sekcija ulazi, pa se dobija dubina bez ijednog dodatnog sloja.
  */
 export default function FullBleed({
-  slot,
+  image,
   label,
   cta,
   href,
 }: {
-  slot: string;
+  image: string;
   label: string;
   cta: string;
   href: string;
 }) {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const el = root.current;
     if (!el) return;
-
     const mm = gsap.matchMedia();
 
     mm.add('(prefers-reduced-motion: no-preference)', () => {
@@ -60,29 +59,97 @@ export default function FullBleed({
       };
     });
 
+    mm.add('(min-width: 768px)', () => {
+      const seal = el.querySelector<HTMLElement>('.pe-banner__cta');
+      const footer = document.querySelector<HTMLElement>('.stopa');
+      if (!seal || !footer) return;
+
+      const showSticky = () => {
+        seal.classList.add('is-sticky');
+        gsap.killTweensOf(seal);
+        gsap.to(seal, { autoAlpha: 1, duration: 0.28, ease: 'power2.out' });
+      };
+
+      /*
+       * Kad footer uđe u kadar, pečat više nije samo fixed: njegov donji rub
+       * prati gornji rub footera. Tako izgleda kao da se zaustavio tačno prije
+       * footera, umjesto da ga preleti ili naglo nestane.
+       */
+      const followFooterBoundary = () => {
+        if (!seal.classList.contains('is-sticky')) return;
+        const bottom = Number.parseFloat(getComputedStyle(seal).bottom) || 0;
+        const fixedTop = window.innerHeight - bottom - seal.offsetHeight;
+        const footerTop = footer.getBoundingClientRect().top;
+        const y = Math.min(0, footerTop - fixedTop - seal.offsetHeight);
+        gsap.set(seal, { y });
+      };
+
+      const hideAfterFooter = () => {
+        gsap.killTweensOf(seal);
+        gsap.to(seal, { autoAlpha: 0, duration: 0.22, ease: 'power2.out' });
+      };
+
+      const restoreToBanner = () => {
+        gsap.killTweensOf(seal);
+        gsap.set(seal, { autoAlpha: 1, y: 0 });
+        seal.classList.remove('is-sticky');
+      };
+
+      const sticky = ScrollTrigger.create({
+        trigger: el,
+        start: 'bottom bottom',
+        endTrigger: footer,
+        end: 'bottom top',
+        invalidateOnRefresh: true,
+        onEnter: () => {
+          showSticky();
+          followFooterBoundary();
+        },
+        onEnterBack: () => {
+          showSticky();
+          followFooterBoundary();
+        },
+        onUpdate: followFooterBoundary,
+        onRefresh: followFooterBoundary,
+        onLeave: hideAfterFooter,
+        onLeaveBack: restoreToBanner,
+      });
+
+      return () => {
+        sticky.kill();
+        gsap.killTweensOf(seal);
+        gsap.set(seal, { clearProps: 'opacity,visibility,transform' });
+        seal.classList.remove('is-sticky');
+      };
+    });
+
     return () => mm.revert();
-  }, []);
+  }, { scope: root });
 
   return (
     <section data-snap="off" className="pe-banner" ref={root}>
       <div className="pe-banner__frame">
         <div className="pe-banner__zoom">
-          <ImageSlot slot={slot} label={label} />
+          <Image
+            src={image}
+            alt={label}
+            fill
+            priority
+            sizes="100vw"
+            className="pe-banner__image"
+          />
         </div>
       </div>
 
-      <a className="pe-pill pe-banner__cta" href={href}>
-        {cta}
-        <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
-          <path
-            d="M7 1v12M1.8 7.8 7 13l5.2-5.2"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+      <a className="brand-cta brand-cta--seal pe-banner__cta" href={href} aria-label={cta}>
+        <Image
+          src="/images/brand/pecat-okusi-tamni.svg"
+          alt=""
+          aria-hidden="true"
+          width={421}
+          height={414}
+          className="brand-cta__art pe-banner__cta-art"
+        />
       </a>
     </section>
   );

@@ -146,7 +146,7 @@ body {
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Fine paper grain over the whole page — the original site's signature texture. */
@@ -227,6 +227,7 @@ a {
 }
 
 img {
+  display: block;
   max-width: 100%;
   height: auto;
 }
@@ -1204,6 +1205,26 @@ p {
   }
 }
 
+/* Na telefonu je ovo jedna mirna produktna scena, ne 2.6 ekrana pina. */
+@media (max-width: 767px) {
+  .hero-jar {
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .hero-jar__stage {
+    position: relative;
+    height: 100dvh;
+  }
+
+  .hero-jar__pop,
+  .hero-jar__heart,
+  .hero-jar__petals {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* ---------------------------------------------------------------------------
  * Podjela: dvije sorte, jedna nasuprot druge.
  *
@@ -1701,11 +1722,10 @@ p {
   bottom: 0;
   width: 43%;
   /*
-   * Bagremova tegla je u fajlu znatno sira nego livadska (760x1045 naspram
-   * 560x972). Dok je ovdje stajao livadski omjer, staklo je bilo za petinu
-   * sire od sanduka i vidjelo se kako prelazi preko njegovih ivica.
+   * Mjeru daje manja, sira tegla nakon uklanjanja transparentnih margina.
+   * Njena stvarna sirina na 84% visine je oko 61% visine vece tegle.
    */
-  --tegla-ar: 727 / 1000;
+  --tegla-ar: 613 / 1000;
 }
 
 /*
@@ -2039,6 +2059,10 @@ html.is-preloading body {
   }
 }
 
+html.skip-preloader #preloader {
+  display: none;
+}
+
 /* ---------------------------------------------------------------------------
  * Pocetni ekran: ime, naslov, opis, dugme — i crtez livade pod njima.
  *
@@ -2130,17 +2154,74 @@ html.is-preloading body {
   color: var(--brown-soft);
 }
 
-.hero-land__cta {
-  display: block;
-  width: clamp(10rem, 12vw, 11.5rem);
+.hero-land__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.7rem;
   margin-top: clamp(1.4rem, 3vh, 2rem);
-  line-height: 0;
 }
 
-.hero-land__cta img {
+.hero-land__cta {
+  position: relative;
+  display: block;
+  width: clamp(10.75rem, 12vw, 12rem);
+  aspect-ratio: 1119 / 368;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  overflow: visible;
+  line-height: 0;
+  background: transparent;
+  transition: transform 0.25s var(--ease-out-expo);
+}
+
+.hero-land__cta-art {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  transition: filter 0.25s ease;
+  pointer-events: none;
+}
+
+.hero-land__cta svg {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 1.3rem;
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--paper);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.hero-land__cta:hover,
+.hero-land__cta:focus-visible {
+  transform: translateY(-2px);
+}
+
+.hero-land__cta:hover .hero-land__cta-art,
+.hero-land__cta:focus-visible .hero-land__cta-art {
+  filter: brightness(0.92);
+}
+
+.hero-land__cart-count {
+  min-width: 1.2rem;
+  height: 1.2rem;
+  display: inline-grid;
+  place-items: center;
+  padding-inline: 0.25rem;
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--brown);
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0;
+  position: absolute;
+  z-index: 2;
+  top: 0.15rem;
+  right: 0.15rem;
 }
 
 /*
@@ -2347,6 +2428,14 @@ html.is-preloading body {
   }
 }
 
+.bee-layer[data-still='true'] .bee,
+.bee-layer[data-still='true'] .bee__hover,
+.bee-layer[data-still='true'] .bee__art #wing-front,
+.bee-layer[data-still='true'] .bee__art #wing-back {
+  animation: none;
+  will-change: auto;
+}
+
 /* ---------------------------------------------------------------------------
  * Odakle smo — karta opstine sa tri sela.
  *
@@ -2364,7 +2453,7 @@ html.is-preloading body {
   margin: 0 auto;
   text-align: center;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--type-eyebrow);
+  font-size: clamp(1.1rem, 1.65vw, 1.55rem);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3154,6 +3243,44 @@ html.is-preloading body {
   background: transparent;
   border-color: var(--brown);
   color: var(--brown);
+}
+
+/* Korpa koristi utišani cvjetni wallpaper i isključivo smeđi UI. */
+.cart-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--brown);
+}
+
+.cart-page::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: url('/images/priroda/cart-cvijece.webp');
+  background-position: top center;
+  background-repeat: repeat-y;
+  background-size: 135% auto;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.cart-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cart-page .cart-page__checkout:hover {
+  background: #6f481f;
+  color: var(--paper);
+}
+
+@media (max-width: 640px) {
+  .cart-page::before {
+    background-size: 220% auto;
+  }
 }
 
 /* --- izdvojen zapis ------------------------------------------------------- */
@@ -3970,8 +4097,8 @@ html.is-preloading body {
 .propolis__line {
   margin: 0;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(0.72rem, 1.15cqi, 1.15rem);
-  line-height: 1.7;
+  font-size: clamp(0.92rem, 1.42cqi, 1.45rem);
+  line-height: 1.58;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--brown-soft);
@@ -4092,7 +4219,7 @@ html.is-preloading body {
   }
 
   .propolis__line {
-    font-size: 0.78rem;
+    font-size: clamp(0.92rem, 3.7vw, 1.05rem);
     /* Uspravno slozeno ima punu sirinu strane; red smije da se prelomi. */
     white-space: normal;
   }
@@ -4325,11 +4452,11 @@ html.is-preloading body {
    * je onda takvu kopirao mis i citao citac ekrana.
    */
   display: inline-block;
-  opacity: clamp(0.25, calc((var(--p) * (var(--n) + 3) - var(--i)) / 3), 1);
+  opacity: 1;
   will-change: opacity;
 }
 
-.js-reveal .geslo__sun {
+.js-reveal .geslo__w {
   /*
    * Koliko se od rijeci vidi dok ceka svoj red.
    *
@@ -4778,7 +4905,7 @@ html.is-preloading body {
  */
 .rail__eyebrow {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: var(--type-eyebrow);
+  font-size: clamp(1.1rem, 1.65vw, 1.55rem);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -4895,6 +5022,52 @@ html.is-preloading body {
     padding-inline: var(--container-padding);
   }
 
+}
+
+/*
+ * Touch album je prava vodoravna polica sa snapom. Nema sticky scene ni
+ * višestruke visine dokumenta, pa vertikalni skrol ostaje pod prstom.
+ */
+@media (max-width: 768px), (pointer: coarse) {
+  .rail {
+    height: auto;
+    padding-block: var(--section-padding-sm);
+  }
+
+  .rail__stage {
+    position: static;
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+  }
+
+  .rail__viewport {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .rail__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rail:not(.rail--shelf) .rail__viewport {
+    flex: none;
+  }
+
+  .rail__track {
+    height: auto;
+    padding-inline: var(--container-padding);
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .rail:not(.rail--shelf) .rail__item {
+    width: min(78vw, 24rem);
+    height: auto;
+    scroll-snap-align: center;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -5546,6 +5719,68 @@ html.is-preloading body {
   }
 }
 
+/*
+ * Brendirani SVG pozivi postoje u samo dvije geometrije: kruzni pecat i
+ * siroka pilula. Boja, krem slog i isprekidani unutrasnji rub zive u samom
+ * SVG-u; CSS cuva odnos stranica, ne dodaje novu plohu i ne rasteze crtez.
+ */
+.brand-cta {
+  display: block;
+  padding: 0;
+  border: 0;
+  overflow: visible;
+  background: transparent;
+  line-height: 0;
+}
+
+.brand-cta--seal {
+  aspect-ratio: 421 / 414;
+  border-radius: 50%;
+}
+
+.brand-cta--pill {
+  aspect-ratio: 1119 / 368;
+  border-radius: var(--radius-pill);
+}
+
+.brand-cta__art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  transition: transform 0.5s var(--ease-out-expo), filter 0.25s ease;
+}
+
+a.brand-cta--seal:hover .brand-cta__art,
+a.brand-cta--seal:focus-visible .brand-cta__art {
+  transform: rotate(-5deg) scale(1.06);
+}
+
+a.brand-cta--pill:hover,
+a.brand-cta--pill:focus-visible {
+  transform: translateY(-2px);
+}
+
+.brand-cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-cta,
+  .brand-cta__art {
+    transition: none;
+  }
+
+  a.brand-cta--seal:hover .brand-cta__art,
+  a.brand-cta--seal:focus-visible .brand-cta__art,
+  a.brand-cta--pill:hover,
+  a.brand-cta--pill:focus-visible {
+    transform: none;
+  }
+}
+
 /* ---------------------------------------------------------------------------
  * Pecat: okrugli znak sa slogom, isti na cijelom sajtu.
  *
@@ -5820,6 +6055,11 @@ a.pecat:focus-visible img {
  * ostalo, pa je izmedju naslova i snimka bila samo praznina — a praznina koja
  * nista ne radi izgleda kao greska, ne kao vazduh.
  * ------------------------------------------------------------------------- */
+.poziv {
+  position: relative;
+  background-color: var(--paper);
+}
+
 .poziv__inner {
   max-width: min(96rem, 100% - 2 * var(--container-padding));
   margin-inline: auto;
@@ -6035,11 +6275,28 @@ a.pecat:focus-visible img {
   margin-top: clamp(1rem, 2vw, 1.75rem);
 }
 
-.stopa__krug {
+.stopa__krug-link {
   display: block;
   width: clamp(3.25rem, 4.5vw, 4.25rem);
-  height: auto;
   margin-top: clamp(1.75rem, 3.5vw, 3rem);
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+
+.stopa__krug {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stopa__krug-link:hover,
+.stopa__krug-link:focus-visible {
+  transform: translateY(-3px) rotate(-5deg);
+}
+
+.stopa__krug-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
 }
 
 /* --- sitno na dnu -------------------------------------------------------- */
@@ -6090,57 +6347,6 @@ a.pecat:focus-visible img {
   .stopa__znak:hover,
   .stopa__znak:focus-visible {
     transform: none;
-  }
-}
-
-/*
- * Potpis autora ostaje u kadru na svakoj stranici. Sloj 45 ga drži iznad
- * sadržaja i pčele, ali ispod menija/korpe (50), zaglavlja (60), prelaza (90)
- * i uvodne zavjese (100). Ne hvata klikove nad sadržajem ispod sebe.
- */
-.portfolio-watermark {
-  position: fixed;
-  right: max(0.75rem, env(safe-area-inset-right));
-  bottom: max(0.75rem, env(safe-area-inset-bottom));
-  z-index: 45;
-  display: grid;
-  justify-items: end;
-  width: max-content;
-  max-width: calc(100vw - 1.5rem);
-  padding: 0.9rem 1.1rem 0.84rem;
-  border: 1px solid rgba(136, 91, 39, 0.2);
-  border-radius: 0.35rem 1.15rem 0.35rem 0.35rem;
-  background: rgba(252, 240, 220, 0.9);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0.35rem 1.4rem rgba(136, 91, 39, 0.12);
-  color: var(--brown);
-  font-size: 0.78rem;
-  line-height: 1.4;
-  letter-spacing: 0.02em;
-  text-align: right;
-  pointer-events: none;
-}
-
-.portfolio-watermark strong {
-  margin-bottom: 0.08rem;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.98rem;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-}
-
-@media (max-width: 480px) {
-  .portfolio-watermark {
-    right: max(0.5rem, env(safe-area-inset-right));
-    bottom: max(0.5rem, env(safe-area-inset-bottom));
-    max-width: calc(100vw - 1rem);
-    padding: 0.68rem 0.78rem 0.64rem;
-    font-size: 0.66rem;
-  }
-
-  .portfolio-watermark strong {
-    font-size: 0.82rem;
   }
 }
 
@@ -6411,6 +6617,19 @@ a.pecat:focus-visible img {
   .izdvojeno__red:hover .izdvojeno__foto,
   .izdvojeno__slika:focus-within .izdvojeno__foto {
     transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-land__actions {
+    width: 100%;
+  }
+
+  .hero-land__cta {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    max-width: 12rem;
   }
 }
 

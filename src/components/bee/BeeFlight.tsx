@@ -138,7 +138,9 @@ export default function BeeFlight() {
     const bee = beeRef.current;
     if (!layer || !bee) return;
 
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const still =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      window.matchMedia('(pointer: coarse)').matches;
 
     /**
      * Mjesto uz ime u heroju, dok se heroj vidi. Kad prodje — `null`, pa

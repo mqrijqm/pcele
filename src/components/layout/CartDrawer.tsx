@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import TransitionLink from '@/components/ui/TransitionLink';
 import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import { useEffect, useRef } from 'react';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
 import { formatPrice } from '@/data/products';
@@ -11,6 +12,22 @@ import { useCart } from '@/lib/cart';
 export default function CartDrawer({ locale }: { locale: Locale }) {
   const t = createTranslator(locale);
   const cart = useCart();
+  const closeButton = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!cart.isOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') cart.close();
+    };
+
+    window.addEventListener('keydown', onKey);
+    closeButton.current?.focus();
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      previous?.focus();
+    };
+  }, [cart.isOpen, cart.close]);
 
   return (
     // The wrapper clips the off-screen drawer so it never widens the document.
@@ -26,6 +43,8 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
         role="dialog"
         aria-modal="true"
         aria-label={t('cart.title')}
+        aria-hidden={!cart.isOpen}
+        inert={!cart.isOpen}
         className={`absolute right-0 top-0 h-full w-full max-w-md bg-[var(--paper)] shadow-2xl transition-transform duration-500 ease-out-expo ${
           cart.isOpen ? 'pointer-events-auto translate-x-0' : 'translate-x-full'
         }`}
@@ -34,9 +53,10 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
           <div className="flex items-center justify-between border-b border-[#885B27]/15 px-6 py-4">
             <h2 className="text-xl text-[#885B27]">{t('cart.title')}</h2>
             <button
+              ref={closeButton}
               type="button"
               onClick={cart.close}
-              aria-label="Close cart"
+              aria-label={locale === 'sr' ? 'Zatvori korpu' : 'Close cart'}
               className="text-[#885B27] transition-colors hover:text-[#885B27]"
             >
               <X className="h-5 w-5" />
@@ -61,7 +81,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
               <ul className="divide-y divide-[#885B27]/15">
                 {cart.items.map((item) => (
                   <li key={item.variantId} className="flex gap-4 py-5">
-                    <div className="relative h-24 w-20 shrink-0 plate overflow-hidden bg-[#885B27]/[0.06]">
+                    <div className="relative h-24 w-20 shrink-0 overflow-hidden border border-[#885B27]/25 bg-transparent">
                       <Image src={item.image} alt={item.name} fill className="object-contain p-2" />
                     </div>
                     <div className="flex flex-1 flex-col">
@@ -88,7 +108,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           <button
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity - 1)}
-                            aria-label="Decrease quantity"
+                            aria-label={locale === 'sr' ? 'Smanji količinu' : 'Decrease quantity'}
                             className="flex h-8 w-8 items-center justify-center rounded-l-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
                           >
                             <Minus className="h-3.5 w-3.5" />
@@ -99,7 +119,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           <button
                             type="button"
                             onClick={() => cart.setQuantity(item.variantId, item.quantity + 1)}
-                            aria-label="Increase quantity"
+                            aria-label={locale === 'sr' ? 'Povećaj količinu' : 'Increase quantity'}
                             className="flex h-8 w-8 items-center justify-center rounded-r-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
                           >
                             <Plus className="h-3.5 w-3.5" />

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // The original site serves its /images/* assets untouched — keep that behaviour so
-  // paths stay identical and no image CDN round-trip is needed.
+  // Landing photographs are already compressed WebP files and are preloaded
+  // under these exact URLs, so Image must reuse that browser cache directly.
   images: { unoptimized: true },
 };
 

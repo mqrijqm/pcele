@@ -7,7 +7,15 @@ import Image from 'next/image';
  * se samo `src` ispod (ili se `Image` zamijeni inline `<svg>`) i sav efekat
  * (pojava, animacija, mjerenje) ostaje kakav jeste.
  */
-export default function MenuSun({ className }: { className?: string }) {
+export default function MenuSun({
+  className,
+  reversed = false,
+  white = false,
+}: {
+  className?: string;
+  reversed?: boolean;
+  white?: boolean;
+}) {
   return (
     <Image
       src="/images/brand/sunce.svg"
@@ -16,6 +24,10 @@ export default function MenuSun({ className }: { className?: string }) {
       width={200}
       height={219}
       className={className}
+      style={{
+        transform: reversed ? 'scaleX(-1)' : undefined,
+        filter: white ? 'brightness(0) invert(1)' : undefined,
+      }}
     />
   );
 }

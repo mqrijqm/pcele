@@ -127,8 +127,8 @@ export default function Apiary({ locale }: { locale: Locale }) {
             preload="metadata"
             aria-label={t.alt}
           >
-            <source src="/images/real/pcelinjak-mracaj.webm" type="video/webm" />
-            <source src="/images/real/pcelinjak-mracaj.mp4" type="video/mp4" />
+            <source src="/images/real/pcelinjak-mracaj-opt.webm" type="video/webm" />
+            <source src="/images/real/pcelinjak-mracaj-opt.mp4" type="video/mp4" />
           </video>
 
           <div className="apiary__scrim" aria-hidden="true" />

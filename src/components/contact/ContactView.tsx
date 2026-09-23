@@ -68,7 +68,11 @@ export default function ContactView({ locale }: { locale: Locale }) {
                   <span className="font-display text-[5rem] font-medium leading-none tracking-[-0.02em] text-[#885B27] sm:text-[7.5rem] lg:text-[9.5rem]">
                     {copy.heading}
                   </span>
-                  <MenuSun className="mx-8 h-10 w-auto shrink-0 sm:mx-12 sm:h-14" />
+                  <MenuSun
+                    className="mx-8 h-10 w-auto shrink-0 sm:mx-12 sm:h-14"
+                    reversed
+                    white
+                  />
                 </span>
               ))}
             </span>

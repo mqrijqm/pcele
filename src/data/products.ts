@@ -8,7 +8,6 @@ export type Product = {
   order: number;
   category: 'honey' | 'other';
   image: string;
-  cardBg: string;
   variants: Variant[];
   name: Record<Locale, string>;
   tagline: Record<Locale, string>;
@@ -29,8 +28,7 @@ export const products: Product[] = [
     slug: 'bagremov-med-1kg',
     order: 1,
     category: 'honey',
-    image: '/images/proizvodi/bagremov-1kg.webp',
-    cardBg: 'var(--shot)',
+    image: '/images/proizvodi/bagremov-1kg-new.png',
     variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 40, stock: 50 }],
     name: {
       sr: 'Bagremov med, 1 kg',
@@ -49,8 +47,7 @@ export const products: Product[] = [
     slug: 'bagremov-med-500g',
     order: 2,
     category: 'honey',
-    image: '/images/proizvodi/bagremov-500g.webp',
-    cardBg: '#FCF0DC',
+    image: '/images/proizvodi/bagremov-500g-new.png',
     variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
@@ -71,8 +68,7 @@ export const products: Product[] = [
     category: 'honey',
     // TODO: privremeno studijski render — fotografija tegle od 1 kg jos nije
     // snimljena. Ostale tri kartice su prave fotografije.
-    image: '/images/mockups/jar-front-studio.webp',
-    cardBg: 'var(--shot)',
+    image: '/images/proizvodi/livadski-1kg-new.png',
     variants: [{ id: 'livadski-1kg', title: '1 kg', price: 32, stock: 60 }],
     name: {
       sr: 'Livadski med, 1 kg',
@@ -91,8 +87,7 @@ export const products: Product[] = [
     slug: 'livadski-med-500g',
     order: 4,
     category: 'honey',
-    image: '/images/proizvodi/livadski-500g.webp',
-    cardBg: '#FCF0DC',
+    image: '/images/proizvodi/livadski-500g-new.png',
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
@@ -114,10 +109,7 @@ export const products: Product[] = [
     // pojavljuje i filter "Ostalo": grid nudi kategoriju samo ako u njoj
     // stvarno ima nesto.
     category: 'other',
-    image: '/images/proizvodi/propolis-20ml.webp',
-    // Snimak nosi svoju ravnu podlogu, pa je i kartica te boje — inace bi se
-    // vidio pravougaonik fotografije unutar kartice.
-    cardBg: '#FCF0DC',
+    image: '/images/proizvodi/propolis-20ml-new.png',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'propolis-20ml', title: '20 ml', price: 12, stock: 40 }],
     name: {
@@ -137,9 +129,7 @@ export const products: Product[] = [
     slug: 'imuno-mix-450g',
     order: 6,
     category: 'other',
-    image: '/images/proizvodi/imuno-mix-450g.webp',
-    // Kao i kod propolisa: podloga kartice prati podlogu snimka.
-    cardBg: '#FCF0DC',
+    image: '/images/proizvodi/imuno-mix-450g-new.png',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'imuno-mix-450', title: '450 g', price: 20, stock: 60 }],
     name: {

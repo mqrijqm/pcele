@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import TransitionLink from '@/components/ui/TransitionLink';
 import ImagePlaceholder from './ImagePlaceholder';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -41,7 +42,17 @@ const OMJER: Record<Slika['omjer'], number> = {
  * Na telefonu se ne pinuje: tamo traka ostaje obican vodoravni niz koji se
  * prevlaci prstom, jer pinovanje na uskom kadru pojede citav ekran.
  */
-export default function Rail({ slike, aria }: { slike: Slika[]; aria: string }) {
+export default function Rail({
+  slike,
+  aria,
+  productsHref,
+  productsLabel,
+}: {
+  slike: Slika[];
+  aria: string;
+  productsHref?: string;
+  productsLabel?: string;
+}) {
   const wrap = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
@@ -95,6 +106,16 @@ export default function Rail({ slike, aria }: { slike: Slika[]; aria: string }) 
           ))}
         </div>
       </div>
+      {productsHref && productsLabel && (
+        <TransitionLink
+          href={productsHref}
+          aria-label={productsLabel}
+          className="pcl-rail__products-badge"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/brand/proizvodiii.svg" alt="" aria-hidden="true" />
+        </TransitionLink>
+      )}
     </div>
   );
 }

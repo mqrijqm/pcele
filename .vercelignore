@@ -1,0 +1,6 @@
+.git
+.next
+.ref
+node_modules
+recon
+*.log

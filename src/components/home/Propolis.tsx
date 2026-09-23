@@ -226,12 +226,12 @@ export default function Propolis({ locale }: { locale: Locale }) {
             biti istog reda — zlatni se na papiru gubio uz nju.
           */}
           <TransitionLink
-            className="propolis__znak pecat"
+            className="brand-cta brand-cta--seal propolis__znak pecat"
             href={localeHref(locale, '/products')}
             aria-label={`${t.znakAlt} — ${home.znakCta[locale]}`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
+            <img className="brand-cta__art" src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
           </TransitionLink>
 
           {/*

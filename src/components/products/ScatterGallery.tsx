@@ -1,13 +1,15 @@
 ﻿'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 import ImageSlot from '@/components/products/ImageSlot';
 import SplitTitle from '@/components/products/SplitTitle';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 /**
  * Rasuti snimci preko pune plohe, sa naslovom u sredini.
@@ -31,33 +33,41 @@ export default function ScatterGallery({
   id,
 }: {
   title: string;
-  lede: string;
-  slots: { slot: string; label: string }[];
+  lede?: string;
+  slots: { slot: string; label: string; image?: string }[];
   id?: string;
 }) {
   const root = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const el = root.current;
     if (!el) return;
 
     const mm = gsap.matchMedia();
 
-    mm.add('(prefers-reduced-motion: no-preference)', () => {
+    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
       const images = gsap.utils.toArray<HTMLElement>('.pe-scatter__image', el);
+      const titleNode = el.querySelector<HTMLElement>('.pe-scatter__content');
+      const xOffsets = [-150, -30, 160, -60, 130];
+      const yOffsets = [40, -110, -80, 140, 150];
 
-      /* Ulazak: ploha se otvori kad je pola u kadru. */
       const intro = gsap.timeline({
-        scrollTrigger: { trigger: el, start: 'top 60%', once: true },
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 82%',
+          end: 'top 18%',
+          scrub: 1,
+        },
       });
       intro.from(images, {
         opacity: 0,
-        scale: 0.92,
-        y: 40,
-        duration: 1.1,
+        scale: 0.84,
+        x: (index) => xOffsets[index] ?? 0,
+        y: (index) => yOffsets[index] ?? 80,
+        duration: 0.8,
         ease: 'power3.out',
-        stagger: 0.09,
-      });
+        stagger: 0.07,
+      }).from(titleNode, { opacity: 0, y: 28, duration: 0.35, ease: 'power2.out' }, 0.3);
 
       return () => {
         intro.scrollTrigger?.kill();
@@ -103,8 +113,24 @@ export default function ScatterGallery({
       };
     });
 
+    mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
+      gsap.from('.pe-scatter__image', {
+        opacity: 0,
+        scale: 0.88,
+        y: 36,
+        duration: 0.9,
+        stagger: 0.08,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 72%' },
+      });
+    });
+
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set(['.pe-scatter__image', '.pe-scatter__content'], { opacity: 1, x: 0, y: 0, scale: 1 });
+    });
+
     return () => mm.revert();
-  }, []);
+  }, { scope: root });
 
   return (
     <section data-snap="off" className="pe-scatter" ref={root} id={id}>
@@ -115,14 +141,22 @@ export default function ScatterGallery({
             key={item.slot}
             data-delta={i === 0 ? 0.5 : 0.75}
           >
-            <ImageSlot slot={item.slot} label={item.label} />
+            {item.image ? (
+              <Image src={item.image} alt="" fill sizes="(max-width: 767px) 42vw, 18vw" />
+            ) : (
+              <ImageSlot slot={item.slot} label={item.label} />
+            )}
           </span>
         ))}
       </div>
 
       <div className="pe-wrap--medium pe-scatter__content">
-        <SplitTitle text={title} className="pe-display pe-scatter__title" />
-        <p className="pe-body pe-scatter__lede reveal">{lede}</p>
+        <div className="pe-scatter__title-row">
+          <SplitTitle text={title} className="pe-display pe-scatter__title" />
+          {/* Crtež je maska obojena bojom naslova (papir), vidi `.pe-scatter__title-icon`. */}
+          <span className="pe-scatter__title-icon" aria-hidden="true" />
+        </div>
+        {lede ? <p className="pe-body pe-scatter__lede reveal">{lede}</p> : null}
       </div>
     </section>
   );

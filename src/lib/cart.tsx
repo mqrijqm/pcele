@@ -82,19 +82,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
+  const open = useCallback(() => setIsOpen(true), []);
+  const close = useCallback(() => setIsOpen(false), []);
+
   const value = useMemo<CartContextValue>(
     () => ({
       items,
       isOpen,
       count: items.reduce((sum, i) => sum + i.quantity, 0),
       subtotal: items.reduce((sum, i) => sum + i.price * i.quantity, 0),
-      open: () => setIsOpen(true),
-      close: () => setIsOpen(false),
+      open,
+      close,
       add,
       remove,
       setQuantity,
     }),
-    [items, isOpen, add, remove, setQuantity]
+    [items, isOpen, add, remove, setQuantity, open, close]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

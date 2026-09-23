@@ -194,29 +194,21 @@ const sr: Copy = {
         alt: 'Pčela na otvorenom dlanu',
         src: '/images/priroda/pcela-na-dlanu.webp',
         body:
-          'Pažljivim radom stari je pčelinjak vraćen u red u kojem je nekad bio, a društva koja ' +
-          'na njemu žive danas idu svojim godišnjim tokom bez našeg upletanja u pravo vrijeme. ' +
-          'Njihov se ritam vidi u sitnicama koje se skupe kroz sezonu:',
+          'Pčelinjak prati prirodan ritam sezone. Društva razvijamo mirno i reagujemo samo kada im je pomoć zaista potrebna.',
       },
       {
         heading: 'Otpornost',
         alt: 'Med teče iz vrcaljke u staklenu teglu',
         src: '/images/real/vrcaljka-tegla.webp',
         body:
-          'manje ali gušće zajednice, duboko ukorijenjena paša koja izdrži i sušu, i stari ' +
-          'satovi koji društvu služe kao zaliha kroz zimu — sve to zajedno daje otpornost koja ' +
-          'se poslije vidi u tegli: ujednačen kvalitet iz godine u godinu, jasna gustina i ' +
-          'sasvim prepoznatljivi',
+          'Jaka društva, raznovrsna paša i dovoljno zimskih zaliha daju stabilan med, jasne gustine i ujednačenog kvaliteta.',
       },
       {
         heading: 'Karakter',
         alt: 'Tegla livadskog meda na ogradnom stubu, iza nje pokošena livada i brdo',
         src: '/images/real/tegla-stub-livada.webp',
         body:
-          'mirisi koji dolaze od starosti društava i od toga što s njih uzimamo malo. Zaklonjen ' +
-          'od vjetra i tih veći dio dana, ovaj je obronak zapravo srce pčelinjaka, mjesto gdje ' +
-          'se pčelarsko znanje spaja sa strpljenjem zemlje i daje med prepoznatljiv, postojan i ' +
-          'uvijek isti po karakteru.',
+          'Zaklonjen obronak i umjerena berba čuvaju miris livade. Zato je naš med prepoznatljiv i postojan iz godine u godinu.',
       },
     ],
   },
@@ -372,26 +364,21 @@ const en: Copy = {
         alt: 'A bee on an open palm',
         src: '/images/priroda/pcela-na-dlanu.webp',
         body:
-          'Careful work has brought the old apiary back to the order it once had, and the ' +
-          'colonies living on it now follow their yearly course without our interference:',
+          'The apiary follows the season’s natural rhythm. We let each colony develop calmly and step in only when help is truly needed.',
       },
       {
         heading: 'Resilience',
         alt: 'Honey running from the extractor into a glass jar',
         src: '/images/real/vrcaljka-tegla.webp',
         body:
-          'smaller but denser colonies, deep-rooted forage that survives a drought, and old ' +
-          'combs that serve the colony as a reserve — together they give a resilience you later ' +
-          'see in the jar: steady quality year after year, clear body and',
+          'Strong colonies, varied forage and enough winter stores give the honey a clear body and dependable quality.',
       },
       {
         heading: 'Character',
         alt: 'A jar of meadow honey on a fence post, a mown meadow and a hill behind it',
         src: '/images/real/tegla-stub-livada.webp',
         body:
-          'aromas that come from the age of the colonies and from how little we take. Sheltered ' +
-          'and quiet, this slope is the true heart of the apiary, where beekeeping knowledge ' +
-          'meets the patience of the land and gives an honest, lasting honey.',
+          'A sheltered slope and modest harvest preserve the meadow’s aroma, giving the honey a lasting, recognizable character.',
       },
     ],
   },

@@ -73,6 +73,12 @@ export default function Preloader() {
       window.dispatchEvent(new Event('preloader:done'));
     };
 
+    if (document.documentElement.classList.contains('skip-preloader')) {
+      release();
+      setDone(true);
+      return;
+    }
+
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       release();
       setDone(true);
@@ -86,6 +92,12 @@ export default function Preloader() {
     const leave = () => {
       if (left || cancelled) return;
       left = true;
+
+      try {
+        window.sessionStorage.setItem('jevtic.preloaded', '1');
+      } catch {
+        /* Privatni režim može zabraniti storage; animacija i dalje radi. */
+      }
 
       tl = gsap.timeline({
         delay: 0.15,

@@ -1,328 +1,177 @@
 'use client';
 
 import Image from 'next/image';
-import {
-  Award,
-  Check,
-  Droplets,
-  Heart,
-  Leaf,
-  Minus,
-  Plus,
-  RotateCcw,
-  ShieldCheck,
-  ShoppingBag,
-  Truck,
-} from 'lucide-react';
+import { Check, Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
+import TransitionLink from '@/components/ui/TransitionLink';
 import { formatPrice, type Product } from '@/data/products';
-import { createTranslator, type Locale } from '@/i18n/config';
+import { localeHref, type Locale } from '@/i18n/config';
 import { useCart } from '@/lib/cart';
 import { useWishlist } from '@/lib/wishlist';
+import styles from './productDetail.module.css';
 
-const trustIcons = [Truck, ShieldCheck, RotateCcw, Award];
-const featureIcons = [Leaf, Droplets, Award, ShieldCheck, Heart];
-
-type Tab = 'description' | 'shipping' | 'reviews';
+const copy = {
+  sr: {
+    back: 'Nazad na proizvode', natural: 'Iz našeg pčelinjaka', vat: 'PDV uračunat',
+    size: 'Pakovanje', quantity: 'Količina', add: 'Dodaj u korpu', added: 'Dodano u korpu',
+    addWish: 'Sačuvaj', removeWish: 'Sačuvano', stock: 'Dostupno', gallerySoon: 'Nova fotografija uskoro',
+    containsEyebrow: 'Šta sadrži?', containsTitle: 'Jednostavan proizvod, poznatog porijekla.',
+    containsBody: 'Bez suvišnih dodataka i bez prečica. Svako pakovanje čuva karakter proizvoda, mjesta i sezone iz koje dolazi.',
+    infoEyebrow: 'Informacije o proizvodu', facts: ['Neto količina', 'Porijeklo', 'Čuvanje', 'Proizvođač'],
+    factValues: ['', 'Mračaj, Prnjavor', 'Na suvom i tamnom mjestu', 'Pčelarstvo Jevtić'],
+    reasonsEyebrow: 'Od košnice do stola', reasonsTitle: '5 razloga da izaberete naše proizvode',
+    reasons: [
+      ['01', 'Naše pčele', 'Proizvod počinje u košnicama o kojima brinemo kroz cijelu godinu.'],
+      ['02', 'Čisto porijeklo', 'Pčelinjaci su smješteni uz šume i livade oko Mračaja i Prnjavora.'],
+      ['03', 'Male serije', 'Punimo pažljivo i u manjim količinama, bez industrijskog pristupa.'],
+      ['04', 'Bez žurbe', 'Prirodni ritam pčela i sezone određuje kada je proizvod spreman.'],
+      ['05', 'Porodična tradicija', 'Znanje, rad i ukus prenosimo u porodici od 1980. godine.'],
+    ],
+    visualEyebrow: 'Galerija proizvoda', visualTitle: 'Priča koja se vidi u svakom detalju',
+    visualBody: 'Ovdje ostavljamo prostor za fotografije proizvoda, pčelinjaka i sezone. Nove kadrove možemo dodavati bez promjene dizajna stranice.',
+  },
+  en: {
+    back: 'Back to products', natural: 'From our apiary', vat: 'VAT included', size: 'Pack size',
+    quantity: 'Quantity', add: 'Add to cart', added: 'Added to cart', addWish: 'Save', removeWish: 'Saved',
+    stock: 'In stock', gallerySoon: 'New photograph coming soon', containsEyebrow: 'What is inside?',
+    containsTitle: 'A simple product with a known origin.',
+    containsBody: 'No unnecessary additions and no shortcuts. Every pack preserves the character of the product, place and season it comes from.',
+    infoEyebrow: 'Product information', facts: ['Net quantity', 'Origin', 'Storage', 'Producer'],
+    factValues: ['', 'Mračaj, Prnjavor', 'Keep in a cool, dark place', 'Jevtić Beekeeping'],
+    reasonsEyebrow: 'From hive to table', reasonsTitle: '5 reasons to choose our products',
+    reasons: [
+      ['01', 'Our bees', 'The product begins in hives we care for throughout the year.'],
+      ['02', 'Clear origin', 'Our apiaries sit beside the forests and meadows around Mračaj and Prnjavor.'],
+      ['03', 'Small batches', 'We fill each pack carefully and in small quantities, never industrially.'],
+      ['04', 'Never rushed', 'The natural rhythm of the bees and the season decides when a product is ready.'],
+      ['05', 'Family tradition', 'Knowledge, work and taste have stayed in our family since 1980.'],
+    ],
+    visualEyebrow: 'Product gallery', visualTitle: 'A story visible in every detail',
+    visualBody: 'This space is reserved for new product, apiary and seasonal photographs. New frames can be added without changing the page design.',
+  },
+} as const;
 
 export default function ProductDetail({ product, locale }: { product: Product; locale: Locale }) {
-  const t = createTranslator(locale);
+  const c = copy[locale];
   const cart = useCart();
   const wishlist = useWishlist();
-
   const [variantId, setVariantId] = useState(product.variants[0].id);
   const [quantity, setQuantity] = useState(1);
-  const [tab, setTab] = useState<Tab>('description');
   const [justAdded, setJustAdded] = useState(false);
-
-  const variant = product.variants.find((v) => v.id === variantId) ?? product.variants[0];
+  const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0];
   const saved = wishlist.has(product.slug);
-
-  const badges = [0, 1, 2, 3].map((index) => ({
-    title: t(`products.trustBadges.${index}.title`),
-    desc: t(`products.trustBadges.${index}.desc`),
-  }));
-
-  const features = [0, 1, 2, 3, 4].map((index) => t(`products.tabs.features.${index}`));
+  const facts = c.facts.map((label, index) => ({ label, value: index === 0 ? variant.title : c.factValues[index] }));
 
   function handleAdd() {
-    cart.add({
-      productSlug: product.slug,
-      variantId: variant.id,
-      variantTitle: variant.title,
-      name: product.name[locale],
-      image: product.image,
-      price: variant.price,
-    }, quantity);
+    cart.add({ productSlug: product.slug, variantId: variant.id, variantTitle: variant.title,
+      name: product.name[locale], image: product.image, price: variant.price }, quantity);
     setJustAdded(true);
     window.setTimeout(() => setJustAdded(false), 2000);
   }
 
   return (
-    <>
-      <div className="container section-padding-sm">
-        <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
-          <div>
-            <div className="relative aspect-square plate overflow-hidden border border-[#885B27]/15 bg-linen">
-              <div className="absolute left-4 top-4 z-10">
-                <span className="inline-block bg-[#885B27] px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-[#FCF0DC]">
-                  Premium
-                </span>
+    <main className={styles.page}>
+      <section className={styles.productHero}>
+        <TransitionLink href={localeHref(locale, '/products')} className={styles.backLink}>
+          <span aria-hidden="true">←</span> {c.back}
+        </TransitionLink>
+
+        <div className={styles.purchaseGrid}>
+          <div className={styles.galleryColumn}>
+            <div className={styles.mainImage}>
+              <span className={styles.imageIndex}>01 / 04</span>
+              <Image src={product.image} alt={product.name[locale]} fill priority
+                sizes="(max-width: 900px) 100vw, 54vw" className={styles.productImage} />
+            </div>
+            <div className={styles.thumbnailRail} aria-label={c.visualEyebrow}>
+              <div className={`${styles.thumbnail} ${styles.thumbnailActive}`}>
+                <Image src={product.image} alt="" fill sizes="10rem" className={styles.thumbImage} />
+                <span>01</span>
               </div>
-              <div className="relative flex h-full w-full items-center justify-center p-12">
-                <Image
-                  src={product.image}
-                  alt={product.name[locale]}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-contain"
-                />
-              </div>
+              {[2, 3, 4].map((slot) => (
+                <div className={styles.thumbnailPlaceholder} key={slot}>
+                  <span className={styles.slotNumber}>0{slot}</span><small>{c.gallerySoon}</small>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="border border-[#885B27]/15 bg-[var(--paper)] p-7 sm:p-9 lg:p-11 rounded-[0.6rem]">
-            <div className="mb-2">
-              <span className="inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-[#885B27]">
-                <Leaf className="h-4 w-4" />
-                {t('products.naturalBadge')}
-              </span>
-            </div>
-
-            <h1 className="font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] text-[#885B27] lg:text-6xl">
-              {product.name[locale]}
-            </h1>
-
-            <div className="mt-6 flex items-baseline gap-3">
-              <p className="text-3xl text-[#885B27]">{formatPrice(variant.price)}</p>
-              <span className="text-sm text-[#885B27]">{t('products.inclVat')}</span>
-            </div>
-
-            <p className="mt-6 text-base leading-relaxed text-[#885B27]">
-              {product.description[locale]}
-            </p>
-
-            <div className="my-8 h-px bg-[#885B27]/[0.06]" />
-
+          <div className={styles.productInfo}>
             <div>
-              <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#885B27]">
-                {t('products.size')}
-              </span>
-              <div className="flex flex-wrap gap-3">
-                {product.variants.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    onClick={() => setVariantId(option.id)}
-                    className={`rounded-full border px-6 py-3 text-sm font-medium transition-all duration-300 ${
-                      option.id === variant.id
-                        ? 'border-[#EEC660] bg-[#885B27] text-[#FCF0DC]'
-                        : 'border-[#885B27]/15 text-[#885B27] hover:border-[#EEC660] hover:text-[#885B27]'
-                    }`}
-                  >
-                    {option.title}
-                  </button>
-                ))}
-              </div>
+              <p className={styles.eyebrow}>{c.natural}</p>
+              <h1 data-no-type>{product.name[locale]}</h1>
+              <p className={styles.tagline}>{product.tagline[locale]}</p>
+              <div className={styles.priceRow}><strong>{formatPrice(variant.price)}</strong><span>{c.vat}</span></div>
+              <p className={styles.description}>{product.description[locale]}</p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end">
-              <div>
-                <span className="mb-3 block text-xs font-bold uppercase tracking-[0.2em] text-[#885B27]">
-                  {t('products.quantity')}
-                </span>
-                <div className="inline-flex items-center rounded-full border border-[#885B27]/15">
-                  <button
-                    type="button"
-                    disabled={quantity <= 1}
-                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    aria-label="Decrease quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-l-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27] disabled:opacity-50"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </button>
-                  <span className="flex h-10 w-12 items-center justify-center font-medium text-[#885B27]">
-                    {quantity}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setQuantity((q) => q + 1)}
-                    aria-label="Increase quantity"
-                    className="flex h-10 w-10 items-center justify-center rounded-r-full text-[#885B27] transition-colors hover:bg-linen hover:text-[#885B27]"
-                  >
-                    <Plus className="h-4 w-4" />
-                  </button>
+            <div className={styles.purchaseControls}>
+              <div className={styles.controlBlock}>
+                <span className={styles.controlLabel}>{c.size}</span>
+                <div className={styles.variants}>
+                  {product.variants.map((option) => (
+                    <button key={option.id} type="button" onClick={() => setVariantId(option.id)}
+                      className={option.id === variant.id ? styles.variantActive : styles.variant}>{option.title}</button>
+                  ))}
                 </div>
               </div>
-
-              <button
-                type="button"
-                onClick={handleAdd}
-                className="btn flex-1 sm:max-w-xs"
-              >
-                <ShoppingBag className="h-5 w-5" />
-                {justAdded ? t('products.added') : t('common.addToCart')}
-              </button>
-
-              <button
-                type="button"
-                aria-pressed={saved}
-                onClick={() => wishlist.toggle(product.slug)}
-                className={`flex h-14 shrink-0 items-center justify-center gap-2 whitespace-nowrap border px-6 text-sm font-semibold transition-all duration-300 active:scale-[0.98] ${
-                  saved
-                    ? 'border-[#EEC660] text-[#885B27]'
-                    : 'border-[#885B27]/15 text-[#885B27] hover:border-[#EEC660] hover:text-[#885B27]'
-                }`}
-              >
-                <Heart className={`h-4 w-4 ${saved ? 'fill-[#EEC660]' : ''}`} />
-                {saved ? t('wishlist.remove') : t('wishlist.add')}
-              </button>
-            </div>
-
-            <div className="mt-4">
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#885B27]">
-                <Check className="h-4 w-4 text-[#EEC660]" aria-hidden="true" />
-                {t('common.inStock')}
-              </span>
-            </div>
-
-            <div className="mt-10 grid grid-cols-2 border-t border-[#885B27]/15">
-              {badges.map((badge, index) => {
-                const Icon = trustIcons[index];
-                return (
-                  <div
-                    key={badge.title}
-                    className="flex items-start gap-3 border-b border-[#885B27]/15 py-4 odd:pr-4 even:border-l even:pl-4"
-                  >
-                    <div className="flex h-8 w-8 shrink-0 items-center justify-center text-[#885B27]">
-                      <Icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-wider text-[#885B27]">
-                        {badge.title}
-                      </p>
-                      <p className="mt-0.5 text-xs text-[#885B27]">{badge.desc}</p>
-                    </div>
+              <div className={styles.actionRow}>
+                <div className={styles.quantityBlock}>
+                  <span className={styles.controlLabel}>{c.quantity}</span>
+                  <div className={styles.quantity}>
+                    <button type="button" disabled={quantity <= 1} onClick={() => setQuantity((value) => Math.max(1, value - 1))} aria-label="Decrease quantity"><Minus aria-hidden="true" /></button>
+                    <span>{quantity}</span>
+                    <button type="button" onClick={() => setQuantity((value) => value + 1)} aria-label="Increase quantity"><Plus aria-hidden="true" /></button>
                   </div>
-                );
-              })}
+                </div>
+                <button type="button" onClick={handleAdd} className={styles.addButton}>
+                  <ShoppingBag aria-hidden="true" />{justAdded ? c.added : c.add}
+                </button>
+              </div>
+              <div className={styles.secondaryActions}>
+                <span><Check aria-hidden="true" /> {c.stock}</span>
+                <button type="button" aria-pressed={saved} onClick={() => wishlist.toggle(product.slug)}>
+                  <Heart className={saved ? styles.heartFilled : undefined} aria-hidden="true" />{saved ? c.removeWish : c.addWish}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="border-t border-[#885B27]/15">
-        <div className="container">
-          <div className="flex border-b border-[#885B27]/15">
-            {(
-              [
-                ['description', t('products.tabs.descriptionTab')],
-                ['shipping', t('products.tabs.shippingTab')],
-                ['reviews', t('products.tabs.reviewsTab')],
-              ] as [Tab, string][]
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setTab(id)}
-                className={`relative px-6 py-5 text-sm font-medium uppercase tracking-wider transition-colors ${
-                  tab === id ? 'text-[#885B27]' : 'text-[#885B27] hover:text-[#885B27]'
-                }`}
-              >
-                {label}
-                {tab === id && (
-                  <span className="absolute bottom-0 left-0 h-0.5 w-full bg-[#885B27]" />
-                )}
-              </button>
-            ))}
-          </div>
-
-          <div className="section-padding-sm">
-            {tab === 'description' && (
-              <div className="grid gap-16 lg:grid-cols-2">
-                <div>
-                  <h3 className="mb-6 text-2xl text-[#885B27]">
-                    {t('products.tabs.aboutProduct')}
-                  </h3>
-                  <div className="space-y-4 leading-relaxed text-[#885B27]">
-                    <p>{product.description[locale]}</p>
-                    <p>{t('products.tabs.qualityNote')}</p>
-                  </div>
-                </div>
-                <div>
-                  <h3 className="mb-6 text-2xl text-[#885B27]">
-                    {t('products.tabs.featuresTitle')}
-                  </h3>
-                  <ul className="space-y-4">
-                    {features.map((feature, index) => {
-                      const Icon = featureIcons[index];
-                      return (
-                        <li key={feature} className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#EEC660]/25">
-                            <Icon className="h-4 w-4 text-[#885B27]" />
-                          </div>
-                          <span className="text-sm text-[#885B27]">{feature}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            )}
-
-            {tab === 'shipping' && (
-              <div className="grid gap-16 lg:grid-cols-2">
-                <div>
-                  <h3 className="mb-6 text-2xl text-[#885B27]">
-                    {t('products.tabs.shippingInfoTitle')}
-                  </h3>
-                  <p className="leading-relaxed text-[#885B27]">
-                    {t('products.tabs.shippingInfoText')}
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-[#885B27]">
-                    <li>
-                      <span className="font-semibold text-[#885B27]">
-                        {t('products.tabs.standardDeliveryLabel')}
-                      </span>{' '}
-                      {t('products.tabs.standardDeliveryValue')}
-                    </li>
-                    <li>
-                      <span className="font-semibold text-[#885B27]">
-                        {t('products.tabs.expressDeliveryLabel')}
-                      </span>{' '}
-                      {t('products.tabs.expressDeliveryValue')}
-                    </li>
-                    <li>
-                      <span className="font-semibold text-[#885B27]">
-                        {t('products.tabs.freeShippingLabel')}
-                      </span>{' '}
-                      {t('products.freeShippingNote')}
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="mb-6 text-2xl text-[#885B27]">
-                    {t('products.tabs.returnPolicyTitle')}
-                  </h3>
-                  <p className="leading-relaxed text-[#885B27]">
-                    {t('products.tabs.returnPolicyText')}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {tab === 'reviews' && (
-              <div className="max-w-2xl">
-                <h3 className="mb-4 text-2xl text-[#885B27]">{t('reviews.heading')}</h3>
-                <p className="text-[#885B27]">{t('reviews.noReviewsYet')}</p>
-                <p className="mt-2 text-sm text-[#885B27]">{t('reviews.beFirst')}</p>
-              </div>
-            )}
-          </div>
+      <section className={styles.productStory}>
+        <div className={styles.storyIntro}>
+          <p className={styles.eyebrow}>{c.containsEyebrow}</p><h2>{c.containsTitle}</h2><p>{c.containsBody}</p>
         </div>
-      </div>
-    </>
+        <div className={styles.productFacts}>
+          <p className={styles.eyebrow}>{c.infoEyebrow}</p>
+          <dl>{facts.map((fact) => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>
+        </div>
+      </section>
+
+      <section className={styles.reasons}>
+        <div className={styles.reasonsHeader}>
+          <p className={styles.eyebrow}>{c.reasonsEyebrow}</p><h2>{c.reasonsTitle}</h2>
+          <Image src="/images/brand/sunce.svg" alt="" width={190} height={190} className={styles.sun} />
+        </div>
+        <div className={styles.reasonsList}>
+          {c.reasons.map(([index, title, body]) => (
+            <article className={styles.reason} key={index}><span>{index}</span><h3>{title}</h3><p>{body}</p></article>
+          ))}
+        </div>
+      </section>
+
+      <section className={styles.visualStory}>
+        <div className={styles.visualCopy}>
+          <p className={styles.eyebrow}>{c.visualEyebrow}</p><h2>{c.visualTitle}</h2><p>{c.visualBody}</p>
+        </div>
+        <div className={styles.futureGallery}>
+          <div className={styles.futureMain}><Image src={product.image} alt={product.name[locale]} fill sizes="58vw" className={styles.productImage} /></div>
+          <div className={styles.futureSlot}><span>02</span><small>{c.gallerySoon}</small></div>
+          <div className={styles.futureSlot}><span>03</span><small>{c.gallerySoon}</small></div>
+        </div>
+      </section>
+    </main>
   );
 }

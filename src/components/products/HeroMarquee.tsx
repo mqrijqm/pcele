@@ -20,8 +20,12 @@ gsap.registerPlugin(ScrollTrigger);
  */
 const UNITS = 4;
 
-export default function HeroMarquee({ title, note }: { title: string; note: string }) {
+export default function HeroMarquee({ title }: { title: string }) {
   const root = useRef<HTMLElement>(null);
+  const labels = title
+    .replace(/\.$/, '')
+    .split(/\s+(?:i|and)\s+/i)
+    .map((label) => label.toLocaleLowerCase());
 
   useEffect(() => {
     const el = root.current;
@@ -68,19 +72,18 @@ export default function HeroMarquee({ title, note }: { title: string; note: stri
           <div className="pe-hero__track">
             {Array.from({ length: UNITS }, (_, i) => (
               <span className="pe-hero__unit" key={i}>
-                <span className="pe-display">{title}</span>
-                <i>
-                  <Image src="/images/brand/sunce.svg" alt="" width={200} height={219} />
-                </i>
+                {labels.map((label, labelIndex) => (
+                  <span className="pe-hero__phrase" key={`${label}-${labelIndex}`}>
+                    <span className="pe-display">{label}</span>
+                    <i>
+                      <Image src="/images/brand/sunce.svg" alt="" width={200} height={219} />
+                    </i>
+                  </span>
+                ))}
               </span>
             ))}
           </div>
         </div>
-      </div>
-
-      <div className="pe-wrap pe-hero__foot">
-        <span className="pe-caption">{note}</span>
-        <span className="pe-caption">100% sirovo vrcano</span>
       </div>
     </section>
   );

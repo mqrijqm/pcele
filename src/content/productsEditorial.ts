@@ -14,7 +14,6 @@ import type { Locale } from '@/i18n/config';
 type Copy = {
   /* 01 — uvodni marquee */
   heroTitle: string;
-  heroNote: string;
 
   /* 02 — fotografia preko cijelog ekrana */
   bannerAlt: string;
@@ -81,6 +80,8 @@ type Copy = {
     label: string;
     heading: string;
     steps: { when: string; title: string; body: string }[];
+    /* Oznake dugmeta na videu, za čitače ekrana. */
+    video: { play: string; pause: string };
   };
 
   /* 09 — cuvanje i kristalizacija */
@@ -100,8 +101,7 @@ type Copy = {
 };
 
 const sr: Copy = {
-  heroTitle: 'Med i pčelinji proizvodi.',
-  heroNote: 'Mračaj · Prnjavor · od 1980.',
+  heroTitle: 'med i pčelinji proizvodi',
 
   bannerAlt: 'Pčelinjak u bagremovoj šumi, rano ljeto',
   bannerCta: 'Pogledaj tegle',
@@ -149,35 +149,34 @@ const sr: Copy = {
   },
 
   bagrem: {
-    label: 'Bagremov med',
+    label: 'Naš med',
     lede:
-      'Bagremov med vrcamo prvi, dok se šuma još bijeli. To je jedini med u godini koji ima svoj rok — desetak dana cvjetanja, i onda ga nema.',
+      'Naš med nastaje kroz cijelu sezonu, od prvog proljetnog cvata do pune ljetne livade. Svaku pašu vrcamo odvojeno, u malim serijama, da u tegli ostanu ukus, miris i karakter mjesta iz kojeg dolazi.',
     facts: [
-      { label: 'Paša', value: 'Maj–jun' },
-      { label: 'Ukus', value: 'Blag' },
-      { label: 'Boja', value: 'Svijetlozlatna' },
-      { label: 'Kristalizacija', value: 'Spora' },
+      { label: 'Pčelinjak', value: 'Mračaj' },
+      { label: 'Sezona', value: 'Proljeće–ljeto' },
+      { label: 'Obrada', value: 'Bez zagrijavanja' },
+      { label: 'Sastav', value: '100% med' },
     ],
   },
 
   why: {
-    title: 'Zašto naš bagrem?',
-    imageAlt: 'Bagremova grana u cvatu, uz tegla bagremovog meda',
+    title: 'Zašto naš med?',
+    imageAlt: 'Ručno otklapanje saća prije vrcanja meda',
     intro:
-      'Bagrem traje kratko i ne prašta. Ako se paša propusti, nema je do sljedećeg maja. Zato je cijela sezona posložena oko tih desetak dana.',
+      'Svaka tegla čuva ono što je sezona stvarno donijela.',
     list: [
-      'Kratka proljetna paša, bez kasnijih vrsta meda',
-      'Blag ukus, bez gorčine i bez jakog mirisa',
-      'Prirodno svijetla boja, bez zagrijavanja',
-      'Bez dodataka, bez boja i bez aroma',
-      'Direktno iz našeg pčelinjaka u Mračaju',
+      'Vlastiti pčelinjak u Mračaju',
+      'Svaka paša čuvana zasebno',
+      'Prirodna boja, miris i ukus',
+      'Bez dodataka, ručno punjeno',
     ],
     outro:
-      'Med se cijedi na hladno i odležava u tegli, bez zagrijavanja i bez filtriranja pod pritiskom. Zato vremenom kristališe — i to je jedini dokaz da u tegli nije ništa dirano.',
+      'Med cijedimo i ostavljamo da miruje bez zagrijavanja i filtriranja pod pritiskom. Tako u svakoj tegli ostaju prirodna aroma, boja i karakter paše. S vremenom može kristalisati — prirodan proces i znak da med nije nepotrebno obrađivan.',
   },
 
   features: [
-    { title: 'Bagremova paša', iconAlt: 'Grana bagrema u cvatu' },
+    { title: 'Svaka paša zasebno', iconAlt: 'Grana u cvatu' },
     { title: 'Od košnice do tegle', iconAlt: 'Tegla meda i košnica' },
   ],
 
@@ -191,63 +190,69 @@ const sr: Copy = {
   },
 
   others: {
-    title: 'Pčelinji proizvodi.',
-    lede:
-      'Osim meda, iz košnice izlaze još dvije stvari koje punimo sami: propolis i imuno mix. Male serije, iste košnice.',
+    title: 'meden.',
+    lede: '',
     alt: 'Propolis u bočici i imuno mix u tegli',
   },
 
   season: {
     label: 'Sezona u pčelinjaku',
     heading: 'Godina kod pčela.',
+    video: { play: 'Pusti video', pause: 'Zaustavi video' },
     steps: [
       {
         when: 'Mart–April',
         title: 'Priprema pčelinjaka',
         body:
-          'Pregledavamo košnice poslije zime, mijenjamo ramove, čistimo dna i hranimo zajednice koje su oslabile. Do prve paše moraju biti jake.',
+          'Pregledavamo košnice poslije zime, mijenjamo ramove, čistimo dna i hranimo zajednice koje su oslabile. Prvi topliji dani pokažu koliko je koja zajednica preživjela zimu. Svaku košnicu otvaramo samo koliko treba, da pčele ne izgube toplotu. Do prve paše moraju biti jake.',
       },
       {
         when: 'Maj',
         title: 'Bagremova paša',
         body:
-          'Desetak dana, i to je sve. Selimo košnice u bagremovu šumu prije nego što pupoljci puknu i ne diramo ih dok cvijet ne opadne.',
+          'Desetak dana, i to je sve. Selimo košnice u bagremovu šumu prije nego što pupoljci puknu i ne diramo ih dok cvijet ne opadne. Bagrem cvjeta kratko, pa jedan hladan ili kišovit dan može promijeniti cijelu berbu. Zato je bagremov med svake godine mala serija.',
       },
       {
         when: 'Jun–Jul',
         title: 'Livadska paša',
         body:
-          'Kad bagrem procvjeta i opadne, pčele prelaze na livade. Ovdje med nije jedna vrsta nego mješavina svega što cvjeta u krugu leta.',
+          'Kad bagrem procvjeta i opadne, pčele prelaze na livade. Ovdje med nije jedna vrsta nego mješavina svega što cvjeta u krugu leta — kamilice, maslačka, djeteline, lipe. Zato se livadski med razlikuje iz godine u godinu, prema tome šta je te sezone najviše cvjetalo. Ne miješamo ga sa medom iz druge sezone.',
       },
       {
         when: 'Jul',
         title: 'Vrcanje',
         body:
-          'Vrcamo samo zatvoreno saće. Ako med nije zreo, ne izlazi iz košnice — vratimo ram i čekamo još koji dan.',
+          'Vrcamo samo zatvoreno saće. Ako med nije zreo, ne izlazi iz košnice — vratimo ram i čekamo još koji dan. Saće otklapamo ručno, a ramove vrcamo bez zagrijavanja. Svaku pašu vrcamo posebno, da se u tegli ne pomiješa ono što nije trebalo.',
       },
       {
         when: 'Jul–Avgust',
         title: 'Cijeđenje i odležavanje',
         body:
-          'Med se cijedi na hladno, kroz cjedilo, bez zagrijavanja. Poslije toga odležava u tanku, dok se ne skine pjena i dok se okus ne slegne.',
+          'Med se cijedi na hladno, kroz cjedilo, bez zagrijavanja. Poslije toga odležava u tanku, dok se ne skine pjena i dok se okus ne slegne. Ne filtriramo ga pod pritiskom, da mu ne oduzmemo ono što nosi iz košnice. Koliko će odležavati ne određuje kalendar nego sam med.',
       },
       {
         when: 'Avgust',
         title: 'Punjenje',
         body:
-          'Punimo ručno, u staklo, iz slavine. Svaka tegla dobija etiketu s brojem serije i pašom iz koje dolazi.',
+          'Punimo ručno, u staklo, iz slavine. Svaka tegla dobija etiketu s brojem serije i pašom iz koje dolazi. Punimo u malim serijama, pa uvijek znamo kojoj paši i kojem dijelu sezone pripada svaka tegla. Teglu zatvaramo odmah po punjenju, dok je med čist i miran.',
       },
       {
         when: 'Septembar',
         title: 'Pakovanje',
         body:
-          'Tegle idu u kartonska ležišta, po jednu u svaki pretinac, da put ne pređu na staklo o staklo.',
+          'Tegle idu u kartonska ležišta, po jednu u svaki pretinac, da put ne pređu na staklo o staklo. Etiketu i zaštitu stavljamo rukom, teglu po teglu. Prije nego što krene dalje, svaka tegla se još jednom pregleda. Tako do vas stigne onakva kakva je izašla iz pčelinjaka.',
       },
       {
-        when: 'Oktobar',
-        title: 'Dostava',
+        when: 'Oktobar–Februar',
+        title: 'Zimovanje',
         body:
-          'Vozimo sami, u dogovoreno vrijeme. Za veće količine se dogovorimo oko lokacije i termina.',
+          'Kad paša prestane, pčele se skupe u zimsku gromadu i miruju. Ostavljamo im dovoljno njihovog meda da preko zime imaju od čega da žive. Košnice ne otvaramo, samo ih obilazimo i slušamo da li su mirne. Zimi popravljamo ramove i opremu, da do proljeća sve bude spremno.',
+      },
+      {
+        when: 'Godinu dana poslije',
+        title: 'Tegla na vašem stolu',
+        body:
+          'Med u tegli i godinu dana poslije ostaje ono što je bio na dan punjenja. S vremenom se šećeri vežu u sitne kristale, med posvijetli i postane gušći — znak da nije zagrijavan. Teglu držite na sobnoj temperaturi, dalje od sunca, a ako se stvrdne, polako je zagrijte u mlakoj vodi. A mi smo tada već opet u pčelinjaku, na početku nove sezone.',
       },
     ],
   },
@@ -272,8 +277,7 @@ const sr: Copy = {
 };
 
 const en: Copy = {
-  heroTitle: 'Honey and bee products.',
-  heroNote: 'Mracaj · Prnjavor · since 1980.',
+  heroTitle: 'honey and bee products',
 
   bannerAlt: 'An apiary in an acacia forest, early summer',
   bannerCta: 'See the jars',
@@ -320,35 +324,34 @@ const en: Copy = {
   },
 
   bagrem: {
-    label: 'Acacia honey',
+    label: 'Our honey',
     lede:
-      'Acacia is the first honey we spin, while the forest is still white. It is the only honey in the year with a deadline — ten days of flowering, and then it is gone.',
+      'Our honey is made across the whole season, from the first spring blossom to the full summer meadow. We extract every forage separately in small batches, keeping the taste, scent and character of its place in every jar.',
     facts: [
-      { label: 'Forage', value: 'May–June' },
-      { label: 'Taste', value: 'Mild' },
-      { label: 'Colour', value: 'Light gold' },
-      { label: 'Crystallising', value: 'Slow' },
+      { label: 'Apiary', value: 'Mracaj' },
+      { label: 'Season', value: 'Spring–summer' },
+      { label: 'Process', value: 'Never heated' },
+      { label: 'Contents', value: '100% honey' },
     ],
   },
 
   why: {
-    title: 'Why our acacia?',
-    imageAlt: 'An acacia branch in bloom beside a jar of acacia honey',
+    title: 'Why our honey?',
+    imageAlt: 'Honey from our apiary in Mracaj',
     intro:
-      'Acacia is short and unforgiving. Miss the forage and it is gone until next May. The whole season is built around those ten days.',
+      'Every jar follows the rhythm of the bees and the plants flowering around our apiary. We do not force the same taste every year — we preserve what the season truly brings.',
     list: [
-      'A short spring forage, with no later honeys mixed in',
-      'Mild taste, with no bitterness and no heavy scent',
-      'Naturally light colour, never heated',
-      'No additives, no colourings, no flavourings',
-      'Straight from our apiary in Mracaj',
+      'Honey from our own apiary in Mracaj',
+      'Every forage extracted and kept separately',
+      'The natural colour, scent and taste of each season',
+      'No additives, filled by hand',
     ],
     outro:
-      'The honey is cold-extracted and left to settle in the jar, with no heating and no pressure filtering. That is why it crystallises in time — and that is the only proof that nothing in the jar has been touched.',
+      'We strain the honey and leave it to settle without heating or pressure filtering. Its natural aroma, colour and the character of each forage remain in every jar. It may crystallise over time — a natural process and a sign that the honey has not been unnecessarily processed.',
   },
 
   features: [
-    { title: 'A spring forage', iconAlt: 'An acacia branch in bloom' },
+    { title: 'Each forage kept separate', iconAlt: 'A flowering branch' },
     { title: 'From hive to jar', iconAlt: 'A jar of honey and a hive' },
   ],
 
@@ -362,63 +365,69 @@ const en: Copy = {
   },
 
   others: {
-    title: 'Bee products.',
-    lede:
-      'Beyond honey, two more things come out of the hive and we pack both ourselves: propolis and imuno mix. Small batches, the same hives.',
+    title: 'honey.',
+    lede: '',
     alt: 'Propolis in a dropper bottle and imuno mix in a jar',
   },
 
   season: {
     label: 'The season in the apiary',
     heading: 'A year with the bees.',
+    video: { play: 'Play video', pause: 'Pause video' },
     steps: [
       {
         when: 'March–April',
         title: 'Preparing the apiary',
         body:
-          'We go through the hives after winter, swap frames, clean the floors and feed the colonies that came out weak. They have to be strong before the first forage.',
+          'We go through the hives after winter, swap frames, clean the floors and feed the colonies that came out weak. The first warm days show how well each colony got through the cold. We open each hive only as long as we need to, so the bees do not lose their warmth. They have to be strong before the first forage.',
       },
       {
         when: 'May',
         title: 'Acacia forage',
         body:
-          'Ten days, and that is all. We move the hives into the acacia forest before the buds open and leave them alone until the blossom falls.',
+          'Ten days, and that is all. We move the hives into the acacia forest before the buds open and leave them alone until the blossom falls. Acacia flowers briefly, so a single cold or rainy day can change the whole harvest. That is why acacia honey is a small batch every year.',
       },
       {
         when: 'June–July',
         title: 'Meadow forage',
         body:
-          'Once the acacia has flowered and dropped, the bees move to the meadows. This honey is not a single variety but a mix of everything in flying range.',
+          'Once the acacia has flowered and dropped, the bees move to the meadows. This honey is not a single variety but a mix of everything in flying range — camomile, dandelion, clover, linden. That is why meadow honey differs from year to year, by whatever flowered most that season. We never blend it with honey from another season.',
       },
       {
         when: 'July',
         title: 'Extraction',
         body:
-          'We only spin sealed comb. If the honey is not ripe it does not leave the hive — the frame goes back and we wait a few more days.',
+          'We only spin sealed comb. If the honey is not ripe it does not leave the hive — the frame goes back and we wait a few more days. We uncap the comb by hand and spin the frames without heating. Every forage is spun separately, so nothing ends up in a jar that should not be there.',
       },
       {
         when: 'July–August',
         title: 'Straining and settling',
         body:
-          'The honey is cold-strained through a sieve, never heated. Then it settles in a tank until the foam is skimmed and the taste has come together.',
+          'The honey is cold-strained through a sieve, never heated. Then it settles in a tank until the foam is skimmed and the taste has come together. We do not pressure-filter it, so it keeps what it brings from the hive. How long it settles is decided by the honey, not the calendar.',
       },
       {
         when: 'August',
         title: 'Filling',
         body:
-          'We fill by hand, into glass, straight from the tap. Every jar gets a label with its batch number and the forage it came from.',
+          'We fill by hand, into glass, straight from the tap. Every jar gets a label with its batch number and the forage it came from. We fill in small batches, so we always know which forage and which part of the season each jar belongs to. The jar is closed right after filling, while the honey is clean and still.',
       },
       {
         when: 'September',
         title: 'Packing',
         body:
-          'Jars go into cardboard cradles, one per cell, so they never travel glass against glass.',
+          'Jars go into cardboard cradles, one per cell, so they never travel glass against glass. We put on the label and protection by hand, jar by jar. Before it goes any further, every jar is looked over once more. That way it reaches you just as it left the apiary.',
       },
       {
-        when: 'October',
-        title: 'Delivery',
+        when: 'October–February',
+        title: 'Wintering',
         body:
-          'We drive it ourselves, at a time we agree on. For larger quantities we arrange the location and the date together.',
+          'When the forage ends, the bees gather into a winter cluster and rest. We leave them enough of their own honey to live on through the cold. We do not open the hives — we only walk the rows and listen for a calm hum. Winter is also when we mend frames and equipment, so everything is ready by spring.',
+      },
+      {
+        when: 'A year later',
+        title: 'The jar on your table',
+        body:
+          'A year on, the honey in the jar is still what it was on the day we filled it. Over time the sugars bind into fine crystals and the honey lightens and thickens — a sign that it was never heated. Keep the jar at room temperature, away from sun, and if it sets hard, warm it slowly in lukewarm water. By then we are back in the apiary, at the start of a new season.',
       },
     ],
   },
@@ -444,6 +453,33 @@ const en: Copy = {
 
 export const productsEditorial: Record<Locale, Copy> = { sr, en };
 
+/**
+ * Snimak uz svaki korak "Godine kod pčela". Redoslijed je isti kao u
+ * `season.steps`: mart–april, maj, livadska paša, vrcanje, cijeđenje,
+ * punjenje, pakovanje, zimovanje, godinu dana poslije.
+ *
+ * Video se ne pušta sam — počinje tek kad se klikne na krug. `null` znači da
+ * korak još nema snimak i ostaje prazan sivi blok.
+ */
+export type SeasonMedia =
+  | { type: 'image'; src: string }
+  | { type: 'video'; src: string; poster: string };
+
+export const seasonMedia: (SeasonMedia | null)[] = [
+  { type: 'video', src: '/images/season/mart-april.mp4', poster: '/images/season/mart-april-poster.webp' },
+  { type: 'image', src: '/images/season/maj-bagrem.webp' },
+  { type: 'image', src: '/images/season/livadska-pasa.webp' },
+  { type: 'image', src: '/images/season/vrcanje.webp' },
+  { type: 'video', src: '/images/season/jul-avgust.mp4', poster: '/images/season/jul-avgust-poster.webp' },
+  /* Napunjene tegle — isti snimak koji stoji iznad podnožja na početnoj. */
+  { type: 'image', src: '/images/real/tegle-red.webp' },
+  { type: 'image', src: '/images/season/pakovanje.webp' },
+  /* TODO: zimovanje — zasad mirni arhivski snimak pčelinjaka; čeka pravu zimsku fotografiju. */
+  { type: 'image', src: '/images/real/pcelinjak-arhiva.webp' },
+  /* Tegla kod kuće, na stolu. */
+  { type: 'image', src: '/images/real/tegla-kafa-sto.webp' },
+];
+
 /** Imena polja za `data-image-slot`, na jednom mjestu. */
 export const imageSlots = {
   /* Snimak preko cijelog ekrana — ujedno i glavna fotografija bagrema. */
@@ -462,5 +498,6 @@ export const imageSlots = {
     'pcelinjak-proces-06',
     'pcelinjak-proces-07',
     'pcelinjak-proces-08',
+    'pcelinjak-proces-09',
   ],
 } as const;

@@ -14,7 +14,6 @@ import Preloader from '@/components/layout/Preloader';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
-import PortfolioWatermark from '@/components/layout/PortfolioWatermark';
 import HoneyTransitionProvider from '@/components/layout/HoneyTransition';
 import RevealObserver from '@/components/ui/RevealObserver';
 import HeadingTypewriter from '@/components/ui/HeadingTypewriter';
@@ -159,8 +158,11 @@ export default async function LocaleLayout({
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "var d=document.documentElement;d.classList.add('js-reveal','is-preloading');" +
-              "setTimeout(function(){d.classList.remove('is-preloading')},7000);",
+              "var d=document.documentElement,s=false;" +
+              "try{s=sessionStorage.getItem('jevtic.preloaded')==='1'||matchMedia('(pointer: coarse)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}" +
+              "d.classList.add('js-reveal');" +
+              "if(s){d.classList.add('skip-preloader')}else{d.classList.add('is-preloading');" +
+              "setTimeout(function(){d.classList.remove('is-preloading')},7000)}",
           }}
         />
       </head>
@@ -175,7 +177,6 @@ export default async function LocaleLayout({
               <Header locale={locale} />
               <main className="flex-1">{children}</main>
               <Footer locale={locale} />
-              <PortfolioWatermark locale={locale} />
               <CartDrawer locale={locale} />
             </WishlistProvider>
           </CartProvider>

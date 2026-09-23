@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
-import { ChevronRight } from 'lucide-react';
 
 import Declaration from '@/components/products/Declaration';
 import ProductDetail from '@/components/products/ProductDetail';
@@ -78,25 +77,6 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="border-b border-[#885B27]/15">
-        <div className="container py-4">
-          <nav className="flex items-center gap-2 text-xs text-[#885B27]">
-            <TransitionLink href={localeHref(locale, '/')} className="transition-colors hover:text-[#885B27]">
-              {t('nav.home')}
-            </TransitionLink>
-            <ChevronRight className="h-3 w-3" />
-            <TransitionLink
-              href={localeHref(locale, '/products')}
-              className="transition-colors hover:text-[#885B27]"
-            >
-              {t('products.breadcrumb')}
-            </TransitionLink>
-            <ChevronRight className="h-3 w-3" />
-            <span className="text-[#885B27]">{product.name[locale]}</span>
-          </nav>
-        </div>
-      </div>
-
       <ProductDetail product={product} locale={locale} />
 
       {/* Zasad je izvezena samo etiketa livadskog meda od 1 kg. */}
@@ -125,14 +105,14 @@ export default async function ProductPage({
                 href={localeHref(locale, `/products/${item.slug}`)}
                 className={`reveal stagger-${index + 1} group block`}
               >
-                <div className="plate overflow-hidden border border-[#885B27]/15 bg-[var(--paper)] shadow-sm transition-shadow duration-300 group-hover:shadow-md">
-                  <div className="relative aspect-[3/4] plate overflow-hidden bg-ivory">
+                <div className="overflow-hidden border border-[#885B27]/25 bg-transparent">
+                  <div className="relative aspect-[3/4] overflow-hidden border-b border-[#885B27]/25 bg-transparent">
                     <Image
                       src={item.image}
                       alt={item.name[locale]}
                       fill
                       sizes="(max-width: 640px) 100vw, 33vw"
-                      className="object-contain p-6 transition-transform duration-500 group-hover:scale-105"
+                      className="object-contain p-[12%] transition-transform duration-500 group-hover:scale-[1.02]"
                     />
                   </div>
                   <div className="p-6">

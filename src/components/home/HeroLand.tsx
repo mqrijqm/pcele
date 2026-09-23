@@ -3,15 +3,18 @@
 import TransitionLink from '@/components/ui/TransitionLink';
 import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ArrowUpRight, ShoppingBag } from 'lucide-react';
 
 import { localeHref, type Locale } from '@/i18n/config';
+import { useCart } from '@/lib/cart';
 
 const copy = {
   sr: {
     drawingAlt: 'Crtež livade oko Mračaja: niski brežuljci s drvoredima i grmljem',
     title: 'Iz naših pčelinjaka, pravo do vašeg stola.',
     lead: 'Sirov med iz sela nadomak Prnjavora.',
-    cta: 'Okusi slast',
+    cta: 'Kupi med',
+    cart: 'Korpa',
   },
   en: {
     drawingAlt: 'A drawing of the meadows around Mračaj: low hills lined with trees and shrubs',
@@ -19,7 +22,8 @@ const copy = {
     lead:
       'Raw family honey from our apiaries near Prnjavor. ' +
       'Nothing added, no sugar feeding — since 1980.',
-    cta: 'See our honeys',
+    cta: 'Shop honey',
+    cart: 'Cart',
   },
 } as const;
 
@@ -53,13 +57,14 @@ const DRAWING_INK = 0.7;
  * Isto je bilo i prije ove dorade, pa se ostatak strane — a `HeroJar` na to
  * racuna u svom komentaru — nije morao dirati.
  *
- * **Dugme.** Jedno je, i vodi na stranu s proizvodima. Kad izadje iz kadra,
- * isto to dugme se javi kao mala pilula u donjem desnom uglu — nikad oba
- * odjednom, o cemu vodi racuna `IntersectionObserver` nize.
+ * **Akcije.** Primarno dugme vodi pravo na proizvode, a drugo na punu stranicu
+ * korpe. Bočni drawer se iz heroja namjerno ne otvara.
  */
 export default function HeroLand({ locale }: { locale: Locale }) {
   const t = copy[locale];
   const href = localeHref(locale, '/products');
+  const cartHref = localeHref(locale, '/cart');
+  const cart = useCart();
 
   const heroRef = useRef<HTMLElement>(null);
 
@@ -146,14 +151,48 @@ export default function HeroLand({ locale }: { locale: Locale }) {
 
           <p className="hero-land__lead">{t.lead}</p>
 
-          <TransitionLink href={href} className="hero-land__cta" aria-label={t.cta}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/hero/okusi-slast.svg" alt="" aria-hidden="true" />
-          </TransitionLink>
+          <div className="hero-land__actions">
+            <TransitionLink
+              href={href}
+              className="brand-cta brand-cta--pill hero-land__cta hero-land__cta--primary"
+              aria-label={t.cta}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="brand-cta__art hero-land__cta-art"
+                src="/hero/cta-products.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <ArrowUpRight aria-hidden="true" />
+            </TransitionLink>
+
+            <TransitionLink
+              href={cartHref}
+              className="brand-cta brand-cta--pill hero-land__cta hero-land__cta--cart"
+              aria-label={`${t.cart}${cart.count ? ` (${cart.count})` : ''}`}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="brand-cta__art hero-land__cta-art"
+                src="/hero/cta-cart.svg"
+                alt=""
+                aria-hidden="true"
+              />
+              <ShoppingBag aria-hidden="true" />
+              {cart.count > 0 && <span className="hero-land__cart-count">{cart.count}</span>}
+            </TransitionLink>
+          </div>
         </div>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="hero-land__drawing" src="/hero/hero-pejzaz.svg" alt={t.drawingAlt} />
+        <img
+          className="hero-land__drawing"
+          src="/hero/hero-pejzaz-opt.webp"
+          alt={t.drawingAlt}
+          width="2400"
+          height="779"
+        />
     </section>
   );
 }

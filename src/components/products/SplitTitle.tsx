@@ -1,3 +1,5 @@
+import { Fragment } from 'react';
+
 /**
  * Naslov koji ulazi red po red, iz maske.
  *
@@ -34,12 +36,19 @@ export default function SplitTitle({
     >
       <span aria-hidden="true">
         {words.map((word, i) => (
-          <span className="pe-split__line" key={`${word}-${i}`}>
-            <span className="pe-split__word" style={{ '--word': i } as React.CSSProperties}>
-              {word}
+          <Fragment key={`${word}-${i}`}>
+            <span className="pe-split__line">
+              <span className="pe-split__word" style={{ '--word': i } as React.CSSProperties}>
+                {word}
+              </span>
             </span>
+            {/*
+              Razmak stoji IZVAN `.pe-split__line`. Taj element je `inline-block`,
+              a razmak na kraju inline-block-a browser odbaci — rijeci bi se
+              slijepile ("Zaštonaš med?").
+            */}
             {i < words.length - 1 ? ' ' : ''}
-          </span>
+          </Fragment>
         ))}
       </span>
     </Tag>

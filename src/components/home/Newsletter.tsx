@@ -51,12 +51,12 @@ export default function Newsletter({ locale }: { locale: Locale }) {
           </div>
 
           <TransitionLink
-            className="poziv__znak pecat"
+            className="brand-cta brand-cta--seal poziv__znak pecat"
             href={localeHref(locale, '/products')}
             aria-label={home.znakCta[locale]}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
+            <img className="brand-cta__art" src="/images/brand/pecat-okusi-tamni.svg" alt="" aria-hidden="true" />
           </TransitionLink>
         </div>
       </div>

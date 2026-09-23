@@ -15,14 +15,14 @@ type ShopCopy = (typeof productsEditorial)['sr']['shop'];
  * `productsEditorial`).
  */
 const productImages: Record<number, string> = {
-  0: '/images/proizvodi/tegla-1kg.webp',
-  1: '/images/proizvodi/tegla-500g.webp',
-  2: '/images/proizvodi/tegla-bagrem-1kg.webp',
-  3: '/images/proizvodi/tegla-bagrem-500g.webp',
-  4: '/images/proizvodi/propolis-20ml.webp',
-  5: '/images/proizvodi/imuno-mix-450g.webp',
-  6: '/images/real/imuno-mix-polen.webp',
-  7: '/images/real/sace-posuda.webp',
+  0: '/images/proizvodi/livadski-1kg-new.png',
+  1: '/images/proizvodi/livadski-500g-new.png',
+  2: '/images/proizvodi/bagremov-1kg-new.png',
+  3: '/images/proizvodi/bagremov-500g-new.png',
+  4: '/images/proizvodi/propolis-20ml-new.png',
+  5: '/images/proizvodi/imuno-mix-450g-new.png',
+  6: '/images/proizvodi/perga-10g-new.webp',
+  7: '/images/proizvodi/med-u-sacu-new.png',
 };
 
 const lifestyle = {
@@ -36,10 +36,7 @@ const lifestyle = {
  */
 function OvalLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <TransitionLink
-      href={href}
-      className="inline-flex items-center rounded-full border border-[#885B27]/40 px-8 py-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-[#885B27] transition-colors duration-300 hover:bg-[#885B27] hover:text-[var(--white-soft)]"
-    >
+    <TransitionLink href={href} className="btn btn--ghost pe-shop__button">
       {children}
     </TransitionLink>
   );
@@ -53,7 +50,7 @@ function OvalLink({ href, children }: { href: string; children: React.ReactNode 
  */
 export default function ProductShowcase({ locale, copy }: { locale: Locale; copy: ShopCopy }) {
   return (
-    <section className="border-y border-[#885B27]/20 bg-[#FDFBF7] text-[#885B27]">
+    <section className="pe-shop border-y border-[#885B27]/20 bg-[#FDFBF7] text-[#885B27]">
       {/* --- 01 · uvod: tekst lijevo, velika lifestyle fotografija desno --- */}
       <div className="grid lg:grid-cols-2">
         <div className="flex flex-col justify-between border-b border-[#885B27]/20 px-6 py-14 sm:px-10 lg:border-b-0 lg:border-r lg:px-14 lg:py-20">
@@ -90,7 +87,14 @@ export default function ProductShowcase({ locale, copy }: { locale: Locale; copy
                   className="flex items-center text-[11px] font-medium uppercase tracking-[0.3em] text-[#885B27]/70"
                 >
                   <span className="px-10">{natpis}</span>
-                  <span className="h-px w-12 bg-[#885B27]/40" />
+                  <Image
+                    src={i % 2 === 0 ? '/images/brand/sunce.svg' : '/images/brand/travcica.svg'}
+                    alt=""
+                    aria-hidden="true"
+                    width={34}
+                    height={34}
+                    className="h-8 w-8 shrink-0 object-contain"
+                  />
                 </span>
               ))}
             </span>
@@ -165,7 +169,7 @@ export default function ProductShowcase({ locale, copy }: { locale: Locale; copy
 
           <TransitionLink
             href="#proizvodi"
-            className="group mt-12 inline-flex w-fit items-center gap-3 text-xs font-semibold uppercase tracking-[0.3em] underline decoration-[#885B27]/40 underline-offset-8 transition-colors hover:decoration-[#885B27]"
+            className="btn group mt-12 w-fit"
           >
             {copy.final.cta}
             <ArrowRight
@@ -206,14 +210,14 @@ function ProductCard({
   const href = product.slug ? localeHref(locale, `/products/${product.slug}`) : '#proizvodi';
 
   return (
-    <TransitionLink href={href} className="group block bg-[#FDFBF7]">
-      <div className="relative aspect-[4/5] overflow-hidden bg-[#111008]">
+    <TransitionLink href={href} className="group block bg-white">
+      <div className="relative aspect-[4/5] overflow-hidden bg-white">
         <Image
           src={image}
           alt={product.slug ? `${product.name}, ${product.unit}` : product.name}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.045]"
+          className="object-contain p-[12%] transition-transform duration-700 ease-out group-hover:scale-[1.015]"
         />
       </div>
 

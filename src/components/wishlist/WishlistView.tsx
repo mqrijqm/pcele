@@ -53,8 +53,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                     className="group block"
                   >
                     <div
-                      className="relative flex aspect-[4/4.8] items-center justify-center plate overflow-hidden p-8"
-                      style={{ backgroundColor: product.cardBg }}
+                      className="relative flex aspect-[4/4.8] items-center justify-center overflow-hidden border border-[#885B27]/25 bg-transparent p-8"
                     >
                       <Image
                         src={product.image}

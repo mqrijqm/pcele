@@ -11,15 +11,14 @@ import CtaMovingImage from '@/components/products/CtaMovingImage';
 import FullBleed from '@/components/products/FullBleed';
 import HeroMarquee from '@/components/products/HeroMarquee';
 import MovingTitles from '@/components/products/MovingTitles';
-import ProductBand from '@/components/products/ProductBand';
 import ProductShowcase from '@/components/products/ProductShowcase';
 import ScatterGallery from '@/components/products/ScatterGallery';
 import SeasonTimeline from '@/components/products/SeasonTimeline';
 import StoryBlock from '@/components/products/StoryBlock';
 import WhyBlock from '@/components/products/WhyBlock';
 import { meta } from '@/content/pages';
-import { imageSlots, productsEditorial } from '@/content/productsEditorial';
-import { isLocale, localeHref, type Locale } from '@/i18n/config';
+import { imageSlots, productsEditorial, seasonMedia } from '@/content/productsEditorial';
+import { isLocale, type Locale } from '@/i18n/config';
 
 /**
  * Strana proizvoda.
@@ -53,26 +52,27 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
   return (
     <div className="pe bg-ivory header-offset">
       {/* 01 — naslov koji se krece preko cijele sirine */}
-      <HeroMarquee title={copy.heroTitle} note={copy.heroNote} />
+      <HeroMarquee title={copy.heroTitle} />
 
       {/* 02 — snimak preko cijelog ekrana, sa krugom koji vodi na proizvode */}
       <FullBleed
-        slot={imageSlots.banner}
+        image="/images/products-editorial/livadski-med-korpa.png"
         label={copy.bannerAlt}
         cta={copy.bannerCta}
         href="#proizvodi"
       />
 
       {/* 02b — e-commerce showcase: editorial katalog svih artikala */}
-      <ProductShowcase locale={locale} copy={copy.shop} />
 
       {/* 03 — bagremov med: natpis, krupna recenica, podaci */}
+      <div className="pe-editorial">
       <StoryBlock
         label={copy.bagrem.label}
         lede={copy.bagrem.lede}
-        facts={copy.bagrem.facts}
-        art={{ src: '/images/brand/bagremov-grana.svg', width: 1271, height: 1213 }}
-        artAlt="Grana bagrema u cvatu"
+        art={{ src: '/images/brand/sunce.svg', width: 320, height: 320 }}
+        artAlt={copy.why.imageAlt}
+        scrollReveal
+        highlightWords={locale === 'sr' ? ['proljetnog', 'ljetne', 'ukus', 'miris', 'karakter'] : ['spring', 'summer', 'taste', 'scent', 'character']}
       />
 
       {/* 04 — zasto nas bagrem */}
@@ -83,42 +83,38 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         intro={copy.why.intro}
         list={copy.why.list}
         outro={copy.why.outro}
+        image="/images/products-editorial/vrcanje-sace.jpg"
       />
 
       {/* 05 — dva krupna naslova koja ulaze sa strane */}
       <MovingTitles
         items={[
-          { ...copy.features[0], icon: '/images/brand/bagremov-grana.svg' },
+          { ...copy.features[0], icon: '/images/brand/travcica.svg', tint: true },
           { ...copy.features[1], icon: '/images/brand/teglica.svg' },
         ]}
       />
 
-      {/* 06 — livadski med, u pojasu u boji */}
-      <ProductBand
-        locale={locale}
-        label={copy.meadow.label}
-        heading={copy.meadow.heading}
-        body={copy.meadow.body}
-        cta={copy.meadow.cta}
-        href="/products/livadski-med-500g"
-        slot={imageSlots.meadow}
-        slotLabel={copy.meadow.imageAlt}
-      />
-
-      {/* 07 — ostali proizvodi, rasuti preko pune plohe */}
+      {/* 06 — medeni proizvodi, rasuti preko zute plohe */}
       <ScatterGallery
         id="proizvodi"
         title={copy.others.title}
-        lede={copy.others.lede}
-        slots={imageSlots.others.map((slot) => ({ slot, label: copy.others.alt }))}
+        slots={[
+          { slot: imageSlots.others[0], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-1.webp' },
+          { slot: imageSlots.others[1], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-2.webp' },
+          { slot: imageSlots.others[2], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-3.webp' },
+          { slot: imageSlots.others[3], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-4.webp' },
+          { slot: imageSlots.others[4], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-5.webp' },
+        ]}
       />
 
-      {/* 08 — sezona u pcelinjaku */}
+      {/* 07 — sezona u pcelinjaku */}
       <SeasonTimeline
         label={copy.season.label}
         heading={copy.season.heading}
         steps={copy.season.steps}
         slots={[...imageSlots.season]}
+        media={seasonMedia}
+        videoLabels={copy.season.video}
       />
 
       {/* 09 — cuvanje i kristalizacija */}
@@ -128,6 +124,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         body={copy.storage.body}
         facts={copy.storage.facts}
       />
+      </div>
+
+      <ProductShowcase locale={locale} copy={copy.shop} />
 
       {/* 10 — zavrsni poziv */}
       <CtaMovingImage

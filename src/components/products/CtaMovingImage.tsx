@@ -2,6 +2,7 @@
 
 import ImageSlot from '@/components/products/ImageSlot';
 import SplitTitle from '@/components/products/SplitTitle';
+import Image from 'next/image';
 
 /**
  * Zavrsni poziv.
@@ -28,18 +29,19 @@ export default function CtaMovingImage({
     <section data-snap="off" className="pe-cta">
       <div className="pe-cta__content">
         <SplitTitle text={title} className="pe-display pe-cta__title" />
-        <Link className="pe-pill pe-cta__button" href={href}>
-          {button}
-          <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
-            <path
-              d="M1 13 13 1M4.6 1H13v8.4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+        <Link
+          className="brand-cta brand-cta--pill pe-cta__button"
+          href={href}
+          aria-label={button}
+        >
+          <Image
+            className="brand-cta__art"
+            src="/hero/okusi-slast.svg"
+            alt=""
+            aria-hidden="true"
+            width={367}
+            height={136}
+          />
         </Link>
       </div>
 

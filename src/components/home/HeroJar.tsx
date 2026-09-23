@@ -166,7 +166,7 @@ export default function HeroJar({ locale }: { locale: Locale }) {
        * because stacked they would otherwise overlap.
        */
       mm.add(
-        '(prefers-reduced-motion: no-preference) and (orientation: portrait)',
+        '(prefers-reduced-motion: no-preference) and (orientation: portrait) and (min-width: 768px)',
         () => {
           const master = gsap.timeline({
             scrollTrigger: {

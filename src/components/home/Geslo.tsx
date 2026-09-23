@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, useEffect, useRef, type CSSProperties } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,9 +8,6 @@ import { home } from '@/content/pages';
 import type { Locale } from '@/i18n/config';
 
 gsap.registerPlugin(ScrollTrigger);
-
-type WordStyle = CSSProperties & { '--i': number };
-type LineStyle = CSSProperties & { '--n': number; '--p': number };
 
 export default function Geslo({ locale }: { locale: Locale }) {
   const t = home.geslo[locale];
@@ -30,23 +27,44 @@ export default function Geslo({ locale }: { locale: Locale }) {
     const section = root.current;
     const text = line.current;
     if (!section || !text) return;
+    const wordEls = Array.from(text.querySelectorAll<HTMLElement>('.geslo__w'));
+    if (!wordEls.length) return;
 
     const mm = gsap.matchMedia();
-    mm.add('(prefers-reduced-motion: reduce)', () => text.style.setProperty('--p', '1'));
+    mm.add('(prefers-reduced-motion: reduce)', () => {
+      gsap.set(wordEls, { opacity: 1 });
+      return () => gsap.set(wordEls, { clearProps: 'opacity' });
+    });
     mm.add('(prefers-reduced-motion: no-preference)', () => {
-      text.style.setProperty('--p', '0');
+      const setters = wordEls.map((word) => gsap.quickSetter(word, 'opacity'));
+      const render = (scrollProgress: number) => {
+        const progress = Math.min(1, scrollProgress / 0.82);
+        const count = wordEls.length;
+
+        setters.forEach((setOpacity, index) => {
+          const opacity = Math.min(
+            1,
+            Math.max(0.25, (progress * (count + 3) - index) / 3),
+          );
+          setOpacity(opacity);
+        });
+      };
+
+      render(0);
       const trigger = ScrollTrigger.create({
         trigger: section,
         start: 'top top',
         end: 'bottom bottom',
         scrub: true,
         invalidateOnRefresh: true,
-        onUpdate: ({ progress }) => {
-          // The last 18% holds the fully filled sentence before release.
-          text.style.setProperty('--p', String(Math.min(1, progress / 0.82)));
-        },
+        onRefresh: ({ progress }) => render(progress),
+        // The last 18% holds the fully filled sentence before release.
+        onUpdate: ({ progress }) => render(progress),
       });
-      return () => trigger.kill();
+      return () => {
+        trigger.kill();
+        gsap.set(wordEls, { clearProps: 'opacity' });
+      };
     });
 
     return () => mm.revert();
@@ -61,13 +79,11 @@ export default function Geslo({ locale }: { locale: Locale }) {
           className="geslo__line"
           ref={line}
           aria-hidden="true"
-          style={{ '--n': words.length, '--p': 0 } as LineStyle}
         >
           {words.map(({ word, accent }, index) => (
             <Fragment key={`${word}-${index}`}>
               <span
                 className={`geslo__w${accent ? ' geslo__accent' : ''}`}
-                style={{ '--i': index } as WordStyle}
               >
                 {word}
               </span>{' '}
