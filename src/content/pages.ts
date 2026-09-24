@@ -1242,37 +1242,6 @@ export const processStepImages = [
   '/images/real/punjenje-tegle.webp',
 ];
 
-// ------------------------------------------------------------ deklaracija ----
-// Verbatim from the jar label, so the site and the physical product agree.
-export const declaration = {
-  sr: {
-    eyebrow: 'Sa etikete',
-    heading: 'Deklaracija',
-    apiaryLabel: 'Broj pčelinjaka',
-    apiary: 'RS 0212729',
-    locationsLabel: 'Lokacije',
-    locations: 'Mračaj, Orašje, Otpočivaljka',
-    originLabel: 'Porijeklo',
-    origin: 'Republika Srpska',
-    usageLabel: 'Način upotrebe',
-    usage: 'Kristalizacija je prirodno svojstvo meda. Čuvati na suhom mjestu.',
-    labelAlt: 'Etiketa za livadski med, 1 kg',
-  },
-  en: {
-    eyebrow: 'From the label',
-    heading: 'Declaration',
-    apiaryLabel: 'Apiary number',
-    apiary: 'RS 0212729',
-    locationsLabel: 'Locations',
-    locations: 'Mračaj, Orašje, Otpočivaljka',
-    originLabel: 'Origin',
-    origin: 'Republika Srpska',
-    usageLabel: 'How to use',
-    usage: 'Crystallisation is a natural property of honey. Store in a dry place.',
-    labelAlt: 'Meadow honey label, 1 kg',
-  },
-} as const;
-
 // ---------------------------------------------------------- foto-pauze ------
 
 /**

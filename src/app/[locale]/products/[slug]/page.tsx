@@ -3,7 +3,6 @@ import Image from 'next/image';
 import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 
-import Declaration from '@/components/products/Declaration';
 import ProductDetail from '@/components/products/ProductDetail';
 import { formatPrice, getProduct, products } from '@/data/products';
 import { createTranslator, isLocale, locales, localeHref, type Locale } from '@/i18n/config';
@@ -76,14 +75,6 @@ export default async function ProductPage({
       />
 
       <ProductDetail product={product} locale={locale} />
-
-      {/* Zasad je izvezena samo etiketa livadskog meda od 1 kg. */}
-      <Declaration
-        locale={locale}
-        labelImage={
-          product.slug === 'livadski-med-1kg' ? '/images/brand/deklaracija-1kg.webp' : undefined
-        }
-      />
 
       <div className="border-t border-[#885B27]/15 bg-linen">
         <div className="container section-padding">
