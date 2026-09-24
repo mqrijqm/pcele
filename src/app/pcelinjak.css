@@ -696,17 +696,30 @@
   text-align: left;
 }
 
+.pcl-table tr {
+  border-bottom: 1px solid var(--pcl-hairline);
+}
+
+.pcl-table tr:first-child {
+  border-top: 1px solid var(--pcl-hairline);
+}
+
+/*
+ * Vrijednost moze biti i u tri reda ("plitko krecnjacko tlo sa ilovacom..."),
+ * pa nema fiksne visine reda: red raste s tekstom, a oznaka i vrijednost stoje
+ * uz gornju ivicu, ne jedna sredinom a druga na vrhu.
+ */
 .pcl-table th,
 .pcl-table td {
-  height: 35.2px;
-  padding: 0;
+  padding: 0.6rem 0;
   font-weight: 400;
   line-height: var(--pcl-row-lh);
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .pcl-table th {
-  width: 142.8px;
+  width: clamp(7.5rem, 9vw, 9.5rem);
+  padding-right: 1rem;
   font-size: var(--pcl-th);
   font-weight: 600;
   text-transform: uppercase;
@@ -718,13 +731,6 @@
   font-size: var(--pcl-td);
 }
 
-@media (min-width: 768px) {
-  .pcl-table th { width: 168px; }
-}
-
-@media (min-width: 1200px) {
-  .pcl-table th { width: 189.3px; }
-}
 
 /* ---------------------------------------------------------------------------
  * Dvije ploce: tekst ostaje slijeva, desna ploca (slike) prolaze u stranu.
@@ -739,7 +745,8 @@
 
 .pcl-hscroll__track {
   display: flex;
-  align-items: flex-start;
+  /* Galerija je nizi od teksta; u sredini izgleda uravnotezeno, uz vrh visi. */
+  align-items: center;
   will-change: transform;
 }
 
@@ -747,12 +754,48 @@
   flex: 0 0 100%;
 }
 
-/* Tekst i tabela — stoji na mjestu cijelo vrijeme, samo uzan. */
+.pcl-hscroll {
+  /* Lijeva ivica sadrzaja (kao ostale trake na strani), ne ivica ekrana. */
+  --pcl-hs-pad: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
+  /* Ne uze od 21rem: ispod toga tabela nema mjesta za dugacke vrijednosti. */
+  --pcl-hs-text: clamp(21rem, 40vw, 30rem);
+  --pcl-hs-gap: clamp(1rem, 2.5vw, 2.5rem);
+  /* Zona blijedjenja na lijevoj ivici prozora galerije; galerija pocinje tik iza nje. */
+  --pcl-hs-fade: 3.5rem;
+}
+
+/*
+ * Tekst i tabela — stoje na mjestu cijelo vrijeme. Sirina je: lijeva margina
+ * sadrzaja + kolona teksta + razmak do galerije. Kolona je dovoljno siroka da
+ * tabela ima mjesta za dugacke vrijednosti.
+ */
 .pcl-hscroll__panel--text {
   flex: 0 0 auto;
-  width: min(30rem, 44%);
-  padding-left: var(--pcl-gutter);
-  padding-right: clamp(2rem, 4vw, 4.5rem);
+  box-sizing: border-box;
+  width: calc(var(--pcl-hs-pad) + var(--pcl-hs-text) + var(--pcl-hs-gap));
+  padding-left: var(--pcl-hs-pad);
+  padding-right: var(--pcl-hs-gap);
+}
+
+.pcl-hscroll__sorta {
+  margin-bottom: 1rem;
+}
+
+/*
+ * Prozor galerije: zauzima ostatak reda i isijeca sve sto izadje iz njega, pa
+ * galerija klizi "ispod" teksta umjesto preko njega.
+ */
+.pcl-hscroll__window {
+  flex: 1 1 0;
+  min-width: 0;
+  overflow: hidden;
+  /*
+   * Slike ne nestaju naglo na ivici prozora nego blijede na zadnjih 3.5rem —
+   * inace se vide odsijecena slova ("n", "rati prirodan ritam"). Galerija u
+   * mirovanju pocinje iza te zone (padding-left ispod), pa prva slika stoji cijela.
+   */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--pcl-hs-fade));
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--pcl-hs-fade));
 }
 
 /* Galerija koja prolazi: kvadratna slika, pa tri stupca, sve u jednom redu. */
@@ -762,7 +805,17 @@
   display: flex;
   align-items: flex-start;
   gap: clamp(2rem, 3.5vw, 3.5rem);
+  padding-left: var(--pcl-hs-fade);
   padding-right: var(--pcl-gutter);
+}
+
+/* Bez kretanja nema pinovanja: prozor se lista prstom / tockicem umjesto da klizi sam. */
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .pcl-hscroll__window {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 .pcl-hscroll__kvadrat {
@@ -772,6 +825,7 @@
 
 /* Tanji uvod uz deblje zaglavlja tabele — kontrast tezina u istoj ploci. */
 .pcl-hscroll__uvod {
+  margin-bottom: 1.5rem;
   font-weight: 300;
 }
 
@@ -784,9 +838,16 @@
     padding-right: 0;
   }
 
+  .pcl-hscroll__window {
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
   .pcl-hscroll__panel--galerija {
     width: calc(100% - 2 * var(--pcl-gutter));
     margin-inline: auto;
+    padding-left: 0;
     padding-right: 0;
     flex-direction: column;
   }
@@ -799,7 +860,7 @@
     display: block;
     transform: none !important;
   }
-  .pcl-hscroll__panel + .pcl-hscroll__panel {
+  .pcl-hscroll__panel--text + .pcl-hscroll__window {
     margin-top: var(--pcl-lg);
   }
 }

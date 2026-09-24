@@ -17,10 +17,12 @@ gsap.registerPlugin(ScrollTrigger);
  * desnoj strani. Klik na crtez mijenja fotografiju — slajdovi se pretope,
  * bez biblioteke.
  *
- * **Vodoravna ploca.** Dok blok stoji zakacen za vrh kadra, tekst i tabela
- * ostaju na svom mjestu slijeva, a desna ploca (kvadratna slika i tri stupca)
- * prolazi u stranu dok njena zadnja slika ne stane uz tekst. Duzina skrola je
- * jednaka duzini puta te ploce, pa je kretanje po prstu.
+ * **Vodoravna ploca.** Dok je blok zakacen na sredini kadra, tekst i tabela
+ * ostaju na svom mjestu slijeva, a galerija (kvadratna slika i tri stupca)
+ * klizi u SVOM prozoru desno od teksta — prozor je isijeca uz tekst, pa slike
+ * nikad ne prelaze preko njega. Prije je galerija klizila preko teksta i
+ * prekrivala tabelu. Duzina skrola je jednaka duzini puta galerije, pa je
+ * kretanje po prstu.
  *
  * Na telefonu se pinovanje ne pali: ploce idu jedna pod drugu.
  */
@@ -41,12 +43,14 @@ export default function Pase({
   const hscroll = useRef<HTMLDivElement>(null);
   const panelTekst = useRef<HTMLDivElement>(null);
   const panelGalerija = useRef<HTMLDivElement>(null);
+  const okno = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrap = hscroll.current;
     const tekst = panelTekst.current;
     const galerija = panelGalerija.current;
-    if (!wrap || !tekst || !galerija) return;
+    const prozor = okno.current;
+    if (!wrap || !tekst || !galerija || !prozor) return;
 
     /* Vidi napomenu u `Hero.tsx` — `gsap.matchMedia` sam ciscen na uzem kadru. */
     const mm = gsap.matchMedia();
@@ -54,22 +58,20 @@ export default function Pase({
       "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
       () => {
         /*
-         * Tekst stoji na mjestu; klizi samo galerija. Put je koliko joj treba
-         * da njena zadnja slika stane tik uz tekst — i nista vise, pa se skrol
-         * ne gubi na praznoj voznji.
+         * Tekst stoji na mjestu; klizi samo galerija, unutar svog prozora. Put
+         * je koliko joj treba da njena zadnja slika stane uz desnu ivicu
+         * prozora — i nista vise, pa se skrol ne gubi na praznoj voznji.
          */
-        const put = () =>
-          Math.max(
-            0,
-            galerija.scrollWidth - (wrap.clientWidth - tekst.offsetWidth),
-          );
+        const put = () => Math.max(0, galerija.scrollWidth - prozor.clientWidth);
 
         gsap.to(galerija, {
           x: () => -put(),
           ease: "none",
           scrollTrigger: {
             trigger: wrap,
-            start: "top top",
+            // Blok se zakaci na sredini kadra, ne uz vrh: inace je pola ekrana
+            // ispod njega prazno dok galerija klizi.
+            start: "center center",
             end: () => `+=${put()}`,
             pin: true,
             scrub: true,
@@ -82,6 +84,16 @@ export default function Pase({
 
     return () => mm.revert();
   }, []);
+
+  /*
+   * Uvod i tabela su razlicite duzine po sorti, pa se visina bloka mijenja kad
+   * se klikne na drugi crtez. Pin je izmjeren na staroj visini; ponovo se mjeri
+   * odmah po promjeni (klik je uvijek iznad bloka, pa se skrol ne pomjera).
+   */
+  useEffect(() => {
+    const id = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(id);
+  }, [aktivna]);
 
   const p = lista[aktivna];
 
@@ -147,6 +159,8 @@ export default function Pase({
           <div className="pcl-hscroll__track">
             {/* tekst i tabela — ostaju na mjestu dok galerija prolazi */}
             <div className="pcl-hscroll__panel pcl-hscroll__panel--text" ref={panelTekst}>
+              {/* Ime sorte: crtezi su iznad, pa bez ovoga tekst ne kaze o cemu govori. */}
+              <p className="pcl-pretitle pcl-hscroll__sorta">{p.tab}</p>
               <p className="pcl-body pcl-hscroll__uvod">{p.uvod}</p>
               <table className="pcl-table" aria-label={tabelaAria}>
                 <tbody>
@@ -160,6 +174,8 @@ export default function Pase({
               </table>
             </div>
 
+            {/* prozor: isijeca galeriju uz tekst, da slike ne prelaze preko njega */}
+            <div className="pcl-hscroll__window" ref={okno}>
             {/* kvadratna slika i tri stupca — jedina ploca koja se pomjera */}
             <div className="pcl-hscroll__panel pcl-hscroll__panel--galerija" ref={panelGalerija}>
               <div className="pcl-hscroll__kvadrat">
@@ -180,6 +196,7 @@ export default function Pase({
                   </div>
                 ))}
               </div>
+            </div>
             </div>
           </div>
         </div>
