@@ -28,7 +28,7 @@ export const products: Product[] = [
     slug: 'bagremov-med-1kg',
     order: 1,
     category: 'honey',
-    image: '/images/proizvodi/bagremov-1kg-new.png',
+    image: '/images/proizvodi/bagremov-1kg-new.webp',
     variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 40, stock: 50 }],
     name: {
       sr: 'Bagremov med, 1 kg',
@@ -47,7 +47,7 @@ export const products: Product[] = [
     slug: 'bagremov-med-500g',
     order: 2,
     category: 'honey',
-    image: '/images/proizvodi/bagremov-500g-new.png',
+    image: '/images/proizvodi/bagremov-500g-new.webp',
     variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
@@ -68,7 +68,7 @@ export const products: Product[] = [
     category: 'honey',
     // TODO: privremeno studijski render — fotografija tegle od 1 kg jos nije
     // snimljena. Ostale tri kartice su prave fotografije.
-    image: '/images/proizvodi/livadski-1kg-new.png',
+    image: '/images/proizvodi/livadski-1kg-new.webp',
     variants: [{ id: 'livadski-1kg', title: '1 kg', price: 32, stock: 60 }],
     name: {
       sr: 'Livadski med, 1 kg',
@@ -87,7 +87,7 @@ export const products: Product[] = [
     slug: 'livadski-med-500g',
     order: 4,
     category: 'honey',
-    image: '/images/proizvodi/livadski-500g-new.png',
+    image: '/images/proizvodi/livadski-500g-new.webp',
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
@@ -109,7 +109,7 @@ export const products: Product[] = [
     // pojavljuje i filter "Ostalo": grid nudi kategoriju samo ako u njoj
     // stvarno ima nesto.
     category: 'other',
-    image: '/images/proizvodi/propolis-20ml-new.png',
+    image: '/images/proizvodi/propolis-20ml-new.webp',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'propolis-20ml', title: '20 ml', price: 12, stock: 40 }],
     name: {
@@ -129,7 +129,7 @@ export const products: Product[] = [
     slug: 'imuno-mix-450g',
     order: 6,
     category: 'other',
-    image: '/images/proizvodi/imuno-mix-450g-new.png',
+    image: '/images/proizvodi/imuno-mix-450g-new.webp',
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'imuno-mix-450', title: '450 g', price: 20, stock: 60 }],
     name: {

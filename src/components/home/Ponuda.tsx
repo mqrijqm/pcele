@@ -66,13 +66,13 @@ export const SORTE = {
     mjere: [
       {
         slug: 'livadski-med-1kg',
-        slika: '/images/proizvodi/livadski-1kg-new.png',
+        slika: '/images/proizvodi/livadski-1kg-new.webp',
         dimenzije: { sirina: 404, visina: 698 },
         visina: 100,
       },
       {
         slug: 'livadski-med-500g',
-        slika: '/images/proizvodi/livadski-500g-new.png',
+        slika: '/images/proizvodi/livadski-500g-new.webp',
         dimenzije: { sirina: 589, visina: 589 },
         visina: 84,
       },
@@ -88,13 +88,13 @@ export const SORTE = {
     mjere: [
       {
         slug: 'bagremov-med-1kg',
-        slika: '/images/proizvodi/bagremov-1kg-new.png',
+        slika: '/images/proizvodi/bagremov-1kg-new.webp',
         dimenzije: { sirina: 486, visina: 629 },
         visina: 100,
       },
       {
         slug: 'bagremov-med-500g',
-        slika: '/images/proizvodi/bagremov-500g-new.png',
+        slika: '/images/proizvodi/bagremov-500g-new.webp',
         dimenzije: { sirina: 450, visina: 597 },
         visina: 84,
       },

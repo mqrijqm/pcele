@@ -15,14 +15,14 @@ type ShopCopy = (typeof productsEditorial)['sr']['shop'];
  * `productsEditorial`).
  */
 const productImages: Record<number, string> = {
-  0: '/images/proizvodi/livadski-1kg-new.png',
-  1: '/images/proizvodi/livadski-500g-new.png',
-  2: '/images/proizvodi/bagremov-1kg-new.png',
-  3: '/images/proizvodi/bagremov-500g-new.png',
-  4: '/images/proizvodi/propolis-20ml-new.png',
-  5: '/images/proizvodi/imuno-mix-450g-new.png',
+  0: '/images/proizvodi/livadski-1kg-new.webp',
+  1: '/images/proizvodi/livadski-500g-new.webp',
+  2: '/images/proizvodi/bagremov-1kg-new.webp',
+  3: '/images/proizvodi/bagremov-500g-new.webp',
+  4: '/images/proizvodi/propolis-20ml-new.webp',
+  5: '/images/proizvodi/imuno-mix-450g-new.webp',
   6: '/images/proizvodi/perga-10g-new.webp',
-  7: '/images/proizvodi/med-u-sacu-new.png',
+  7: '/images/proizvodi/med-u-sacu-new.webp',
 };
 
 const lifestyle = {
