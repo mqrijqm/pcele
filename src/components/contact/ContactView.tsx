@@ -31,7 +31,19 @@ type Status = 'idle' | 'sending' | 'sent' | 'fallback' | 'error';
 
 const ERROR_COLOR = 'text-[#6B1F0C]'; // 7:1 na medenoj podlozi
 
-export default function ContactView({ locale }: { locale: Locale }) {
+export default function ContactView({
+  locale,
+  embedded = false,
+}: {
+  locale: Locale;
+  /**
+   * Ugrađeno u drugu stranu (npr. na dnu strane proizvoda) umjesto da bude
+   * cijela strana: nema razmaka za zaglavlje, a naslovi su `h2` — strana već
+   * ima svoj `h1`. Ima i sidro #kontakt.
+   */
+  embedded?: boolean;
+}) {
+  const Heading = embedded ? 'h2' : 'h1';
   const copy = simplePages.kontakt[locale];
   const formRef = useRef<HTMLFormElement>(null);
   const openedAt = useRef(0);
@@ -154,20 +166,25 @@ export default function ContactView({ locale }: { locale: Locale }) {
   });
 
   return (
-    <section className="header-offset bg-[#EEC660] pb-28">
+    <section
+      id={embedded ? 'kontakt' : undefined}
+      // Lebdeci pecat "Okusi slast" na strani proizvoda staje ispred ove sekcije da ne prekrije formu.
+      data-seal-stop={embedded ? '' : undefined}
+      className={`${embedded ? 'scroll-mt-24 ' : 'header-offset '}bg-[#EEC660] pb-28`}
+    >
       {/* --- marquee naslov ------------------------------------------- */}
       {/*
         Pravi naslov za čitač ekrana stoji ovdje, izvan `aria-hidden` omotača
         ispod — ranije je bio unutar njega pa ga čitač nikad nije dobio.
         Marquee ispod je samo slika riječi ponovljene osam puta.
       */}
-      <h1 className="sr-only">{copy.heading}</h1>
+      <Heading className="sr-only">{copy.heading}</Heading>
       {/* `relative` da `overflow-hidden` drži i apsolutno pozicionirane potomke. */}
       <div
         className="relative overflow-hidden whitespace-nowrap pt-16 sm:pt-20"
         aria-hidden="true"
       >
-        <h1 className="kontakt-marquee inline-flex w-max items-center">
+        <Heading className="kontakt-marquee inline-flex w-max items-center">
           {[0, 1].map((grupa) => (
             <span key={grupa} className="inline-flex w-max shrink-0 items-center">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -184,7 +201,7 @@ export default function ContactView({ locale }: { locale: Locale }) {
               ))}
             </span>
           ))}
-        </h1>
+        </Heading>
       </div>
 
       <div className="mx-auto mt-16 grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:mt-28 lg:grid-cols-2 lg:gap-20 lg:px-12">

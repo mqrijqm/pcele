@@ -61,7 +61,14 @@ export default function FullBleed({
 
     mm.add('(min-width: 768px)', () => {
       const seal = el.querySelector<HTMLElement>('.pe-banner__cta');
-      const footer = document.querySelector<HTMLElement>('.stopa');
+      /*
+       * Granica na kojoj se pečat zaustavlja: kontakt sekcija na dnu strane
+       * (nosi `data-seal-stop`), a ako je nema, footer. Bez ovoga bi pečat
+       * lebdio preko polja forme i dugmeta za slanje.
+       */
+      const footer =
+        document.querySelector<HTMLElement>('[data-seal-stop]') ??
+        document.querySelector<HTMLElement>('.stopa');
       if (!seal || !footer) return;
 
       const showSticky = () => {
@@ -101,6 +108,14 @@ export default function FullBleed({
         endTrigger: footer,
         end: 'bottom top',
         invalidateOnRefresh: true,
+        /*
+         * Granica (kontakt sekcija) stoji ISPOD prikvačenih sekcija ("Nas med",
+         * "Zasto nas med"), koje dodaju svoj razmak tek kad se i one postave.
+         * Okidac koji se prvi preracuna (a ovaj je najraniji na strani) bi granicu
+         * mjerio bez tog razmaka i pecat bi nestao ~1000px prerano. Nizi prioritet
+         * znaci: preracunaj me tek poslije svih ostalih.
+         */
+        refreshPriority: -1,
         onEnter: () => {
           showSticky();
           followFooterBoundary();

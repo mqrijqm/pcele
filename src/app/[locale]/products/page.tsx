@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
  */
 import '@/app/products.css';
 
+import ContactView from '@/components/contact/ContactView';
 import CtaMovingImage from '@/components/products/CtaMovingImage';
 import FullBleed from '@/components/products/FullBleed';
 import HeroMarquee from '@/components/products/HeroMarquee';
@@ -136,6 +137,9 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         left={{ slot: imageSlots.ctaLeft, label: copy.cta.alt }}
         right={{ slot: imageSlots.ctaRight, label: copy.cta.alt }}
       />
+
+      {/* 11 — kontakt: ista sekcija (i ista forma) kao na strani Kontakt */}
+      <ContactView locale={locale} embedded />
     </div>
   );
 }
