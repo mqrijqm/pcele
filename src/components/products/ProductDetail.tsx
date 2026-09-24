@@ -2,7 +2,10 @@
 
 import Image from 'next/image';
 import { Check, Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 
 import TransitionLink from '@/components/ui/TransitionLink';
 import { formatPrice, type Product } from '@/data/products';
@@ -10,6 +13,8 @@ import { localeHref, type Locale } from '@/i18n/config';
 import { useCart } from '@/lib/cart';
 import { useWishlist } from '@/lib/wishlist';
 import styles from './productDetail.module.css';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const copy = {
   sr: {
@@ -19,14 +24,10 @@ const copy = {
     gallery: 'Galerija proizvoda', photo: 'Fotografija',
     infoEyebrow: 'Informacije o proizvodu', facts: ['Neto količina', 'Porijeklo', 'Čuvanje', 'Proizvođač'],
     factValues: ['', 'Mračaj, Prnjavor', 'Na suvom i tamnom mjestu', 'Pčelarstvo Jevtić'],
-    reasonsEyebrow: 'Od košnice do stola', reasonsTitle: '5 razloga da izaberete naše proizvode',
-    reasons: [
-      ['01', 'Naše pčele', 'Proizvod počinje u košnicama o kojima brinemo kroz cijelu godinu.'],
-      ['02', 'Čisto porijeklo', 'Pčelinjaci su smješteni uz šume i livade oko Mračaja i Prnjavora.'],
-      ['03', 'Male serije', 'Punimo pažljivo i u manjim količinama, bez industrijskog pristupa.'],
-      ['04', 'Bez žurbe', 'Prirodni ritam pčela i sezone određuje kada je proizvod spreman.'],
-      ['05', 'Porodična tradicija', 'Znanje, rad i ukus prenosimo u porodici od 1980. godine.'],
-    ],
+    discoverEyebrow: 'Od košnice do stola',
+    discoverTitle: 'Otkrijte kako se vrca, kako nastaje med.',
+    discoverAlt: 'Med se cijedi iz vrcaljke u teglu',
+    discoverCta: 'Pčelinjak — otkrijte kako nastaje med',
   },
   en: {
     back: 'Back to products', natural: 'From our apiary', vat: 'VAT included', size: 'Pack size',
@@ -34,14 +35,10 @@ const copy = {
     stock: 'In stock', gallery: 'Product gallery', photo: 'Photo',
     infoEyebrow: 'Product information', facts: ['Net quantity', 'Origin', 'Storage', 'Producer'],
     factValues: ['', 'Mračaj, Prnjavor', 'Keep in a cool, dark place', 'Jevtić Beekeeping'],
-    reasonsEyebrow: 'From hive to table', reasonsTitle: '5 reasons to choose our products',
-    reasons: [
-      ['01', 'Our bees', 'The product begins in hives we care for throughout the year.'],
-      ['02', 'Clear origin', 'Our apiaries sit beside the forests and meadows around Mračaj and Prnjavor.'],
-      ['03', 'Small batches', 'We fill each pack carefully and in small quantities, never industrially.'],
-      ['04', 'Never rushed', 'The natural rhythm of the bees and the season decides when a product is ready.'],
-      ['05', 'Family tradition', 'Knowledge, work and taste have stayed in our family since 1980.'],
-    ],
+    discoverEyebrow: 'From hive to table',
+    discoverTitle: 'Discover how honey is spun, how it comes to be.',
+    discoverAlt: 'Honey pouring from the extractor into a jar',
+    discoverCta: 'The apiary — discover how honey is made',
   },
 } as const;
 
@@ -50,7 +47,8 @@ const copy = {
  *
  * Minimalno i u tri poteza, po uzoru na referentni webshop: lijevo galerija u
  * zaobljenoj plohi, desno naslov, kutija sa količinom i cijenom, opis i
- * podaci; ispod pet razloga. Sve je na papiru — bez bijele, bez tamne trake.
+ * podaci; ispod poziv da se otkrije kako nastaje med. Sve je na papiru — bez
+ * bijele, bez tamne trake.
  *
  * Galerija: prvi snimak je sam proizvod (na plohi), ostali su prave
  * fotografije uz njega (`product.gallery`). Sličice se pojave samo kad ih ima.
@@ -63,6 +61,37 @@ export default function ProductDetail({ product, locale }: { product: Product; l
   const [quantity, setQuantity] = useState(1);
   const [justAdded, setJustAdded] = useState(false);
   const [active, setActive] = useState(0);
+  const discover = useRef<HTMLElement>(null);
+
+  /*
+   * Slika u sekciji ispod se blago zumira dok se strana skrola: krene od prave
+   * velicine kad ulazi u kadar i naraste 14% dok izlazi. Zumira se sama slika
+   * unutar svog okvira (okvir stoji), pa ivice ostaju mirne. Ko je iskljucio
+   * kretanje u sistemu, dobija sliku bez zuma.
+   */
+  useGSAP(() => {
+    const frame = discover.current?.querySelector<HTMLElement>('[data-zoom-frame]');
+    const img = frame?.querySelector<HTMLElement>('img');
+    if (!frame || !img) return;
+
+    const mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
+      const zoom = gsap.fromTo(
+        img,
+        { scale: 1 },
+        {
+          scale: 1.14,
+          ease: 'none',
+          scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true },
+        },
+      );
+      return () => {
+        zoom.scrollTrigger?.kill();
+        zoom.kill();
+      };
+    });
+    return () => mm.revert();
+  }, { scope: discover });
 
   const variant = product.variants.find((item) => item.id === variantId) ?? product.variants[0];
   const saved = wishlist.has(product.slug);
@@ -186,17 +215,38 @@ export default function ProductDetail({ product, locale }: { product: Product; l
         </div>
       </section>
 
-      {/* --- pet razloga: mirno, na papiru, tanke linije ---------------- */}
-      <section className={styles.reasons}>
-        <header className={styles.reasonsHead}>
-          <p className={styles.eyebrow}>{c.reasonsEyebrow}</p>
-          <h2>{c.reasonsTitle}</h2>
-        </header>
-        <ol className={styles.reasonsList}>
-          {c.reasons.map(([index, title, body]) => (
-            <li className={styles.reason} key={index}><span>{index}</span><h3>{title}</h3><p>{body}</p></li>
-          ))}
-        </ol>
+      {/*
+        --- otkrijte kako nastaje med ------------------------------------
+        Pozadina je cvjetno polje (.bloomfield) kao na pocetnoj i na strani
+        pcelinjaka. Mala slika u sredini se zumira na skrol, a okrugli zeleni
+        pecat "Pcelinjak" vodi na stranu pcelinjaka.
+      */}
+      <section className={`bloomfield ${styles.discover}`} ref={discover}>
+        <div className={styles.discoverInner}>
+          <p className={styles.eyebrow}>{c.discoverEyebrow}</p>
+          <h2>{c.discoverTitle}</h2>
+
+          <div className={styles.frameWrap}>
+            <div className={styles.frame} data-zoom-frame>
+              <Image
+                src="/images/real/vrcaljka-tegla.webp"
+                alt={c.discoverAlt}
+                fill
+                sizes="(max-width: 640px) 78vw, 24rem"
+                className={styles.zoomImage}
+              />
+            </div>
+
+            <TransitionLink
+              href={localeHref(locale, '/pcelinjak')}
+              className={`brand-cta brand-cta--seal pecat ${styles.seal}`}
+              aria-label={c.discoverCta}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img className="brand-cta__art" src="/images/brand/pecat-pcelinjak.svg" alt="" aria-hidden="true" />
+            </TransitionLink>
+          </div>
+        </div>
       </section>
     </main>
   );
