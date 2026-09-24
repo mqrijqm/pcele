@@ -26,7 +26,8 @@ type Copy = {
     oval: string;
     headline: string;
     strip: string[];
-    products: { slug: string | null; name: string; unit: string }[];
+    /* `price` samo za artikle bez svoje strane (slug: null); ostali uzimaju cijenu iz kataloga. */
+    products: { slug: string | null; name: string; unit: string; price?: number }[];
     editorial: { title: string; list: string[] }[];
     final: {
       eyebrow: string;
@@ -123,8 +124,8 @@ const sr: Copy = {
       { slug: 'imuno-mix-450g', name: 'Imuno mix', unit: '450 g' },
       // TODO: perga i med u sacu cekaju prave fotografije; dok ne stignu,
       // stoje najblize postojece snimke i vode na spisak proizvoda.
-      { slug: null, name: 'Perga', unit: '10 g' },
-      { slug: null, name: 'Med u saću', unit: '' },
+      { slug: null, name: 'Perga', unit: '10 g', price: 10 },
+      { slug: null, name: 'Med u saću', unit: '', price: 2 },
     ],
     editorial: [
       {
@@ -299,8 +300,8 @@ const en: Copy = {
       { slug: 'pcelinji-propolis-20ml', name: 'Propolis', unit: 'Bee product' },
       { slug: 'imuno-mix-450g', name: 'Imuno mix', unit: '450 g' },
       // TODO: waiting for real product shots of bee bread and comb honey.
-      { slug: null, name: 'Bee bread', unit: '10 g' },
-      { slug: null, name: 'Comb honey', unit: '' },
+      { slug: null, name: 'Bee bread', unit: '10 g', price: 10 },
+      { slug: null, name: 'Comb honey', unit: '', price: 2 },
     ],
     editorial: [
       {

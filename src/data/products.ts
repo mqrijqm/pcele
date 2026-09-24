@@ -26,7 +26,9 @@ export type Product = {
  * svaka ima svoju fotografiju sa svojom etiketom — na etiketi pise gramaza,
  * pa jedna slika ne moze pokrivati dvije tegle.
  *
- * Cijene i zalihe prenesene su iz ranijeg kataloga.
+ * Cijene je 24.9.2026. odredila Marija: livadski 30 / 17 KM, bagremov 32 / 18 KM
+ * (bagrem je na trzistu skuplji; cijena od 500 g nije zadata, uzeta je
+ * srazmjerno), propolis 5 KM, imuno mix 20 KM. Zalihe su iz ranijeg kataloga.
  */
 export const products: Product[] = [
   {
@@ -39,7 +41,7 @@ export const products: Product[] = [
       { src: '/images/products-editorial/acacia-hive.webp', alt: { sr: 'Tegla bagremovog meda na košnici', en: 'A jar of acacia honey on a hive' } },
       { src: '/images/products-editorial/medeni-proizvod-2.webp', alt: { sr: 'Dijete zahvata bagremov med iz tegle', en: 'A child reaching into a jar of acacia honey' } },
     ],
-    variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 40, stock: 50 }],
+    variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 32, stock: 50 }],
     name: {
       sr: 'Bagremov med, 1 kg',
       en: 'Acacia honey, 1 kg',
@@ -63,7 +65,7 @@ export const products: Product[] = [
       { src: '/images/products-editorial/acacia-hive.webp', alt: { sr: 'Tegla bagremovog meda na košnici', en: 'A jar of acacia honey on a hive' } },
       { src: '/images/products-editorial/medeni-proizvod-2.webp', alt: { sr: 'Dijete zahvata bagremov med iz tegle', en: 'A child reaching into a jar of acacia honey' } },
     ],
-    variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
+    variants: [{ id: 'bagremov-500', title: '500 g', price: 18, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
       en: 'Acacia honey, 500 g',
@@ -89,7 +91,7 @@ export const products: Product[] = [
       { src: '/images/products-editorial/jars-railing.webp', alt: { sr: 'Red tegli livadskog meda na drvenoj ogradi', en: 'A row of meadow honey jars on a wooden railing' } },
       { src: '/images/products-editorial/honeys-apiary.webp', alt: { sr: 'Bagremov i livadski med na drvenom stolu u pčelinjaku', en: 'Acacia and meadow honey on a wooden table in the apiary' } },
     ],
-    variants: [{ id: 'livadski-1kg', title: '1 kg', price: 32, stock: 60 }],
+    variants: [{ id: 'livadski-1kg', title: '1 kg', price: 30, stock: 60 }],
     name: {
       sr: 'Livadski med, 1 kg',
       en: 'Meadow honey, 1 kg',
@@ -113,7 +115,7 @@ export const products: Product[] = [
       { src: '/images/products-editorial/jars-railing.webp', alt: { sr: 'Red tegli livadskog meda na drvenoj ogradi', en: 'A row of meadow honey jars on a wooden railing' } },
       { src: '/images/products-editorial/honeys-apiary.webp', alt: { sr: 'Bagremov i livadski med na drvenom stolu u pčelinjaku', en: 'Acacia and meadow honey on a wooden table in the apiary' } },
     ],
-    variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
+    variants: [{ id: 'livadski-500', title: '500 g', price: 17, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
       en: 'Meadow honey, 500 g',
@@ -140,8 +142,8 @@ export const products: Product[] = [
       { src: '/images/products-editorial/propolis-meadow.webp', alt: { sr: 'Bočica propolisa na livadi, uz cvijeće', en: 'A bottle of propolis in a meadow, among flowers' } },
       { src: '/images/products-editorial/propolis-tea.webp', alt: { sr: 'Propolis iz kapaljke uz šolju čaja', en: 'Propolis from a dropper beside a cup of tea' } },
     ],
-    // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
-    variants: [{ id: 'propolis-20ml', title: '20 ml', price: 12, stock: 40 }],
+    // Cijena potvrđena (Marija, 24.9.2026). TODO: zaliha je još privremena.
+    variants: [{ id: 'propolis-20ml', title: '20 ml', price: 5, stock: 40 }],
     name: {
       sr: 'Pčelinji propolis, 20 ml',
       en: 'Bee propolis, 20 ml',
@@ -164,7 +166,7 @@ export const products: Product[] = [
       { src: '/images/products-editorial/imuno-spoon.webp', alt: { sr: 'Imuno mix na kašici, uz otvorenu teglu', en: 'Imuno mix on a spoon, beside the open jar' } },
       { src: '/images/products-editorial/imuno-meadow.webp', alt: { sr: 'Tegla imuno mixa u travi, uz cvijeće', en: 'A jar of imuno mix in the grass, among flowers' } },
     ],
-    // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
+    // Cijena potvrđena (Marija, 24.9.2026). TODO: zaliha je još privremena.
     variants: [{ id: 'imuno-mix-450', title: '450 g', price: 20, stock: 60 }],
     name: {
       sr: 'Imuno mix, 450 g',

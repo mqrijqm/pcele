@@ -2,6 +2,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
+import { products } from '@/data/products';
+
 export type CartItem = {
   productSlug: string;
   variantId: string;
@@ -26,6 +28,18 @@ type CartContextValue = {
 
 const STORAGE_KEY = 'jevtic.cart';
 
+/*
+ * Korpa pamti cijenu iz trenutka kad je artikal dodat. Kad se cijene promijene
+ * u katalogu, ko je vec imao korpu u browseru bi je zadrzao po staroj cijeni —
+ * zato se pri ucitavanju cijena svake stavke uzima ponovo iz kataloga (po
+ * variantId). Stavka koje vise nema u katalogu ostaje kakva jeste.
+ */
+const CATALOG_PRICE = new Map(products.flatMap((p) => p.variants.map((v) => [v.id, v.price] as const)));
+const withCurrentPrice = (item: CartItem): CartItem => {
+  const price = CATALOG_PRICE.get(item.variantId);
+  return price === undefined ? item : { ...item, price };
+};
+
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -35,7 +49,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) setItems(JSON.parse(raw) as CartItem[]);
+      if (raw) setItems((JSON.parse(raw) as CartItem[]).map(withCurrentPrice));
     } catch {
       // A corrupt or unavailable store simply means we start with an empty cart.
     }

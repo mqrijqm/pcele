@@ -24,7 +24,7 @@ const productImages: Record<number, string> = {
 /**
  * Kartica iz kataloga: ista komponenta kao "Možda će vam se dopasti" na strani
  * proizvoda (`ProductCard`). Cijena se uzima iz kataloga po `slug`-u; artikli
- * koji još nemaju svoju stranu (perga, med u saću) je nemaju ni na kartici.
+ * koji još nemaju svoju stranu (perga, med u saću) nose cijenu zadatu uz karticu.
  */
 function CatalogCard({
   product,
@@ -36,6 +36,8 @@ function CatalogCard({
   locale: Locale;
 }) {
   const item = product.slug ? getProduct(product.slug) : undefined;
+  // Artikli sa stranom: cijena iz kataloga. Bez strane (perga, med u saću): zadata uz karticu.
+  const price = item ? item.variants[0].price : product.price;
 
   return (
     <ProductCard
@@ -44,7 +46,7 @@ function CatalogCard({
       imageAlt={product.slug ? `${product.name}, ${product.unit}` : product.name}
       name={product.name}
       unit={product.unit}
-      price={item ? formatPrice(item.variants[0].price) : undefined}
+      price={price !== undefined ? formatPrice(price) : undefined}
       heading="h3"
     />
   );
