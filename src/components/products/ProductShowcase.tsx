@@ -1,16 +1,15 @@
 import Image from 'next/image';
-import { ArrowRight } from 'lucide-react';
 
 import TransitionLink from '@/components/ui/TransitionLink';
 import { localeHref, type Locale } from '@/i18n/config';
 import type { productsEditorial } from '@/content/productsEditorial';
 
-type ShopCopy = (typeof productsEditorial)['sr']['shop'];
+type Copy = (typeof productsEditorial)['sr'];
+type ShopCopy = Copy['shop'];
+type StorageCopy = Copy['storage'];
 
 /*
- * Slike za osam artikala, u tacnom redoslijedu iz zadatka. Sest teglica su
- * studijski snimci na crnoj podlozi — crna je tu dio kadra, pa kartica nosi
- * sliku preko cijele povrsine, bez okvira unutar kartice. Perga i med u sacu
+ * Slike za osam artikala, u tacnom redoslijedu iz zadatka. Perga i med u sacu
  * cekaju svoje snimke i stoji im najblizi postojeci kadar (vidi TODO u
  * `productsEditorial`).
  */
@@ -32,68 +31,111 @@ const lifestyle = {
 } as const;
 
 /**
- * Ovao dugme iz referenca — tanki elipticni okvir, sitno verzalno pismo.
+ * Jedino dugme na ovoj strani: crtana "Okusi slast" pilula, ista kao zavrsni
+ * poziv ispod (`CtaMovingImage`) i kao dugme u heroju pocetne. Sajt ima samo
+ * dvije vrste brendiranih poziva — ovu pilulu i okrugli pecat — pa prodavnica
+ * ne nosi svoje.
  */
-function OvalLink({ href, children }: { href: string; children: React.ReactNode }) {
+function BrandPill({ href, label }: { href: string; label: string }) {
   return (
-    <TransitionLink href={href} className="btn btn--ghost pe-shop__button">
-      {children}
+    <TransitionLink
+      href={href}
+      className="brand-cta brand-cta--pill pe-shop__cta"
+      aria-label={label}
+    >
+      <Image
+        className="brand-cta__art"
+        src="/hero/okusi-slast.svg"
+        alt=""
+        aria-hidden="true"
+        width={367}
+        height={136}
+      />
     </TransitionLink>
   );
 }
 
 /**
- * E-commerce showcase na stranici proizvoda, po uzoru na editorial katalog:
- * modulni grid sa tankim linijama, krupni verzalni naslovi bez serifa i
- * product kartice cije fotografije nose cijeli kvadrat. Sve linije i tekst
- * su topli braon — crna se ne koristi kao boja teksta nigdje u bloku.
+ * Podnaslov grupe proizvoda: sitan crtez, oznaka i naslov, sve u sredini.
  */
-export default function ProductShowcase({ locale, copy }: { locale: Locale; copy: ShopCopy }) {
+function GroupHead({
+  mark,
+  tags,
+  title,
+}: {
+  mark: string;
+  tags: string[];
+  title: string;
+}) {
   return (
-    <section className="pe-shop border-y border-[#885B27]/20 bg-[#FDFBF7] text-[#885B27]">
-      {/* --- 01 · uvod: tekst lijevo, velika lifestyle fotografija desno --- */}
-      <div className="grid lg:grid-cols-2">
-        <div className="flex flex-col justify-between border-b border-[#885B27]/20 px-6 py-14 sm:px-10 lg:border-b-0 lg:border-r lg:px-14 lg:py-20">
-          <p className="max-w-md text-sm leading-6 text-[#885B27]/85">{copy.intro}</p>
+    <header className="pe-shop__group-head">
+      <Image src={mark} alt="" aria-hidden="true" width={48} height={48} className="pe-shop__mark" />
+      <p className="pe-shop__eyebrow">{tags.join('  ·  ')}</p>
+      <h3 className="pe-shop__group-title">{title}</h3>
+    </header>
+  );
+}
 
-          <div className="mt-10 lg:mt-16">
-            <OvalLink href="#proizvodi">{copy.oval}</OvalLink>
-          </div>
+/**
+ * Katalog na strani proizvoda.
+ *
+ * Isti jezik kao ostatak strane: papir i smedje mastilo, Gazpacho za sve krupno
+ * (obicnom debljinom, malim slovima — kao "Godina kod pcela."), Inter za sve
+ * sitno. Nema bijele i nema verzala u serifu.
+ *
+ * Redoslijed: uvod, traka natpisa, medovi, kako se med cuva, pcelinji
+ * proizvodi, dostava. Tekst o cuvanju i kristalizaciji stoji ovdje, uz veliku
+ * fotografiju, a ne kao zasebna sekcija — tu je prije stajao samo spisak
+ * naziva koji se ponavljao ispod u karticama.
+ */
+export default function ProductShowcase({
+  locale,
+  copy,
+  storage,
+}: {
+  locale: Locale;
+  copy: ShopCopy;
+  storage: StorageCopy;
+}) {
+  const [honeys, beeProducts] = copy.editorial;
 
-          <h2 className="mt-14 whitespace-pre-line font-sans text-[2.1rem] font-semibold uppercase leading-[1.1] tracking-[0.06em] sm:text-5xl lg:mt-24 lg:text-[3.2rem]">
-            {copy.headline}
-          </h2>
+  return (
+    <section className="pe-shop">
+      {/* --- 01 · uvod: tekst lijevo, fotografija desno --------------------- */}
+      <div className="pe-shop__split">
+        <div className="pe-shop__panel">
+          <p className="pe-shop__eyebrow">{copy.eyebrow}</p>
+          <h2 className="pe-shop__heading">{copy.headline}</h2>
+          <p className="pe-body pe-shop__text">{copy.intro}</p>
+          <BrandPill href="#proizvodi" label={copy.oval} />
         </div>
 
-        <div className="relative min-h-[340px] lg:min-h-[600px]">
+        <div className="pe-shop__photo">
           <Image
             src={lifestyle.hero}
             alt={copy.alt.hero}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
+            className="pe-shop__photo-img"
           />
         </div>
       </div>
 
-      {/* --- 02 · traka sa kratkim natpisima --------------------------- */}
-      <div className="overflow-hidden border-b border-[#885B27]/20 py-4" aria-hidden="true">
-        <div className="animate-[kontakt-marquee_46s_linear_infinite] flex w-max items-center">
+      {/* --- 02 · traka sa kratkim natpisima ------------------------------- */}
+      <div className="pe-shop__strip" aria-hidden="true">
+        <div className="pe-shop__strip-track">
           {[0, 1].map((grupa) => (
-            <span key={grupa} className="flex w-max shrink-0 items-center">
+            <span key={grupa} className="pe-shop__strip-group">
               {[...copy.strip, ...copy.strip].map((natpis, i) => (
-                <span
-                  key={i}
-                  className="flex items-center text-[11px] font-medium uppercase tracking-[0.3em] text-[#885B27]/70"
-                >
-                  <span className="px-10">{natpis}</span>
+                <span key={i} className="pe-shop__strip-item">
+                  <span className="pe-shop__strip-text">{natpis}</span>
                   <Image
-                    src={i % 2 === 0 ? '/images/brand/sunce.svg' : '/images/brand/travcica.svg'}
+                    src={i % 2 === 0 ? '/images/brand/sunce.svg' : '/images/brand/teglica.svg'}
                     alt=""
                     aria-hidden="true"
                     width={34}
                     height={34}
-                    className="h-8 w-8 shrink-0 object-contain"
+                    className="pe-shop__strip-mark"
                   />
                 </span>
               ))}
@@ -102,90 +144,69 @@ export default function ProductShowcase({ locale, copy }: { locale: Locale; copy
         </div>
       </div>
 
-      {/* 03 · medovi: cetiri kartice, tanke vertikalne linije ------ */}
-      <div className="grid grid-cols-2 gap-px border-b border-[#885B27]/20 bg-[#885B27]/20 lg:grid-cols-4">
-        {copy.products.slice(0, 4).map((p, i) => (
-          <ProductCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
-        ))}
+      {/* --- 03 · medovi ---------------------------------------------------- */}
+      <div id="proizvodi" className="pe-shop__group">
+        <GroupHead mark="/images/brand/teglica.svg" tags={honeys.list} title={honeys.title} />
+        <div className="pe-shop__grid">
+          {copy.products.slice(0, 4).map((p, i) => (
+            <ProductCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
+          ))}
+        </div>
       </div>
 
-      {/* --- 04 · lifestyle fotografija + editorial tekstualni blokovi -- */}
-      <div className="grid border-b border-[#885B27]/20 lg:grid-cols-2">
-        <div className="relative min-h-[320px] lg:min-h-[680px]">
+      {/* --- 04 · kako se med cuva: fotografija lijevo, tekst desno --------- */}
+      <div className="pe-shop__split pe-shop__split--flip">
+        <div className="pe-shop__panel">
+          <p className="pe-shop__eyebrow">{storage.label}</p>
+          <h2 className="pe-shop__heading pe-shop__heading--long">{storage.heading}</h2>
+          <p className="pe-body pe-shop__text">{storage.body}</p>
+          <dl className="pe-shop__facts">
+            {storage.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="pe-shop__photo">
           <Image
             src={lifestyle.editorial}
             alt={copy.alt.editorial}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
+            className="pe-shop__photo-img"
           />
         </div>
+      </div>
 
-        <div className="flex flex-col">
-          {copy.editorial.map((blok, i) => (
-            <div
-              key={blok.title}
-              className={`flex flex-1 flex-col justify-center px-6 py-14 sm:px-10 lg:px-14 lg:py-20 ${
-                i > 0 ? 'border-t border-[#885B27]/20 lg:border-t' : ''
-              }`}
-            >
-              <h3 className="whitespace-pre-line font-sans text-[1.7rem] font-semibold uppercase leading-[1.12] tracking-[0.06em] sm:text-4xl">
-                {blok.title}
-              </h3>
-              <ul className="mt-6 space-y-1.5">
-                {blok.list.map((stavka) => (
-                  <li key={stavka} className="text-sm text-[#885B27]/80">
-                    {stavka}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-9">
-                <OvalLink href="#proizvodi">{copy.oval}</OvalLink>
-              </div>
-            </div>
+      {/* --- 05 · pcelinji proizvodi ---------------------------------------- */}
+      <div className="pe-shop__group">
+        <GroupHead mark="/images/brand/cvijet-krug.svg" tags={beeProducts.list} title={beeProducts.title} />
+        <div className="pe-shop__grid">
+          {copy.products.slice(4).map((p, i) => (
+            <ProductCard key={p.name + p.unit} product={p} image={productImages[i + 4]} locale={locale} />
           ))}
         </div>
       </div>
 
-      {/* 05 · pcelinji proizvodi: cetiri kartice ------------------- */}
-      <div className="grid grid-cols-2 gap-px border-b border-[#885B27]/20 bg-[#885B27]/20 lg:grid-cols-4">
-        {copy.products.slice(4).map((p, i) => (
-          <ProductCard key={p.name + p.unit} product={p} image={productImages[i + 4]} locale={locale} />
-        ))}
-      </div>
-
-      {/* --- 06 · zavrsni poziv ---------------------------------------- */}
-      <div className="grid lg:grid-cols-2">
-        <div className="order-2 flex flex-col justify-center px-6 py-14 sm:px-10 lg:order-1 lg:px-14 lg:py-24">
-          <p className="max-w-md text-sm leading-6 text-[#885B27]/85">{copy.final.note}</p>
-
-          <div className="mt-10">
-            <OvalLink href="#proizvodi">{copy.final.oval}</OvalLink>
-          </div>
-
-          <h2 className="mt-14 whitespace-pre-line font-sans text-[2.1rem] font-semibold uppercase leading-[1.1] tracking-[0.06em] sm:text-5xl lg:text-[3.2rem]">
-            {copy.final.title}
-          </h2>
-
-          <TransitionLink
-            href="#proizvodi"
-            className="btn group mt-12 w-fit"
-          >
-            {copy.final.cta}
-            <ArrowRight
-              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5"
-              strokeWidth={1.7}
-            />
-          </TransitionLink>
+      {/* --- 06 · dostava i zavrsni poziv ----------------------------------- */}
+      <div className="pe-shop__split pe-shop__split--photo-first-mobile">
+        <div className="pe-shop__panel">
+          <p className="pe-shop__eyebrow">{copy.final.eyebrow}</p>
+          <h2 className="pe-shop__heading">{copy.final.title}</h2>
+          <p className="pe-body pe-shop__text">{copy.final.note}</p>
+          <BrandPill href="#proizvodi" label={copy.final.cta} />
         </div>
 
-        <div className="relative order-1 min-h-[340px] lg:order-2 lg:min-h-[620px]">
+        <div className="pe-shop__photo">
           <Image
             src={lifestyle.final}
             alt={copy.alt.final}
             fill
             sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover"
+            className="pe-shop__photo-img"
           />
         </div>
       </div>
@@ -194,9 +215,8 @@ export default function ProductShowcase({ locale, copy }: { locale: Locale; copy
 }
 
 /**
- * Jedna product kartica: fotografija preko cijele povrsine, naziv i gramaza
- * uvijek ispod, nikad preko proizvoda. Hover je srodan referenci — blagi
- * zoom fotografije i tanak pomak strijelice.
+ * Jedna kartica: proizvod na papiru, a ispod njega — u sredini — naziv i
+ * mjera. Naziv je uvijek ispod proizvoda, nikad preko njega.
  */
 function ProductCard({
   product,
@@ -210,26 +230,20 @@ function ProductCard({
   const href = product.slug ? localeHref(locale, `/products/${product.slug}`) : '#proizvodi';
 
   return (
-    <TransitionLink href={href} className="group block bg-white">
-      <div className="relative aspect-[4/5] overflow-hidden bg-white">
+    <TransitionLink href={href} className="pe-shop__card">
+      <div className="pe-shop__card-media">
         <Image
           src={image}
           alt={product.slug ? `${product.name}, ${product.unit}` : product.name}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-contain p-[12%] transition-transform duration-700 ease-out group-hover:scale-[1.015]"
+          sizes="(max-width: 1024px) 50vw, 25vw"
+          className="pe-shop__card-img"
         />
       </div>
 
-      <div className="px-5 py-6 sm:px-6">
-        <h3 className="text-xs font-semibold uppercase tracking-[0.22em] transition-colors duration-300 group-hover:text-[#6B4A2F] group-hover:underline group-hover:decoration-[#EEC660] group-hover:decoration-2 group-hover:underline-offset-[6px]">
-          {product.name}
-        </h3>
-        {product.unit && (
-          <p className="mt-1.5 text-[11px] uppercase tracking-[0.22em] text-[#885B27]/60">
-            {product.unit}
-          </p>
-        )}
+      <div className="pe-shop__card-info">
+        <h4 className="pe-shop__card-name">{product.name}</h4>
+        {product.unit && <p className="pe-shop__card-unit">{product.unit}</p>}
       </div>
     </TransitionLink>
   );

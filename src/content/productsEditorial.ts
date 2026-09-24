@@ -21,6 +21,7 @@ type Copy = {
 
   /* 02b — e-commerce showcase (novi blok poslije heroja) */
   shop: {
+    eyebrow: string;
     intro: string;
     oval: string;
     headline: string;
@@ -28,8 +29,8 @@ type Copy = {
     products: { slug: string | null; name: string; unit: string }[];
     editorial: { title: string; list: string[] }[];
     final: {
+      eyebrow: string;
       note: string;
-      oval: string;
       title: string;
       cta: string;
     };
@@ -107,6 +108,7 @@ const sr: Copy = {
   bannerCta: 'Pogledaj tegle',
 
   shop: {
+    eyebrow: 'Ponuda',
     intro:
       'Pažljivo birani pčelinji proizvodi, nastali u skladu s prirodom. Od čistog livadskog i bagremovog meda do propolisa, perge i pažljivo odabranih proizvoda iz košnice.',
     oval: 'Svi proizvodi',
@@ -131,13 +133,13 @@ const sr: Copy = {
       },
       {
         title: 'Priroda koju\nmožete okusiti.',
-        list: ['Propolis', 'Imuno mix'],
+        list: ['Propolis', 'Imuno mix', 'Perga', 'Med u saću'],
       },
     ],
     final: {
       note:
         'Tegle pakujemo ručno i vozimo sami — dostavu dogovaramo direktno s vama, za veće količine i poklon pakovanja.',
-      oval: 'Naruči',
+      eyebrow: 'Dostava',
       title: 'Odaberite svoj\nomiljeni proizvod\niz košnice.',
       cta: 'Istražite ponudu',
     },
@@ -261,11 +263,11 @@ const sr: Copy = {
     label: 'Kako se čuva',
     heading: 'Kristalizacija nije kvar — to je dokaz da med nije zagrijavan.',
     body:
-      'Sirov med vremenom stvrdne. Šećeri se vežu u sitne kristale, med posvijetli i postane gušći — to je znak da u njemu nije bilo ni zagrijavanja ni filtriranja pod pritiskom. Teglu držite na sobnoj temperaturi, dalje od sunca i pare. Ako je tvrda, stavi je u mlaku vodu do 40 stepeni i ostavi da se polako vrati.',
+      'Sirov med vremenom stvrdne. Šećeri se vežu u sitne kristale, med posvijetli i postane gušći — to je znak da u njemu nije bilo ni zagrijavanja ni filtriranja pod pritiskom. Teglu držite na sobnoj temperaturi, dalje od sunca i pare. Ako je tvrda, stavite je u mlaku vodu do 40 °C i ostavite da se polako vrati.',
     facts: [
-      { label: 'Temperatura', value: '15–25 °C' },
+      { label: 'Temperatura', value: '15–25 °C' },
       { label: 'Rok', value: 'Bez roka' },
-      { label: 'Zagrijavanje', value: 'Ne preko 40 °C' },
+      { label: 'Zagrijavanje', value: 'Ne preko 40 °C' },
     ],
   },
 
@@ -283,6 +285,7 @@ const en: Copy = {
   bannerCta: 'See the jars',
 
   shop: {
+    eyebrow: 'Our range',
     intro:
       'Carefully chosen bee products, made in step with nature. From pure meadow and acacia honey to propolis, bee bread and picks straight from the hive.',
     oval: 'All products',
@@ -306,13 +309,13 @@ const en: Copy = {
       },
       {
         title: 'Nature you\ncan taste.',
-        list: ['Propolis', 'Imuno mix'],
+        list: ['Propolis', 'Imuno mix', 'Bee bread', 'Comb honey'],
       },
     ],
     final: {
       note:
         'We pack every jar by hand and deliver it ourselves — delivery is arranged directly with you, for larger quantities and gift packaging.',
-      oval: 'Order',
+      eyebrow: 'Delivery',
       title: 'Choose your\nfavourite product\nfrom the hive.',
       cta: 'Explore the offer',
     },
@@ -436,11 +439,11 @@ const en: Copy = {
     label: 'How to keep it',
     heading: 'Crystallising is not spoilage — it is proof the honey was never heated.',
     body:
-      'Raw honey sets in time. The sugars bind into fine crystals, the honey lightens and thickens — a sign that it was neither heated nor pressure filtered. Keep the jar at room temperature, away from sun and steam. If it has gone hard, stand it in warm water up to 40 °C and let it come back slowly.',
+      'Raw honey sets in time. The sugars bind into fine crystals, the honey lightens and thickens — a sign that it was neither heated nor pressure filtered. Keep the jar at room temperature, away from sun and steam. If it has gone hard, stand it in warm water up to 40 °C and let it come back slowly.',
     facts: [
-      { label: 'Temperature', value: '15–25 °C' },
+      { label: 'Temperature', value: '15–25 °C' },
       { label: 'Shelf life', value: 'No expiry' },
-      { label: 'Heating', value: 'Never above 40 °C' },
+      { label: 'Heating', value: 'Never above 40 °C' },
     ],
   },
 

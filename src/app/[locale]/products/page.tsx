@@ -95,9 +95,8 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         ]}
       />
 
-      {/* 06 — medeni proizvodi, rasuti preko zute plohe */}
+      {/* 06 — zuta ploha sa kapima na vrhu; snimci rasuti preko nje */}
       <ScatterGallery
-        id="proizvodi"
         title={copy.others.title}
         slots={[
           { slot: imageSlots.others[0], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-1.webp' },
@@ -117,17 +116,14 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         media={seasonMedia}
         videoLabels={copy.season.video}
       />
-
-      {/* 09 — cuvanje i kristalizacija */}
-      <StoryBlock
-        label={copy.storage.label}
-        lede={copy.storage.heading}
-        body={copy.storage.body}
-        facts={copy.storage.facts}
-      />
       </div>
 
-      <ProductShowcase locale={locale} copy={copy.shop} />
+      {/*
+        Katalog. Ovdje je i tekst o cuvanju i kristalizaciji (`storage`) — nekad
+        je stajao kao zasebna sekcija iznad, a sada je uz veliku fotografiju.
+        Sidro #proizvodi (dugmad "Okusi slast" na strani) vodi na prve kartice.
+      */}
+      <ProductShowcase locale={locale} copy={copy.shop} storage={copy.storage} />
 
       {/* 10 — zavrsni poziv */}
       <CtaMovingImage

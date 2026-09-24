@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
+import DripEdge from '@/components/home/DripEdge';
 import ImageSlot from '@/components/products/ImageSlot';
 import SplitTitle from '@/components/products/SplitTitle';
 
@@ -133,31 +134,43 @@ export default function ScatterGallery({
   }, { scope: root });
 
   return (
-    <section data-snap="off" className="pe-scatter" ref={root} id={id}>
-      <div className="pe-scatter__gallery" aria-hidden="true">
-        {slots.map((item, i) => (
-          <span
-            className={`pe-scatter__image pe-scatter__image--${i}`}
-            key={item.slot}
-            data-delta={i === 0 ? 0.5 : 0.75}
-          >
-            {item.image ? (
-              <Image src={item.image} alt="" fill sizes="(max-width: 767px) 42vw, 18vw" />
-            ) : (
-              <ImageSlot slot={item.slot} label={item.label} />
-            )}
-          </span>
-        ))}
+    <>
+      {/*
+        Isti pocetak kao zuta ploha ispod heroja na pocetnoj: med se prelije preko
+        ruba i skrolom se ravna linija izduzi u kapi. Komponenta i crtez su oni sa
+        pocetne (`DripEdge`), a `drip__head` je njen sanduk — proziran, pa se
+        iznad kapi vidi papir strane. Ploha ispod pocinje tamo gdje se kapi zavrse.
+      */}
+      <div className="drip__head" aria-hidden="true">
+        <DripEdge variant="head" />
       </div>
 
-      <div className="pe-wrap--medium pe-scatter__content">
-        <div className="pe-scatter__title-row">
-          <SplitTitle text={title} className="pe-display pe-scatter__title" />
-          {/* Crtež je maska obojena bojom naslova (papir), vidi `.pe-scatter__title-icon`. */}
-          <span className="pe-scatter__title-icon" aria-hidden="true" />
+      <section data-snap="off" className="pe-scatter" ref={root} id={id}>
+        <div className="pe-scatter__gallery" aria-hidden="true">
+          {slots.map((item, i) => (
+            <span
+              className={`pe-scatter__image pe-scatter__image--${i}`}
+              key={item.slot}
+              data-delta={i === 0 ? 0.5 : 0.75}
+            >
+              {item.image ? (
+                <Image src={item.image} alt="" fill sizes="(max-width: 767px) 42vw, 18vw" />
+              ) : (
+                <ImageSlot slot={item.slot} label={item.label} />
+              )}
+            </span>
+          ))}
         </div>
-        {lede ? <p className="pe-body pe-scatter__lede reveal">{lede}</p> : null}
-      </div>
-    </section>
+
+        <div className="pe-wrap--medium pe-scatter__content">
+          <div className="pe-scatter__title-row">
+            <SplitTitle text={title} className="pe-display pe-scatter__title" />
+            {/* Crtež je maska obojena bojom naslova (papir), vidi `.pe-scatter__title-icon`. */}
+            <span className="pe-scatter__title-icon" aria-hidden="true" />
+          </div>
+          {lede ? <p className="pe-body pe-scatter__lede reveal">{lede}</p> : null}
+        </div>
+      </section>
+    </>
   );
 }
