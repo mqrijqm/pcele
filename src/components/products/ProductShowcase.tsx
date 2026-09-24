@@ -99,11 +99,25 @@ export default function ProductShowcase({
   copy: ShopCopy;
   storage: StorageCopy;
 }) {
-  const [honeys, beeProducts] = copy.editorial;
+  const [, beeProducts] = copy.editorial;
 
   return (
     <section className="pe-shop">
-      {/* --- 01 · uvod: tekst lijevo, fotografija desno --------------------- */}
+      {/*
+        --- 01 · medovi: samo kartice, na samom vrhu ----------------------
+        Prvo se vide proizvodi, tek onda prica. Nema naslova: kartice govore
+        same. Sidro #proizvodi (dugmad "Okusi slast" na strani) vodi ovamo.
+      */}
+      <div id="proizvodi" className="pe-shop__group pe-shop__group--first">
+        <div className="pe-shop__grid">
+          {copy.products.slice(0, 4).map((p, i) => (
+            <CatalogCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
+          ))}
+        </div>
+      </div>
+
+
+      {/* --- 02 · uvod: tekst lijevo, fotografija desno --------------------- */}
       <div className="pe-shop__split">
         <div className="pe-shop__panel">
           <p className="pe-shop__eyebrow">{copy.eyebrow}</p>
@@ -142,16 +156,6 @@ export default function ProductShowcase({
                 </span>
               ))}
             </span>
-          ))}
-        </div>
-      </div>
-
-      {/* --- 03 · medovi ---------------------------------------------------- */}
-      <div id="proizvodi" className="pe-shop__group">
-        <GroupHead mark="/images/brand/teglica.svg" tags={honeys.list} title={honeys.title} />
-        <div className="pe-shop__grid">
-          {copy.products.slice(0, 4).map((p, i) => (
-            <CatalogCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
           ))}
         </div>
       </div>

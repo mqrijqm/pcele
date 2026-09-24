@@ -19,9 +19,26 @@ gsap.registerPlugin(ScrollTrigger);
 /* Na serveru nema rasporeda da se mjeri, pa tamo `useEffect`. */
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
+/*
+ * `headCut`: isti gornji rub kao `head`, ali okrenut — umjesto zute mase crta
+ * PAPIR, s rupom tamo gdje je med. Pravi se tako sto se ispred iste putanje
+ * doda pravougaonik cijelog crteza i popuni pravilom "parno-neparno": sve sto
+ * je unutar oba oblika ostaje prazno (to je med), a sve izvan meda je papir.
+ *
+ * Trebalo je zato da bi se ispod ivice mogle provuci slike: med je tada
+ * pozadina, slike leze na njoj, a papir sa kapima preko njih ih sijece. Sa
+ * običnim `head` (zuta masa preko prozirne pozadine) slike bi se vidjele kroz
+ * rupe izmedju kapi.
+ *
+ * Pravougaonik koristi samo M, L i Z, isto kao i sama putanja, pa `morph` i
+ * dalje uparuje ravnu i kapajucu verziju broj po broj.
+ */
+const CUT = 'M0 0L1365 0L1365 633.75L0 633.75Z';
+
 const SHAPES = {
-  head: { viewBox: HEAD_VIEWBOX, flat: HEAD_FLAT, drip: HEAD_DRIP, fill: 'var(--amber)' },
-  tail: { viewBox: TAIL_VIEWBOX, flat: TAIL_FLAT, drip: TAIL_DRIP, fill: 'var(--paper)' },
+  head: { viewBox: HEAD_VIEWBOX, flat: HEAD_FLAT, drip: HEAD_DRIP, fill: 'var(--amber)', fillRule: 'nonzero' },
+  headCut: { viewBox: HEAD_VIEWBOX, flat: CUT + HEAD_FLAT, drip: CUT + HEAD_DRIP, fill: 'var(--paper)', fillRule: 'evenodd' },
+  tail: { viewBox: TAIL_VIEWBOX, flat: TAIL_FLAT, drip: TAIL_DRIP, fill: 'var(--paper)', fillRule: 'nonzero' },
 } as const;
 
 /**
@@ -38,7 +55,7 @@ const SHAPES = {
  *
  * Ko je iskljucio kretanje u sistemu, dobija odmah kapi i nista se ne mice.
  */
-export default function DripEdge({ variant }: { variant: 'head' | 'tail' }) {
+export default function DripEdge({ variant }: { variant: 'head' | 'headCut' | 'tail' }) {
   const path = useRef<SVGPathElement>(null);
   const svg = useRef<SVGSVGElement>(null);
   const shape = SHAPES[variant];
@@ -105,7 +122,7 @@ export default function DripEdge({ variant }: { variant: 'head' | 'tail' }) {
       aria-hidden="true"
       focusable="false"
     >
-      <path ref={path} fill={shape.fill} d={shape.drip} />
+      <path ref={path} fill={shape.fill} fillRule={shape.fillRule} d={shape.drip} />
     </svg>
   );
 }

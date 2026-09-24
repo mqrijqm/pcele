@@ -171,8 +171,7 @@ export default function SeasonTimeline({
   return (
     <section data-snap="off" className="pe-season" ref={root}>
       <div className="pe-wrap--small pe-season__head">
-        <p className="pe-label reveal">{label}</p>
-        <h2 className="pe-title reveal stagger-1">{heading}</h2>
+        <h2 className="pe-title reveal">{heading}</h2>
       </div>
 
       {/* Traka mjeseci ide od ivice do ivice ekrana — zato nije u omotaču sa uvlačenjem. */}

@@ -19,15 +19,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
  * Svaki snimak se okrece za isti ugao u suprotnom smjeru, pa ostaje uspravan
  * dok putuje — inace bi se prevrtao naglavacke.
  *
+ * Krug je veci od same plohe: gore i dole zalazi ispod kapi. To je namjerno —
+ * ploha je jedan blok (`.pe-scatter-block`) u boji meda, snimci leze na njoj, a
+ * gornja i donja ivica su PAPIR sa kapima preko njih (`headCut` i `tail`), pa
+ * ivica sijece sve sto joj dodje pod ruku. Snimak se pojavi ispod kapi, prodje
+ * kroz med i nestane ispod donje ivice.
+ *
  * Okretanje je cisti CSS (vidi `.pe-scatter__orbit` u products.css): radi na
  * grafickoj kartici, ne koci skrol i ne trazi JavaScript. GSAP radi samo
  * jedno — kad ploha udje u kadar, krug izraste iz sredine — i to na
  * omotacu (`.pe-scatter__ring`), a ne na elementu koji se okrece, da se dva
  * pokreta ne bore oko istog `transform`-a.
  *
- * Ploha ima kapi i na vrhu i na dnu — isti rubovi (`DripEdge`) kao pojas ispod
- * heroja na pocetnoj — a ispod donjeg ruba ostaje puno praznog papira prije
- * sljedece sekcije.
+ * Ispod donje ivice ostaje puno praznog papira prije sljedece sekcije.
  */
 export default function ScatterGallery({
   title,
@@ -40,22 +44,28 @@ export default function ScatterGallery({
   slots: { slot: string; label: string; image?: string }[];
   id?: string;
 }) {
-  const root = useRef<HTMLElement>(null);
+  const root = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const el = root.current;
     const ring = el?.querySelector<HTMLElement>('.pe-scatter__ring');
+    const body = el?.querySelector<HTMLElement>('.pe-scatter');
     const titleNode = el?.querySelector<HTMLElement>('.pe-scatter__content');
-    if (!el || !ring || !titleNode) return;
+    if (!el || !ring || !body || !titleNode) return;
 
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      /*
+       * Trigger je tijelo plohe (gdje stoji naslov), ne cio blok: blok je visok
+       * dva ekrana i krug bi izrastao dok je jos van kadra. Ovako raste dok mu
+       * se sredina primice sredini ekrana.
+       */
       const intro = gsap.timeline({
         scrollTrigger: {
-          trigger: el,
-          start: 'top 82%',
-          end: 'top 18%',
+          trigger: body,
+          start: 'top 85%',
+          end: 'center 55%',
           scrub: 1,
         },
       });
@@ -75,7 +85,7 @@ export default function ScatterGallery({
         scale: 0.6,
         duration: 1.1,
         ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 72%' },
+        scrollTrigger: { trigger: body, start: 'top 80%' },
       });
     });
 
@@ -88,17 +98,8 @@ export default function ScatterGallery({
 
   return (
     <>
-      {/*
-        Isti pocetak kao zuta ploha ispod heroja na pocetnoj: med se prelije preko
-        ruba i skrolom se ravna linija izduzi u kapi. Komponenta i crtez su oni sa
-        pocetne (`DripEdge`), a `drip__head` je njen sanduk — proziran, pa se
-        iznad kapi vidi papir strane. Ploha ispod pocinje tamo gdje se kapi zavrse.
-      */}
-      <div className="drip__head" aria-hidden="true">
-        <DripEdge variant="head" />
-      </div>
-
-      <section data-snap="off" className="pe-scatter" ref={root} id={id}>
+      <div className="pe-scatter-block" ref={root} id={id}>
+        {/* Krug snimaka: pozadina bloka, ispod obje ivice. */}
         <div className="pe-scatter__gallery" aria-hidden="true">
           <div className="pe-scatter__ring">
             <div className="pe-scatter__orbit">
@@ -111,7 +112,7 @@ export default function ScatterGallery({
                 >
                   <span className="pe-scatter__image">
                     {item.image ? (
-                      <Image src={item.image} alt="" fill sizes="(max-width: 767px) 22vw, 12vw" />
+                      <Image src={item.image} alt="" fill sizes="(max-width: 767px) 28vw, 17vw" />
                     ) : (
                       <ImageSlot slot={item.slot} label={item.label} />
                     )}
@@ -122,24 +123,32 @@ export default function ScatterGallery({
           </div>
         </div>
 
-        <div className="pe-wrap--medium pe-scatter__content">
-          <div className="pe-scatter__title-row">
-            <SplitTitle text={title} className="pe-display pe-scatter__title" />
-            {/* Crtež je maska obojena bojom naslova (papir), vidi `.pe-scatter__title-icon`. */}
-            <span className="pe-scatter__title-icon" aria-hidden="true" />
-          </div>
-          {lede ? <p className="pe-body pe-scatter__lede reveal">{lede}</p> : null}
+        {/*
+          Gornja ivica: papir sa kapima (isti crtez kao pojas ispod heroja na
+          pocetnoj, samo okrenut). Med je pozadina bloka, pa se kroz rupu vidi.
+        */}
+        <div className="pe-scatter__head" aria-hidden="true">
+          <DripEdge variant="headCut" />
         </div>
-      </section>
 
-      {/*
-        Donja ivica: isti potez kao na dnu pojasa na pocetnoj. Zuta ploha se
-        zavrsava kapima koje vise u papir, a ispod njih je namjerno puno praznog
-        prostora — sljedeca sekcija ne treba da pocne odmah uz med.
-      */}
-      <div className="drip__tail pe-scatter__tail" aria-hidden="true">
-        <DripEdge variant="tail" />
+        <section data-snap="off" className="pe-scatter">
+          <div className="pe-wrap--medium pe-scatter__content">
+            <div className="pe-scatter__title-row">
+              <SplitTitle text={title} className="pe-display pe-scatter__title" />
+              {/* Crtež je maska obojena bojom naslova (papir), vidi `.pe-scatter__title-icon`. */}
+              <span className="pe-scatter__title-icon" aria-hidden="true" />
+            </div>
+            {lede ? <p className="pe-body pe-scatter__lede reveal">{lede}</p> : null}
+          </div>
+        </section>
+
+        {/* Donja ivica: isti potez kao na dnu pojasa na pocetnoj. */}
+        <div className="pe-scatter__tail" aria-hidden="true">
+          <DripEdge variant="tail" />
+        </div>
       </div>
+
+      {/* Puno praznog papira prije sljedece sekcije. */}
       <div className="pe-scatter__air" aria-hidden="true" />
     </>
   );

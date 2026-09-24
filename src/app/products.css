@@ -710,33 +710,34 @@
 /* =======================================================================
  * 07 — zuta ploha: snimci kruze oko naslova
  *
- * Osam snimaka stoji na krugu, ravnomjerno, i cio krug se okrece oko rijeci.
- * Sve mjere krugu daju tri promjenljive na samoj plohi:
+ * Ploha je jedan blok u boji meda (.pe-scatter-block). Osam snimaka stoji na
+ * krugu oko naslova i cio krug se okrece. Slojevi, odozdo prema gore:
  *
- *   --orbit-r   poluprecnik kruga (sredina snimka do sredine plohe)
- *   --orbit-w   sirina jednog snimka; visina je uvijek 1.25 puta veca
+ *   1  krug snimaka (.pe-scatter__gallery) — preko cijelog bloka
+ *   3  gornja i donja ivica (.pe-scatter__head / __tail) — PAPIR sa kapima
+ *   5  naslov
+ *
+ * Krug je veci od tijela plohe: zalazi ispod obje ivice za --orbit-dip. Ivice
+ * su neprozirne, pa sijeku snimke koji prolaze ispod — snimak se pojavi ispod
+ * kapi, prodje kroz med i nestane. Zato ivica ne smije biti prozirna: papir je
+ * u njoj nacrtan, a med je pozadina bloka.
+ *
+ * Mjere kruga daju promjenljive na bloku:
+ *
+ *   --orbit-r     poluprecnik (od sredine plohe do sredine snimka)
+ *   --orbit-w     sirina jednog snimka; visina je 1.25 puta veca
  *   --orbit-turn  koliko traje jedan pun krug
- *
- * Poluprecnik prati i sirinu i visinu ekrana: krug treba da stane u kadar, ali
- * nikad ne smije biti tako uzak da snimak prelazi preko naslova — zato donja
- * granica (19svw) drzi snimke izvan rijeci i na niskom ekranu.
+ *   --orbit-dip   za koliko krug zalazi ispod ivica
  * ==================================================================== */
 
-.pe-scatter {
-  --orbit-r: clamp(8.5rem, max(19svw, min(24svw, 36svh)), 27rem);
-  --orbit-w: clamp(5rem, 10.5svw, 12rem);
+.pe-scatter-block {
+  --orbit-r: clamp(11rem, 34svw, 38rem);
+  --orbit-w: clamp(7rem, 16svw, 18rem);
   --orbit-h: calc(var(--orbit-w) * 1.25);
-  --orbit-turn: 70s;
+  --orbit-turn: 80s;
+  --orbit-dip: clamp(5rem, 9vw, 11rem);
 
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Ploha je visoka koliko i krug (oba kraja) plus zrak — krug ne smije da se odsijeca. */
-  min-height: calc(var(--orbit-r) * 2 + var(--orbit-h) + clamp(4rem, 13svh, 8.5rem));
-  /* Jedan piksel pod kapi iznad (`.drip__head`): crtez je odsjecen na visini u
-     vw, koja rijetko padne na cio piksel, pa bi se inace vidjela svijetla nit. */
-  margin-top: -1px;
   background-color: var(--pe-accent);
   color: var(--pe-paper);
 }
@@ -748,7 +749,26 @@
   z-index: 1;
 }
 
-/* Krug: nulte velicine, u sredini plohe. Sve ostalo se mjeri od te tacke. */
+/* Ivice: isti sanduk kao na pocetnoj (visina 23vw, samo kapi), ali papirne. */
+.pe-scatter__head,
+.pe-scatter__tail {
+  position: relative;
+  z-index: 3;
+  height: 23vw;
+  overflow: hidden;
+}
+
+/* Tijelo plohe: visoko koliko krug, umanjeno za dio koji zalazi ispod ivica. */
+.pe-scatter {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(var(--orbit-r) * 2 + var(--orbit-h) - 2 * var(--orbit-dip));
+}
+
+/* Krug: nulte velicine, u sredini bloka. Sve ostalo se mjeri od te tacke. */
 .pe-scatter__ring {
   position: absolute;
   top: 50%;
@@ -778,8 +798,8 @@
 }
 
 /*
- * Snimak ponistava obje rotacije: stalni ugao mjesta (--a) preko `transform`, a
- * okretanje kruga preko posebnog svojstva `rotate` koje ide u suprotnom smjeru.
+ * Snimak ponistava obje rotacije: stalni ugao mjesta (--a) preko transform, a
+ * okretanje kruga preko posebnog svojstva rotate koje ide u suprotnom smjeru.
  * Zbir je nula — snimak putuje po krugu, ali ostaje uspravan.
  */
 .pe-scatter__image {
@@ -825,14 +845,6 @@
   .pe-scatter__image {
     animation: none;
   }
-}
-
-/*
- * Donja ivica: kapi. Isti sanduk kao `.drip__tail` na pocetnoj (zuta pozadina,
- * papirni potez preko nje), samo jedan piksel pod plohu iznad da se ne vidi nit.
- */
-.pe-scatter__tail {
-  margin-top: -1px;
 }
 
 /* Prazan papir ispod kapi, prije sljedece sekcije (ona ima i svoj razmak). */
@@ -1156,6 +1168,11 @@
   }
 }
 
+/* Kartice na samom vrhu prodavnice (bez naslova): zrak gore, kao da je naslov tu. */
+.pe-shop__group--first .pe-shop__grid {
+  padding-top: clamp(3rem, 7svh, 5.5rem);
+}
+
 
 /* =======================================================================
  * 08 — sezona: traka s koracima
@@ -1167,16 +1184,17 @@
   padding-bottom: clamp(3rem, 9.2593svh, 8rem);
 }
 
+/*
+ * Naslov stoji na istoj lijevoj crti kao tekst koraka ispod (vidi
+ * --pe-season-text-x), a ne uz ivicu kolone.
+ */
 .pe-season__head {
+  --pe-season-text-x: calc(var(--pe-pad-small) + 1.0417svw + 1px);
+
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
-  gap: 2rem;
+  padding-left: var(--pe-season-text-x);
   padding-bottom: clamp(1.5rem, 4svh, 3rem);
-}
-
-.pe-season__head .pe-label {
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
 }
 
 .pe-season__head .pe-title {
@@ -1202,10 +1220,23 @@
  * natpisa. Ako ih ima vise nego sto stane (usko, a ipak siroko), traka se lista.
  */
 .pe-season__nav {
+  /* Vodoravno uvlacenje jednog mjeseca; nav mu oduzima od lijevog uvlacenja. */
+  --pe-tab-pad: clamp(1rem, 1.5vw, 2rem);
+
   position: relative;
   display: flex;
+  /* Mjeseci se ne razvlace (tekst u njima bi se pomjerio), nego se raspore od prvog do zadnjeg. */
+  justify-content: space-between;
   width: 100%;
-  padding-inline: clamp(1rem, 1.6vw, 2rem);
+  /*
+   * Lijevo: tekst prvog mjeseca = tekst koraka ispod. Kolona pocinje na
+   * --pe-pad-small, korak se uvlaci 1.0417svw i ima liniju od 1px; od toga se
+   * oduzima uvlacenje samog mjeseca (--pe-tab-pad) jer i ono pomjera tekst.
+   * Linije (border) i dalje idu od ivice do ivice — pomjera se samo tekst.
+   */
+  padding-left: max(0px, calc(var(--pe-pad-small) + 1.0417svw + 1px - var(--pe-tab-pad)));
+  /* Bez desne margine: mjeseci su pomjereni udesno zbog poravnanja, pa im treba sav prostor. */
+  padding-right: 0;
   overflow-x: auto;
   scrollbar-width: none;
   border-top: 1px solid var(--pe-ink);
@@ -1220,8 +1251,8 @@
 .pe-season__tab {
   position: relative;
   z-index: 5;
-  flex: 1 0 auto;
-  padding: clamp(1rem, 2.6svh, 1.7rem) clamp(1rem, 1.5vw, 2rem);
+  flex: 0 0 auto;
+  padding: clamp(1rem, 2.6svh, 1.7rem) var(--pe-tab-pad);
   border: 0;
   background: none;
   color: inherit;
@@ -1454,6 +1485,11 @@
   /* Traka s naljepnicama nema smisla na telefonu — koraci se listaju prstom. */
   .pe-season__navwrap {
     display: none;
+  }
+
+  /* Koraci su ovdje kartice s obrisom: naslov staje uz ivicu kartice, ne uz tekst u njoj. */
+  .pe-season__head {
+    --pe-season-text-x: var(--pe-pad-small);
   }
 
   /*
@@ -1867,13 +1903,15 @@
   }
 
   /*
-   * Krug je uzi: snimci su manji, a poluprecnik 38svw ih drzi u kadru (vanjski rub
-   * 38svw + 9.5svw < 50svw) i izvan naslova (unutrasnji rub 28.5svw).
+   * Telefon: krug je siri od ekrana (vanjski rub 44svw + 13svw > 50svw), pa
+   * snimci na 3 i 9 sati djelimicno izlaze iz kadra — to je namjerno. Unutrasnji
+   * rub (31svw) ostaje izvan naslova.
    */
-  .pe-scatter {
-    --orbit-r: 38svw;
-    --orbit-w: 19svw;
-    --orbit-turn: 60s;
+  .pe-scatter-block {
+    --orbit-r: 44svw;
+    --orbit-w: 26svw;
+    --orbit-turn: 64s;
+    --orbit-dip: 4.5rem;
   }
 
   .pe-scatter__title {
