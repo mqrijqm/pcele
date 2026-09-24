@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import ContactView from '@/components/contact/ContactView';
 import { meta } from '@/content/pages';
 import { isLocale, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: meta[l].contact.title, description: meta[l].contact.description };
+  return pageMetadata({ locale: l, path: '/kontakt', ...meta[l].contact });
 }
 
 export default async function KontaktPage({ params }: { params: Promise<{ locale: string }> }) {

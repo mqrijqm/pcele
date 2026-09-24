@@ -15,19 +15,31 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
       description:
         'Porodični med i pčelinji proizvodi iz Mračaja kod Prnjavora. Pčelarska tradicija od 1980.',
     },
-    products: { title: 'Naši proizvodi', description: 'Izaberite savršen med za vas' },
+    products: {
+      title: 'Naši proizvodi',
+      description:
+        'Bagremov i livadski med, propolis i imuno mješavina iz našeg pčelinjaka u Mračaju. Male serije, sirovo vrcano, bez dodataka.',
+    },
     about: {
       title: 'O nama',
       description:
         'Pčelarstvo Jevtić započelo je kao mala porodična djelatnost u mirnom selu Mračaj, u blizini Prnjavora. Kroz tri generacije, prenijeli smo znanje i ljubav prema pčelama, čuvajući tradiciju proizvodnje čistog, prirodnog meda.',
     },
-    process: { title: 'Naš proces', description: 'Od košnice do vaše kutije - svaki korak s pažnjom' },
+    process: {
+      title: 'Naš proces',
+      description:
+        'Od košnice do vaše tegle — kako vrcamo, cijedimo i punimo med u našem pčelinjaku u Mračaju, korak po korak i bez prečica.',
+    },
     blog: {
       title: 'Iz našeg pčelinjaka',
       description:
         'Priče o medu, pčelama i sezonskom radu na imanju u Mračaju — pisane iz iskustva tri generacije pčelara.',
     },
-    contact: { title: 'Kontaktirajte nas', description: 'Rado ćemo odgovoriti na sva vaša pitanja' },
+    contact: {
+      title: 'Kontaktirajte nas',
+      description:
+        'Javite se za količine, poklon pakovanja, veleprodaju ili posjetu pčelinjaku u Mračaju kod Prnjavora. Rado ćemo odgovoriti na sva pitanja.',
+    },
     terms: {
       title: 'Uslovi kupovine',
       description: 'Pravila koja važe za svaku narudžbu u našoj online prodavnici',
@@ -46,19 +58,31 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
       description:
         'Family honey and bee products from Mračaj near Prnjavor. A beekeeping tradition since 1980.',
     },
-    products: { title: 'Our Products', description: 'Choose the perfect honey for you' },
+    products: {
+      title: 'Our Products',
+      description:
+        'Acacia and meadow honey, propolis and an immune blend from our apiary in Mračaj. Small batches, raw-spun, nothing added.',
+    },
     about: {
       title: 'About Us',
       description:
         'Pčelarstvo Jevtić began as a small family business in the peaceful village of Mračaj, near Prnjavor. Through three generations, we have passed down knowledge and love for bees, preserving the tradition of producing pure, natural honey.',
     },
-    process: { title: 'Our Process', description: 'From hive to your jar - every step with care' },
+    process: {
+      title: 'Our Process',
+      description:
+        'From hive to your jar — how we spin, strain and fill honey at our apiary in Mračaj, step by step and with no shortcuts.',
+    },
     blog: {
       title: 'From our apiary',
       description:
         'Stories about honey, bees, and seasonal work on the Mračaj homestead — written from three generations of beekeeping experience.',
     },
-    contact: { title: 'Contact Us', description: "We're happy to answer all your questions" },
+    contact: {
+      title: 'Contact Us',
+      description:
+        "Get in touch about quantities, gift packaging, wholesale or a visit to our apiary in Mračaj near Prnjavor. We're happy to answer any question.",
+    },
     terms: {
       title: 'Terms of purchase',
       description: 'The rules that apply to every order in our online store',
@@ -75,8 +99,9 @@ export const meta: L<Record<string, { title: string; description: string }>> = {
 
 /*
  * Kontakt: ploha u medenom tonu po uzoru na meracinque contact — marquee
- * naslov, uvod i kontakt pillovi lijevo, forma desno. Forma nema backend:
- * slanje ide kroz mailto, pa su ovdje i tekstovi koji ga pune.
+ * naslov, uvod i kontakt pillovi lijevo, forma desno. Forma šalje na
+ * /api/contact; dok mejl servis nije podešen pada nazad na mailto, pa su
+ * ovdje i tekstovi koji ga pune.
  */
 export const simplePages = {
   kontakt: {
@@ -103,6 +128,17 @@ export const simplePages = {
         submit: 'Pošalji upit',
         success: 'Hvala! Upit je poslan — javljamo se uskoro.',
         subject: 'Upit sa sajta — Pčelarstvo Jevtić',
+        sending: 'Šaljem…',
+        fallback:
+          'Otvorili smo vaš mail program s pripremljenom porukom — samo je tamo pošaljite.',
+        error: 'Slanje nije uspjelo. Pokušajte ponovo ili nam pišite direktno na',
+        errors: {
+          required: 'Ovo polje je obavezno.',
+          email: 'Unesite ispravnu email adresu.',
+          phone: 'Unesite ispravan broj telefona.',
+          tooLong: 'Tekst je predugačak.',
+          consent: 'Potrebna je vaša saglasnost da bismo nastavili.',
+        },
       },
     },
     en: {
@@ -128,6 +164,16 @@ export const simplePages = {
         submit: 'Send request',
         success: 'Thank you! Your inquiry is on its way — we will get back to you soon.',
         subject: 'Website inquiry — Pčelarstvo Jevtić',
+        sending: 'Sending…',
+        fallback: 'We opened your mail app with the message ready — just send it from there.',
+        error: 'Sending failed. Please try again or write to us directly at',
+        errors: {
+          required: 'This field is required.',
+          email: 'Please enter a valid email address.',
+          phone: 'Please enter a valid phone number.',
+          tooLong: 'This text is too long.',
+          consent: 'We need your consent to continue.',
+        },
       },
     },
   } satisfies L<{
@@ -149,9 +195,50 @@ export const simplePages = {
       submit: string;
       success: string;
       subject: string;
+      sending: string;
+      fallback: string;
+      error: string;
+      errors: {
+        required: string;
+        email: string;
+        phone: string;
+        tooLong: string;
+        consent: string;
+      };
     };
   }>,
 };
+
+/*
+ * Kolačići. Korpa i lista želja čuvaju se u browseru (localStorage) i rade bez
+ * ikakve saglasnosti; pita se samo za mjerenje posjeta. Tekst je namjerno
+ * kratak i tačan — obećava samo ono što sajt zaista radi.
+ */
+export const cookieConsent = {
+  sr: {
+    title: 'Kolačići i mjerenje posjeta',
+    text: 'Korpa i lista želja rade i bez kolačića. Uz vašu saglasnost anonimno mjerimo posjete — da vidimo šta se čita, a šta ne. Bez reklama i bez dijeljenja podataka.',
+    necessary: 'Samo neophodno',
+    accept: 'Prihvatam mjerenje',
+    more: 'Politika privatnosti',
+    settings: 'Podešavanja kolačića',
+  },
+  en: {
+    title: 'Cookies and visit measurement',
+    text: 'The cart and wishlist work without cookies. With your consent we measure visits anonymously — to see what gets read and what does not. No ads, and no data is shared.',
+    necessary: 'Necessary only',
+    accept: 'Accept measurement',
+    more: 'Privacy policy',
+    settings: 'Cookie settings',
+  },
+} satisfies L<{
+  title: string;
+  text: string;
+  necessary: string;
+  accept: string;
+  more: string;
+  settings: string;
+}>;
 
 // ---------------------------------------------------------------- home -------
 

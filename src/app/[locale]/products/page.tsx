@@ -19,6 +19,7 @@ import WhyBlock from '@/components/products/WhyBlock';
 import { meta } from '@/content/pages';
 import { imageSlots, productsEditorial, seasonMedia } from '@/content/productsEditorial';
 import { isLocale, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 
 /**
  * Strana proizvoda.
@@ -40,7 +41,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: meta[l].products.title, description: meta[l].products.description };
+  return pageMetadata({ locale: l, path: '/products', ...meta[l].products });
 }
 
 export default async function ProductsPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -56,7 +57,7 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
 
       {/* 02 — snimak preko cijelog ekrana, sa krugom koji vodi na proizvode */}
       <FullBleed
-        image="/images/products-editorial/livadski-med-korpa.png"
+        image="/images/products-editorial/livadski-med-korpa.webp"
         label={copy.bannerAlt}
         cta={copy.bannerCta}
         href="#proizvodi"

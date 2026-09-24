@@ -5,6 +5,7 @@ import LegalPage from '@/components/legal/LegalPage';
 import { legal } from '@/data/legal';
 import { meta } from '@/content/pages';
 import { createTranslator, isLocale, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -13,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: meta[l].privacy.title, description: meta[l].privacy.description };
+  return pageMetadata({ locale: l, path: '/privacy', ...meta[l].privacy });
 }
 
 export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {

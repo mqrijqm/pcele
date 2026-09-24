@@ -1,3 +1,4 @@
+import { CookieSettingsButton } from '@/components/layout/CookieConsent';
 import TransitionLink from '@/components/ui/TransitionLink';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
@@ -140,6 +141,8 @@ export default function Footer({ locale }: { locale: Locale }) {
           </TransitionLink>
           <span className="stopa__crta" aria-hidden="true" />
           <TransitionLink href={localeHref(locale, '/terms')}>{t('footer.terms')}</TransitionLink>
+          <span className="stopa__crta" aria-hidden="true" />
+          <CookieSettingsButton locale={locale} />
         </p>
       </div>
     </footer>

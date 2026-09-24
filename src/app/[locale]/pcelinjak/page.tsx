@@ -12,6 +12,7 @@ import Kraj from "@/components/pcelinjak/Kraj";
 import ImagePlaceholder from "@/components/pcelinjak/ImagePlaceholder";
 import { pcelinjak } from "@/content/pcelinjak";
 import { isLocale, localeHref, type Locale } from "@/i18n/config";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -20,10 +21,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : "sr";
-  return {
+  return pageMetadata({
+    locale: l,
+    path: "/pcelinjak",
     title: pcelinjak[l].meta.title,
     description: pcelinjak[l].meta.description,
-  };
+  });
 }
 
 /**

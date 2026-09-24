@@ -1,9 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 import BeeSvg from '@/components/bee/BeeSvg';
+
+/* Na serveru `useLayoutEffect` nema sta da radi, pa tamo koristimo obican. */
+const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
 /**
  * Koliko punjenje smije da traje.
@@ -63,6 +66,27 @@ export default function Preloader() {
   const beeRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [done, setDone] = useState(false);
+
+  /*
+   * Skriptu iz <head> layouta (ona koja dodaje `skip-preloader` povratniku)
+   * Next ne servira uz 404: za nepostojecu adresu salje svoju praznu ljusku i
+   * stranu sastavlja tek u browseru, a React skripte koje sam iscrta ne
+   * izvrsava. Bez ove provjere bi povratnik koji pogrijesi adresu opet
+   * gledao zavjesu s teglom. `js-reveal` je znak da je skripta radila; ako
+   * ga nema, isto pravilo primjenjujemo ovdje, prije prvog iscrtavanja.
+   */
+  useIsomorphicLayoutEffect(() => {
+    const html = document.documentElement;
+    if (html.classList.contains('js-reveal')) return;
+    try {
+      const seen =
+        window.sessionStorage.getItem('jevtic.preloaded') === '1' ||
+        window.matchMedia('(pointer: coarse)').matches;
+      if (seen) html.classList.add('skip-preloader');
+    } catch {
+      /* bez storage-a zavjesa se prikaze, kao i inace */
+    }
+  }, []);
 
   useEffect(() => {
     const curtain = curtainRef.current;

@@ -5,6 +5,7 @@ import { Package, Settings, User } from 'lucide-react';
 
 import { meta } from '@/content/pages';
 import { createTranslator, isLocale, localeHref, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -13,7 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: meta[l].account.title, description: meta[l].account.description };
+  return pageMetadata({ locale: l, path: '/account', ...meta[l].account, noindex: true });
 }
 
 export default async function AccountPage({ params }: { params: Promise<{ locale: string }> }) {

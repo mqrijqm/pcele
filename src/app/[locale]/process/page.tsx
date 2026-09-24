@@ -13,6 +13,7 @@ import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
 import { meta } from '@/content/pages';
 import { processView } from '@/content/process';
 import { isLocale, localeHref, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
@@ -21,7 +22,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const l: Locale = isLocale(locale) ? locale : 'sr';
-  return { title: meta[l].process.title, description: meta[l].process.description };
+  return pageMetadata({ locale: l, path: '/process', ...meta[l].process });
 }
 
 /**

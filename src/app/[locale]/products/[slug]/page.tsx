@@ -7,6 +7,7 @@ import Declaration from '@/components/products/Declaration';
 import ProductDetail from '@/components/products/ProductDetail';
 import { formatPrice, getProduct, products } from '@/data/products';
 import { createTranslator, isLocale, locales, localeHref, type Locale } from '@/i18n/config';
+import { pageMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/lib/site-url';
 
 /** Related cards show only the opening of the description, as on the original site. */
@@ -27,15 +28,12 @@ export async function generateMetadata({
   const product = getProduct(slug);
   if (!product) return {};
 
-  return {
+  return pageMetadata({
+    locale: l,
+    path: `/products/${product.slug}`,
     title: product.name[l],
     description: product.description[l],
-    openGraph: {
-      title: product.name[l],
-      description: product.description[l],
-      images: [{ url: product.image }],
-    },
-  };
+  });
 }
 
 export default async function ProductPage({

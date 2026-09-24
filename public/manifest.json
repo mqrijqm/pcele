@@ -1,11 +1,11 @@
 {
   "name": "Pčelarstvo Jevtić",
   "short_name": "Jevtić Med",
-  "description": "Porodični med i pčelinji proizvodi iz Mračaja kod Prnjavora, od 1985.",
+  "description": "Porodični med i pčelinji proizvodi iz Mračaja kod Prnjavora, od 1980.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F1EBDD",
-  "theme_color": "#302B26",
+  "background_color": "#FCF0DC",
+  "theme_color": "#885B27",
   "icons": [
     {
       "src": "/icons/icon-192.png",
