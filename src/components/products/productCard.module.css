@@ -1,0 +1,98 @@
+/*
+ * Kartica proizvoda. Boje samo iz palete sajta: papir, smeđe mastilo i njihove
+ * mješavine — bijele nema. Ploha ispod proizvoda je papir zatamnjen sa 7%
+ * mastila, pa se kartica čita kao "udubljenje" u papiru, ne kao bijeli okvir.
+ */
+
+.card {
+  --rule: color-mix(in srgb, var(--brown) 30%, transparent);
+
+  display: flex;
+  flex-direction: column;
+  padding: clamp(0.6rem, 1vw, 0.85rem);
+  border: 1px solid var(--rule);
+  border-radius: 1.5rem;
+  color: var(--brown);
+  text-decoration: none;
+  transition: border-color 0.35s var(--ease-out-expo);
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--brown);
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1.05rem;
+  background: color-mix(in srgb, var(--brown) 7%, var(--paper));
+}
+
+.image {
+  padding: 10%;
+  object-fit: contain;
+  transition: transform 0.7s var(--ease-out-expo);
+}
+
+.card:hover .image,
+.card:focus-visible .image {
+  transform: scale(1.035);
+}
+
+/* Naziv: u sredini, Gazpacho obične debljine, malim slovima. */
+.name {
+  margin: clamp(1.15rem, 2vw, 1.6rem) 0.5rem 0;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(1.45rem, 1.9vw, 2.05rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-align: center;
+  text-wrap: balance;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+  transition: text-decoration-color 0.35s var(--ease-out-expo);
+}
+
+.card:hover .name,
+.card:focus-visible .name {
+  text-decoration-color: var(--gold);
+}
+
+.rule {
+  height: 1px;
+  margin: clamp(1rem, 1.8vw, 1.35rem) 0.3rem 0.8rem;
+  background: var(--rule);
+}
+
+.meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 0.35rem 0.4rem;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.price {
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .image,
+  .name {
+    transition: none;
+  }
+}

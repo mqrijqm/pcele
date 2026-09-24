@@ -3,11 +3,16 @@ import type { Locale } from '@/i18n/config';
 
 export type Variant = { id: string; title: string; price: number; stock: number };
 
+/** Dodatna fotografija uz glavni snimak proizvoda (stranica proizvoda, galerija). */
+export type GalleryImage = { src: string; alt: Record<Locale, string> };
+
 export type Product = {
   slug: string;
   order: number;
   category: 'honey' | 'other';
   image: string;
+  /** Snimci koji idu iza glavnog; galerija na stranici proizvoda ih pokazuje kao sličice. */
+  gallery?: GalleryImage[];
   variants: Variant[];
   name: Record<Locale, string>;
   tagline: Record<Locale, string>;
@@ -29,6 +34,11 @@ export const products: Product[] = [
     order: 1,
     category: 'honey',
     image: '/images/proizvodi/bagremov-1kg-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/acacia-hand.webp', alt: { sr: 'Tegla bagremovog meda u ruci, u pčelinjaku', en: 'A jar of acacia honey in a hand, in the apiary' } },
+      { src: '/images/products-editorial/acacia-hive.webp', alt: { sr: 'Tegla bagremovog meda na košnici', en: 'A jar of acacia honey on a hive' } },
+      { src: '/images/products-editorial/medeni-proizvod-2.webp', alt: { sr: 'Dijete zahvata bagremov med iz tegle', en: 'A child reaching into a jar of acacia honey' } },
+    ],
     variants: [{ id: 'bagremov-1kg', title: '1 kg', price: 40, stock: 50 }],
     name: {
       sr: 'Bagremov med, 1 kg',
@@ -48,6 +58,11 @@ export const products: Product[] = [
     order: 2,
     category: 'honey',
     image: '/images/proizvodi/bagremov-500g-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/acacia-hand.webp', alt: { sr: 'Tegla bagremovog meda u ruci, u pčelinjaku', en: 'A jar of acacia honey in a hand, in the apiary' } },
+      { src: '/images/products-editorial/acacia-hive.webp', alt: { sr: 'Tegla bagremovog meda na košnici', en: 'A jar of acacia honey on a hive' } },
+      { src: '/images/products-editorial/medeni-proizvod-2.webp', alt: { sr: 'Dijete zahvata bagremov med iz tegle', en: 'A child reaching into a jar of acacia honey' } },
+    ],
     variants: [{ id: 'bagremov-500', title: '500 g', price: 22, stock: 100 }],
     name: {
       sr: 'Bagremov med, 500 g',
@@ -69,6 +84,11 @@ export const products: Product[] = [
     // TODO: privremeno studijski render — fotografija tegle od 1 kg jos nije
     // snimljena. Ostale tri kartice su prave fotografije.
     image: '/images/proizvodi/livadski-1kg-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/meadow-hand.webp', alt: { sr: 'Tegla livadskog meda na dlanu, na livadi', en: 'A jar of meadow honey on a palm, in a meadow' } },
+      { src: '/images/products-editorial/jars-railing.webp', alt: { sr: 'Red tegli livadskog meda na drvenoj ogradi', en: 'A row of meadow honey jars on a wooden railing' } },
+      { src: '/images/products-editorial/honeys-apiary.webp', alt: { sr: 'Bagremov i livadski med na drvenom stolu u pčelinjaku', en: 'Acacia and meadow honey on a wooden table in the apiary' } },
+    ],
     variants: [{ id: 'livadski-1kg', title: '1 kg', price: 32, stock: 60 }],
     name: {
       sr: 'Livadski med, 1 kg',
@@ -88,6 +108,11 @@ export const products: Product[] = [
     order: 4,
     category: 'honey',
     image: '/images/proizvodi/livadski-500g-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/meadow-hand.webp', alt: { sr: 'Tegla livadskog meda na dlanu, na livadi', en: 'A jar of meadow honey on a palm, in a meadow' } },
+      { src: '/images/products-editorial/jars-railing.webp', alt: { sr: 'Red tegli livadskog meda na drvenoj ogradi', en: 'A row of meadow honey jars on a wooden railing' } },
+      { src: '/images/products-editorial/honeys-apiary.webp', alt: { sr: 'Bagremov i livadski med na drvenom stolu u pčelinjaku', en: 'Acacia and meadow honey on a wooden table in the apiary' } },
+    ],
     variants: [{ id: 'livadski-500', title: '500 g', price: 18, stock: 120 }],
     name: {
       sr: 'Livadski med, 500 g',
@@ -110,6 +135,11 @@ export const products: Product[] = [
     // stvarno ima nesto.
     category: 'other',
     image: '/images/proizvodi/propolis-20ml-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/propolis-hand.webp', alt: { sr: 'Bočica propolisa u ruci', en: 'A bottle of propolis in a hand' } },
+      { src: '/images/products-editorial/propolis-meadow.webp', alt: { sr: 'Bočica propolisa na livadi, uz cvijeće', en: 'A bottle of propolis in a meadow, among flowers' } },
+      { src: '/images/products-editorial/propolis-tea.webp', alt: { sr: 'Propolis iz kapaljke uz šolju čaja', en: 'Propolis from a dropper beside a cup of tea' } },
+    ],
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'propolis-20ml', title: '20 ml', price: 12, stock: 40 }],
     name: {
@@ -130,6 +160,10 @@ export const products: Product[] = [
     order: 6,
     category: 'other',
     image: '/images/proizvodi/imuno-mix-450g-new.webp',
+    gallery: [
+      { src: '/images/products-editorial/imuno-spoon.webp', alt: { sr: 'Imuno mix na kašici, uz otvorenu teglu', en: 'Imuno mix on a spoon, beside the open jar' } },
+      { src: '/images/products-editorial/imuno-meadow.webp', alt: { sr: 'Tegla imuno mixa u travi, uz cvijeće', en: 'A jar of imuno mix in the grass, among flowers' } },
+    ],
     // TODO: cijena i zaliha su privremene — nisu dobijene uz fotografije.
     variants: [{ id: 'imuno-mix-450', title: '450 g', price: 20, stock: 60 }],
     name: {
@@ -148,6 +182,12 @@ export const products: Product[] = [
 ];
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
+
+/** Naziv artikla nosi i mjeru ("Livadski med, 1 kg"); kartice ih prikazuju odvojeno. */
+export const splitName = (name: string): { title: string; unit: string } => {
+  const m = name.match(/^(.*?),\s*(\d[\d.,]*\s*(?:kg|g|ml))$/i);
+  return m ? { title: m[1], unit: m[2] } : { title: name, unit: '' };
+};
 
 export const lowestPrice = (p: Product) => Math.min(...p.variants.map((v) => v.price));
 

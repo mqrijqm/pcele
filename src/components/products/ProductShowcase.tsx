@@ -1,6 +1,8 @@
 import Image from 'next/image';
 
+import ProductCard from '@/components/products/ProductCard';
 import TransitionLink from '@/components/ui/TransitionLink';
+import { formatPrice, getProduct } from '@/data/products';
 import { localeHref, type Locale } from '@/i18n/config';
 import type { productsEditorial } from '@/content/productsEditorial';
 
@@ -149,7 +151,7 @@ export default function ProductShowcase({
         <GroupHead mark="/images/brand/teglica.svg" tags={honeys.list} title={honeys.title} />
         <div className="pe-shop__grid">
           {copy.products.slice(0, 4).map((p, i) => (
-            <ProductCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
+            <CatalogCard key={p.name + p.unit} product={p} image={productImages[i]} locale={locale} />
           ))}
         </div>
       </div>
@@ -186,7 +188,7 @@ export default function ProductShowcase({
         <GroupHead mark="/images/brand/cvijet-krug.svg" tags={beeProducts.list} title={beeProducts.title} />
         <div className="pe-shop__grid">
           {copy.products.slice(4).map((p, i) => (
-            <ProductCard key={p.name + p.unit} product={p} image={productImages[i + 4]} locale={locale} />
+            <CatalogCard key={p.name + p.unit} product={p} image={productImages[i + 4]} locale={locale} />
           ))}
         </div>
       </div>
@@ -215,10 +217,11 @@ export default function ProductShowcase({
 }
 
 /**
- * Jedna kartica: proizvod na papiru, a ispod njega — u sredini — naziv i
- * mjera. Naziv je uvijek ispod proizvoda, nikad preko njega.
+ * Kartica iz kataloga: ista komponenta kao "Možda će vam se dopasti" na strani
+ * proizvoda (`ProductCard`). Cijena se uzima iz kataloga po `slug`-u; artikli
+ * koji još nemaju svoju stranu (perga, med u saću) je nemaju ni na kartici.
  */
-function ProductCard({
+function CatalogCard({
   product,
   image,
   locale,
@@ -227,24 +230,17 @@ function ProductCard({
   image: string;
   locale: Locale;
 }) {
-  const href = product.slug ? localeHref(locale, `/products/${product.slug}`) : '#proizvodi';
+  const item = product.slug ? getProduct(product.slug) : undefined;
 
   return (
-    <TransitionLink href={href} className="pe-shop__card">
-      <div className="pe-shop__card-media">
-        <Image
-          src={image}
-          alt={product.slug ? `${product.name}, ${product.unit}` : product.name}
-          fill
-          sizes="(max-width: 1024px) 50vw, 25vw"
-          className="pe-shop__card-img"
-        />
-      </div>
-
-      <div className="pe-shop__card-info">
-        <h4 className="pe-shop__card-name">{product.name}</h4>
-        {product.unit && <p className="pe-shop__card-unit">{product.unit}</p>}
-      </div>
-    </TransitionLink>
+    <ProductCard
+      href={product.slug ? localeHref(locale, `/products/${product.slug}`) : '#proizvodi'}
+      image={image}
+      imageAlt={product.slug ? `${product.name}, ${product.unit}` : product.name}
+      name={product.name}
+      unit={product.unit}
+      price={item ? formatPrice(item.variants[0].price) : undefined}
+      heading="h4"
+    />
   );
 }

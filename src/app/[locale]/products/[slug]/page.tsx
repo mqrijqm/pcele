@@ -1,17 +1,12 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
-import TransitionLink from '@/components/ui/TransitionLink';
 import { notFound } from 'next/navigation';
 
+import ProductCard from '@/components/products/ProductCard';
 import ProductDetail from '@/components/products/ProductDetail';
-import { formatPrice, getProduct, products } from '@/data/products';
+import { formatPrice, getProduct, products, splitName } from '@/data/products';
 import { createTranslator, isLocale, locales, localeHref, type Locale } from '@/i18n/config';
 import { pageMetadata } from '@/lib/seo';
 import { SITE_URL } from '@/lib/site-url';
-
-/** Related cards show only the opening of the description, as on the original site. */
-const truncate = (text: string, length = 60) =>
-  text.length > length ? `${text.slice(0, length)}...` : text;
 
 export function generateStaticParams() {
   return locales.flatMap((locale) => products.map((product) => ({ locale, slug: product.slug })));
@@ -76,53 +71,37 @@ export default async function ProductPage({
 
       <ProductDetail product={product} locale={locale} />
 
-      <div className="border-t border-[#885B27]/15 bg-linen">
+      {/* Ostali proizvodi: ista kartica kao u katalogu. */}
+      <section className="border-t border-[#885B27]/30">
         <div className="container section-padding">
-          <div className="reveal mb-12 text-center">
-            <span className="mb-3 inline-block text-sm font-medium uppercase tracking-widest text-[#885B27]">
+          <div className="reveal mb-12 flex flex-col items-center text-center">
+            <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-[#885B27]">
               {t('products.related.eyebrow')}
-            </span>
-            <h2 className="font-display text-display-md text-[#885B27]">
+            </p>
+            <h2 className="mt-4 font-display text-display-md font-normal text-[#885B27]">
               {t('products.related.heading')}
             </h2>
           </div>
 
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((item, index) => (
-              <TransitionLink
-                key={item.slug}
-                href={localeHref(locale, `/products/${item.slug}`)}
-                className={`reveal stagger-${index + 1} group block`}
-              >
-                <div className="overflow-hidden border border-[#885B27]/25 bg-transparent">
-                  <div className="relative aspect-[3/4] overflow-hidden border-b border-[#885B27]/25 bg-transparent">
-                    <Image
-                      src={item.image}
-                      alt={item.name[locale]}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 33vw"
-                      className="object-contain p-[12%] transition-transform duration-500 group-hover:scale-[1.02]"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-xl text-[#885B27] transition-colors duration-300 group-hover:text-honey-600">
-                        {item.name[locale]}
-                      </h3>
-                      <span className="shrink-0 text-base font-semibold text-[#885B27]">
-                        {formatPrice(item.variants[0].price)}
-                      </span>
-                    </div>
-                    <p className="mt-2 line-clamp-2 text-sm text-[#885B27]">
-                      {truncate(item.description[locale])}
-                    </p>
-                  </div>
-                </div>
-              </TransitionLink>
-            ))}
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            {related.map((item) => {
+              const { title, unit } = splitName(item.name[locale]);
+              return (
+                <ProductCard
+                  key={item.slug}
+                  href={localeHref(locale, `/products/${item.slug}`)}
+                  image={item.image}
+                  imageAlt={item.name[locale]}
+                  name={title}
+                  unit={unit || item.variants[0].title}
+                  price={formatPrice(item.variants[0].price)}
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                />
+              );
+            })}
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
