@@ -95,14 +95,17 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
         ]}
       />
 
-      {/* 06 — zuta ploha sa kapima na vrhu; snimci rasuti preko nje */}
+      {/* 06 — zuta ploha sa kapima gore i dolje; snimci kruze oko naslova */}
       <ScatterGallery
         title={copy.others.title}
         slots={[
           { slot: imageSlots.others[0], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-1.webp' },
-          { slot: imageSlots.others[1], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-2.webp' },
+          { slot: imageSlots.others[5], label: copy.others.alt, image: '/images/products-editorial/propolis-meadow.webp' },
           { slot: imageSlots.others[2], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-3.webp' },
+          { slot: imageSlots.others[1], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-2.webp' },
+          { slot: imageSlots.others[7], label: copy.others.alt, image: '/images/products-editorial/meadow-hand.webp' },
           { slot: imageSlots.others[3], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-4.webp' },
+          { slot: imageSlots.others[6], label: copy.others.alt, image: '/images/products-editorial/acacia-hive.webp' },
           { slot: imageSlots.others[4], label: copy.others.alt, image: '/images/products-editorial/medeni-proizvod-5.webp' },
         ]}
       />

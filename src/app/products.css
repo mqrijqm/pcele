@@ -708,15 +708,32 @@
 }
 
 /* =======================================================================
- * 07 — rasuti snimci preko pune plohe
+ * 07 — zuta ploha: snimci kruze oko naslova
+ *
+ * Osam snimaka stoji na krugu, ravnomjerno, i cio krug se okrece oko rijeci.
+ * Sve mjere krugu daju tri promjenljive na samoj plohi:
+ *
+ *   --orbit-r   poluprecnik kruga (sredina snimka do sredine plohe)
+ *   --orbit-w   sirina jednog snimka; visina je uvijek 1.25 puta veca
+ *   --orbit-turn  koliko traje jedan pun krug
+ *
+ * Poluprecnik prati i sirinu i visinu ekrana: krug treba da stane u kadar, ali
+ * nikad ne smije biti tako uzak da snimak prelazi preko naslova — zato donja
+ * granica (19svw) drzi snimke izvan rijeci i na niskom ekranu.
  * ==================================================================== */
 
 .pe-scatter {
+  --orbit-r: clamp(8.5rem, max(19svw, min(24svw, 36svh)), 27rem);
+  --orbit-w: clamp(5rem, 10.5svw, 12rem);
+  --orbit-h: calc(var(--orbit-w) * 1.25);
+  --orbit-turn: 70s;
+
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100svh;
+  /* Ploha je visoka koliko i krug (oba kraja) plus zrak — krug ne smije da se odsijeca. */
+  min-height: calc(var(--orbit-r) * 2 + var(--orbit-h) + clamp(4rem, 13svh, 8.5rem));
   /* Jedan piksel pod kapi iznad (`.drip__head`): crtez je odsjecen na visini u
      vw, koja rijetko padne na cio piksel, pa bi se inace vidjela svijetla nit. */
   margin-top: -1px;
@@ -731,10 +748,48 @@
   z-index: 1;
 }
 
+/* Krug: nulte velicine, u sredini plohe. Sve ostalo se mjeri od te tacke. */
+.pe-scatter__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.pe-scatter__orbit {
+  position: absolute;
+  inset: 0;
+  animation: pe-orbit var(--orbit-turn) linear infinite;
+}
+
+/*
+ * Mjesto snimka na krugu: kutija se najprije okrene za svoj ugao (--a), pa se
+ * odmakne za poluprecnik. Negativne margine je stavljaju sredinom na sredinu kruga.
+ */
+.pe-scatter__slot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--orbit-w);
+  height: var(--orbit-h);
+  margin: calc(var(--orbit-h) / -2) 0 0 calc(var(--orbit-w) / -2);
+  transform: rotate(var(--a)) translateX(var(--orbit-r));
+}
+
+/*
+ * Snimak ponistava obje rotacije: stalni ugao mjesta (--a) preko `transform`, a
+ * okretanje kruga preko posebnog svojstva `rotate` koje ide u suprotnom smjeru.
+ * Zbir je nula — snimak putuje po krugu, ali ostaje uspravan.
+ */
 .pe-scatter__image {
   position: absolute;
-  border-radius: 0;
+  inset: 0;
+  display: block;
   overflow: hidden;
+  border-radius: 0;
+  transform: rotate(calc(var(--a) * -1));
+  animation: pe-orbit-back var(--orbit-turn) linear infinite;
 }
 
 .pe-scatter__image > img {
@@ -749,43 +804,40 @@
   box-shadow: inset 0 0 0 1px rgba(252, 240, 220, 0.18);
 }
 
+@keyframes pe-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pe-orbit-back {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: -360deg;
+  }
+}
+
+/* Ko je iskljucio kretanje: isti krug, samo miran. */
+@media (prefers-reduced-motion: reduce) {
+  .pe-scatter__orbit,
+  .pe-scatter__image {
+    animation: none;
+  }
+}
+
 /*
- * Polozaji su dati u procentima plohe, ne u pikselima — raspored ostaje
- * isti na svakoj sirini, samo se ploha mijenja.
+ * Donja ivica: kapi. Isti sanduk kao `.drip__tail` na pocetnoj (zuta pozadina,
+ * papirni potez preko nje), samo jedan piksel pod plohu iznad da se ne vidi nit.
  */
-.pe-scatter__image--0 {
-  top: 13%;
-  left: 9%;
-  width: 15svw;
-  height: 46svh;
+.pe-scatter__tail {
+  margin-top: -1px;
 }
 
-.pe-scatter__image--1 {
-  top: 9%;
-  left: 47%;
-  width: 17svw;
-  height: 23svh;
-}
-
-.pe-scatter__image--2 {
-  top: 4%;
-  left: 79%;
-  width: 14svw;
-  height: 38svh;
-}
-
-.pe-scatter__image--3 {
-  bottom: 4%;
-  left: 37%;
-  width: 14svw;
-  height: 30svh;
-}
-
-.pe-scatter__image--4 {
-  bottom: 7%;
-  left: 74%;
-  width: 12svw;
-  height: 28svh;
+/* Prazan papir ispod kapi, prije sljedece sekcije (ona ima i svoj razmak). */
+.pe-scatter__air {
+  height: clamp(7rem, 20vw, 18rem);
 }
 
 .pe-scatter__content {
@@ -1885,46 +1937,14 @@
     max-width: none;
   }
 
+  /*
+   * Krug je uzi: snimci su manji, a poluprecnik 38svw ih drzi u kadru (vanjski rub
+   * 38svw + 9.5svw < 50svw) i izvan naslova (unutrasnji rub 28.5svw).
+   */
   .pe-scatter {
-    min-height: 84svh;
-  }
-
-  .pe-scatter__image--0 {
-    top: 9%;
-    left: 6%;
-    width: 22svw;
-    height: 20svh;
-  }
-
-  .pe-scatter__image--1 {
-    top: 5%;
-    right: 7%;
-    left: auto;
-    width: 19svw;
-    height: 16svh;
-  }
-
-  .pe-scatter__image--2 {
-    top: 27%;
-    right: 0;
-    left: auto;
-    width: 18svw;
-    height: 20svh;
-  }
-
-  .pe-scatter__image--3 {
-    bottom: 8%;
-    left: 6%;
-    width: 21svw;
-    height: 20svh;
-  }
-
-  .pe-scatter__image--4 {
-    right: 9%;
-    bottom: 6%;
-    left: auto;
-    width: 19svw;
-    height: 19svh;
+    --orbit-r: 38svw;
+    --orbit-w: 19svw;
+    --orbit-turn: 60s;
   }
 
   .pe-scatter__title {

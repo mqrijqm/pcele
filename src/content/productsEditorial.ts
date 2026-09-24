@@ -489,7 +489,7 @@ export const imageSlots = {
   banner: 'pcelinjak-hero',
   why: 'bagrem-detalj',
   meadow: 'livadski-tegla',
-  others: ['propolis', 'imuno-mix', 'livadski-cvijet', 'pcelinjak-let', 'tegle-red'],
+  others: ['propolis', 'imuno-mix', 'livadski-cvijet', 'pcelinjak-let', 'tegle-red', 'propolis-livada', 'bagrem-kosnica', 'livadski-ruka'],
   ctaLeft: 'pcelinjak-cta-lijevo',
   ctaRight: 'pcelinjak-cta-desno',
   season: [
