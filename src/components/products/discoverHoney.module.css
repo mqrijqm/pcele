@@ -1,0 +1,91 @@
+/*
+ * "Otkrijte kako nastaje med" — cvjetno polje, mala slika, zeleni pecat.
+ *
+ * Cvjetno polje iza sekcije dolazi iz globalne klase .bloomfield (isti uzorak kao
+ * na pocetnoj i na strani pcelinjaka; blijedjenje na oba kraja je njeno). Ovdje
+ * je samo razmak i sve ono sto stoji na polju.
+ */
+
+.discover {
+  --ink: var(--brown, #885b27);
+  --tint: color-mix(in srgb, var(--ink) 7%, var(--paper, #fcf0dc));
+
+  padding: clamp(5rem, 10vw, 10rem) clamp(1.2rem, 4.8vw, 5.5rem);
+  color: var(--ink);
+}
+
+/*
+ * Na strani Proizvodi: puno praznog papira izvan polja cvijeca, prije i poslije
+ * (iznad je katalog, ispod zuta kontakt ploha), da se sekcija ne lijepi ni za
+ * jedno ni za drugo.
+ */
+.airy {
+  padding-block: clamp(7rem, 16vw, 17rem);
+}
+
+.inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.inner h2 {
+  max-width: 16ch;
+  margin-top: 1.2rem;
+  color: inherit;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  font-size: clamp(2.2rem, 4.2vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+/* Mala slika u sredini; okvir stoji, a slika u njemu se zumira (vidi komponentu). */
+.frameWrap {
+  position: relative;
+  width: min(24rem, 78vw);
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  background: var(--tint);
+}
+
+.zoomImage {
+  object-fit: cover;
+  object-position: 50% 42%;
+  transform-origin: center;
+  will-change: transform;
+}
+
+/* Okrugli pecat na donjem desnom uglu slike, dijelom izvan nje — kao uz bocicu propolisa na pocetnoj. */
+.seal {
+  position: absolute;
+  right: -3.4rem;
+  bottom: -2.4rem;
+  z-index: 2;
+}
+
+@media (max-width: 640px) {
+  .seal {
+    right: -1rem;
+    bottom: -2rem;
+  }
+}

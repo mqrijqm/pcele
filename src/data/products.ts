@@ -13,6 +13,8 @@ export type Product = {
   image: string;
   /** Snimci koji idu iza glavnog; galerija na stranici proizvoda ih pokazuje kao sličice. */
   gallery?: GalleryImage[];
+  /** Koliko se proizvod povecava na kartici (1 = bez promjene). Za tegle koje u svom kadru izgledaju sitno. */
+  cardZoom?: number;
   variants: Variant[];
   name: Record<Locale, string>;
   tagline: Record<Locale, string>;
@@ -110,6 +112,8 @@ export const products: Product[] = [
     order: 4,
     category: 'honey',
     image: '/images/proizvodi/livadski-500g-new.webp',
+    // Tegla od 500 g zauzima samo 60% sirine svog kadra, pa na kartici izgleda sitno.
+    cardZoom: 1.22,
     gallery: [
       { src: '/images/products-editorial/meadow-hand.webp', alt: { sr: 'Tegla livadskog meda na dlanu, na livadi', en: 'A jar of meadow honey on a palm, in a meadow' } },
       { src: '/images/products-editorial/jars-railing.webp', alt: { sr: 'Red tegli livadskog meda na drvenoj ogradi', en: 'A row of meadow honey jars on a wooden railing' } },
@@ -179,6 +183,59 @@ export const products: Product[] = [
     description: {
       sr: 'Imuno mix je med i cvjetni polen umiješani u istoj tegli — sedamdeset posto meda, trideset posto polena. Polen ostaje u zrnu, pa se osjeti pod zubom i daje smjesi gust, pun ukus. Kašičica ujutru je uobičajena mjera.',
       en: 'Imuno mix is honey and flower pollen stirred together in one jar — seventy per cent honey, thirty per cent pollen. The pollen stays whole, so you feel the grains and the mix tastes dense and full. A spoonful in the morning is the usual measure.',
+    },
+  },
+  {
+    slug: 'perga-10g',
+    order: 7,
+    category: 'other',
+    // Isjecena slika (samo tegla i malo zraka): u originalu je tegla zauzimala
+    // 31% x 28% kadra od 1000x1000 i na kartici je bila jedva vidljiva.
+    image: '/images/proizvodi/perga-10g-crop.webp',
+    gallery: [
+      { src: '/images/real/pcele-cvijet.webp', alt: { sr: 'Pčele na cvijetu kamilice', en: 'Bees on a chamomile flower' } },
+      { src: '/images/real/ram-pcele.webp', alt: { sr: 'Ram sa pčelama u pčelinjaku', en: 'A frame with bees in the apiary' } },
+      { src: '/images/real/ramovi-sace.webp', alt: { sr: 'Ramovi sa saćem', en: 'Frames with comb' } },
+    ],
+    // Cijena potvrđena (Marija, 24.9.2026). TODO: zaliha je privremena.
+    variants: [{ id: 'perga-10g', title: '10 g', price: 10, stock: 30 }],
+    name: {
+      sr: 'Perga, 10 g',
+      en: 'Bee bread, 10 g',
+    },
+    tagline: {
+      sr: 'Polen iz saća, zrno po zrno',
+      en: 'Pollen from the comb, grain by grain',
+    },
+    description: {
+      sr: 'Perga je polen koji pčele same pakuju u ćelije saća, miješaju sa medom i enzimima i ostavljaju da fermentira. Nastane tvrdo, zrnasto zrno blago kiselkastog ukusa, koje se jede kao grickalica ili dodaje kaši, jogurtu i voću. Ne kuva se. Naša perga dolazi iz košnica oko Mračaja. Ko je alergičan na polen ili pčelinje proizvode, neka se prvo posavjetuje sa ljekarom.',
+      en: 'Bee bread is pollen that the bees pack into the cells of the comb themselves, mix with honey and enzymes and leave to ferment. What forms is a hard, granular pellet with a mildly sour taste, eaten as a snack or added to porridge, yoghurt and fruit. It is not cooked. Our bee bread comes from the hives around Mračaj. If you are allergic to pollen or bee products, ask your doctor first.',
+    },
+  },
+  {
+    slug: 'med-u-sacu',
+    order: 8,
+    category: 'other',
+    image: '/images/proizvodi/med-u-sacu-new.webp',
+    gallery: [
+      { src: '/images/real/sace-posuda.webp', alt: { sr: 'Komadi saća u posudi', en: 'Pieces of comb in a tray' } },
+      { src: '/images/real/sace-u-rukama.webp', alt: { sr: 'Svježe saće u rukama pčelara', en: 'Fresh comb in the hands of a beekeeper' } },
+      { src: '/images/products-editorial/medeni-proizvod-3.webp', alt: { sr: 'Saće u tegli meda, u ruci', en: 'Comb in a jar of honey, held in a hand' } },
+    ],
+    // Cijena potvrđena (Marija, 24.9.2026). TODO: gramaža komada i zaliha nisu
+    // zadate — "1 komad" je privremena oznaka, zaliha je privremena.
+    variants: [{ id: 'med-u-sacu', title: '1 komad', price: 2, stock: 50 }],
+    name: {
+      sr: 'Med u saću',
+      en: 'Comb honey',
+    },
+    tagline: {
+      sr: 'Med onakav kakav je u košnici',
+      en: 'Honey just as it is in the hive',
+    },
+    description: {
+      sr: 'Med u saću nije vrcan. Ostaje u voštanim ćelijama, tačno onako kako su ga pčele zatvorile. Jede se zajedno sa saćem: vosak je jestiv, a što ostane poslije žvakanja slobodno izbacite. Jedite ga sam kao slatki zalogaj, na hljebu, uz sir ili u salati. Čuvajte ga u zatvorenoj posudi, dalje od jakih mirisa, jer med lako upija miris.',
+      en: 'Comb honey is not spun. It stays in the wax cells exactly as the bees capped it, and it is eaten together with the comb: the wax is edible, and whatever is left after chewing you can simply spit out. Eat it on its own as a sweet bite, on bread, with cheese or in a salad. Keep it in a closed container away from strong smells, because honey takes up scents easily.',
     },
   },
 ];

@@ -36,12 +36,14 @@
 .image {
   padding: 10%;
   object-fit: contain;
+  /* --zoom dolazi sa kartice (Product.cardZoom); bez njega je 1. */
+  transform: scale(var(--zoom, 1));
   transition: transform 0.7s var(--ease-out-expo);
 }
 
 .card:hover .image,
 .card:focus-visible .image {
-  transform: scale(1.035);
+  transform: scale(calc(var(--zoom, 1) * 1.035));
 }
 
 /* Naziv: u sredini, Gazpacho obične debljine, malim slovima. */

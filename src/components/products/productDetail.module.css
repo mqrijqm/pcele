@@ -419,65 +419,6 @@
   line-height: 1.15;
 }
 
-/* --- otkrijte kako nastaje med --------------------------------------------- */
-
-/*
- * Cvjetno polje iza sekcije dolazi iz globalne klase .bloomfield (isti uzorak kao
- * na pocetnoj i na strani pcelinjaka; svijetli i tamni prelaz na oba kraja je
- * njen). Ovdje je samo razmak i sve ono sto stoji na polju.
- */
-.discover {
-  padding: clamp(5rem, 10vw, 10rem) clamp(1.2rem, 4.8vw, 5.5rem);
-  border-top: 1px solid var(--rule);
-}
-
-.discoverInner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.discoverInner h2 {
-  max-width: 16ch;
-  margin-top: 1.2rem;
-  font-size: clamp(2.2rem, 4.2vw, 4.4rem);
-  letter-spacing: -0.04em;
-  line-height: 0.98;
-  text-wrap: balance;
-}
-
-/* Mala slika u sredini; okvir stoji, a slika u njemu se zumira (vidi ProductDetail). */
-.frameWrap {
-  position: relative;
-  width: min(24rem, 78vw);
-  margin-top: clamp(2rem, 4vw, 3.5rem);
-}
-
-.frame {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: 1.75rem;
-  background: var(--tint);
-}
-
-.zoomImage {
-  object-fit: cover;
-  object-position: 50% 42%;
-  transform-origin: center;
-  will-change: transform;
-}
-
-/* Okrugli pecat na donjem desnom uglu slike, dijelom izvan nje — kao uz bocicu propolisa na pocetnoj. */
-.seal {
-  position: absolute;
-  right: -3.4rem;
-  bottom: -2.4rem;
-  z-index: 2;
-}
-
 /* --- tablet i telefon -------------------------------------------------------- */
 
 @media (max-width: 900px) {
@@ -537,11 +478,6 @@
 
   .details dl > div {
     grid-template-columns: 0.9fr 1fr;
-  }
-
-  .seal {
-    right: -1rem;
-    bottom: -2rem;
   }
 }
 

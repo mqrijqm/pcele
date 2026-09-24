@@ -1360,68 +1360,6 @@
 }
 
 /* =======================================================================
- * 10 — zavrsni poziv
- * ==================================================================== */
-
-/*
- * Visinu daje sadrzaj, ne ekran: pojas je nizak i sirok, a dvije fotografije
- * namjerno vire iz njega i bivaju odsjecene. Isto radi i referentna strana.
- */
-.pe-cta {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 1px;
-  overflow: hidden;
-  padding: clamp(4rem, 18.5185svh, 14rem) 0;
-}
-
-.pe-cta__content {
-  position: relative;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 var(--pe-pad);
-  text-align: center;
-}
-
-.pe-cta__image {
-  position: absolute;
-  top: 50%;
-  width: 18.75svw;
-  height: 37.037svh;
-  border-radius: var(--pe-radius);
-  overflow: hidden;
-  z-index: 1;
-  transition: left 0.7s var(--ease-out-expo), right 0.7s var(--ease-out-expo);
-}
-
-.pe-cta__image--left {
-  left: 2%;
-  transform: translateY(-50%);
-}
-
-.pe-cta__image--right {
-  right: -40%;
-  transform: translateY(-50%);
-}
-
-/* Na prelaz misa lijeva slika izlazi iz kadra, desna ulazi dublje. */
-.pe-cta__content:hover ~ .pe-cta__image--left,
-.pe-cta:focus-within .pe-cta__image--left {
-  left: -35%;
-}
-
-.pe-cta__button {
-  display: block;
-  width: clamp(9.5rem, 15.5vw, 13rem);
-  aspect-ratio: 367 / 136;
-  margin-top: clamp(2rem, 5svh, 4rem);
-}
-
-/* =======================================================================
  * Telefon i uski ekrani
  *
  * Ovdje se raspored stvarno mijenja, a ne samo skuplja: redovi postaju
@@ -1692,45 +1630,6 @@
     gap: 1.5rem;
   }
 
-  .pe-cta {
-    min-height: 1px;
-    justify-content: flex-start;
-    padding: clamp(3rem, 8.9955svh, 6rem) 5.3333svw;
-  }
-
-  .pe-cta__content {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .pe-cta__title {
-    max-width: 58.6667svw;
-    margin-bottom: clamp(1.5rem, 4.4978svh, 3rem);
-  }
-
-  /*
-   * Snimci se na telefonu sklanjaju iza teksta, ne ispod njega: naslov i
-   * dugme ostaju na cistom papiru, a plohe ulaze iz desne ivice. Kad dodju
-   * prave fotografije, preko njih nece ici ni slovo.
-   */
-  .pe-cta__image {
-    width: 40svw;
-    height: 26svh;
-  }
-
-  .pe-cta__image--left {
-    left: auto;
-    right: 2%;
-    top: auto;
-    bottom: 2%;
-    transform: none;
-  }
-
-  .pe-cta__image--right {
-    top: 4%;
-    right: -18%;
-    transform: none;
-  }
 }
 
 /* =======================================================================
@@ -1749,8 +1648,7 @@
   .pe-season__name,
   .pe-season__media,
   .pe-season__tab,
-  .pe-season__tab-label::before,
-  .pe-cta__image {
+  .pe-season__tab-label::before {
     transition: none;
   }
 }

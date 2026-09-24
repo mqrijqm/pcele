@@ -18,6 +18,7 @@ export default function ProductCard({
   name,
   unit,
   price,
+  zoom = 1,
   heading: Heading = 'h3',
   sizes = '(max-width: 1024px) 50vw, 25vw',
 }: {
@@ -29,11 +30,17 @@ export default function ProductCard({
   unit?: string;
   /** Već formatirana cijena; izostavlja se za artikle bez svoje strane. */
   price?: string;
+  /** Povecanje proizvoda na plohi (1 = bez promjene); vidi `Product.cardZoom`. */
+  zoom?: number;
   heading?: 'h3' | 'h4';
   sizes?: string;
 }) {
   return (
-    <TransitionLink href={href} className={styles.card}>
+    <TransitionLink
+      href={href}
+      className={styles.card}
+      style={zoom !== 1 ? ({ '--zoom': zoom } as React.CSSProperties) : undefined}
+    >
       <div className={styles.media}>
         <Image src={image} alt={imageAlt} fill sizes={sizes} className={styles.image} />
       </div>

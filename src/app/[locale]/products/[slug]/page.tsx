@@ -95,6 +95,7 @@ export default async function ProductPage({
                   name={title}
                   unit={unit || item.variants[0].title}
                   price={formatPrice(item.variants[0].price)}
+                  zoom={item.cardZoom}
                   sizes="(max-width: 640px) 100vw, 33vw"
                 />
               );

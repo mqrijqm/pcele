@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 import '@/app/products.css';
 
 import ContactView from '@/components/contact/ContactView';
-import CtaMovingImage from '@/components/products/CtaMovingImage';
+import DiscoverHoney from '@/components/products/DiscoverHoney';
 import FullBleed from '@/components/products/FullBleed';
 import HeroMarquee from '@/components/products/HeroMarquee';
 import MovingTitles from '@/components/products/MovingTitles';
@@ -128,14 +128,11 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
       */}
       <ProductShowcase locale={locale} copy={copy.shop} />
 
-      {/* 10 — zavrsni poziv */}
-      <CtaMovingImage
-        title={copy.cta.title}
-        button={copy.cta.button}
-        href="#proizvodi"
-        left={{ slot: imageSlots.ctaLeft, label: copy.cta.alt }}
-        right={{ slot: imageSlots.ctaRight, label: copy.cta.alt }}
-      />
+      {/*
+        10 — "Otkrijte kako nastaje med": cvjetno polje, slika koja se zumira i
+        zeleni pecat ka pcelinjaku; sa puno praznog papira prije i poslije.
+      */}
+      <DiscoverHoney locale={locale} spacious />
 
       {/* 11 — kontakt: ista sekcija (i ista forma) kao na strani Kontakt */}
       <ContactView locale={locale} embedded />
