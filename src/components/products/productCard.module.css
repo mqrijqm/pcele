@@ -7,6 +7,9 @@
 .card {
   --rule: color-mix(in srgb, var(--brown) 30%, transparent);
 
+  /* Kartica zna koliko je siroka (vidi @container ispod), ne koliko je ekran. */
+  container-type: inline-size;
+
   display: flex;
   flex-direction: column;
   padding: clamp(0.6rem, 1vw, 0.85rem);
@@ -87,6 +90,23 @@
   font-size: 1.15rem;
   font-weight: 400;
   letter-spacing: -0.01em;
+}
+
+.meta span {
+  white-space: nowrap;
+}
+
+/*
+ * Uska kartica (dvije kolone na telefonu, ~170px): mjera i cijena ne stanu jedno
+ * uz drugo pa se lome usred "450 g" i "20,00 KM". Tu idu jedno ispod drugog, u sredini.
+ */
+@container (max-width: 13rem) {
+  .meta {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    padding-inline: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

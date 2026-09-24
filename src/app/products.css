@@ -896,15 +896,9 @@
 /* =======================================================================
  * Katalog proizvoda
  *
- * Isti jezik kao ostatak strane, bez ijednog izuzetka:
- *   - podloga je papir (`--pe-paper`), nigdje bijela;
- *   - sve krupno je Gazpacho, obicna debljina, MALA slova — kao "Godina kod
- *     pcela." i "Nas med";
- *   - sve sitno je Inter. Serif se ne pise velikim slovima, ni krupno ni sitno.
- *
- * Ovdje je nekad stajalo pravilo koje je SVE u sekciji (i dugmad, i sitne
- * natpise) guralo u Gazpacho; otud su verzali izgledali oštro i težinski
- * pogrešno. Font se sada bira po ulozi, ne po sekciji.
+ * Osam kartica (4 x 2) i ništa između. Podloga je papir (--pe-paper), nigdje
+ * bijela; kartica sama (vidi ProductCard) nosi Gazpacho za naziv i Inter za
+ * mjeru.
  * ==================================================================== */
 
 .pe-shop {
@@ -917,238 +911,9 @@
   color: var(--pe-ink);
 }
 
-/* Sitan natpis iznad naslova — jedini verzal u sekciji, i to u sansu. */
-.pe-shop__eyebrow {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: clamp(0.72rem, 0.85vw, 0.9rem);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
-  text-transform: uppercase;
-  color: var(--pe-ink);
-}
-
-/* --- uvod / cuvanje / dostava: tekst uz veliku fotografiju --------------- */
-
-.pe-shop__split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.pe-shop__panel {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: clamp(3rem, 8svh, 7rem) var(--pe-pad-medium);
-}
-
-.pe-shop__heading {
-  margin-top: clamp(0.85rem, 1.6svh, 1.2rem);
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(2.1rem, 3.9svw, 4.6rem);
-  font-weight: 400;
-  letter-spacing: -0.028em;
-  line-height: 1.04;
-  text-wrap: balance;
-  white-space: pre-line;
-  color: var(--pe-ink);
-}
-
-/* Naslov od cijele recenice (cuvanje) — manji, da ne pojede pola stupca. */
-.pe-shop__heading--long {
-  font-size: clamp(1.75rem, 2.9svw, 3.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.024em;
-}
-
-.pe-shop__text {
-  max-width: 32rem;
-  margin-top: clamp(1.15rem, 2.8svh, 1.9rem);
-}
-
-/* Poziv: ista pilula kao zavrsni poziv strane (`.pe-cta__button`). */
-.pe-shop__cta {
-  width: clamp(9.5rem, 15.5vw, 13rem);
-  aspect-ratio: 367 / 136;
-  margin-top: clamp(1.75rem, 4.2svh, 2.75rem);
-}
-
-.pe-shop__photo {
-  position: relative;
-  min-height: clamp(19rem, 78vw, 30rem);
-  overflow: hidden;
-}
-
-.pe-shop__photo-img {
-  object-fit: cover;
-}
-
-/* Cinjenice o cuvanju: tri podatka, tanke linije. Na telefonu jedan ispod drugog. */
-.pe-shop__facts {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  width: 100%;
-  max-width: 34rem;
-  margin-top: clamp(1.75rem, 4.2svh, 2.75rem);
-  border-top: 1px solid var(--pe-rule);
-}
-
-.pe-shop__facts > div {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.9rem 0;
-  border-bottom: 1px solid var(--pe-rule);
-}
-
-.pe-shop__facts dt {
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.pe-shop__facts dd {
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 1.25rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-align: right;
-}
-
-@media (min-width: 640px) {
-  .pe-shop__facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    border-bottom: 1px solid var(--pe-rule);
-  }
-
-  .pe-shop__facts > div {
-    display: block;
-    padding: 1.05rem 1rem 1.1rem 0;
-    border-bottom: 0;
-  }
-
-  .pe-shop__facts > div + div {
-    padding-left: 1.1rem;
-    border-left: 1px solid var(--pe-rule);
-  }
-
-  .pe-shop__facts dd {
-    margin-top: 0.5rem;
-    font-size: clamp(1.1rem, 1.55svw, 1.6rem);
-    text-align: left;
-  }
-}
-
-@media (min-width: 1024px) {
-  .pe-shop__split {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .pe-shop__photo {
-    min-height: clamp(32rem, 46svw, 46rem);
-  }
-
-  /* Fotografija lijevo, tekst desno. */
-  .pe-shop__split--flip .pe-shop__photo {
-    order: -1;
-  }
-}
-
-/* Na telefonu fotografija stoji iznad teksta (u uvodu ostaje ispod). */
-@media (max-width: 1023px) {
-  .pe-shop__split--flip .pe-shop__photo,
-  .pe-shop__split--photo-first-mobile .pe-shop__photo {
-    order: -1;
-  }
-}
-
-/* --- traka sa natpisima ---------------------------------------------------- */
-
-.pe-shop__strip {
-  overflow: hidden;
-  padding-block: 1rem;
-  border-top: 1px solid var(--pe-hair);
-  border-bottom: 1px solid var(--pe-hair);
-}
-
-.pe-shop__strip-track {
-  display: flex;
-  width: max-content;
-  align-items: center;
-  animation: kontakt-marquee 46s linear infinite;
-}
-
-.pe-shop__strip-group {
-  display: flex;
-  width: max-content;
-  flex-shrink: 0;
-  align-items: center;
-}
-
-.pe-shop__strip-item {
-  display: flex;
-  align-items: center;
-}
-
-.pe-shop__strip-text {
-  padding-inline: 2.5rem;
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  opacity: 0.75;
-}
-
-.pe-shop__strip-mark {
-  width: 2rem;
-  height: 2rem;
-  flex-shrink: 0;
-  object-fit: contain;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pe-shop__strip-track {
-    animation: none;
-  }
-}
-
-/* --- grupa proizvoda: podnaslov u sredini + kartice ------------------------- */
-
+/* Sidro #proizvodi: da meni koji lebdi ne pojede kartice kad se skoci ovamo. */
 .pe-shop__group {
-  /* Da meni koji lebdi ne pojede podnaslov kad se skoci na #proizvodi. */
   scroll-margin-top: 4.5rem;
-}
-
-.pe-shop__group-head {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: clamp(3.5rem, 9svh, 6.5rem) var(--pe-pad) clamp(2.25rem, 5svh, 3.75rem);
-  text-align: center;
-}
-
-.pe-shop__mark {
-  width: auto;
-  height: clamp(2.6rem, 3.6vw, 3.4rem);
-  margin-bottom: clamp(0.9rem, 1.8svh, 1.3rem);
-}
-
-.pe-shop__group-title {
-  margin-top: clamp(0.75rem, 1.5svh, 1.1rem);
-  max-width: 20ch;
-  font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.9rem, 3.4svw, 3.8rem);
-  font-weight: 400;
-  letter-spacing: -0.026em;
-  line-height: 1.06;
-  text-wrap: balance;
-  white-space: pre-line;
-  color: var(--pe-ink);
 }
 
 /*
@@ -1159,18 +924,13 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(0.75rem, 1.4vw, 1.4rem);
-  padding: 0 clamp(1.15rem, 5.2svw, 6.5rem) clamp(3.5rem, 8svh, 6rem);
+  padding: clamp(3rem, 7svh, 5.5rem) clamp(1.15rem, 5.2svw, 6.5rem) clamp(3.5rem, 8svh, 6rem);
 }
 
 @media (min-width: 1024px) {
   .pe-shop__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-}
-
-/* Kartice na samom vrhu prodavnice (bez naslova): zrak gore, kao da je naslov tu. */
-.pe-shop__group--first .pe-shop__grid {
-  padding-top: clamp(3rem, 7svh, 5.5rem);
 }
 
 

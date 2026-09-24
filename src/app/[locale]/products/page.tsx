@@ -123,11 +123,10 @@ export default async function ProductsPage({ params }: { params: Promise<{ local
       </div>
 
       {/*
-        Katalog. Ovdje je i tekst o cuvanju i kristalizaciji (`storage`) — nekad
-        je stajao kao zasebna sekcija iznad, a sada je uz veliku fotografiju.
-        Sidro #proizvodi (dugmad "Okusi slast" na strani) vodi na prve kartice.
+        Katalog: osam kartica u jednoj mrezi, odmah ispod sezone. Sidro
+        #proizvodi (dugmad "Okusi slast" na strani) vodi na prvu karticu.
       */}
-      <ProductShowcase locale={locale} copy={copy.shop} storage={copy.storage} />
+      <ProductShowcase locale={locale} copy={copy.shop} />
 
       {/* 10 — zavrsni poziv */}
       <CtaMovingImage
