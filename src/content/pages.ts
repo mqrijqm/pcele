@@ -209,37 +209,6 @@ export const simplePages = {
   }>,
 };
 
-/*
- * Kolačići. Korpa i lista želja čuvaju se u browseru (localStorage) i rade bez
- * ikakve saglasnosti; pita se samo za mjerenje posjeta. Tekst je namjerno
- * kratak i tačan — obećava samo ono što sajt zaista radi.
- */
-export const cookieConsent = {
-  sr: {
-    title: 'Kolačići i mjerenje posjeta',
-    text: 'Korpa i lista želja rade i bez kolačića. Uz vašu saglasnost anonimno mjerimo posjete — da vidimo šta se čita, a šta ne. Bez reklama i bez dijeljenja podataka.',
-    necessary: 'Samo neophodno',
-    accept: 'Prihvatam mjerenje',
-    more: 'Politika privatnosti',
-    settings: 'Podešavanja kolačića',
-  },
-  en: {
-    title: 'Cookies and visit measurement',
-    text: 'The cart and wishlist work without cookies. With your consent we measure visits anonymously — to see what gets read and what does not. No ads, and no data is shared.',
-    necessary: 'Necessary only',
-    accept: 'Accept measurement',
-    more: 'Privacy policy',
-    settings: 'Cookie settings',
-  },
-} satisfies L<{
-  title: string;
-  text: string;
-  necessary: string;
-  accept: string;
-  more: string;
-  settings: string;
-}>;
-
 // ---------------------------------------------------------------- home -------
 
 export const home = {

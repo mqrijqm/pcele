@@ -6242,24 +6242,8 @@ a.pecat:focus-visible img {
 .stopa__podaci a:hover,
 .stopa__podaci a:focus-visible,
 .stopa__dno a:hover,
-.stopa__dno a:focus-visible,
-.stopa__dno button:hover,
-.stopa__dno button:focus-visible {
+.stopa__dno a:focus-visible {
   text-decoration-color: currentColor;
-}
-
-/* Dugme "Podešavanja kolačića" izgleda kao susjedne veze. */
-.stopa__dno button {
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  text-decoration-color: transparent;
-  text-decoration-line: underline;
-  text-underline-offset: 0.28em;
-  transition: text-decoration-color 0.35s ease;
 }
 
 /* --- sredina: znak, ime, pecat ------------------------------------------- */

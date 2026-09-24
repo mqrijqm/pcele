@@ -14,7 +14,7 @@ import Preloader from '@/components/layout/Preloader';
 import SmoothScroll from '@/components/layout/SmoothScroll';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
-import CookieConsent from '@/components/layout/CookieConsent';
+import Analytics from '@/components/layout/Analytics';
 import HoneyTransitionProvider from '@/components/layout/HoneyTransition';
 import RevealObserver from '@/components/ui/RevealObserver';
 import HeadingTypewriter from '@/components/ui/HeadingTypewriter';
@@ -178,7 +178,7 @@ export default async function LocaleLayout({
               <Header locale={locale} />
               <main className="flex-1">{children}</main>
               <Footer locale={locale} />
-              <CookieConsent locale={locale} />
+              <Analytics />
               <CartDrawer locale={locale} />
             </WishlistProvider>
           </CartProvider>
