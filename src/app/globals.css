@@ -6571,13 +6571,35 @@ a.pecat:focus-visible img {
   align-items: center;
 }
 
-/* Copyright i potpis studija u istom redu. Na uskom ekranu se prelama i
-   centrira, pa vlas izmedju njih ostane na kraju gornjeg reda. */
+/* Copyright i potpis studija. Dok nema mjesta za oba uz pravne veze, potpis
+   ide u svoj red bez vlasi: prelomljen red je ostavljao vlas da visi na
+   kraju gornjeg reda, a na ~700px je gurao pravne veze u dva reda. Od
+   960px stoje u istom redu. */
 .stopa__autor {
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 0.25rem;
+}
+
+.stopa__autor .stopa__crta {
+  display: none;
+}
+
+.stopa__pravno a {
+  white-space: nowrap;
+}
+
+@media (min-width: 960px) {
+  .stopa__autor {
+    flex-direction: row;
+    gap: 0;
+    white-space: nowrap;
+  }
+
+  .stopa__autor .stopa__crta {
+    display: inline-block;
+  }
 }
 
 /* Vlas izmedju dvije veze u istom redu. */
