@@ -53,19 +53,25 @@
   --pcl-d2: min(43.008px, calc(31.38px + 1.1354vw));
   --pcl-d3: min(32.768px, calc(31.53px + 0.1211vw));
 
-  --pcl-pretitle: 12.24px;
-  --pcl-pretitle-lh: 19.584px;
+  --pcl-pretitle: 13px;
+  --pcl-pretitle-lh: 20px;
   --pcl-tab: 10.8px;
   --pcl-tab-lh: 17.28px;
 
-  --pcl-body: 14.4px;
-  --pcl-body-lh: 23.04px;
-  --pcl-th: 12.96px;
-  --pcl-td: 14.4px;
-  --pcl-row-lh: 19.2px;
-  --pcl-counter: 12.24px;
-  --pcl-link: 11.52px;
-  --pcl-link-lh: 18.432px;
+  /*
+   * Tekst za citanje. Uzor ga slaze na 14.4px, a to je ispod granice do koje se
+   * ugodno cita — pa je ovdje 15.5px na telefonu i 16.5px od 768 navise, s
+   * redom od oko 1.65. Sitni natpisi (veze, brojaci, zaglavlja tabele) su tek
+   * malo veci nego na uzoru.
+   */
+  --pcl-body: 15.5px;
+  --pcl-body-lh: 25.6px;
+  --pcl-th: 13px;
+  --pcl-td: 15.5px;
+  --pcl-row-lh: 22px;
+  --pcl-counter: 12.5px;
+  --pcl-link: 12.5px;
+  --pcl-link-lh: 20px;
 
   background-color: var(--pcl-paper);
   color: var(--pcl-ink);
@@ -89,6 +95,11 @@
     --pcl-sm: 27.648px;
     --pcl-md: 55.296px;
     --pcl-lg: 110.592px;
+    --pcl-body: 16.5px;
+    --pcl-body-lh: 27.2px;
+    --pcl-th: 13.5px;
+    --pcl-td: 16px;
+    --pcl-row-lh: 23px;
   }
 }
 
@@ -326,13 +337,23 @@
 }
 
 /* ---------------------------------------------------------------------------
- * Heroj: naslov stoji, slika se skrolom siri iz male kutije u cio kadar.
+ * Heroj: naslov stoji, slika se skrolom siri iz male kutije u traku ispod
+ * naslova. Sirenje je `transform`, ne layout — vidi `Hero.tsx`.
  * ------------------------------------------------------------------------- */
 .pcl-hero {
   position: relative;
+  /*
+   * Gdje pocinje mala slika, mjereno od vrha trake ispod naslova. Na 1440x900
+   * daje 290px kao na uzoru; na nizem ekranu se vraca gore, da slika i tamo
+   * viri ispod ruba tacno onoliko (oko 185px) koliko na velikom — bez ovoga je
+   * na 720px visine od nje ostajala tanka crta na samom dnu.
+   */
+  --pcl-hero-top: clamp(5.5rem, calc(100svh - var(--header-h) - 474px), 30rem);
+  /* Put skrola dok se slika siri, povrh jednog kadra. */
+  --pcl-hero-run: 110svh;
   height: 801px;
   max-height: calc(100svh - var(--header-h));
-  /* Slika koja se siri ne smije da izadje iz heroja na sekciju pod njim. */
+  /* Ko nema kretanja ili JavaScripta dobija heroj u mjeri uzora, bez sirenja. */
   overflow: clip;
 }
 
@@ -348,26 +369,57 @@
   height: 100%;
 }
 
-/* Slika je iznad sloga dok raste, pa natpisi ispod nje mijenjaju boju. */
+/*
+ * Sirenje: heroj je visok koliko kadar plus put skrola, a scena u njemu se
+ * zalijepi za vrh (`sticky`) i stoji dok se slika ne razlije — isto kao
+ * `.geslo`. Nema pin-spacera, pa nema ni preskoka kad se scena otpusti.
+ * Samo uz JavaScript (`js-reveal`): bez njega bi ostao prazan put ispod slike.
+ */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal .pcl-hero {
+    height: calc(100svh + var(--pcl-hero-run));
+    max-height: none;
+    overflow: visible;
+  }
+
+  .js-reveal .pcl-hero__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+  }
+}
+
+/*
+ * Slika. Ovako stoji dok JavaScript ne stigne: mala, u sredini, iznad slova.
+ * `Hero.tsx` je poslije prebacuje u punu mjeru (`is-live`) i smanjuje
+ * `transform`-om na isti izgled.
+ */
 .pcl-hero__media {
   position: absolute;
   z-index: 2;
   left: 50%;
   translate: -50% 0;
-  top: 290px;
+  top: var(--pcl-hero-top);
   /*
    * Ista mjera koju bi imao srednji od tri jednaka stupca. Pisana ovako, a ne
    * kao broj, jer slika stoji izvan toka pa je mreza ne moze izmjeriti sama:
    * na 1440 daje 363.1, na 1024 daje 267.6 — oboje tacno kao uzor.
    */
   width: calc(min(var(--pcl-max), 100vw - 2 * var(--pcl-gutter)) / 3 - var(--pcl-gap) * 2 / 3);
-  /*
-   * Visinu drzi omotac, ne ploha u njemu. Bez ovoga bi ploha racunala visinu
-   * iz svog omjera, pa bi pri sirenju na cio kadar narasla u 1440/1.261 =
-   * 1142px i prelila se preko sekcije ispod heroja.
-   */
   aspect-ratio: 1.261;
-  will-change: width, height, top;
+}
+
+/* Prazno mjesto male kutije u mrezi: mjera odakle slika krece, nevidljiva. */
+.pcl-hero__slot {
+  aspect-ratio: 1.261;
+  margin-top: var(--pcl-hero-top);
+  visibility: hidden;
+}
+
+.pcl-hero__inner {
+  position: absolute;
+  inset: 0;
 }
 
 .pcl-hero__media .pcl-ph {
@@ -375,8 +427,21 @@
   aspect-ratio: auto;
 }
 
-@media (max-width: 1023px) {
-  .pcl-hero__media { top: 276px; }
+/*
+ * Kutija u punoj mjeri: od dna naslova do dna scene, preko cijele sirine.
+ * Sirinu i visinu upisuje `Hero.tsx` (mjerenjem), ovdje je samo ono sto je
+ * uvijek isto. `will-change` samo dok traje sirenje.
+ */
+.pcl-hero.is-live .pcl-hero__media {
+  top: 0;
+  aspect-ratio: auto;
+  /* Slika je u kutiji uvecana, pa sve sto izadje iz nje ostaje odsjeceno. */
+  overflow: clip;
+  will-change: transform;
+}
+
+.pcl-hero.is-live .pcl-hero__inner {
+  will-change: transform;
 }
 
 /*
@@ -391,9 +456,10 @@
     left: 0;
     translate: none;
     width: 100%;
+    aspect-ratio: 0.672;
   }
 
-  .pcl-hero__media { aspect-ratio: 0.672; }
+  .pcl-hero__slot { display: none; }
 }
 
 @media (min-width: 768px) {
@@ -417,85 +483,111 @@
   z-index: 3;
   /*
    * Slika je izvan toka, pa je mreza ne broji — bez ovoga bi potpis sjeo u
-   * drugi stupac umjesto u treci. Odmak je mjeren: na uzoru potpis stoji
-   * 352px ispod vrha trostupacne trake, pri dnu heroja.
+   * drugi stupac umjesto u treci. Potpis stoji malo ispod vrha male slike,
+   * pri dnu heroja, kao na uzoru.
    */
   grid-column: 3;
-  margin-top: 352px;
+  margin-top: calc(var(--pcl-hero-top) + 4rem);
 }
 
 @media (max-width: 767px) {
   .pcl-hero__caption { grid-column: 1; margin-top: var(--pcl-md); }
 }
 
-/* Kad se slika razlije preko kadra, slog na njoj prelazi u papir. */
-.pcl-hero.is-covered .pcl-hero__title,
+/*
+ * Kad slika krene da raste potpis nestaje: bio bi na fotografiji, sitan i
+ * necitljiv. Naslov ne treba ovakvo pravilo — slika mu nikad ne prelazi preko
+ * slova, jer raste samo u traku ispod njega.
+ */
 .pcl-hero.is-covered .pcl-hero__caption {
-  color: var(--pcl-paper);
+  opacity: 0;
+  pointer-events: none;
 }
 
-/* Svijetla slika: papirni natpis bi se na njoj izgubio, pa ostaje tamni. */
-.pcl-hero--light.is-covered .pcl-hero__title,
-.pcl-hero--light.is-covered .pcl-hero__caption {
-  color: var(--pcl-ink);
-}
+/* ---------------------------------------------------------------------------
+ * Lijepljenje. Zajednicko za sve sto na ovim stranama stoji dok se nesto
+ * skrolom pomjera (traka slika, koraci, sorte, zavrsna kartica) — objasnjenje
+ * je u `lijepi.ts`. Sekcija (`.pcl-lijep`) je visoka koliko scena plus put
+ * skrola (`--scena`, `--put` upisuje JavaScript pri mjerenju), a scena u njoj
+ * (`.pcl-lijep__scena`) se lijepi na sredinu kadra.
+ *
+ * Samo od 768 navise, uz kretanje i uz JavaScript (`js-reveal`) — inace bi
+ * ostao prazan put skrola ispod sadrzaja koji se nikad ne pomjeri.
+ * ------------------------------------------------------------------------- */
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal .pcl-lijep {
+    height: calc(var(--scena, 100svh) + var(--put, 100svh));
+  }
 
-.pcl-hero__title,
-.pcl-hero__caption {
-  transition: color 0.35s ease;
+  .js-reveal .pcl-lijep__scena {
+    position: sticky;
+    top: max(0px, calc(50svh - var(--scena, 100svh) / 2));
+  }
 }
 
 /* ---------------------------------------------------------------------------
  * Traka slika koja se lista u stranu.
+ *
+ * Scena je visoka koliko slike i po 4rem zraka gore i dolje, a ne cio kadar:
+ * ranije je bila visoka cio kadar sa slikama po sredini, pa je iznad i ispod
+ * trake u toku strane ostajalo skoro pola ekrana praznine. Lijepi se na sredinu,
+ * pa slike u kadru stoje isto kao prije.
  * ------------------------------------------------------------------------- */
-/*
- * Traka se lista skrolom, pa dok je zakacena mora da stane u kadar: visina je
- * cio kadar, a niz u njoj stoji po sredini.
- */
 .pcl-rail {
   position: relative;
-  padding-left: var(--pcl-rail-pad, 230px);
+  /* Lijeva ivica sadrzaja — slike krecu tu gdje i ostali sadrzaj, ne na proizvoljnih 230px. */
+  --pcl-rail-pad: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
+  /* Zona blijedjenja slika koje odlaze ulijevo; prva slika u mirovanju stoji iza nje. */
+  --pcl-rail-fade: 3rem;
+}
+
+.pcl-rail__stage {
+  position: relative;
   display: flex;
   align-items: center;
-  min-height: 100svh;
-}
-
-@media (max-width: 1023px) {
-  .pcl-rail { --pcl-rail-pad: 120px; }
-}
-
-@media (max-width: 767px) {
-  .pcl-rail { --pcl-rail-pad: var(--pcl-gutter); }
+  padding-block: 4rem;
+  padding-left: calc(var(--pcl-rail-pad) - var(--pcl-rail-fade));
 }
 
 .pcl-rail__viewport {
   width: 100%;
   overflow: hidden;
+  /* Slike ne nestaju naglo na ivici prozora nego blijede — kao u sortama. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--pcl-rail-fade));
+  mask-image: linear-gradient(to right, transparent 0, #000 var(--pcl-rail-fade));
 }
 
 .pcl-rail__track {
   display: flex;
   gap: 27.648px;
+  /* Sirina je sirina sadrzaja, ne kadra: put trake se mjeri iz nje. */
+  width: max-content;
+  min-width: 100%;
+  padding-left: var(--pcl-rail-fade);
+  /* Zadnja slika staje uz desnu marginu sadrzaja, ne uz samu ivicu ekrana. */
+  padding-right: var(--pcl-gutter);
   will-change: transform;
 }
 
 .pcl-rail__item {
   flex: 0 0 auto;
-  height: 450px;
+  /* Prati visinu ekrana, da traka sa razmakom stane i na niskom laptopu. */
+  height: clamp(280px, 56svh, 520px);
 }
 
 /*
- * Pečat je izvan trake koju GSAP pomjera, pa ostaje pričvršćen za donji
- * ugao kadra dok fotografije prolaze ispod njega.
+ * Pecat je izvan trake koju GSAP pomjera, pa ostaje pricvrscen za donji
+ * ugao kadra dok fotografije prolaze ispod njega. Sjedi na donjoj ivici slika:
+ * dvije trecine mu je na slici, trecina ispod nje.
  */
 .pcl-rail__products-badge {
   position: absolute;
   z-index: 4;
-  top: calc(50% + 225px);
+  bottom: 4rem;
   right: clamp(1.25rem, 4vw, 4.5rem);
   width: clamp(7.5rem, 10vw, 9.75rem);
   aspect-ratio: 1;
-  transform: translateY(-62%);
+  transform: translateY(38%);
   border-radius: 50%;
   filter: drop-shadow(0 0.75rem 1.5rem rgb(78 48 19 / 0.14));
   transition: transform 220ms ease, filter 220ms ease;
@@ -509,7 +601,7 @@
 
 .pcl-rail__products-badge:hover,
 .pcl-rail__products-badge:focus-visible {
-  transform: translateY(-62%) scale(1.045);
+  transform: translateY(38%) scale(1.045);
   filter: drop-shadow(0 0.9rem 1.75rem rgb(78 48 19 / 0.2));
 }
 
@@ -518,12 +610,43 @@
   outline-offset: 5px;
 }
 
+.pcl-rail__item .pcl-ph {
+  height: 100%;
+  width: auto;
+  aspect-ratio: var(--ratio);
+}
+
+/* Bez kretanja nema lijepljenja: traka se prevlaci prstom / tockicem. */
+@media (min-width: 768px) and (prefers-reduced-motion: reduce) {
+  .pcl-rail__viewport {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+/* Na telefonu nema lijepljenja: traka ostaje vodoravni niz koji se prevlaci prstom. */
 @media (max-width: 767px) {
-  .pcl-rail {
-    min-height: 0;
+  .pcl-rail { --pcl-rail-fade: 0px; }
+
+  .pcl-rail__stage { padding-block: 0; }
+
+  .pcl-rail__viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
+  .pcl-rail__viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pcl-rail__item { height: 295.4px; }
+
   .pcl-rail__products-badge {
+    bottom: auto;
     top: 50%;
     right: calc(var(--pcl-gutter) * 0.55);
     width: clamp(5.75rem, 26vw, 7rem);
@@ -534,31 +657,7 @@
   .pcl-rail__products-badge:focus-visible {
     transform: translateY(-50%) scale(1.045);
   }
-
-  .pcl-rail__item { height: 295.4px; }
-
-  /* Bez pinovanja traka se prevlaci prstom. */
-  .pcl-rail__viewport {
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .pcl-rail__viewport::-webkit-scrollbar {
-    display: none;
-  }
-
-  .pcl-rail__track {
-    padding-right: var(--pcl-gutter);
-  }
 }
-
-.pcl-rail__item .pcl-ph {
-  height: 100%;
-  width: auto;
-  aspect-ratio: var(--ratio);
-}
-
 
 /* ---------------------------------------------------------------------------
  * Sorte: fotografija pase po sredini, crtezi sorti u vertikalnom nizu tik uz
@@ -600,19 +699,24 @@
 
 /*
  * Dugme je sam crtez sorte — u njemu je i ime, pisano rukom, pa nikakav slog
- * pod njim ne treba. Neizabrani crtezi su tisi, a izabrani nosi vlas pod
- * sobom: to je jedini znak koji ne trazi ni boju ni tezinu vise.
+ * pod njim ne treba. Neizabrani crtezi su tisi, a izabrani je pun i nosi vlas
+ * uz sebe: uspravnu uz crtez u nizu, vodoravnu ispod njega u redu. Bez vlasi bi
+ * se izabrani od neizabranih razlikovao samo svjetlinom, a to se na sitnom
+ * crtezu pisanom rukom slabo cita.
  */
 .pcl-tab {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  /* Zona dodira nikad ispod 44px, ma kako sitan bio crtez. */
+  min-width: 44px;
+  min-height: 44px;
   background: none;
   border: 0;
-  padding: 0 0 10px;
+  padding: 0 0.5rem 10px;
   cursor: pointer;
   border-bottom: 1px solid transparent;
-  opacity: 0.45;
+  opacity: 0.55;
   transition:
     opacity 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95),
     border-color 0.4s cubic-bezier(0.445, 0.05, 0.55, 0.95);
@@ -621,14 +725,17 @@
 .pcl-tab__znak {
   display: block;
   width: auto;
-  height: clamp(3.6rem, 12vw, 5.5rem);
+  height: clamp(4rem, 15vw, 5.25rem);
 }
 
 @media (min-width: 768px) {
   .pcl-tab {
-    /* U vertikalnom nizu vlas ispod crteza nije marker — samo svjetlost. */
-    padding: 0;
+    align-items: flex-start;
+    /* Isti okvir za sva tri crteza, da vlas i zona dodira budu jednaki. */
+    min-width: 8.5rem;
+    padding: 0.35rem 0 0.35rem 1.1rem;
     border-bottom: 0;
+    border-left: 1px solid transparent;
   }
 
   /* Uz fotografiju crtezi su krupniji, da nose svoj red u nizu. */
@@ -639,16 +746,21 @@
 
 .pcl-tab[aria-selected='true'] {
   opacity: 1;
-  border-bottom-color: rgba(136, 91, 39, 0.5);
+  border-color: rgba(136, 91, 39, 0.55);
 }
 
 .pcl-tab:hover,
 .pcl-tab:focus-visible {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .pcl-tab[aria-selected='true']:hover {
   opacity: 1;
+}
+
+.pcl-tab:focus-visible {
+  outline: 2px solid #a96f36;
+  outline-offset: 2px;
 }
 
 .pcl-slides {
@@ -874,7 +986,7 @@
 @media (min-width: 768px) {
   /* Fiksne kolone: ploca ide u stranu pa sirina ne smije visjeti o kadru. */
   .pcl-triptych {
-    grid-template-columns: repeat(3, clamp(11rem, 16vw, 15rem));
+    grid-template-columns: repeat(3, clamp(12rem, 17vw, 16rem));
     column-gap: var(--pcl-gap);
   }
 }
@@ -890,20 +1002,32 @@
 
 .pcl-triptych__text {
   margin-top: 0.4rem;
-  /* Sitniji tekst ispod slika — nosi ga sitno, ne krupno. */
-  font-size: clamp(0.78rem, 0.85vw, 0.88rem);
+  /*
+   * Sitniji od glavnog teksta, jer stoji ispod slike u uskoj koloni — ali ne
+   * ispod 14.4px: 12.5px, koliko je bilo, na 1440 se vise nije moglo citati.
+   */
+  font-size: clamp(0.9rem, 0.95vw, 1rem);
   line-height: 1.6;
 }
 
 /* ---------------------------------------------------------------------------
  * Stara parcela — "Košnica na brdu". Iza teksta i slike stoji polje cvijeca:
  * svijetlo, s utisnutim rubovima, da se stopi sa stranom a ne se namece.
+ *
+ * Pasus je dug pet recenica, pa sekcija stane (`Citaj`): polje cvijeca je na
+ * sceni, ne na sekciji, da ne klizi ispod teksta koji stoji. Vlastiti razmaci
+ * od susjednih sekcija vrijede samo dok se ne lijepi — kad se lijepi, zrak
+ * daje sama scena (visoka cio kadar).
  * ------------------------------------------------------------------------- */
 .pcl-parcela {
+  margin-block: var(--pcl-lg);
+}
+
+.pcl-parcela .citaj__scena {
   position: relative;
 }
 
-.pcl-parcela::before {
+.pcl-parcela .citaj__scena::before {
   content: "";
   position: absolute;
   top: calc(-1 * var(--pcl-md));
@@ -931,8 +1055,19 @@
   pointer-events: none;
 }
 
-.pcl-parcela > * {
+.pcl-parcela .citaj__scena > * {
   position: relative;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal .pcl-parcela {
+    margin-block: 0;
+  }
+
+  .js-reveal .pcl-parcela .citaj__scena::before {
+    top: 0;
+    bottom: 0;
+  }
 }
 
 /* Crtez pcele stoje na mjestu starog natpisa, uz naslov. */
@@ -945,11 +1080,12 @@
 /* Uvodni pasus ide odmah ispod naslova, na istoj lijevoj ivici. */
 .pcl-uvod-lead {
   margin-top: var(--pcl-md);
-  max-width: 44rem;
+  /* ~60 znakova u redu; na 44rem je red bio preko sto, pa se oko gubilo pri prelasku u sljedeci. */
+  max-width: 36rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pcl-parcela::before {
+  .pcl-parcela .citaj__scena::before {
     mask-image: none;
     -webkit-mask-image: none;
   }
@@ -963,7 +1099,8 @@
 }
 
 .pcl-panorama .pcl-ph {
-  width: min(32rem, 100%);
+  /* Visina ne prelazi kadar minus meni i zrak: na 720px je 3:4 sa 32rem bila visa od ekrana. */
+  width: min(32rem, 100%, calc((100svh - 12rem) * 0.75));
 }
 
 /* ---------------------------------------------------------------------------
@@ -971,7 +1108,8 @@
  * ------------------------------------------------------------------------- */
 .pcl-next {
   position: relative;
-  min-height: 800.4px;
+  /* Uzor: 800px; ali nikad visi od kadra, jer u zalijepljenoj sceni ne bi stala. */
+  min-height: min(800.4px, 100svh);
   display: grid;
   place-items: center;
   padding: var(--pcl-md);
@@ -1024,6 +1162,17 @@
 }
 
 .pcl-next__media { margin-top: 27.6px; }
+
+/*
+ * Na niskom kadru (720-860px) karta u zalijepljenoj sceni mora da ostavi mjesta
+ * za red imena pri dnu; inace ih karta prekrije (imena su papirna, karta je
+ * papirna). Snimak se stanji, a karta uzme manje zraka gore i dolje.
+ */
+@media (min-width: 768px) {
+  .pcl-next { padding-bottom: 5.5rem; }
+  .pcl-next__media .pcl-ph { max-height: 24svh; }
+  .pcl-next__card { padding-block: min(55.296px, 5.5svh); }
+}
 
 .pcl-next__text { margin-top: 24px; }
 
@@ -1103,19 +1252,40 @@
   object-fit: cover;
 }
 
-/* Zavrsna sekcija dok je zakacena mora da stane u kadar. */
+/*
+ * Zavrsna sekcija: visoka je kadar plus put ispisivanja, a scena u njoj se
+ * zalijepi za vrh (`sticky`) i mora da stane u kadar — vidi `Kraj.tsx`.
+ */
 .pcl-kraj {
+  position: relative;
+}
+
+.pcl-kraj__scena {
   min-height: 100svh;
   display: flex;
   align-items: stretch;
 }
 
-.pcl-kraj > .pcl-next {
+.pcl-kraj__scena > .pcl-next {
   flex: 1;
 }
 
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal .pcl-kraj {
+    /* Kadar plus 90% kadra za ispisivanje, ~15% od toga drzi puni sadrzaj. */
+    height: 190svh;
+  }
+
+  .js-reveal .pcl-kraj__scena {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    min-height: 0;
+  }
+}
+
 @media (max-width: 767px) {
-  .pcl-kraj {
+  .pcl-kraj__scena {
     min-height: 0;
     display: block;
   }
@@ -1127,7 +1297,9 @@
  * Prvi korak stoji lijevo, ostali kliznu sdesna. Sve mjere idu iz `--kw`,
  * sirine jedne kartice: slika je kvadrat te sirine, pa cio korak (broj,
  * naslov, slika, tekst) stane u kadar i na laptopu, ne samo na velikom
- * monitoru — `46svh` je ono sto slici brani da naraste preko visine kadra.
+ * monitoru — `100svh - 26rem` je ono sto slici brani da naraste preko visine
+ * kadra: 26rem je sve ostalo na kartici (broj, naslov, razmaci, cetiri reda
+ * teksta) plus zrak pod menijem gore i ispod kartice dolje.
  * ------------------------------------------------------------------------- */
 .pcl-display--4 {
   font-size: clamp(1.4rem, 2.1vw, 1.95rem);
@@ -1140,11 +1312,12 @@
 }
 
 .pcl-koraci__stage {
-  --kw: clamp(14rem, min(30vw, 46svh), 28rem);
+  --kw: clamp(14rem, min(30vw, calc(100svh - 26rem)), 28rem);
   --pad: max(var(--pcl-gutter), calc((100% - var(--pcl-max)) / 2));
   display: flex;
   align-items: center;
-  min-height: 100svh;
+  /* Zrak iznad je za meni: kartice prolaze ispod njega i ne smiju mu zaci pod pilulu. */
+  padding-block: 5.5rem 2rem;
   /* Lijeva ivica je ivica sadrzaja; desna ide do ruba kadra. */
 }
 
@@ -1196,12 +1369,12 @@
   margin-top: 20px;
 }
 
-/* Bez pinovanja (telefon) koraci idu jedan pod drugim. */
+/* Bez lijepljenja (telefon) koraci idu jedan pod drugim. */
 @media (max-width: 767px) {
   .pcl-koraci__stage {
     --kw: min(100%, 26rem);
     display: block;
-    min-height: 0;
+    padding-block: 0;
     padding-inline: var(--pcl-gutter);
   }
 
@@ -1246,4 +1419,66 @@
 .pcl-next--dark .pcl-next__railLink:hover,
 .pcl-next--dark .pcl-next__railLink[aria-current='true'] {
   opacity: 1;
+}
+
+/* ---------------------------------------------------------------------------
+ * Stani i citaj (`Citaj.tsx`): sekcija sa tekstom koji treba procitati.
+ *
+ * Isti obrazac kao `.geslo`: sekcija je visoka kadar plus budzet za citanje
+ * (`--citaj-run`), scena u njoj je `sticky` i visoka tacno kadar, a skrol vodi
+ * otkrivanje rijeci. Sadrzaj scene mora stati u kadar — i na 1280x720 i na
+ * telefonu.
+ *
+ * Rijec iz tri broja izracuna koliko je ispisana: `--p` (napredak skrola, 0-1,
+ * upisuje `Citaj.tsx`), `--i` (redni broj rijeci) i `--n` (koliko ih ima; vidi
+ * `Rijeci.tsx`). Isti izraz kao u `Geslo.tsx`: svaka rijec je tri rijeci
+ * "u prelazu", pa se tekst ne pali cijeli odjednom nego talasom.
+ * ------------------------------------------------------------------------- */
+.citaj {
+  position: relative;
+}
+
+.citaj__scena {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .js-reveal .citaj {
+    height: calc(100svh + var(--citaj-run, 70svh));
+  }
+
+  .js-reveal .citaj__scena {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    /* Ono sto se ne lijepi ne smije da viri sa strane (npr. polje cvijeca sirine 100vw). */
+    overflow-x: clip;
+  }
+
+  /*
+   * Koliko se od rijeci vidi dok ceka svoj red: 0.3, isto kao Geslo — da se
+   * vidi da tekst tu stoji, samo tiho, a ne da se pise iz niceg.
+   */
+  .js-reveal .citaj__w {
+    opacity: clamp(0.3, calc((var(--p, 0) * (var(--n) + 3) - var(--i)) / 3), 1);
+  }
+}
+
+/* Sekcije ciji sadrzaj (slika uz tekst) ne staje u telefonski kadar lijepe se tek od 768. */
+@media (max-width: 767px) and (prefers-reduced-motion: no-preference) {
+  .js-reveal .citaj--tablet {
+    height: auto;
+  }
+
+  .js-reveal .citaj--tablet .citaj__scena {
+    position: static;
+    height: auto;
+    overflow-x: visible;
+  }
+
+  .js-reveal .citaj--tablet .citaj__w {
+    opacity: 1;
+  }
 }

@@ -4,12 +4,14 @@ import { useEffect, useRef, type ReactNode } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { SKROL_MQ } from './lijepi';
+
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Zavrsna sekcija: strana stane dok se karta ne ispise.
  *
- * Sekcija se zakaci za vrh kadra i, dok stoji, njeni dijelovi ulaze redom —
+ * Scena se zalijepi za vrh kadra i, dok stoji, njeni dijelovi ulaze redom —
  * brojac, naslov, snimak, tekst, veza, pa red imena sekcija pod njima. Tek kad
  * je sve na svom mjestu strana pusta dalje, u podnozje.
  *
@@ -18,9 +20,10 @@ gsap.registerPlugin(ScrollTrigger);
  * nema cekanja na animaciju koja ide svojim tempom bez obzira na korisnika.
  *
  * Duzina stajanja je jedan kadar: dovoljno da se sve ispise bez zurbe, a ne
- * toliko da se cini da je strana zapela.
+ * toliko da se cini da je strana zapela. Lijepljenje je CSS (`position:
+ * sticky`, visinu daje `.pcl-kraj`), ne GSAP pin — vidi `lijepi.ts`.
  *
- * Na telefonu i uz iskljucene animacije nema pinovanja — sve stoji ispisano,
+ * Na telefonu i uz iskljucene animacije nema lijepljenja — sve stoji ispisano,
  * jer bi na uskom kadru zadrzavanje pojelo citav ekran.
  */
 export default function Kraj({ children }: { children: ReactNode }) {
@@ -31,7 +34,7 @@ export default function Kraj({ children }: { children: ReactNode }) {
     if (!el) return;
 
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add(SKROL_MQ, () => {
       const dijelovi = el.querySelectorAll<HTMLElement>('[data-ulaz]');
       if (!dijelovi.length) return;
 
@@ -41,14 +44,13 @@ export default function Kraj({ children }: { children: ReactNode }) {
         scrollTrigger: {
           trigger: el,
           start: 'top top',
-          end: () => `+=${Math.round(window.innerHeight * 0.9)}`,
-          pin: true,
+          end: 'bottom bottom',
           scrub: true,
           invalidateOnRefresh: true,
-          anticipatePin: 1,
         },
       });
 
+      // Zadnjih ~15% skrola drzi puni sadrzaj prije otpustanja.
       tl.to(dijelovi, {
         opacity: 1,
         y: 0,
@@ -56,6 +58,13 @@ export default function Kraj({ children }: { children: ReactNode }) {
         stagger: 0.5,
         duration: 1,
       });
+      tl.to({}, { duration: 0.6 });
+
+      return () => {
+        tl.scrollTrigger?.kill();
+        tl.kill();
+        gsap.set(dijelovi, { clearProps: 'opacity,transform' });
+      };
     });
 
     return () => mm.revert();
@@ -63,7 +72,7 @@ export default function Kraj({ children }: { children: ReactNode }) {
 
   return (
     <div className="pcl-kraj" ref={root}>
-      {children}
+      <div className="pcl-kraj__scena">{children}</div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import TransitionLink from '@/components/ui/TransitionLink';
 import ImagePlaceholder from './ImagePlaceholder';
+import { SKROL_MQ, lijepi } from './lijepi';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,21 +27,25 @@ const OMJER: Record<Slika['omjer'], number> = {
 /**
  * Traka slika koja se lista skrolom.
  *
- * Strana stane dok traka ne prodje: sekcija se zakaci za vrh kadra i, dok se
- * skroluje nadolje, niz putuje u stranu dok se ne izlista do kraja. Koliko se
- * prstom pomjeri, toliko traka predje — nema ubrzanja ni zaostajanja, pa se
+ * Strana stane dok traka ne prodje: scena se zalijepi na sredinu kadra i, dok
+ * se skroluje nadolje, niz putuje u stranu dok se ne izlista do kraja. Koliko
+ * se prstom pomjeri, toliko traka predje — nema ubrzanja ni zaostajanja, pa se
  * moze i stati na sredini i vratiti natrag.
  *
  * Duzina skrola je jednaka sirini koju traka treba da predje. Tako je stajanje
  * tacno onoliko dugo koliko ima sta da se vidi: sest slika ne drze stranu
  * jednako dugo kao tri.
  *
+ * Lijepljenje je CSS (`position: sticky`), ne GSAP pin — vidi `lijepi.ts`.
+ * Scena je visoka samo koliko slike i malo zraka, ne cio kadar, pa oko trake
+ * nema pola ekrana praznine u toku strane.
+ *
  * Strelica vise nema. Dok se traka pomjerala klikom imale su smisla; sada bi
  * se tukle sa skrolom, jer bi vukle niz na mjesto koje skrol istog trena
  * vraca natrag.
  *
- * Na telefonu se ne pinuje: tamo traka ostaje obican vodoravni niz koji se
- * prevlaci prstom, jer pinovanje na uskom kadru pojede citav ekran.
+ * Na telefonu se ne lijepi: tamo traka ostaje obican vodoravni niz koji se
+ * prevlaci prstom, jer lijepljenje na uskom kadru pojede citav ekran.
  */
 export default function Rail({
   slike,
@@ -54,30 +59,31 @@ export default function Rail({
   productsLabel?: string;
 }) {
   const wrap = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+  const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const w = wrap.current;
+    const s = stage.current;
+    const v = viewport.current;
     const t = track.current;
-    if (!w || !t) return;
+    if (!w || !s || !v || !t) return;
 
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
-      // Preci treba sve osim jednog kadra trake.
-      const put = () => Math.max(0, t.scrollWidth - t.clientWidth);
-      gsap.to(t, {
-        x: () => -put(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: w,
-          start: 'top top',
-          end: () => `+=${put()}`,
-          pin: true,
-          scrub: true,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
+    mm.add(SKROL_MQ, () => {
+      const setX = gsap.quickSetter(t, 'x', 'px');
+      const stop = lijepi({
+        outer: w,
+        stage: s,
+        // Preci treba sve osim jednog kadra trake.
+        put: () => Math.max(0, t.offsetWidth - v.clientWidth),
+        napredak: (p, put) => setX(-put * p),
       });
+      return () => {
+        stop();
+        gsap.set(t, { clearProps: 'transform' });
+      };
     });
 
     return () => mm.revert();
@@ -85,37 +91,39 @@ export default function Rail({
 
   return (
     <div
-      className="pcl-rail"
+      className="pcl-rail pcl-lijep"
       ref={wrap}
       role="group"
       aria-roledescription="carousel"
       aria-label={aria}
     >
-      <div className="pcl-rail__viewport">
-        <div className="pcl-rail__track" ref={track}>
-          {slike.map((s, i) => (
-            <div className="pcl-rail__item" key={`${s.alt}-${i}`}>
-              <ImagePlaceholder
-                ratio={OMJER[s.omjer]}
-                label={s.omjer}
-                alt={s.alt}
-                src={s.src}
-                sizes="(max-width: 767px) 70vw, 45vw"
-              />
-            </div>
-          ))}
+      <div className="pcl-rail__stage pcl-lijep__scena" ref={stage}>
+        <div className="pcl-rail__viewport" ref={viewport}>
+          <div className="pcl-rail__track" ref={track}>
+            {slike.map((s, i) => (
+              <div className="pcl-rail__item" key={`${s.alt}-${i}`}>
+                <ImagePlaceholder
+                  ratio={OMJER[s.omjer]}
+                  label={s.omjer}
+                  alt={s.alt}
+                  src={s.src}
+                  sizes="(max-width: 767px) 70vw, 45vw"
+                />
+              </div>
+            ))}
+          </div>
         </div>
+        {productsHref && productsLabel && (
+          <TransitionLink
+            href={productsHref}
+            aria-label={productsLabel}
+            className="pcl-rail__products-badge"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/brand/proizvodiii.svg" alt="" aria-hidden="true" />
+          </TransitionLink>
+        )}
       </div>
-      {productsHref && productsLabel && (
-        <TransitionLink
-          href={productsHref}
-          aria-label={productsLabel}
-          className="pcl-rail__products-badge"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/brand/proizvodiii.svg" alt="" aria-hidden="true" />
-        </TransitionLink>
-      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import ImagePlaceholder from './ImagePlaceholder';
+import { SKROL_MQ, lijepi } from './lijepi';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,50 +56,51 @@ function Kartica({ k, priority = false }: { k: Korak; priority?: boolean }) {
  *
  * Svih pet koraka su u jednoj traci: prvi stoji na lijevoj ivici sadrzaja,
  * ostali ulaze sdesna, a dok se strana skrola cijela traka putuje ulijevo —
- * prvi korak odlazi prvi, ne ostaje zalijepljen. Sekcija se zakaci za vrh
+ * prvi korak odlazi prvi, ne ostaje zalijepljen. Scena se zalijepi na sredinu
  * kadra tacno onoliko koliko treba da stigne posljednji korak. Koliko se
- * prstom pomjeri, toliko traka predje (`scrub`), pa se moze stati na sredini
- * i vratiti natrag.
+ * prstom pomjeri, toliko traka predje, pa se moze stati na sredini i vratiti
+ * natrag.
  *
- * Na telefonu i uz iskljucene animacije nema pinovanja: koraci idu jedan pod
+ * Lijepljenje je CSS (`position: sticky`), ne GSAP pin — vidi `lijepi.ts`.
+ *
+ * Na telefonu i uz iskljucene animacije nema lijepljenja: koraci idu jedan pod
  * drugim, odnosno traka se prevlaci prstom — vidi `pcelinjak.css`.
  */
 export default function Koraci({ koraci }: { koraci: Korak[] }) {
   const wrap = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const w = wrap.current;
+    const s = stage.current;
     const v = viewport.current;
     const t = track.current;
-    if (!w || !v || !t) return;
+    if (!w || !s || !v || !t) return;
 
     const mm = gsap.matchMedia();
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
-      // Preci treba sve sto ne stane u kadar trake.
-      const put = () => Math.max(0, t.scrollWidth - v.clientWidth);
-      gsap.to(t, {
-        x: () => -put(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: w,
-          start: 'top top',
-          end: () => `+=${put()}`,
-          pin: true,
-          scrub: true,
-          invalidateOnRefresh: true,
-          anticipatePin: 1,
-        },
+    mm.add(SKROL_MQ, () => {
+      const setX = gsap.quickSetter(t, 'x', 'px');
+      const stop = lijepi({
+        outer: w,
+        stage: s,
+        // Preci treba sve sto ne stane u kadar trake.
+        put: () => Math.max(0, t.offsetWidth - v.clientWidth),
+        napredak: (p, put) => setX(-put * p),
       });
+      return () => {
+        stop();
+        gsap.set(t, { clearProps: 'transform' });
+      };
     });
 
     return () => mm.revert();
   }, [koraci.length]);
 
   return (
-    <div className="pcl-koraci" ref={wrap}>
-      <div className="pcl-koraci__stage">
+    <div className="pcl-koraci pcl-lijep" ref={wrap}>
+      <div className="pcl-koraci__stage pcl-lijep__scena" ref={stage}>
         <div className="pcl-koraci__viewport" ref={viewport}>
           <div className="pcl-koraci__track" ref={track}>
             {koraci.map((k, i) => (

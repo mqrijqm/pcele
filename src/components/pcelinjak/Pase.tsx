@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import ImagePlaceholder from "./ImagePlaceholder";
+import { SKROL_MQ, lijepi } from "./lijepi";
 import type { PcelinjakPasa } from "@/content/pcelinjak";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,14 +18,15 @@ gsap.registerPlugin(ScrollTrigger);
  * desnoj strani. Klik na crtez mijenja fotografiju — slajdovi se pretope,
  * bez biblioteke.
  *
- * **Vodoravna ploca.** Dok je blok zakacen na sredini kadra, tekst i tabela
+ * **Vodoravna ploca.** Dok je blok zalijepljen na sredini kadra, tekst i tabela
  * ostaju na svom mjestu slijeva, a galerija (kvadratna slika i tri stupca)
  * klizi u SVOM prozoru desno od teksta — prozor je isijeca uz tekst, pa slike
  * nikad ne prelaze preko njega. Prije je galerija klizila preko teksta i
  * prekrivala tabelu. Duzina skrola je jednaka duzini puta galerije, pa je
- * kretanje po prstu.
+ * kretanje po prstu. Lijepljenje je CSS (`position: sticky`), ne GSAP pin —
+ * vidi `lijepi.ts`.
  *
- * Na telefonu se pinovanje ne pali: ploce idu jedna pod drugu.
+ * Na telefonu se ne lijepi: ploce idu jedna pod drugu.
  */
 export default function Pase({
   lista,
@@ -41,54 +43,47 @@ export default function Pase({
 }) {
   const [aktivna, setAktivna] = useState(0);
   const hscroll = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
   const panelTekst = useRef<HTMLDivElement>(null);
   const panelGalerija = useRef<HTMLDivElement>(null);
   const okno = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrap = hscroll.current;
-    const tekst = panelTekst.current;
+    const scena = stage.current;
     const galerija = panelGalerija.current;
     const prozor = okno.current;
-    if (!wrap || !tekst || !galerija || !prozor) return;
+    if (!wrap || !scena || !galerija || !prozor) return;
 
     /* Vidi napomenu u `Hero.tsx` — `gsap.matchMedia` sam ciscen na uzem kadru. */
     const mm = gsap.matchMedia();
-    mm.add(
-      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        /*
-         * Tekst stoji na mjestu; klizi samo galerija, unutar svog prozora. Put
-         * je koliko joj treba da njena zadnja slika stane uz desnu ivicu
-         * prozora — i nista vise, pa se skrol ne gubi na praznoj voznji.
-         */
-        const put = () => Math.max(0, galerija.scrollWidth - prozor.clientWidth);
-
-        gsap.to(galerija, {
-          x: () => -put(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: wrap,
-            // Blok se zakaci na sredini kadra, ne uz vrh: inace je pola ekrana
-            // ispod njega prazno dok galerija klizi.
-            start: "center center",
-            end: () => `+=${put()}`,
-            pin: true,
-            scrub: true,
-            invalidateOnRefresh: true,
-            anticipatePin: 1,
-          },
-        });
-      },
-    );
+    mm.add(SKROL_MQ, () => {
+      /*
+       * Tekst stoji na mjestu; klizi samo galerija, unutar svog prozora. Put je
+       * koliko joj treba da njena zadnja slika stane uz desnu ivicu prozora — i
+       * nista vise, pa se skrol ne gubi na praznoj voznji.
+       */
+      const setX = gsap.quickSetter(galerija, "x", "px");
+      const stop = lijepi({
+        outer: wrap,
+        stage: scena,
+        put: () => Math.max(0, galerija.scrollWidth - prozor.clientWidth),
+        napredak: (p, put) => setX(-put * p),
+      });
+      return () => {
+        stop();
+        gsap.set(galerija, { clearProps: "transform" });
+      };
+    });
 
     return () => mm.revert();
   }, []);
 
   /*
    * Uvod i tabela su razlicite duzine po sorti, pa se visina bloka mijenja kad
-   * se klikne na drugi crtez. Pin je izmjeren na staroj visini; ponovo se mjeri
-   * odmah po promjeni (klik je uvijek iznad bloka, pa se skrol ne pomjera).
+   * se klikne na drugi crtez. Visina scene je izmjerena na staroj visini; ponovo
+   * se mjeri odmah po promjeni (klik je uvijek iznad bloka, pa se skrol ne
+   * pomjera).
    */
   useEffect(() => {
     const id = requestAnimationFrame(() => ScrollTrigger.refresh());
@@ -154,8 +149,8 @@ export default function Pase({
       </div>
 
       {/* --- ploca koja prolazi u stranu -------------------------------- */}
-      <div className="pcl-hscroll pcl-mb-lg" ref={hscroll}>
-        <div className="pcl-hscroll__viewport">
+      <div className="pcl-hscroll pcl-lijep pcl-mb-lg" ref={hscroll}>
+        <div className="pcl-hscroll__viewport pcl-lijep__scena" ref={stage}>
           <div className="pcl-hscroll__track">
             {/* tekst i tabela — ostaju na mjestu dok galerija prolazi */}
             <div className="pcl-hscroll__panel pcl-hscroll__panel--text" ref={panelTekst}>

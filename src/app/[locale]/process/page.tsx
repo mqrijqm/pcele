@@ -9,6 +9,8 @@ import Rail from '@/components/pcelinjak/Rail';
 import Motion from '@/components/pcelinjak/Motion';
 import Kraj from '@/components/pcelinjak/Kraj';
 import Koraci from '@/components/pcelinjak/Koraci';
+import Citaj from '@/components/pcelinjak/Citaj';
+import Rijeci from '@/components/pcelinjak/Rijeci';
 import ImagePlaceholder from '@/components/pcelinjak/ImagePlaceholder';
 import { meta } from '@/content/pages';
 import { processView } from '@/content/process';
@@ -70,7 +72,8 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
       </section>
 
       <section className="pcl-strip pcl-mb-lg">
-        <div className="pcl-cols pcl-cols--8-16">
+        {/* Isti raspored stupaca kao naslov iznad, da lijeve ivice teksta stoje na istoj liniji. */}
+        <div className="pcl-cols pcl-cols--7-17">
           <div aria-hidden="true" />
           <p className="pcl-body pcl-in">{t.uvod.lead}</p>
         </div>
@@ -84,26 +87,29 @@ export default async function ProcessPage({ params }: { params: Promise<{ locale
         <Koraci koraci={t.koraci} />
       </section>
 
-      {/* --- umetak: ramove pravimo sami, pa traka iz radionice ---------- */}
-      <section className="pcl-strip pcl-mt-lg pcl-mb-md">
-        <div className="pcl-cols pcl-cols--7-17">
-          <p className="pcl-pretitle pcl-in">{t.ramovi.pretitle}</p>
-          <h2 className="pcl-display pcl-display--2 pcl-in">
-            {t.ramovi.title.map((r, i) => (
-              <span className="pcl-display__word" key={`${r}-${i}`}>
-                <span>{r}</span>
-              </span>
-            ))}
-          </h2>
+      {/*
+        Umetak: ramove pravimo sami, pa traka iz radionice. Pasus je dvije
+        recenice koje treba procitati, pa sekcija stane dok se ispisuju.
+      */}
+      <Citaj budzet={70}>
+        <div className="pcl-strip">
+          <div className="pcl-cols pcl-cols--7-17">
+            <p className="pcl-pretitle pcl-in">{t.ramovi.pretitle}</p>
+            <div>
+              <h2 className="pcl-display pcl-display--2 pcl-in">
+                {t.ramovi.title.map((r, i) => (
+                  <span className="pcl-display__word" key={`${r}-${i}`}>
+                    <span>{r}</span>
+                  </span>
+                ))}
+              </h2>
+              <p className="pcl-body pcl-uvod-lead">
+                <Rijeci tekst={t.ramovi.body} />
+              </p>
+            </div>
+          </div>
         </div>
-      </section>
-
-      <section className="pcl-strip pcl-mb-md">
-        <div className="pcl-cols pcl-cols--8-16">
-          <div aria-hidden="true" />
-          <p className="pcl-body pcl-in">{t.ramovi.body}</p>
-        </div>
-      </section>
+      </Citaj>
 
       <section className="pcl-strip pcl-strip--wide pcl-mb-lg pcl-in">
         <Rail

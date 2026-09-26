@@ -9,6 +9,8 @@ import Rail from "@/components/pcelinjak/Rail";
 import Pase from "@/components/pcelinjak/Pase";
 import Motion from "@/components/pcelinjak/Motion";
 import Kraj from "@/components/pcelinjak/Kraj";
+import Citaj from "@/components/pcelinjak/Citaj";
+import Rijeci from "@/components/pcelinjak/Rijeci";
 import ImagePlaceholder from "@/components/pcelinjak/ImagePlaceholder";
 import { pcelinjak } from "@/content/pcelinjak";
 import { isLocale, localeHref, type Locale } from "@/i18n/config";
@@ -71,28 +73,35 @@ export default async function PcelinjakPage({
         slika={t.hero.slika}
       />
 
-      {/* --- znak pcele lijevo, naslov i uvod desno: sedam pa sedamnaest - */}
-      <section className="pcl-strip pcl-mb-md">
-        <div className="pcl-cols pcl-cols--7-17">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            className="pcl-uvod-znak pcl-in"
-            src="/images/brand/pcela-crtez.svg"
-            alt=""
-            aria-hidden="true"
-          />
-          <div>
-            <h2 className="pcl-display pcl-display--2 pcl-in">
-              {t.uvod.title.map((r) => (
-                <span className="pcl-display__word" key={r}>
-                  <span>{r}</span>
-                </span>
-              ))}
-            </h2>
-            <p className="pcl-body pcl-in pcl-uvod-lead">{t.uvod.lead}</p>
+      {/*
+        Znak pcele lijevo, naslov i uvod desno: sedam pa sedamnaest. Uvod je dvije
+        recenice koje treba procitati, pa sekcija stane dok se ispisuju.
+      */}
+      <Citaj budzet={70}>
+        <div className="pcl-strip">
+          <div className="pcl-cols pcl-cols--7-17">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="pcl-uvod-znak pcl-in"
+              src="/images/brand/pcela-crtez.svg"
+              alt=""
+              aria-hidden="true"
+            />
+            <div>
+              <h2 className="pcl-display pcl-display--2 pcl-in">
+                {t.uvod.title.map((r) => (
+                  <span className="pcl-display__word" key={r}>
+                    <span>{r}</span>
+                  </span>
+                ))}
+              </h2>
+              <p className="pcl-body pcl-uvod-lead">
+                <Rijeci tekst={t.uvod.lead} />
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </Citaj>
 
       {/*
         Traka slika. Preko cijele mjere, uvucena s lijeva i prelivena preko
@@ -117,30 +126,35 @@ export default async function PcelinjakPage({
         Stara parcela: naslov, dugi pasus i uspravna slika u tri stupca
         (sedam / devet / osam). Slika je uza od svog stupca po mjeri, ali je
         na uzoru uvecana preko njega — otud `pcl-ph--zoom`, koji je i vraca na
-        svoje kad udje u kadar.
+        svoje kad udje u kadar. Pasus je dug, pa sekcija stane dok se ispisuje
+        (na telefonu ne: slika uz tekst ne staje u jedan kadar).
       */}
-      <section className="pcl-strip pcl-mt-lg pcl-mb-lg pcl-parcela">
-        <div className="pcl-cols pcl-cols--7-9-8">
-          <h2 className="pcl-display pcl-display--2 pcl-in">
-            {t.parcela.title.map((r) => (
-              <span className="pcl-display__word" key={r}>
-                <span>{r}</span>
-              </span>
-            ))}
-          </h2>
-          <p className="pcl-body pcl-in">{t.parcela.body}</p>
-          <div>
-            <ImagePlaceholder
-              ratio={0.667}
-              label="2:3"
-              alt={t.parcela.slikaAlt}
-              src={t.parcela.slika}
-              sizes="(max-width: 767px) 90vw, 30vw"
-              zoom
-            />
+      <Citaj tablet budzet={100} className="pcl-parcela">
+        <div className="pcl-strip">
+          <div className="pcl-cols pcl-cols--7-9-8">
+            <h2 className="pcl-display pcl-display--2 pcl-in">
+              {t.parcela.title.map((r) => (
+                <span className="pcl-display__word" key={r}>
+                  <span>{r}</span>
+                </span>
+              ))}
+            </h2>
+            <p className="pcl-body">
+              <Rijeci tekst={t.parcela.body} />
+            </p>
+            <div>
+              <ImagePlaceholder
+                ratio={0.667}
+                label="2:3"
+                alt={t.parcela.slikaAlt}
+                src={t.parcela.slika}
+                sizes="(max-width: 767px) 90vw, 30vw"
+                zoom
+              />
+            </div>
           </div>
         </div>
-      </section>
+      </Citaj>
 
       {/* --- natpis i naslov iznad izbornika, u uskoj traci ------------- */}
       <section className="pcl-strip pcl-strip--narrow pcl-mb-md pcl-center pcl-pase-intro">
