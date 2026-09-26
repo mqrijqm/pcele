@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { createTranslator, locales, localeHref, type Locale } from '@/i18n/config';
 import { useCart } from '@/lib/cart';
+import { lockBackground } from '@/lib/inert-background';
 
 /*
  * Tri glavne stavke menija. Uz svaku ide crtez koji se pojavi sa desne
@@ -65,6 +66,12 @@ export default function Header({ locale }: { locale: Locale }) {
     };
   }, [menuOpen]);
 
+  // Strana iza menija ne smije hvatati Tab — pilula ostaje aktivna da meni moze da se zatvori.
+  useEffect(() => {
+    if (!menuOpen) return;
+    return lockBackground();
+  }, [menuOpen]);
+
   // Escape zatvara meni — mala stvar, ali tastatura to ocekuje.
   useEffect(() => {
     if (!menuOpen) return;
@@ -104,6 +111,16 @@ export default function Header({ locale }: { locale: Locale }) {
    * tukli.
    */
   const isHome = pathWithoutLocale === '/';
+
+  /*
+   * Veza ka strani na kojoj vec stojis ne mijenja putanju, pa se meni (koji se
+   * zatvara na promjenu putanje) nikad ne bi zatvorio — klik bi izgledao kao
+   * da nista ne radi. Za sve ostale veze meni ostaje otvoren dok zavjesa ne
+   * pokrije kadar.
+   */
+  const closeIfCurrent = (href: string) => {
+    if (href === pathname) setMenuOpen(false);
+  };
   const docked = scrolled || menuOpen;
 
   return (
@@ -171,7 +188,7 @@ export default function Header({ locale }: { locale: Locale }) {
                   : 'Menu'
             }
             aria-expanded={menuOpen}
-            className="flex min-h-11 items-center gap-2 rounded-full px-3 transition-colors hover:text-[#EEC660] sm:gap-3 sm:px-4"
+            className="flex min-h-11 items-center gap-2 rounded-full px-3 transition-colors [@media(hover:hover)]:hover:text-[#EEC660] sm:gap-3 sm:px-4"
           >
             <span className="font-display text-[1.2rem] font-medium leading-none tracking-[0.01em]">
               {locale === 'sr' ? 'Meni' : 'Menu'}
@@ -189,7 +206,7 @@ export default function Header({ locale }: { locale: Locale }) {
           <TransitionLink
             href={localeHref(locale, '/cart')}
             aria-label={t('nav.cart')}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full transition-colors hover:text-[#EEC660]"
+            className="relative flex h-11 w-11 items-center justify-center rounded-full transition-colors [@media(hover:hover)]:hover:text-[#EEC660]"
           >
             <ShoppingBag className="h-5 w-5" strokeWidth={1.7} />
             {cart.count > 0 && (
@@ -228,6 +245,7 @@ export default function Header({ locale }: { locale: Locale }) {
                       key={item.href}
                       href={localeHref(locale, item.href)}
                       style={{ transitionDelay: menuOpen ? `${60 + index * 45}ms` : '0ms' }}
+                      onClick={() => closeIfCurrent(localeHref(locale, item.href))}
                       onPointerEnter={() => setActiveItem(index)}
                       onPointerLeave={() => setActiveItem(null)}
                       onFocus={() => setActiveItem(index)}
@@ -276,6 +294,7 @@ export default function Header({ locale }: { locale: Locale }) {
                   <TransitionLink
                     key={link.href}
                     href={localeHref(locale, link.href)}
+                    onClick={() => closeIfCurrent(localeHref(locale, link.href))}
                     className="inline-block w-fit font-display text-xl text-[#885B27]/75 transition-all duration-300 hover:translate-x-1 hover:text-[#885B27] hover:underline hover:decoration-[#EEC660] hover:decoration-2 hover:underline-offset-8 sm:text-2xl"
                   >
                     {t(link.key)}
@@ -351,6 +370,9 @@ export default function Header({ locale }: { locale: Locale }) {
                 <span key={code} className="flex items-center">
                   <TransitionLink
                     href={`/${code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`}
+                    onClick={() =>
+                      closeIfCurrent(`/${code}${pathWithoutLocale === '/' ? '' : pathWithoutLocale}`)
+                    }
                     aria-label={`Switch to ${code.toUpperCase()}`}
                     className={`text-xs font-medium uppercase tracking-wider transition-colors ${
                       code === locale

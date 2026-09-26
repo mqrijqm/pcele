@@ -7,6 +7,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+/*
+ * Na telefonu se adresna traka pri skrolu skuplja i vraca, pa se visina kadra
+ * mijenja. Bez ovoga ScrollTrigger to čita kao promjenu veličine ekrana i
+ * preračuna sve pinove — strana tada vidljivo poskoči usred skrola.
+ */
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 /** Lenis owns smooth scrolling and keeps all existing ScrollTriggers in sync. */
 export default function SmoothScroll() {
   useEffect(() => {

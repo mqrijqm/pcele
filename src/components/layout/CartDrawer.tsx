@@ -6,6 +6,7 @@ import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 
 import { createTranslator, localeHref, type Locale } from '@/i18n/config';
+import { lockBackground } from '@/lib/inert-background';
 import { formatPrice } from '@/data/products';
 import { useCart } from '@/lib/cart';
 
@@ -22,16 +23,22 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
     };
 
     window.addEventListener('keydown', onKey);
+    // Sve iza korpe (i zaglavlje) je neaktivno za tastaturu dok je otvorena.
+    const release = lockBackground({ withHeader: true });
     closeButton.current?.focus();
     return () => {
       window.removeEventListener('keydown', onKey);
+      // Prvo se vraca aktivnost, pa tek onda fokus — neaktivan element ga ne prima.
+      release();
       previous?.focus();
     };
   }, [cart.isOpen, cart.close]);
 
   return (
     // The wrapper clips the off-screen drawer so it never widens the document.
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden">
+    // z-70: iznad plutajuce pilule zaglavlja (60), koja je inace prekrivala
+    // naslov i dugme za zatvaranje; ispod medene zavjese (90) i splash-a (100).
+    <div className="pointer-events-none fixed inset-0 z-[70] overflow-hidden">
       <div
         onClick={cart.close}
         aria-hidden="true"
@@ -45,19 +52,21 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
         aria-label={t('cart.title')}
         aria-hidden={!cart.isOpen}
         inert={!cart.isOpen}
-        className={`absolute right-0 top-0 h-full w-full max-w-md bg-[var(--paper)] shadow-2xl transition-transform duration-500 ease-out-expo ${
-          cart.isOpen ? 'pointer-events-auto translate-x-0' : 'translate-x-full'
+        // Sjenka samo dok je otvorena: parkirana van kadra je inace curila u
+        // ekran kao taman rub uz desnu ivicu svake strane.
+        className={`absolute right-0 top-0 h-full w-full max-w-md bg-[var(--paper)] transition-transform duration-500 ease-out-expo ${
+          cart.isOpen ? 'pointer-events-auto translate-x-0 shadow-2xl' : 'translate-x-full'
         }`}
       >
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-[#885B27]/15 px-6 py-4">
-            <h2 className="text-xl text-[#885B27]">{t('cart.title')}</h2>
+            <h2 className="font-display text-2xl font-normal text-[#885B27]">{t('cart.title')}</h2>
             <button
               ref={closeButton}
               type="button"
               onClick={cart.close}
               aria-label={locale === 'sr' ? 'Zatvori korpu' : 'Close cart'}
-              className="text-[#885B27] transition-colors hover:text-[#885B27]"
+              className="-mr-2 flex h-10 w-10 items-center justify-center rounded-full text-[#885B27] transition-colors hover:bg-[#885B27]/[0.06]"
             >
               <X className="h-5 w-5" />
             </button>
@@ -87,7 +96,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <p className="text-lg leading-tight text-[#885B27]">
+                          <p className="font-display text-xl leading-tight text-[#885B27]">
                             {item.name}
                           </p>
                           <p className="mt-0.5 text-xs tracking-wider text-[#885B27]">
@@ -98,7 +107,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                           type="button"
                           onClick={() => cart.remove(item.variantId)}
                           aria-label={t('cart.remove')}
-                          className="text-[#885B27] transition-colors hover:text-[#885B27]"
+                          className="-m-2 p-2 text-[#885B27]/70 transition-colors hover:text-[#885B27]"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -125,7 +134,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
                             <Plus className="h-3.5 w-3.5" />
                           </button>
                         </div>
-                        <span className="text-sm font-semibold text-honey-700">
+                        <span className="font-display text-lg text-[#885B27]">
                           {formatPrice(item.price * item.quantity)}
                         </span>
                       </div>
@@ -140,7 +149,7 @@ export default function CartDrawer({ locale }: { locale: Locale }) {
             <div className="border-t border-[#885B27]/15 px-6 py-5">
               <div className="flex items-center justify-between text-sm text-[#885B27]">
                 <span>{t('cart.subtotal')}</span>
-                <span className="text-xl text-[#885B27]">
+                <span className="font-display text-2xl text-[#885B27]">
                   {formatPrice(cart.subtotal)}
                 </span>
               </div>

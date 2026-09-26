@@ -30,7 +30,7 @@ export default async function AccountPage({ params }: { params: Promise<{ locale
 
   return (
     <div className="bg-ivory header-offset">
-      <section className="section-padding">
+      <section className="pb-[var(--section-padding-sm)] pt-[clamp(2rem,5vw,4rem)]">
         <div className="container max-w-3xl">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
             {t('nav.account')}

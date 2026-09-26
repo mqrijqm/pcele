@@ -18,7 +18,7 @@ export default function LegalPage({
 }) {
   return (
     <div className="pt-20">
-      <section className="relative overflow-hidden bg-linen section-padding">
+      <section className="relative overflow-hidden bg-linen pb-[clamp(2.5rem,5vw,4rem)] pt-[clamp(4rem,8vw,7rem)]">
         <div className="container relative z-10 text-center">
           <div className="reveal stagger-1 divider mx-auto mb-6" />
           <span className="reveal stagger-1 mb-4 inline-block text-xs font-medium uppercase tracking-[0.3em] text-[#885B27]">
@@ -34,24 +34,24 @@ export default function LegalPage({
         </div>
       </section>
 
-      <section className="section-padding bg-[var(--paper)]">
+      <section className="bg-[var(--paper)] pb-[var(--section-padding-sm)] pt-[clamp(1.5rem,3vw,2.5rem)]">
         <div className="container">
-          <div className="mx-auto max-w-prose">
+          <div className="mx-auto max-w-[36rem]">
             {doc.sections.map((section) => (
               <div
                 key={section.id}
                 id={section.id}
-                className="mb-10 scroll-mt-28 border-b border-[#885B27]/15 pb-10 last:mb-0 last:border-b-0 last:pb-0"
+                className="mb-12 scroll-mt-28 border-b border-[#885B27]/15 pb-12 last:mb-0 last:border-b-0 last:pb-0"
               >
                 {/*
                   Numerisani naslov ide serifom, a sve pod njim ostaje
                   grotesknim rezom: pravni tekst se cita u dugim blokovima i
                   serif ga usporava, dok naslovu daje tezinu koju treba.
                 */}
-                <h2 className="font-display text-2xl font-normal tracking-[0.01em] text-[#885B27]">
+                <h2 className="font-display text-2xl font-normal tracking-[0.01em] text-[#885B27] sm:text-[1.75rem]">
                   {section.heading}
                 </h2>
-                <div className="mt-4 space-y-4 text-base leading-relaxed text-[#885B27]">
+                <div className="mt-5 space-y-4 text-[1.0625rem] leading-[1.7] text-[#885B27]">
                   {section.blocks.map((block, index) =>
                     block.t === 'p' ? (
                       <p key={index}>{block.text}</p>
@@ -70,7 +70,7 @@ export default function LegalPage({
             <p className="mt-12 border-t border-[#885B27]/15 pt-8 text-sm text-[#885B27]">
               {locale === 'sr' ? 'Imate dodatnih pitanja? Posjetite našu ' : 'Have more questions? Visit our '}
               <TransitionLink
-                href={localeHref(locale, '/products')}
+                href={localeHref(locale, '/kontakt')}
                 className="border-b border-[#EEC660] text-honey-700 transition-colors hover:text-[#885B27]"
               >
                 {locale === 'sr' ? 'kontakt stranicu' : 'contact page'}

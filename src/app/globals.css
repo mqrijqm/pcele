@@ -2724,7 +2724,32 @@ html.skip-preloader #preloader {
 .livada {
   position: relative;
   background-color: var(--paper);
-  overflow: hidden;
+  /*
+   * `clip`, ne `hidden`: hidden bi od sekcije napravio kutiju za skrolanje, i
+   * pozornica u njoj bi se lijepila za tu kutiju a ne za kadar.
+   */
+  overflow-x: clip;
+}
+
+/*
+ * Izjava: recenica koja se zaustavi.
+ *
+ * Isti mehanizam kao `.geslo`: visoka vanjska kutija, u njoj pozornica visine
+ * kadra koja se lijepi za vrh, i skrol koji vodi ispisivanje (`Livada.tsx`).
+ * Vise od jedne recenice ovdje nema, pa je put kraci nego kod gesla — 75svh
+ * skrola, od cega se zadnjih ~18% recenica samo drzi.
+ *
+ * Bez kretanja recenica ostaje obican slog u toku strane, ispisan.
+ */
+.livada__izjava {
+  position: relative;
+}
+
+.livada__pozornica {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /*
@@ -2741,6 +2766,109 @@ html.skip-preloader #preloader {
    * Mjera je u `vw` da razmak raste zajedno s crtezom nad njim.
    */
   margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+}
+
+/*
+ * Recenica kao slog: na telefonu, gdje crtez postaje sitan, i na engleskom,
+ * gdje crtez nema prijevod. Isto pismo i ista mjera kao geslo na pojasu.
+ */
+.livada__slog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 62rem;
+  margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+  padding-inline: var(--container-padding);
+}
+
+/* Srpski ima crtez, pa slog stoji sakriven dok crtez ne postane premalen. */
+.livada__slog--uzak {
+  display: none;
+}
+
+.livada__trska {
+  display: block;
+  width: clamp(3.25rem, 6vw, 5.25rem);
+  height: auto;
+  margin: 0 auto clamp(1.25rem, 2.6vw, 2.25rem);
+}
+
+.livada__tekst {
+  margin: 0;
+  max-width: min(100%, 28ch);
+  text-align: center;
+  font-family: var(--font-gazpacho), Georgia, serif;
+  /* Visina ekrana je krov, kao kod gesla: blok mora stati u jedan kadar. */
+  font-size: min(clamp(1.9rem, 4.4vw, 4.4rem), 7.5svh);
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--brown);
+}
+
+/*
+ * Maska koja otkriva crtez. Tri sloja, po jedan za svaki red recenice:
+ * `--f1`..`--f3` je gdje je prednja ivica reda, u postocima sirine, a upisuje
+ * ih skrol. Iza ivice recenica nije nestala nego tiha, kao rijeci gesla
+ * (`--faint`) — da se u kadru vidi da je tu, samo ne cita.
+ *
+ * Redovi su rezani na 34% i 67% visine: to su prazni pojasevi izmedju redova u
+ * crtezu, pa maska ne presijeca nijedno slovo. Slojevi se preklapaju za 1%, da
+ * medju njima ne ostane sav; preklop pada u prazan pojas.
+ */
+.livada__recenica.is-reading {
+  --faint: 0.3;
+  --feather: 14%;
+  --f1: 0%;
+  --f2: 0%;
+  --f3: 0%;
+  -webkit-mask-image:
+    linear-gradient(90deg, #000 calc(var(--f1) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f1)),
+    linear-gradient(90deg, #000 calc(var(--f2) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f2)),
+    linear-gradient(90deg, #000 calc(var(--f3) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f3));
+  mask-image:
+    linear-gradient(90deg, #000 calc(var(--f1) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f1)),
+    linear-gradient(90deg, #000 calc(var(--f2) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f2)),
+    linear-gradient(90deg, #000 calc(var(--f3) - var(--feather)), rgba(0, 0, 0, var(--faint)) var(--f3));
+  -webkit-mask-size: 100% 34%;
+  mask-size: 100% 34%;
+  -webkit-mask-position: 0 0, 0 50%, 0 100%;
+  mask-position: 0 0, 0 50%, 0 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Pozornica stoji na sredini kadra; razmak iznad i ispod daje sam kadar. */
+  .livada {
+    padding-top: 0;
+  }
+
+  .livada__izjava {
+    height: 175svh;
+  }
+
+  .livada__pozornica {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+  }
+
+  .livada__recenica,
+  .livada__slog {
+    margin-top: 0;
+  }
+}
+
+/* Na telefonu crtez postaje sitan: recenica prelazi u slog. */
+@media (max-width: 700px) {
+  .livada__recenica {
+    display: none;
+  }
+
+  .livada__slog--uzak {
+    display: flex;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -2774,6 +2902,17 @@ html.skip-preloader #preloader {
   width: min(78%, 1120px);
   /* Isti vazduh kao nad recenicom — tri koraka jednako razmaknuta. */
   margin: clamp(4.5rem, 14vw, 15rem) auto 0;
+}
+
+/*
+ * Kad se izjava zaustavlja, vazduh izmedju nje i snimaka daje ostatak njene
+ * pozornice: kad se otpusti, recenica stoji na sredini kadra, a do dna kutije
+ * je jos pola ekrana. Stari razmak povrh toga bi bio prazan ekran.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .livada__photos {
+    margin-top: clamp(0rem, 2vw, 2rem);
+  }
 }
 
 .livada__column {
@@ -5266,7 +5405,48 @@ html.skip-preloader #preloader {
 .priroda {
   position: relative;
   padding-block: clamp(7rem, 16vw, 15rem) clamp(4rem, 9vw, 8.75rem);
-  overflow: hidden;
+  /*
+   * `clip`, ne `hidden`: hidden bi od sekcije napravio kutiju za skrolanje, i
+   * pozornica u njoj bi se lijepila za tu kutiju a ne za kadar.
+   */
+  overflow-x: clip;
+}
+
+/*
+ * Pozornica: sve sto se vidi stoji u njoj, a sekcija je samo visina kroz koju
+ * se skrola. Na uskom ekranu je obican blok.
+ */
+.priroda__stage {
+  display: block;
+}
+
+/*
+ * Zaustavljanje, kao kod gesla i ponude: sekcija je visoka jedan kadar plus
+ * put kroz koji skrol pali tekst (120svh — dva pasusa, ~70 rijeci), a pozornica
+ * u njoj se lijepi za vrh. Zadnjih ~18% puta cio tekst samo stoji.
+ *
+ * Uslov je isti kao `PIN` u `Priroda.tsx`. Ispod 901px je slog ispod snimka i
+ * sadrzaj je visi od kadra; ispod 640px visine ne stane ni u dva stupca. Tamo
+ * sekcija ostaje obican blok i sve ulazi kad dodje u kadar.
+ *
+ * Zraka iznad sloga je i dalje mnogo — prije ove sekcije zavrsava snimak preko
+ * cijelog ekrana i njemu treba mjesta da se izdise — ali ga sada daje kadar,
+ * ne `padding`: centriran je u onome sto ostane ispod fiksnog zaglavlja.
+ */
+@media (min-width: 901px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .priroda {
+    height: 220svh;
+    padding-block: 0;
+  }
+
+  .priroda__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    padding-block: 5.5rem 2rem;
+  }
 }
 
 .priroda__inner {
@@ -5311,11 +5491,12 @@ html.skip-preloader #preloader {
   left: 100%;
   top: 92.5%;
   /*
-   * Polozaj nosi `translate`, ne `transform` — `transform` je ostavljen
-   * iskakanju, koje ga skalira. Da su na istom svojstvu, jedno bi ponistilo
-   * drugo i pecat bi skocio u ugao.
+   * Pomak od pola svoje mjere (-50% -50%) upisuje GSAP (`xPercent`/`yPercent`
+   * u `Priroda.tsx`), ne CSS `translate`: pecat iskace skaliranjem, GSAP ga
+   * pise u `transform` i pri prvom upisu CSS `translate` pretvori u nulu.
+   * Pecat je zbog toga stajao pomaknut za pola sebe, izvan ivice snimka — a na
+   * telefonu i izvan ekrana.
    */
-  translate: -50% -50%;
   width: 41%;
   height: auto;
 }
@@ -5352,8 +5533,8 @@ html.skip-preloader #preloader {
  */
 .priroda__copy {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(0.95rem, 1.15vw, 1.1rem);
-  line-height: 2;
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
+  line-height: 1.95;
   color: var(--brown);
 }
 
@@ -5868,6 +6049,43 @@ a.pecat:focus-visible img {
   padding-block: clamp(4rem, 9vw, 8.5rem);
 }
 
+/*
+ * Pozornica: sve sto se vidi stoji u njoj, a sekcija je samo visina kroz koju
+ * se skrola. Na uskom ekranu je obican blok.
+ */
+.krajolik__stage {
+  display: block;
+}
+
+/*
+ * Zaustavljanje, kao kod gesla i ponude: sekcija je visoka jedan kadar plus
+ * put kroz koji skrol pali tekst (140svh — dva pasusa, ~80 rijeci), a pozornica
+ * u njoj se lijepi za vrh. Zadnjih ~18% puta cio tekst samo stoji.
+ *
+ * Uslov je isti kao `PIN` u `Krajolik.tsx`. Ispod 901px je jedna kolona i
+ * sadrzaj je visi od kadra; ispod 640px visine tri kolone ne stanu. Tamo
+ * sekcija ostaje obican blok i sve ulazi kad dodje u kadar.
+ *
+ * Pozornica ima gore vise zraka nego dolje: gore je fiksno zaglavlje (kapsula
+ * do ~85px), pa sadrzaj centriran u cijelom kadru zavuce ispod nje kad je
+ * visok. Centrira se u onome sto ostane.
+ */
+@media (min-width: 901px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .krajolik {
+    height: 240svh;
+    padding-block: 0;
+  }
+
+  .krajolik__stage {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: grid;
+    align-content: center;
+    padding-block: 5.5rem 2rem;
+  }
+}
+
 .krajolik__inner {
   max-width: var(--container);
   margin: 0 auto;
@@ -5877,7 +6095,7 @@ a.pecat:focus-visible img {
    * Sredisnja kolona je najsira: naslov je najveci slog na strani i mora da
    * padne u tri reda bez da se lomi gdje ne treba.
    */
-  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1fr) minmax(0, 0.92fr);
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 0.95fr) minmax(0, 1fr);
   /*
    * Sve tri kolone pocinju na istoj liniji. Centrirano je naslov spustalo na
    * sredinu najvise kolone — a ta kolona je sanduk sa slikama, koji je visok
@@ -5953,7 +6171,8 @@ a.pecat:focus-visible img {
   display: flex;
   flex-direction: column;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.9rem, 4.1vw, 3.6rem);
+  /* Visina ekrana je krov: na niskom prozoru naslov od tri-cetiri reda ne smije pojesti kadar. */
+  font-size: min(clamp(1.9rem, 4.1vw, 3.6rem), 7svh);
   font-weight: 400;
   line-height: 1.24;
   letter-spacing: 0.04em;
@@ -5986,7 +6205,7 @@ a.pecat:focus-visible img {
    */
   text-indent: 1.6em;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   line-height: 1.72;
   color: var(--brown);
 }
@@ -6005,7 +6224,7 @@ a.pecat:focus-visible img {
   padding-bottom: 0.25rem;
   border-bottom: 1px solid rgba(136, 91, 39, 0.45);
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--brown);
@@ -6015,6 +6234,25 @@ a.pecat:focus-visible img {
 .krajolik__cta:hover,
 .krajolik__cta:focus-visible {
   border-bottom-color: var(--brown);
+}
+
+/*
+ * Dok se sekcija zaustavlja, sve mora stati u kadar: sirina grupe snimaka i
+ * velicina sloga se ogranicavaju visinom onoga sto pozornica ima (kadar bez
+ * 5.5rem zaglavlja i 2rem zraka dolje). Grupa je najvisi dio (omjer 62:118),
+ * pa njena sirina odlucuje o visini; slog na niskom prozoru poraste tek
+ * onoliko koliko red od stotinu rijeci ostavlja mjesta.
+ *
+ * Ide poslije osnovnih pravila, jer ista svojstva zadaju i ona.
+ */
+@media (min-width: 901px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  .krajolik__slike {
+    width: min(100%, calc((100svh - 8.5rem) * 62 / 118));
+  }
+
+  .krajolik__tekst {
+    font-size: min(clamp(1rem, 1.2vw, 1.125rem), 2.3svh);
+  }
 }
 
 /* --- uzak ekran ---------------------------------------------------------- */

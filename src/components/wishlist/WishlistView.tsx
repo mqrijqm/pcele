@@ -15,7 +15,7 @@ export default function WishlistView({ locale }: { locale: Locale }) {
 
   return (
     <div className="bg-ivory header-offset">
-      <section className="section-padding">
+      <section className="pb-[var(--section-padding-sm)] pt-[clamp(2rem,5vw,4rem)]">
         <div className="container">
           <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#885B27]">
             {t('nav.account')}
@@ -60,12 +60,12 @@ export default function WishlistView({ locale }: { locale: Locale }) {
                         alt={product.name[locale]}
                         fill
                         sizes="(max-width: 640px) 100vw, 33vw"
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                        className="object-contain p-6 transition-transform duration-500 group-hover:scale-[1.025]"
                       />
                     </div>
                     <div className="border-b border-[#885B27]/15 px-1 py-6">
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-2xl leading-tight text-[#885B27]">
+                        <h3 className="font-display text-2xl font-normal leading-tight text-[#885B27]">
                           {product.name[locale]}
                         </h3>
                         <p className="shrink-0 text-sm font-semibold text-honey-700">

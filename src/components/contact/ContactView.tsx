@@ -207,12 +207,17 @@ export default function ContactView({
       <div className="mx-auto mt-16 grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:mt-28 lg:grid-cols-2 lg:gap-20 lg:px-12">
         {/* --- lijevo: uvod + kontakt pillovi -------------------------- */}
         <div>
-          <p className="max-w-lg font-display text-3xl leading-[1.15] tracking-[-0.02em] text-[#885B27] sm:text-4xl">
-            {copy.intro[0]}
-            <br />
-            {copy.intro[1]}
-            <br />
-            {copy.intro[2]}
+          {/*
+            Tekst tece sam, bez tvrdih prelaza u red: `<br />` je u uskoj koloni
+            (i u engleskom, gdje su rečenice duže) ostavljao siroče od jedne
+            riječi ("pakovanja", "you!"). Prva rečenica je zaseban blok, a
+            druga — koja je u tekstu razlomljena na dva reda — ide neprekinuta.
+          */}
+          <p className="max-w-[30rem] font-display text-3xl leading-[1.15] tracking-[-0.02em] text-[#885B27] sm:text-4xl">
+            <span className="block">{copy.intro[0]}</span>
+            <span className="mt-4 block">
+              {copy.intro[1]} {copy.intro[2]}
+            </span>
           </p>
 
           <div className="mt-12 flex flex-wrap gap-4">
