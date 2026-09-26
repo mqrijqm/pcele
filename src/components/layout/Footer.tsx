@@ -133,7 +133,18 @@ export default function Footer({ locale }: { locale: Locale }) {
 
       {/* --- sitno na dnu --------------------------------------------------- */}
       <div className="stopa__dno">
-        <p>{t('footer.copyright', { year })}</p>
+        {/*
+         * Potpis studija stoji uz copyright, odvojen istom vlasi kao pravne veze
+         * desno — a ne kao treci clan reda. Desni ugao je zauzet: tamo je fiksni
+         * portfolio pecat, pa bi potpis pod njim bio nevidljiv.
+         */}
+        <p className="stopa__autor">
+          {t('footer.copyright', { year })}
+          <span className="stopa__crta" aria-hidden="true" />
+          <a href="https://studioblink.ba" target="_blank" rel="noopener noreferrer">
+            {t('footer.autor')}
+          </a>
+        </p>
         <p className="stopa__pravno">
           <TransitionLink href={localeHref(locale, '/privacy')}>
             {t('footer.privacy')}
