@@ -3,12 +3,24 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import ImageSlot from '@/components/products/ImageSlot';
 import SeasonVideo from '@/components/products/SeasonVideo';
+import { anticipatePin } from '@/components/products/pinAnticipate';
 import type { SeasonMedia } from '@/content/productsEditorial';
 
+gsap.registerPlugin(ScrollTrigger);
+
 type Step = { when: string; title: string; body: string };
+
+/*
+ * Koliko skrola vrijedi jedan korak (u visinama ekrana) dok je sekcija zaustavljena,
+ * i koji dio puta pripada koracima. Ostatak (zadnjih 10%) drzi zadnji korak prije
+ * otpustanja, kao `.geslo` na pocetnoj.
+ */
+const SCROLL_PER_STEP = 0.36;
+const STEPS_SHARE = 0.9;
 
 /**
  * Sezona u pcelinjaku, korak po korak.
@@ -22,8 +34,11 @@ type Step = { when: string; title: string; body: string };
  * Na telefonu isti red postaje lista koju prevlacite prstom; `scroll-snap`
  * zaustavlja po jedan korak, a tacke ispod pokazuju gdje ste.
  *
- * Nema `ScrollTrigger`-a: nista se ne odvija skrolom strane, samo klikom.
- * Referentna strana radi isto.
+ * Na sirokom ekranu se sekcija zaustavlja (`pin`), a skrol prelistava korake:
+ * svaki korak ima tekst za citanje, pa ne smije da proleti pored. Klik na mjesec
+ * i dalje radi — pomjeri skrol na taj korak, tako da traka i skrol ostanu jedno.
+ * Bez pokreta (`prefers-reduced-motion`) i na telefonu nema zaustavljanja: tamo
+ * korak bira samo klik, odnosno prevlacenje prstom.
  */
 export default function SeasonTimeline({
   label,
@@ -67,7 +82,8 @@ export default function SeasonTimeline({
       const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       const closed = [...items].find((item) => item.dataset.active !== 'true');
       if (!closed) return;
-      step.current = closed.offsetWidth + gap;
+      /* Razlomljena sirina, ne `offsetWidth`: zaokruzena greska bi se kroz devet koraka nakupila u nekoliko piksela. */
+      step.current = closed.getBoundingClientRect().width + gap;
     };
 
     measure();
@@ -112,6 +128,65 @@ export default function SeasonTimeline({
     place(active, placed.current);
     placed.current = true;
   }, [active, place]);
+
+  /*
+   * Zaustavljanje sekcije. Okidac se sam brine za pin i razmak ispod; skrol samo
+   * bira korak. `start` prati visinu: na niskom ekranu, gdje sekcija ne stane cijela,
+   * poravnava se donjom ivicom, da otvoreni korak uvijek bude u kadru.
+   */
+  const pin = useRef<ScrollTrigger | null>(null);
+  const count = steps.length;
+
+  useEffect(() => {
+    const el = root.current;
+    if (!el || count < 2) return;
+
+    const mm = gsap.matchMedia();
+    mm.add(
+      '(orientation: landscape) and (min-height: 600px) and (prefers-reduced-motion: no-preference)',
+      () => {
+        const trigger = ScrollTrigger.create({
+          trigger: el,
+          start: () => (el.offsetHeight > window.innerHeight ? 'bottom bottom' : 'top top'),
+          end: () => `+=${Math.round(window.innerHeight * SCROLL_PER_STEP * count)}`,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: anticipatePin(),
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const next = Math.min(count - 1, Math.floor((self.progress / STEPS_SHARE) * count));
+            setActive((current) => (current === next ? current : next));
+          },
+        });
+        pin.current = trigger;
+
+        return () => {
+          trigger.kill();
+          pin.current = null;
+        };
+      },
+    );
+
+    return () => mm.revert();
+  }, [count]);
+
+  /*
+   * Klik na mjesec. Dok je sekcija zaustavljena, korak se bira skrolom: klik
+   * pomjeri skrol na sredinu tog koraka (u zaustavljenom kadru se ne vidi nikakav
+   * skok, samo se promijeni korak). Bez zaustavljanja korak se postavlja direktno.
+   */
+  const select = useCallback(
+    (index: number) => {
+      const trigger = pin.current;
+      if (!trigger) {
+        setActive(index);
+        return;
+      }
+      const share = ((index + 0.5) / count) * STEPS_SHARE;
+      window.scrollTo({ top: trigger.start + (trigger.end - trigger.start) * share, behavior: 'instant' });
+    },
+    [count],
+  );
 
   /* Pri promjeni sirine mjere se mijenjaju — traka ide na novo mjesto. */
   useEffect(() => {
@@ -169,7 +244,13 @@ export default function SeasonTimeline({
   };
 
   return (
-    <section data-snap="off" className="pe-season" ref={root}>
+    /*
+     * `data-seal-stop`: pecat "Okusi slast" (vidi `FullBleed`) staje ispred ove
+     * sekcije. Ona se zaustavlja tri ekrana i pecat bi sve to vrijeme lebdio preko
+     * sljedeceg koraka koji viri s desne strane; a katalog na koji pecat vodi je
+     * odmah ispod, pa ga poslije nema cemu da sluzi.
+     */
+    <section data-snap="off" data-seal-stop="" className="pe-season" ref={root}>
       <div className="pe-wrap--small pe-season__head">
         <h2 className="pe-title reveal">{heading}</h2>
       </div>
@@ -187,7 +268,7 @@ export default function SeasonTimeline({
               aria-controls={`pe-season-step-${i}`}
               aria-selected={i === active}
               tabIndex={i === active ? 0 : -1}
-              onClick={() => setActive(i)}
+              onClick={() => select(i)}
             >
               {/* Sunce uz otvoreni mjesec je pseudo-element ove oznake, vidi CSS. */}
               <span className="pe-season__tab-label">{step.when}</span>
@@ -207,6 +288,7 @@ export default function SeasonTimeline({
                 role="tabpanel"
                 aria-labelledby={`pe-season-tab-${i}`}
                 data-active={i === active}
+                data-past={i < active}
               >
                 <div className="pe-season__item__inner">
                   <div className="pe-season__content">

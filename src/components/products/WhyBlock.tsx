@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 import ImageSlot from '@/components/products/ImageSlot';
+import { anticipatePin } from '@/components/products/pinAnticipate';
 import SplitTitle from '@/components/products/SplitTitle';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -61,25 +62,32 @@ export default function WhyBlock({
             end: '+=110%',
             pin: true,
             scrub: 0.7,
-            anticipatePin: 1,
+            anticipatePin: anticipatePin(),
             invalidateOnRefresh: true,
           },
         });
         tl.to(words, { opacity: 1, ease: 'none', stagger: 0.03 });
+        /* Zadnjih ~20% skrola drzi pun tekst prije otpustanja (kao `.geslo`). */
+        tl.to({}, { duration: tl.duration() * 0.25 });
       });
 
       /*
        * Telefon: sekcija je mnogo viša od ekrana i slika stoji ispod teksta,
-       * pa se ne može zaustaviti cijela. Staje samo blijedi tekst, na sredini
-       * ekrana.
+       * pa se ne može zaustaviti cijela. Staje cijeli stubac s tekstom (naslov,
+       * spisak i tekst koji se otkriva), na sredini ekrana. Da je stajao samo
+       * zadnji pasus, spisak bi odletio iznad kadra, a crta uz stubac bi ostala
+       * da visi u praznini.
        */
       mm.add('(orientation: portrait) and (prefers-reduced-motion: no-preference)', () => {
+        const column = el.querySelector<HTMLElement>('.pe-why__text') ?? outro;
         gsap.set(words, { opacity: 0.12 });
 
         const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: outro,
-            start: 'center center',
+            trigger: column,
+            /* Ako se na sredini ne bi odvojio od plutajućeg menija, ide ispod njega. */
+            start: () =>
+              window.innerHeight - column.offsetHeight >= 190 ? 'center center' : 'top 96px',
             end: '+=90%',
             pin: true,
             /*
@@ -88,11 +96,13 @@ export default function WhyBlock({
              */
             pinSpacing: true,
             scrub: 0.6,
-            anticipatePin: 1,
+            anticipatePin: anticipatePin(),
             invalidateOnRefresh: true,
           },
         });
         tl.to(words, { opacity: 1, ease: 'none', stagger: 0.03 });
+        /* Zadnjih ~20% skrola drzi pun tekst prije otpustanja (kao `.geslo`). */
+        tl.to({}, { duration: tl.duration() * 0.25 });
       });
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
@@ -120,7 +130,10 @@ export default function WhyBlock({
 
           <div className="pe-why__text">
             <div>
-              <p className="pe-title reveal">{intro}</p>
+              {/* `data-long`: uvod od cijele recenice dobija manja slova, vidi CSS. */}
+              <p className="pe-title reveal" data-long={intro.length > 60 ? '' : undefined}>
+                {intro}
+              </p>
 
               <ul className="pe-why__list reveal stagger-1">
                 {list.map((item) => (

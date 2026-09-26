@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 import ImageSlot from '@/components/products/ImageSlot';
+import { anticipatePin } from '@/components/products/pinAnticipate';
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -44,46 +45,46 @@ export default function StoryBlock({
       const artNode = root.current.querySelector<HTMLElement>('.pe-story__art');
       const mm = gsap.matchMedia();
 
-      mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
-        gsap.set(words, { opacity: 0.13 });
-        if (labelNode) gsap.set(labelNode, { opacity: 0.3 });
-        if (artNode) gsap.set(artNode, { opacity: 0, scale: 0.82, rotate: 0 });
+      /*
+       * Isti obrazac kao `.geslo` na pocetnoj: sekcija stoji, a skrol otkriva
+       * rijec po rijec. Vazi i za telefon — recenica od osam redova koja samo
+       * proleti pored se ne stigne procitati. Na telefonu je put kraci jer je
+       * i ekran uzi.
+       */
+      mm.add(
+        {
+          wide: '(min-width: 768px) and (prefers-reduced-motion: no-preference)',
+          narrow: '(max-width: 767px) and (prefers-reduced-motion: no-preference)',
+        },
+        (context) => {
+          const wide = Boolean(context.conditions?.wide);
+          gsap.set(words, { opacity: wide ? 0.13 : 0.16 });
+          if (labelNode) gsap.set(labelNode, { opacity: 0.3 });
+          if (artNode) gsap.set(artNode, { opacity: 0, scale: 0.82, rotate: 0 });
 
-        const timeline = gsap.timeline({
-          scrollTrigger: {
-            trigger: root.current,
-            start: 'top top',
-            end: '+=115%',
-            pin: true,
-            scrub: 0.8,
-            anticipatePin: 1,
-          },
-        });
-
-        timeline
-          .to(labelNode, { opacity: 1, duration: 0.12, ease: 'none' }, 0)
-          .to(words, { opacity: 1, duration: 0.12, stagger: 0.035, ease: 'none' }, 0)
-          .to(artNode, { opacity: 1, scale: 1, duration: 0.28, ease: 'power2.out' }, 0.08)
-          .to(artNode, { rotate: 360, duration: 1, ease: 'none' }, 0);
-      });
-
-      mm.add('(max-width: 767px) and (prefers-reduced-motion: no-preference)', () => {
-        gsap.fromTo(
-          words,
-          { opacity: 0.16 },
-          {
-            opacity: 1,
-            stagger: 0.025,
-            ease: 'none',
+          const timeline = gsap.timeline({
             scrollTrigger: {
               trigger: root.current,
-              start: 'top 75%',
-              end: 'center 38%',
-              scrub: 0.6,
+              start: 'top top',
+              end: wide ? '+=115%' : '+=95%',
+              pin: true,
+              scrub: wide ? 0.8 : 0.6,
+              anticipatePin: anticipatePin(),
+              invalidateOnRefresh: true,
             },
-          },
-        );
-      });
+          });
+
+          timeline
+            .to(labelNode, { opacity: 1, duration: 0.12, ease: 'none' }, 0)
+            .to(words, { opacity: 1, duration: 0.12, stagger: 0.035, ease: 'none' }, 0)
+            .to(artNode, { opacity: 1, scale: 1, duration: 0.28, ease: 'power2.out' }, 0.08)
+            .to(artNode, { rotate: 360, duration: 1, ease: 'none' }, 0);
+
+          /* Zadnjih ~20% skrola drzi pun tekst prije otpustanja (kao `.geslo`). */
+          const settled = timeline.duration();
+          timeline.to({}, { duration: settled * 0.25 }, settled);
+        },
+      );
 
       mm.add('(prefers-reduced-motion: reduce)', () => {
         gsap.set(words, { opacity: 1 });

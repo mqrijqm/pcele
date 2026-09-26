@@ -232,7 +232,13 @@
  */
 .pe-hero__drift {
   display: flex;
-  width: 100%;
+  /*
+   * Traka pocinje lijevo od kadra. GSAP je na pocetku pomjera 2svw udesno, pa bi
+   * pri svakom "prelasku" petlje (-50% -> 0) na lijevoj ivici bljesnula prazna
+   * pruga. Ovako lijevo uvijek ima jos teksta.
+   */
+  width: calc(100% + 10svw);
+  margin-left: -10svw;
 }
 
 .pe-hero__track {
@@ -358,8 +364,12 @@
   padding-bottom: clamp(5rem, 11svh, 8rem);
 }
 
+/*
+ * Stubac je u `em`, ne u `rem`: slova rastu sa sirinom ekrana, pa bi fiksna
+ * sirina na 1920 lomila recenicu u osam uskih redova sa usamljenom rijecju.
+ */
 .pe-story--scroll .pe-story__lede {
-  max-width: 48rem;
+  max-width: max(48rem, 20em);
   font-size: clamp(1.65rem, 2.7svw, 3.45rem);
   line-height: 1.08;
 }
@@ -489,8 +499,25 @@
  * razmak veći od donjeg: naslov tad ostaje slobodan od plutajućeg menija.
  */
 .pe-why__inner {
-  padding-top: clamp(4.5rem, 13svh, 9rem);
-  padding-bottom: clamp(3rem, 8svh, 6rem);
+  padding-top: clamp(4.5rem, 11svh, 9rem);
+  padding-bottom: clamp(2rem, 5svh, 5rem);
+}
+
+/*
+ * Cijeli kadar (naslov, slika, tekst) mora stati u ekran dok stoji — i na
+ * laptopu od 720 px, i sa duzim engleskim tekstom. Zato je razmak sazetiji nego
+ * prije (13svh + 7svh + 8svh je na 720 px davalo 736 px, a na engleskom 831 px,
+ * pa se naslov odsijecao pod plutajuci meni). Sekcija je tacno visine ekrana i
+ * sadrzaj joj stoji po sredini, da ni na visokom ekranu ne ostane prazna pruga
+ * ispod.
+ */
+@media (orientation: landscape) {
+  .pe-why {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100svh;
+  }
 }
 
 .pe-why__title {
@@ -501,7 +528,7 @@
 .pe-why__content {
   display: flex;
   align-items: stretch;
-  margin-top: clamp(2.5rem, 7svh, 5rem);
+  margin-top: clamp(2rem, 5svh, 4.5rem);
 }
 
 .pe-why__image {
@@ -533,6 +560,17 @@
   max-width: 23ch;
   font-size: clamp(1.6rem, 2.55svw, 3.25rem);
   line-height: 1.04;
+}
+
+/*
+ * Uvod koji je citava recenica (engleski: ~170 znakova), a ne kratka izjava
+ * (srpski: ~45). Krupna slova od 2.55svw bi ga slomila u sest redova i izgurala
+ * spisak i tekst ispod iz kadra.
+ */
+.pe-why__text .pe-title[data-long] {
+  max-width: 36ch;
+  font-size: clamp(1.25rem, 1.85svw, 2.4rem);
+  line-height: 1.12;
 }
 
 .pe-why__list {
@@ -571,10 +609,12 @@
   background-size: contain;
 }
 
+/* Tekst za citanje: nikad ispod ~15px (bilo je 13px na laptopu). */
 .pe-why__outro {
   max-width: 58ch;
-  margin-top: clamp(1.5rem, 3.5svh, 2.8rem);
-  font-size: clamp(0.82rem, 0.92svw, 1.08rem);
+  margin-top: clamp(1.25rem, 3svh, 2.4rem);
+  font-size: clamp(0.95rem, 1.12svw, 1.15rem);
+  line-height: 1.6;
 }
 
 .pe-why__outro-word {
@@ -847,9 +887,13 @@
   }
 }
 
-/* Prazan papir ispod kapi, prije sljedece sekcije (ona ima i svoj razmak). */
+/*
+ * Prazan papir ispod kapi, prije sljedece sekcije (ona ima i svoj razmak).
+ * Bilo je 18rem + 9rem razmaka sezone: izmedju najdublje kapi i naslova
+ * ostajalo je skoro 30rem praznog papira, sto se citalo kao rupa.
+ */
 .pe-scatter__air {
-  height: clamp(7rem, 20vw, 18rem);
+  height: clamp(3rem, 8vw, 8rem);
 }
 
 .pe-scatter__content {
@@ -941,7 +985,19 @@
 .pe-season {
   position: relative;
   padding-top: clamp(4rem, 11svh, 9rem);
-  padding-bottom: clamp(3rem, 9.2593svh, 8rem);
+  padding-bottom: clamp(1.5rem, 4svh, 3.5rem);
+}
+
+/*
+ * Na sirokom ekranu se sekcija zaustavlja (vidi `SeasonTimeline`), pa cijela mora
+ * da stane u kadar: naslov, traka mjeseci i otvoreni korak. Visina je zato tacno
+ * ekran, a ne "otprilike ekran plus par piksela" kao prije — inace bi se donji
+ * dio odsjekao dok sekcija stoji.
+ */
+@media (orientation: landscape) {
+  .pe-season {
+    min-height: 100svh;
+  }
 }
 
 /*
@@ -1077,7 +1133,7 @@
 .pe-season__slider {
   display: flex;
   gap: 0 2.6042svw;
-  margin-top: clamp(2rem, 8.7963svh, 6rem);
+  margin-top: clamp(1.5rem, 6svh, 4.5rem);
   will-change: transform;
 }
 
@@ -1085,7 +1141,20 @@
   flex: 0 0 auto;
   padding-left: 1.0417svw;
   border-left: 1px solid var(--pe-ink);
-  transition: border-color 0.35s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  transition:
+    border-color 0.35s cubic-bezier(0.445, 0.05, 0.55, 0.95),
+    opacity 0.4s linear;
+}
+
+/*
+ * Korak koji je vec prosao klizi ulijevo iz kadra, pa mu s lijeve ivice ostaju
+ * odsjecene rijeci ("sku", "ga da"). Zato se gasi; sljedeci korak s desne
+ * strane ostaje da viri, jer taj kaze da ima jos.
+ */
+@media (orientation: landscape) {
+  .pe-season__item[data-past='true'] {
+    opacity: 0;
+  }
 }
 
 .pe-season__item__inner {
@@ -1133,10 +1202,12 @@
   font-size: clamp(2.5rem, 4.75svw, 6.2rem);
 }
 
+/* Tekst za citanje: 16px na laptopu (bilo 14.4px), nikad ispod toga. */
 .pe-season__text {
   max-width: 26.0417svw;
-  margin-top: clamp(1.75rem, 5svh, 3.5rem);
-  font-size: clamp(0.9rem, 1vw, 1.1rem);
+  margin-top: clamp(1.25rem, 3.5svh, 3rem);
+  font-size: clamp(1rem, 1.1svw, 1.125rem);
+  line-height: 1.55;
 }
 
 /*
@@ -1274,16 +1345,24 @@
     display: none;
   }
 
+  /*
+   * Kartice u traci su iste visine (najduzi tekst odredjuje). Snimak ide na dno
+   * kartice (`margin-top: auto`), pa prazan prostor kod kracih tekstova ostaje
+   * izmedju teksta i snimka, a ne ispod snimka — snimci u nizu stoje u istoj liniji.
+   */
   .pe-season__item {
+    display: flex;
     flex: 0 0 78svw;
+    flex-direction: column;
     scroll-snap-align: center;
-    padding: 0 0 clamp(1.5rem, 3svh, 2.5rem);
+    padding: 0;
     border: 1px solid var(--pe-ink);
     border-radius: var(--pe-radius);
     overflow: hidden;
   }
 
   .pe-season__item__inner {
+    flex: 1 1 auto;
     flex-direction: column;
     gap: 0;
     height: auto;
@@ -1315,13 +1394,14 @@
   .pe-season__text {
     max-width: none;
     margin-top: 0;
+    font-size: clamp(0.95rem, 2.4svw, 1.15rem);
   }
 
   .pe-season__media {
     width: 100% !important;
     height: 34svh;
     min-height: 0;
-    margin-top: 0;
+    margin-top: auto;
     border-radius: 0;
     opacity: 1 !important;
   }
@@ -1520,6 +1600,21 @@
     font-size: clamp(1.55rem, 7svw, 2.35rem);
   }
 
+  .pe-why__text .pe-title[data-long] {
+    max-width: none;
+    font-size: clamp(1.35rem, 5.6svw, 2rem);
+  }
+
+  .pe-why__outro {
+    max-width: none;
+    margin-top: clamp(1.5rem, 3.5svh, 2.4rem);
+    font-size: clamp(1rem, 2.6svw, 1.2rem);
+  }
+
+  .pe-why__list {
+    font-size: clamp(1.05rem, 2.6svw, 1.4rem);
+  }
+
   .pe-why__list li {
     min-height: 3.5rem;
     padding-left: 11svw;
@@ -1645,6 +1740,7 @@
     transform: none;
   }
 
+  .pe-season__item,
   .pe-season__name,
   .pe-season__media,
   .pe-season__tab,
