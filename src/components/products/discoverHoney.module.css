@@ -10,7 +10,7 @@
   --ink: var(--brown, #885b27);
   --tint: color-mix(in srgb, var(--ink) 7%, var(--paper, #fcf0dc));
 
-  padding: clamp(5rem, 10vw, 10rem) clamp(1.2rem, 4.8vw, 5.5rem);
+  padding: clamp(5rem, 10vw, 10rem) var(--container-padding);
   color: var(--ink);
 }
 
@@ -46,10 +46,11 @@
   margin-top: 1.2rem;
   color: inherit;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(2.2rem, 4.2vw, 4.4rem);
+  /* Naslov ne vice: manji od izjave na pocetnoj, a ne veci od naslova proizvoda. */
+  font-size: clamp(2rem, 3.6vw, 3.75rem);
   font-weight: 400;
   letter-spacing: -0.04em;
-  line-height: 0.98;
+  line-height: 1.02;
   text-wrap: balance;
 }
 

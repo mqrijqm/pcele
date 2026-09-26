@@ -21,6 +21,7 @@ export default function ProductCard({
   zoom = 1,
   heading: Heading = 'h3',
   sizes = '(max-width: 1024px) 50vw, 25vw',
+  className,
 }: {
   href: string;
   image: string;
@@ -34,11 +35,13 @@ export default function ProductCard({
   zoom?: number;
   heading?: 'h3' | 'h4';
   sizes?: string;
+  /** Dodatna klasa na kartici (npr. da se sakrije na uskom ekranu). */
+  className?: string;
 }) {
   return (
     <TransitionLink
       href={href}
-      className={styles.card}
+      className={className ? `${styles.card} ${className}` : styles.card}
       style={zoom !== 1 ? ({ '--zoom': zoom } as React.CSSProperties) : undefined}
     >
       <div className={styles.media}>

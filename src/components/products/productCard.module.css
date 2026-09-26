@@ -56,6 +56,12 @@
   line-height: 1.06;
   text-align: center;
   text-wrap: balance;
+  /*
+   * Naziv popuni sav slobodan prostor kartice, pa linija, mjera i cijena uvijek
+   * stoje na dnu — i kad je jedan naziv u dva reda a drugi u jednom, a kartice
+   * u istom redu imaju istu visinu.
+   */
+  flex: 1 0 auto;
   color: inherit;
   text-decoration: underline;
   text-decoration-color: transparent;

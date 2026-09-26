@@ -4,6 +4,9 @@
  * Minimalno, na papiru: tanke linije umjesto ploha, Gazpacho obične debljine
  * malim slovima za sve krupno, Inter za sve sitno. Bijele nema — ploha ispod
  * proizvoda je papir zatamnjen sa 7% mastila.
+ *
+ * Mjere su umjerene a vazduha je puno: naslov ne prelazi ~3,5rem, opis se cita
+ * u uskoj koloni, a izmedju grupa stoje veliki razmaci.
  */
 
 .page {
@@ -12,7 +15,7 @@
   --gold-c: var(--gold, #eec660);
   --rule: color-mix(in srgb, var(--ink) 30%, transparent);
   --tint: color-mix(in srgb, var(--ink) 7%, var(--sheet));
-  --gap: clamp(2rem, 4.2vw, 5rem);
+  --gap: clamp(2.25rem, 5.5vw, 6.5rem);
 
   background: var(--sheet);
   color: var(--ink);
@@ -30,17 +33,23 @@
 /* --- gornji dio: galerija | kupovina ------------------------------------ */
 
 .hero {
-  padding: clamp(1.5rem, 3vw, 3rem) clamp(1.2rem, 4.8vw, 5.5rem) clamp(4.5rem, 8vw, 9rem);
+  padding: clamp(1.5rem, 2.6vw, 2.75rem) var(--container-padding) clamp(3.5rem, 6vw, 6rem);
+}
+
+/* Isto uvlacenje kao ostatak sajta; siri od toga se ne razvlaci (1920+). */
+.heroInner {
+  max-width: 84rem;
+  margin-inline: auto;
 }
 
 .back {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
-  margin-bottom: clamp(2rem, 4vw, 4rem);
+  margin-bottom: clamp(1.75rem, 3.2vw, 3rem);
   padding-bottom: 0.25rem;
   border-bottom: 1px solid currentColor;
-  font-size: 0.67rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -55,36 +64,52 @@
   transform: translateX(-0.25rem);
 }
 
+/*
+ * Tri stubca: galerija | tanka linija | kupovina. Linija je zaseban stubac
+ * (a ne rub desne kolone) da se proteze cijelom visinom reda, ma koliko
+ * kupovina bila kraca od galerije.
+ */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 1.05fr) 1px minmax(0, 0.95fr);
+  column-gap: var(--gap);
   align-items: start;
+}
+
+.divider {
+  align-self: stretch;
+  background: var(--rule);
 }
 
 /* --- galerija ------------------------------------------------------------ */
 
 .gallery {
   min-width: 0;
-  padding-right: var(--gap);
 }
 
+/*
+ * Kvadrat: staje u prvi kadar i na laptopu, a uspravne fotografije (4:5) gubi
+ * tek po desetinu gore i dolje. `max-height` cuva da na niskom ekranu ploha ne
+ * pojede cijeli kadar.
+ */
 .stage {
   position: relative;
-  aspect-ratio: 1 / 1.1;
+  aspect-ratio: 1 / 1;
+  max-height: max(28rem, calc(100svh - 14.5rem));
+  width: 100%;
   overflow: hidden;
   border-radius: 1.75rem;
   background: var(--tint);
 }
 
-/* Snimak se pri promjeni ne mijenja naglo nego se pojavi. */
+/* Svi snimci stoje jedan preko drugog; aktivan je vidljiv, ostali se preliju. */
 .stageImage {
-  animation: appear 0.6s ease both;
+  opacity: 0;
+  transition: opacity 0.55s ease;
 }
 
-@keyframes appear {
-  from {
-    opacity: 0;
-  }
+.stageOn {
+  opacity: 1;
 }
 
 .contain {
@@ -92,8 +117,10 @@
   object-fit: contain;
 }
 
+/* Fotografije su uglavnom uspravne; pomak nagore cuva ruke i tegle, ne pod. */
 .cover {
   object-fit: cover;
+  object-position: 50% 42%;
 }
 
 .thumbContain {
@@ -103,25 +130,25 @@
 
 .counter {
   position: absolute;
-  top: 1.15rem;
-  left: 1.4rem;
+  top: 1.25rem;
+  left: 1.5rem;
   z-index: 2;
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.13em;
 }
 
+/* Sličice su uvijek iste velicine; na uskom ekranu se skupe da stanu u red. */
 .thumbs {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 0.7rem;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
 }
 
 .thumb {
   position: relative;
-  flex: 0 0 auto;
-  width: clamp(4.2rem, 7vw, 6.5rem);
+  flex: 0 1 6rem;
+  min-width: 0;
   aspect-ratio: 1;
   padding: 0;
   overflow: hidden;
@@ -144,18 +171,21 @@
 
 /* --- desna kolona --------------------------------------------------------- */
 
+/*
+ * Kupovina prati ekran dok se prolazi kraj visoke galerije, da dugme "Dodaj u
+ * korpu" ne ostane iznad ruba. Ispod headera (pilula ~5rem) sa malo vazduha.
+ */
 .info {
   position: sticky;
-  top: calc(var(--header-h, 5rem) + 2rem);
-  padding-left: var(--gap);
-  border-left: 1px solid var(--rule);
+  top: 7rem;
+  min-width: 0;
 }
 
 .eyebrow,
 .label {
   display: block;
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.15em;
   line-height: 1.25;
@@ -163,26 +193,25 @@
 }
 
 .info h1 {
-  max-width: 12ch;
-  margin-top: 1.2rem;
-  font-size: clamp(3rem, 4.6vw, 5.6rem);
-  letter-spacing: -0.045em;
-  line-height: 0.92;
+  margin-top: 1.4rem;
+  font-size: clamp(2.3rem, 3.05vw, 3.25rem);
+  letter-spacing: -0.04em;
+  line-height: 1;
   text-wrap: balance;
 }
 
 .tagline {
-  margin-top: 1rem;
+  margin-top: 1.25rem;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.15rem, 1.4vw, 1.45rem);
-  letter-spacing: -0.025em;
+  font-size: clamp(1.1rem, 1.25vw, 1.3rem);
+  letter-spacing: -0.02em;
+  line-height: 1.35;
 }
 
 /* --- kutija: količina, cijena, dugmad ------------------------------------- */
 
 .box {
-  margin-top: clamp(1.75rem, 3.4vw, 2.75rem);
-  overflow: hidden;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
   border: 1px solid var(--rule);
   border-radius: 1.4rem;
 }
@@ -193,7 +222,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem 1.5rem;
-  padding: 1.1rem 1.4rem;
+  padding: 1.4rem 1.6rem;
 }
 
 .boxRow + .boxRow {
@@ -270,13 +299,16 @@
   text-align: center;
   font-size: 0.95rem;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
+/* Cijena se vidi, ali ne viče. Ista visina reda za sve cifre. */
 .price {
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.7rem, 2.2vw, 2.4rem);
+  font-size: clamp(1.5rem, 1.9vw, 2rem);
   font-weight: 400;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.02em;
+  line-height: 1;
   white-space: nowrap;
 }
 
@@ -285,15 +317,19 @@
   flex-wrap: nowrap;
 }
 
+/* Podnožje: napomena iznad, dugmad ispod, uvijek jedno ispod drugog. */
 .boxFoot {
-  align-items: flex-end;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  gap: 1.25rem;
 }
 
 .note {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -304,6 +340,12 @@
   height: 0.9rem;
 }
 
+/*
+ * Dugmad su u istom redu dok ima mjesta, a kad je kolona uska prelaze jedno
+ * ispod drugog. Osnove su odmjerene po duzem od dva teksta ("Dodano u korpu",
+ * "Sačuvano"), pa promjena natpisa ne moze da prebaci red niti da promijeni
+ * visinu kutije.
+ */
 .actions {
   display: flex;
   flex-wrap: wrap;
@@ -314,11 +356,12 @@
 .addButton {
   position: relative;
   display: inline-flex;
+  flex: 2 1 13rem;
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
-  height: 3.2rem;
-  padding: 0 1.7rem;
+  height: 3.3rem;
+  padding: 0 1.4rem;
   border: 0;
   border-radius: 999px;
   background: var(--ink);
@@ -327,6 +370,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
   cursor: pointer;
 }
 
@@ -340,15 +384,18 @@
 }
 
 .addButton svg {
+  flex: none;
   width: 1rem;
 }
 
 .wishButton {
   display: inline-flex;
+  flex: 1 1 9.5rem;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  height: 3.2rem;
-  padding: 0 1.3rem;
+  height: 3.3rem;
+  padding: 0 1.2rem;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: transparent;
@@ -357,6 +404,7 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap;
   cursor: pointer;
   transition: border-color 0.3s ease;
 }
@@ -367,6 +415,7 @@
 }
 
 .wishButton svg {
+  flex: none;
   width: 0.95rem;
   height: 0.95rem;
 }
@@ -375,76 +424,139 @@
   fill: var(--gold-c);
 }
 
-/* --- opis i podaci --------------------------------------------------------- */
+/* --- opis i podaci: zaustavljen skrol -------------------------------------- */
 
-.description {
-  max-width: 34rem;
-  margin-top: clamp(2rem, 3.6vw, 3rem);
+/*
+ * Visoka sekcija sa "ljepljivim" kadrom (isti obrazac kao `.geslo`). Visina je
+ * kadar (100svh) plus budzet za citanje: 55svh i jos pola svh po rijeci, pa kratak
+ * opis (~35 rijeci) drzi ~72svh, a najduzi (~75) ~92svh. `--words` upisuje
+ * komponenta.
+ */
+.story {
+  position: relative;
+  height: calc(100svh + 55svh + var(--words, 40) * 0.5svh);
+}
+
+.storyInner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  /* Gore ostaje mjesto za pilulu headera. */
+  padding: 6rem var(--container-padding) 3rem;
+  text-align: center;
+}
+
+/*
+ * Opis se cita, ne izgovara: Gazpacho u 1,2–1,5rem, red ~55–60 znakova, malo
+ * vise od naslova, mnogo manje od izjave. Krov u `svh` drzi ga i na niskom
+ * ekranu, da opis + podaci uvijek stanu u jedan kadar.
+ */
+.storyText {
+  max-width: 37rem;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: clamp(1.3rem, 1.7vw, 1.8rem);
-  letter-spacing: -0.02em;
-  line-height: 1.3;
+  font-size: min(clamp(1.2rem, 1.45vw, 1.5rem), 3.4svh);
+  letter-spacing: -0.015em;
+  line-height: 1.55;
   text-wrap: pretty;
 }
 
-.details {
-  margin-top: clamp(2rem, 3.6vw, 3rem);
+/* Rijec ceka svoj red blijeda, pa se skrolom vraca u punu boju (vidi komponentu). */
+.w {
+  display: inline-block;
+  opacity: 1;
 }
 
-.details dl {
-  margin-top: 1rem;
+:global(.js-reveal) .w,
+:global(.js-reveal) .facts {
+  opacity: 0.3;
+  will-change: opacity;
+}
+
+/* Podaci: naslov iznad, pa cetiri stupca ispod tanke linije. */
+.facts {
+  width: min(100%, 52rem);
+  margin-top: clamp(2.5rem, 5.5svh, 4.5rem);
+  text-align: left;
+}
+
+.facts .eyebrow {
+  text-align: center;
+}
+
+.facts dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 2rem;
+  margin-top: 1.25rem;
   border-top: 1px solid var(--rule);
 }
 
-.details dl > div {
-  display: grid;
-  grid-template-columns: 0.8fr 1fr;
-  gap: 1rem;
-  padding: 0.95rem 0;
-  border-bottom: 1px solid var(--rule);
+.facts dl > div {
+  padding-top: 1.1rem;
 }
 
-.details dt {
+.facts dt {
   font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 0.66rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
-.details dd {
+.facts dd {
+  margin-top: 0.5rem;
   font-family: var(--font-gazpacho), Georgia, serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   letter-spacing: -0.01em;
-  line-height: 1.15;
+  line-height: 1.25;
 }
 
 /* --- tablet i telefon -------------------------------------------------------- */
 
 @media (max-width: 900px) {
-  .grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.75rem;
+  /* Jedna uska kolona u sredini; link, galerija i kupovina imaju istu lijevu ivicu. */
+  .heroInner {
+    max-width: 34rem;
   }
 
-  .gallery {
-    padding-right: 0;
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2.75rem;
+  }
+
+  .divider {
+    display: none;
+  }
+
+  .stage {
+    max-height: none;
   }
 
   .info {
     position: static;
-    padding-left: 0;
-    border-left: 0;
+  }
+
+  .facts dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 1.5rem;
   }
 }
 
 @media (max-width: 640px) {
+  .hero {
+    padding-bottom: 3.5rem;
+  }
+
   .info h1 {
-    font-size: clamp(3rem, 14vw, 4.6rem);
+    font-size: clamp(2.3rem, 9.5vw, 2.9rem);
   }
 
   .boxRow {
-    padding: 1rem 1.1rem;
+    padding: 1.15rem 1.15rem;
   }
 
   .qty {
@@ -461,35 +573,78 @@
   }
 
   .price {
-    font-size: 1.45rem;
+    font-size: 1.5rem;
   }
 
-  .boxFoot {
-    align-items: stretch;
+  .storyInner {
+    padding-top: clamp(4.5rem, 12svh, 5.5rem);
+    padding-bottom: 2rem;
   }
 
-  .actions {
-    width: 100%;
+  /* Na niskom telefonu (640px) najduzi opis i podaci moraju stati u jedan kadar. */
+  .storyText {
+    font-size: min(1.15rem, 2.65svh);
+    line-height: 1.5;
   }
 
-  .addButton {
-    flex: 1 1 auto;
+  .facts {
+    margin-top: 2rem;
   }
 
-  .details dl > div {
-    grid-template-columns: 0.9fr 1fr;
+  .facts dl {
+    margin-top: 1rem;
+    row-gap: 1.1rem;
+  }
+
+  .facts dl > div {
+    padding-top: 0.85rem;
+  }
+
+  .facts dd {
+    margin-top: 0.35rem;
+    font-size: 1rem;
   }
 }
 
+/*
+ * Telefon: naslov "Količina" ide iznad brojaca, a cijena ostaje desno uz njega.
+ * Tako ni trocifrena cijena ("180,00 KM") ne moze da izadje iz kutije.
+ */
+@media (max-width: 480px) {
+  .qtyRow {
+    align-items: flex-end;
+  }
+
+  .qty {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}
+
+/* Ko je iskljucio kretanje: obicna sekcija, sve vidljivo, bez zadrzavanja. */
 @media (prefers-reduced-motion: reduce) {
   .back span,
   .thumb,
   .stepper button,
-  .wishButton {
+  .wishButton,
+  .stageImage {
     transition: none;
   }
 
-  .stageImage {
-    animation: none;
+  .story {
+    height: auto;
+  }
+
+  .storyInner {
+    position: relative;
+    min-height: 0;
+    padding-block: clamp(3rem, 6vw, 6rem);
+  }
+
+  :global(.js-reveal) .w,
+  :global(.js-reveal) .facts {
+    opacity: 1;
+    will-change: auto;
   }
 }

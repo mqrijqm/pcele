@@ -69,22 +69,23 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <ProductDetail product={product} locale={locale} />
+      <ProductDetail key={product.slug} product={product} locale={locale} />
 
       {/* Ostali proizvodi: ista kartica kao u katalogu. */}
       <section className="border-t border-[#885B27]/30">
-        <div className="container section-padding">
-          <div className="reveal mb-12 flex flex-col items-center text-center">
+        <div className="container section-padding-sm">
+          <div className="reveal mb-10 flex flex-col items-center text-center md:mb-14">
             <p className="text-[0.68rem] font-bold uppercase tracking-[0.15em] text-[#885B27]">
               {t('products.related.eyebrow')}
             </p>
-            <h2 className="mt-4 font-display text-display-md font-normal text-[#885B27]">
+            <h2 className="mt-4 font-display text-[clamp(1.9rem,3.2vw,3.25rem)] font-normal leading-[1.08] tracking-[-0.03em] text-[#885B27]">
               {t('products.related.heading')}
             </h2>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-            {related.map((item) => {
+          {/* Dvije kartice u redu do 1023px (kao katalog na telefonu), tri iznad; treca se tamo sakrije da red ne ostane polupun. */}
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-6">
+            {related.map((item, index) => {
               const { title, unit } = splitName(item.name[locale]);
               return (
                 <ProductCard
@@ -96,7 +97,8 @@ export default async function ProductPage({
                   unit={unit || item.variants[0].title}
                   price={formatPrice(item.variants[0].price)}
                   zoom={item.cardZoom}
-                  sizes="(max-width: 640px) 100vw, 33vw"
+                  sizes="(max-width: 1023px) 50vw, 33vw"
+                  className={index === 2 ? 'max-lg:!hidden' : undefined}
                 />
               );
             })}
